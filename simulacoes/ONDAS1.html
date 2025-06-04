@@ -1,0 +1,213 @@
+<!DOCTYPE html>
+<html lang='pt-BR'>
+<head>
+<meta charset='UTF-8'>
+<title>DOUG.FÍSICA - ONDAS</title>
+<meta charset='UTF-8'>
+<style>
+  :root{
+    --color-A:#e74c3c;
+    --color-k:#27ae60;
+    --color-w:#2980b9;
+    --color-phi:#f39c12;
+  }
+  body{
+    font-family:'Segoe UI',sans-serif;
+    display:flex;
+    flex-direction:column;
+    align-items:center;
+    margin:0;
+    padding:1rem;
+    background:linear-gradient(180deg,#eef2f3,#ffffff);
+  }
+  h1{margin-bottom:0.75rem;font-size:2.2rem;text-shadow:0 2px 4px rgba(0,0,0,0.15);}  
+  .equation,.values{font-size:2.2rem;font-weight:600;margin:0.25rem;text-shadow:0 1px 3px rgba(0,0,0,0.1);}  
+  .slider-group{display:flex;gap:0.75rem;width:900px;max-width:900px;justify-content:space-between;margin-bottom:1rem;}
+  .slider-box{flex:1 1 200px;padding:0.65rem;border-radius:12px;color:#fff;box-shadow:0 4px 10px rgba(0,0,0,0.1);display:flex;flex-direction:column;min-width:180px;}
+  .slider-box label{font-weight:bold;margin-bottom:0.25rem;}
+  .slider-box input{width:100%;}
+  .val{margin-top:0.2rem;font-size:0.9rem;font-weight:bold;}
+  .slider-A{background:var(--color-A);} .slider-k{background:var(--color-k);} .slider-w{background:var(--color-w);} .slider-phi{background:var(--color-phi);}  
+  canvas{border:1px solid #ccc;border-radius:8px;background:#fafafa;}  
+  .controls{margin-top:0.75rem;}
+  .controls button{margin:0 0.5rem;padding:0.65rem 1.4rem;border:none;border-radius:30px;font-size:1.05rem;font-weight:600;cursor:pointer;box-shadow:0 3px 8px rgba(0,0,0,0.15);transition:transform .15s ease,box-shadow .15s ease;color:#fff;}
+  .controls button:hover{transform:translateY(-2px);box-shadow:0 5px 12px rgba(0,0,0,0.2);}  
+  #play{background:#2ecc71;} #pause{background:#f1c40f;} #restart{background:#e74c3c;}
+</style>
+</head>
+<body>
+  <h1>DOUG.FÍSICA - ONDAS SENOIDAIS</h1>
+  <div class='equation'>y(x,t) = <span style='color:var(--color-A)'>A</span>·sin(<span style='color:var(--color-k)'>k</span>x − <span style='color:var(--color-w)'>ω</span>t + <span style='color:var(--color-phi)'>φ</span>)</div>
+  <div id='eq-values' class='values'></div>
+
+  <div class='slider-group'>
+    <div class='slider-box slider-A'>
+      <label>Amplitude (A)</label>
+      <input type='range' id='A' min='0' max='2' value='1' step='0.05'>
+      <span id='A-val' class='val'></span>
+    </div>
+    <div class='slider-box slider-k'>
+      <label>Número de Onda (k)</label>
+      <input type='range' id='k' min='0' max='5' value='2' step='0.05'>
+      <span id='k-val' class='val'></span>
+    </div>
+    <div class='slider-box slider-w'>
+      <label>Frequência Angular (ω)</label>
+      <input type='range' id='w' min='-10' max='10' value='4' step='0.1'>
+      <span id='w-val' class='val'></span>
+    </div>
+    <div class='slider-box slider-phi'>
+      <label>Fase Inicial (φ)</label>
+      <input type='range' id='phi' min='-6.283' max='6.283' value='0' step='0.05'>
+      <span id='phi-val' class='val'></span>
+    </div>
+  </div>
+
+  <canvas id='waveCanvas' width='900' height='400'></canvas>
+  <div class='controls'>
+    <button id='play'>Play</button>
+    <button id='pause'>Pause</button>
+    <button id='restart'>Restart</button>
+  </div>
+
+<script>
+  const canvas = document.getElementById('waveCanvas');
+  const ctx = canvas.getContext('2d');
+
+  const ASlider = document.getElementById('A');
+  const kSlider = document.getElementById('k');
+  const wSlider = document.getElementById('w');
+  const phiSlider = document.getElementById('phi');
+
+  const ADisplay = document.getElementById('A-val');
+  const kDisplay = document.getElementById('k-val');
+  const wDisplay = document.getElementById('w-val');
+  const phiDisplay = document.getElementById('phi-val');
+
+  const eqValues = document.getElementById('eq-values');
+  const playBtn = document.getElementById('play');
+  const pauseBtn = document.getElementById('pause');
+  const restartBtn = document.getElementById('restart');
+
+  let t = 0;
+  let running = false;
+  const dt = 0.02;
+
+  // Axis / scale settings
+  const xStart = -0.4; 
+  const xRange = 10;   
+  const yMax = 2.4;    
+
+  function updateSliderDisplays(){
+    ADisplay.textContent = `${parseFloat(ASlider.value).toFixed(2)} m`;
+    kDisplay.textContent = `${parseFloat(kSlider.value).toFixed(2)} 1/m`;
+    wDisplay.textContent = `${parseFloat(wSlider.value).toFixed(2)} rad/s`;
+    phiDisplay.textContent = `${parseFloat(phiSlider.value).toFixed(2)} rad`;
+  }
+
+  function updateEquationValues(){
+    const A = parseFloat(ASlider.value);
+    const k = parseFloat(kSlider.value);
+    const w = parseFloat(wSlider.value);
+    const phi = parseFloat(phiSlider.value);
+    eqValues.innerHTML = `y(x,t) = <span style='color:var(--color-A)'>${A.toFixed(2)}</span>·sin(<span style='color:var(--color-k)'>${k.toFixed(2)}</span>x − <span style='color:var(--color-w)'>${w.toFixed(2)}</span>t + <span style='color:var(--color-phi)'>${phi.toFixed(2)}</span>)`;
+  }
+
+  function drawGrid(){
+    const width = canvas.width;
+    const height = canvas.height;
+    const spacing = 50;
+    const scaleY = (height/2)/yMax;
+    ctx.strokeStyle = '#e0e0e0';
+    ctx.lineWidth = 1;
+
+    ctx.font = '12px Segoe UI';
+    ctx.fillStyle = '#555';
+
+    ctx.textAlign = 'center';
+    for(let xVal=Math.ceil(xStart); xVal<=xStart+xRange; xVal++){
+      const xPix = (xVal - xStart)/xRange * width;
+      ctx.beginPath(); ctx.moveTo(xPix,0); ctx.lineTo(xPix,height); ctx.stroke();
+      ctx.fillText(xVal.toFixed(0), xPix, height/2 + 20);
+    }
+
+    ctx.textAlign = 'right';
+    for(let yVal=-yMax; yVal<=yMax; yVal+=0.6){
+      const yPix = height/2 - yVal * scaleY;
+      ctx.beginPath(); ctx.moveTo(0,yPix); ctx.lineTo(width,yPix); ctx.stroke();
+      ctx.fillText(yVal.toFixed(1), zeroXPixel - 8, yPix + 4);
+    }
+  }
+
+  function drawAxes(){
+    const width = canvas.width;
+    const height = canvas.height;
+    ctx.strokeStyle = '#666';
+    ctx.lineWidth = 2;
+
+    ctx.beginPath(); ctx.moveTo(zeroXPixel,height); ctx.lineTo(zeroXPixel,0); ctx.stroke();
+    ctx.beginPath(); ctx.moveTo(zeroXPixel,0); ctx.lineTo(zeroXPixel-6,12); ctx.lineTo(zeroXPixel+6,12); ctx.closePath(); ctx.fillStyle='#666'; ctx.fill();
+
+    ctx.beginPath(); ctx.moveTo(0,height/2); ctx.lineTo(width,height/2); ctx.stroke();
+    ctx.beginPath(); ctx.moveTo(width,height/2); ctx.lineTo(width-12,height/2-6); ctx.lineTo(width-12,height/2+6); ctx.closePath(); ctx.fill();
+
+    ctx.fillStyle='#000';
+    ctx.font='20px Segoe UI';
+    ctx.textAlign='center';
+    ctx.fillText('X', width-12, height/2 + 28);
+    ctx.save();
+    ctx.translate(zeroXPixel - 20, 20);
+    ctx.textAlign='center';
+    ctx.fillText('Y', 0, 0);
+    ctx.restore();
+  }
+
+  function drawWave(){
+    const width = canvas.width;
+    const height = canvas.height;
+    ctx.clearRect(0,0,width,height);
+
+    zeroXPixel = (-xStart / xRange) * width;
+
+    drawGrid();
+    drawAxes();
+
+    const A = parseFloat(ASlider.value);
+    const k = parseFloat(kSlider.value);
+    const w = parseFloat(wSlider.value);
+    const phi = parseFloat(phiSlider.value);
+
+    ctx.beginPath();
+    for(let px=0; px<=width; px++){
+      const x = xStart + (px/width)*xRange;
+      const y = A * Math.sin(k*x - w*t + phi);
+      const yPix = height/2 - y * (height/2)/yMax;
+      if(px===0){ ctx.moveTo(px,yPix);} else {ctx.lineTo(px,yPix);}    
+    }
+    ctx.strokeStyle='#000';
+    ctx.lineWidth=3;
+    ctx.stroke();
+  }
+
+  function animate(){ if(running){ t+=dt; drawWave(); } requestAnimationFrame(animate); }
+
+  [ASlider,kSlider,wSlider,phiSlider].forEach(el=>{
+    el.addEventListener('input',()=>{
+      updateSliderDisplays(); 
+      updateEquationValues(); 
+      drawWave();
+    });
+  });
+
+  playBtn.addEventListener('click',()=>{running=true;});
+  pauseBtn.addEventListener('click',()=>{running=false;});
+  restartBtn.addEventListener('click',()=>{running=false; t=0; drawWave();});
+
+  let zeroXPixel; 
+  updateSliderDisplays();
+  updateEquationValues();
+  drawWave();
+  animate();
+</script>
+</body>
+</html>

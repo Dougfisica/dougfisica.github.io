@@ -1,0 +1,415 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>DOUG.FÍSICA - Simulador da Segunda Lei de Newton</title>
+    <style>
+        body {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            max-width: 900px;
+            margin: 20px auto;
+            padding: 20px;
+            background: linear-gradient(135deg, #f5f7fa 0%, #c3cfe2 100%);
+            color: #2c3e50;
+        }
+
+        .container {
+            background: white;
+            padding: 30px;
+            border-radius: 20px;
+            box-shadow: 0 10px 30px rgba(0,0,0,0.1);
+        }
+
+        h1 {
+            text-align: center;
+            color: #2c3e50;
+            margin-bottom: 30px;
+            font-size: 2.2em;
+            font-weight: 600;
+        }
+
+        .simulation-area {
+            width: 100%;
+            height: 350px;
+            background: linear-gradient(to bottom, #e0e8ff, #f5f7fa);
+            position: relative;
+            margin: 30px 0;
+            border-radius: 15px;
+            overflow: hidden;
+            box-shadow: inset 0 2px 10px rgba(0,0,0,0.1);
+        }
+
+        #block {
+            width: 60px;
+            height: 60px;
+            background: linear-gradient(145deg, #4CAF50, #43A047);
+            position: absolute;
+            bottom: 60px;
+            left: 375px;
+            transition: left 0.016s linear;
+            border-radius: 8px;
+            box-shadow: 0 4px 8px rgba(0,0,0,0.2);
+        }
+
+        #surface {
+            width: 100%;
+            height: 60px;
+            background: linear-gradient(to bottom, #8B4513, #6B3410);
+            position: absolute;
+            bottom: 0;
+            box-shadow: inset 0 2px 5px rgba(0,0,0,0.2);
+        }
+
+        .force-container-left, .force-container-right {
+            position: absolute;
+            bottom: 85px;
+        }
+
+        .force-value {
+            position: absolute;
+            bottom: 20px;
+            width: 100%;
+            text-align: center;
+            font-weight: 600;
+            color: #2c3e50;
+            text-shadow: 1px 1px 1px rgba(255,255,255,0.5);
+        }
+
+        .metrics-display {
+            position: absolute;
+            top: 20px;
+            left: 50%;
+            transform: translateX(-50%);
+            background: rgba(255, 255, 255, 0.95);
+            padding: 15px 30px;
+            border-radius: 12px;
+            box-shadow: 0 4px 15px rgba(0,0,0,0.1);
+            display: flex;
+            gap: 30px;
+            font-size: 1.1em;
+        }
+
+        .metrics-display > div {
+            display: flex;
+            align-items: center;
+            gap: 8px;
+        }
+
+        .arrow-left {
+            position: relative;
+            height: 6px;
+            background: linear-gradient(to right, #FF6B6B, #FF4757);
+            border-radius: 3px;
+            box-shadow: 0 2px 4px rgba(255,71,87,0.3);
+        }
+
+        .arrow-left::after {
+            content: '';
+            position: absolute;
+            right: -12px;
+            top: 50%;
+            transform: translateY(-50%);
+            width: 0;
+            height: 0;
+            border-left: 16px solid #FF4757;
+            border-top: 10px solid transparent;
+            border-bottom: 10px solid transparent;
+            filter: drop-shadow(2px 2px 2px rgba(0,0,0,0.2));
+        }
+
+        .arrow-right {
+            position: relative;
+            height: 6px;
+            background: linear-gradient(to left, #4834d4, #686de0);
+            border-radius: 3px;
+            box-shadow: 0 2px 4px rgba(72,52,212,0.3);
+        }
+
+        .arrow-right::after {
+            content: '';
+            position: absolute;
+            left: -12px;
+            top: 50%;
+            transform: translateY(-50%);
+            width: 0;
+            height: 0;
+            border-right: 16px solid #4834d4;
+            border-top: 10px solid transparent;
+            border-bottom: 10px solid transparent;
+            filter: drop-shadow(-2px 2px 2px rgba(0,0,0,0.2));
+        }
+
+        .controls {
+            display: grid;
+            grid-template-columns: repeat(3, 1fr);
+            gap: 30px;
+            margin: 30px 0;
+            padding: 20px;
+            background: #f8fafc;
+            border-radius: 15px;
+            box-shadow: inset 0 2px 5px rgba(0,0,0,0.05);
+        }
+
+        .slider-container {
+            display: flex;
+            flex-direction: column;
+            gap: 10px;
+        }
+
+        .slider-value {
+            text-align: center;
+            font-size: 1.1em;
+            font-weight: 600;
+            color: #2c3e50;
+        }
+
+        input[type="range"] {
+            width: 100%;
+            height: 8px;
+            border-radius: 4px;
+            -webkit-appearance: none;
+            background: linear-gradient(to right, #4CAF50, #81C784);
+        }
+
+        input[type="range"]::-webkit-slider-thumb {
+            -webkit-appearance: none;
+            width: 20px;
+            height: 20px;
+            border-radius: 50%;
+            background: #4CAF50;
+            cursor: pointer;
+            box-shadow: 0 2px 5px rgba(0,0,0,0.2);
+            transition: all 0.3s ease;
+        }
+
+        input[type="range"]::-webkit-slider-thumb:hover {
+            transform: scale(1.1);
+            box-shadow: 0 3px 8px rgba(0,0,0,0.3);
+        }
+
+        label {
+            font-weight: 600;
+            color: #34495e;
+            margin-bottom: 5px;
+        }
+
+        button {
+            padding: 12px 25px;
+            font-size: 1.1em;
+            font-weight: 600;
+            color: white;
+            background: linear-gradient(145deg, #4CAF50, #43A047);
+            border: none;
+            border-radius: 8px;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            box-shadow: 0 4px 10px rgba(76,175,80,0.3);
+            margin-right: 10px;
+        }
+
+        button:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 6px 15px rgba(76,175,80,0.4);
+        }
+
+        button:active {
+            transform: translateY(0);
+            box-shadow: 0 2px 5px rgba(76,175,80,0.3);
+        }
+
+        .net-force {
+            position: absolute;
+            top: 70px;
+            left: 50%;
+            transform: translateX(-50%);
+            background: rgba(255, 255, 255, 0.95);
+            padding: 10px 20px;
+            border-radius: 10px;
+            font-weight: 600;
+            color: #2c3e50;
+            box-shadow: 0 4px 15px rgba(0,0,0,0.1);
+        }
+    </style>
+</head>
+<!-- Resto do código HTML permanece igual -->
+<body>
+    <div class="container">
+        <h1>DOUG.FÍSICA - Simulador da Segunda Lei de Newton</h1>
+        
+        <div class="controls">
+            <div class="slider-container">
+                <label for="forceLeft">Força Esquerda:</label>
+                <input type="range" id="forceLeft" min="0" max="100" value="10" step="1">
+                <div class="slider-value"><span id="forceLeftValue">10</span> N</div>
+            </div>
+            <div class="slider-container">
+                <label for="forceRight">Força Direita:</label>
+                <input type="range" id="forceRight" min="0" max="100" value="5" step="1">
+                <div class="slider-value"><span id="forceRightValue">5</span> N</div>
+            </div>
+            <div class="slider-container">
+                <label for="mass">Massa:</label>
+                <input type="range" id="mass" min="0.1" max="10" value="1" step="0.1">
+                <div class="slider-value"><span id="massValue">1.0</span> kg</div>
+            </div>
+        </div>
+
+        <button id="startBtn">Iniciar</button>
+        <button id="resetBtn">Reiniciar</button>
+
+        <div class="simulation-area">
+            <div class="metrics-display">
+                <div>
+                    <strong>a =</strong>
+                    <span id="acceleration">0</span>
+                    <span>m/s²</span>
+                </div>
+                <div>
+                    <strong>v =</strong>
+                    <span id="velocity">0</span>
+                    <span>m/s</span>
+                </div>
+            </div>
+            <div class="net-force">
+                Força Resultante: <span id="netForce">5</span> N
+            </div>
+            <div id="block"></div>
+            <div id="surface"></div>
+            <div class="force-container-left">
+                <div class="arrow-left"></div>
+                <div class="force-value">10 N</div>
+            </div>
+            <div class="force-container-right">
+                <div class="arrow-right"></div>
+                <div class="force-value">5 N</div>
+            </div>
+        </div>
+    </div>
+
+    <script>
+        let isRunning = false;
+        let velocity = 0;
+        let position = 375;
+        let lastTime = 0;
+        
+        const block = document.getElementById('block');
+        const startBtn = document.getElementById('startBtn');
+        const resetBtn = document.getElementById('resetBtn');
+        const forceLeftInput = document.getElementById('forceLeft');
+        const forceRightInput = document.getElementById('forceRight');
+        const massInput = document.getElementById('mass');
+        const forceLeftValue = document.getElementById('forceLeftValue');
+        const forceRightValue = document.getElementById('forceRightValue');
+        const massValue = document.getElementById('massValue');
+        const accelerationDisplay = document.getElementById('acceleration');
+        const velocityDisplay = document.getElementById('velocity');
+        const netForceDisplay = document.getElementById('netForce');
+        const leftContainer = document.querySelector('.force-container-left');
+        const rightContainer = document.querySelector('.force-container-right');
+        const leftArrow = document.querySelector('.arrow-left');
+        const rightArrow = document.querySelector('.arrow-right');
+        const forceValues = document.querySelectorAll('.force-value');
+
+		function updateForceArrows() {
+    			const forceLeft = parseFloat(forceLeftInput.value);
+    			const forceRight = parseFloat(forceRightInput.value);
+    			const netForce = forceLeft - forceRight;
+    
+    			// Atualizar valores dos sliders
+    			forceLeftValue.textContent = forceLeft;
+    			forceRightValue.textContent = forceRight;
+    			massValue.textContent = parseFloat(massInput.value).toFixed(1);
+    
+    			// Atualizar setas com distâncias simétricas
+    			const widthLeft = Math.min(Math.max(forceLeft * 3, 30), 100);
+    			const widthRight = Math.min(Math.max(forceRight * 3, 30), 100);
+    			const thicknessLeft = Math.min(Math.max(forceLeft / 15 + 2, 2), 8);
+    			const thicknessRight = Math.min(Math.max(forceRight / 15 + 2, 2), 8);
+    
+    			leftArrow.style.width = `${widthLeft}px`;
+    			leftArrow.style.height = `${thicknessLeft}px`;
+    			rightArrow.style.width = `${widthRight}px`;
+    			rightArrow.style.height = `${thicknessRight}px`;
+    
+    			const GAP = 20; // Distância constante entre a ponta da seta e o bloco
+    			const BLOCK_WIDTH = 60; // Largura do bloco definida no CSS
+    
+    			leftContainer.style.left = `${position - widthLeft - GAP}px`;
+    			rightContainer.style.left = `${position + BLOCK_WIDTH + GAP}px`; // Agora usa a largura correta do bloco
+    
+    			// Atualizar valores das forças
+    			forceValues[0].textContent = `${forceLeft} N`;
+    			forceValues[1].textContent = `${forceRight} N`;
+    			netForceDisplay.textContent = netForce;
+    
+    			 // Atualizar aceleração
+    			const acceleration = calculateAcceleration();
+    			accelerationDisplay.textContent = acceleration.toFixed(2);
+    			}
+
+        function calculateAcceleration() {
+            const forceLeft = parseFloat(forceLeftInput.value);
+            const forceRight = parseFloat(forceRightInput.value);
+            const mass = parseFloat(massInput.value);
+            return (forceLeft - forceRight) / mass;
+        }
+
+        function updateSimulation(currentTime) {
+            if (!isRunning) return;
+
+            if (lastTime === 0) {
+                lastTime = currentTime;
+                requestAnimationFrame(updateSimulation);
+                return;
+            }
+
+            const deltaTime = (currentTime - lastTime) / 1000;
+            lastTime = currentTime;
+
+            const acceleration = calculateAcceleration();
+            velocity += acceleration * deltaTime;
+            position += velocity * deltaTime * 50;
+
+            accelerationDisplay.textContent = acceleration.toFixed(2);
+            velocityDisplay.textContent = velocity.toFixed(2);
+            
+            block.style.left = `${position}px`;
+            updateForceArrows();
+
+            if (position > 700 || position < 50) {
+                isRunning = false;
+                startBtn.textContent = 'Iniciar';
+                return;
+            }
+
+            requestAnimationFrame(updateSimulation);
+        }
+
+        forceLeftInput.addEventListener('input', updateForceArrows);
+        forceRightInput.addEventListener('input', updateForceArrows);
+        massInput.addEventListener('input', updateForceArrows);
+        
+        startBtn.addEventListener('click', () => {
+            isRunning = !isRunning;
+            startBtn.textContent = isRunning ? 'Pausar' : 'Iniciar';
+            
+            if (isRunning) {
+                lastTime = 0;
+                requestAnimationFrame(updateSimulation);
+            }
+        });
+
+        resetBtn.addEventListener('click', () => {
+            isRunning = false;
+            velocity = 0;
+            position = 375;
+            lastTime = 0;
+            block.style.left = `${position}px`;
+            startBtn.textContent = 'Iniciar';
+            velocityDisplay.textContent = '0.00';
+            updateForceArrows();
+        });
+
+        updateForceArrows();
+    </script>
+</body>
+</html>

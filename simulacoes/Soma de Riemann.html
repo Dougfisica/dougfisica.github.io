@@ -1,0 +1,426 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+    <meta charset="UTF-8">
+    <title>DOUG.FÍSICA - Soma de Riemann</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <style>
+        /* Estilos CSS */
+        body {
+            font-family: Arial, sans-serif;
+            margin: 0;
+            padding: 0;
+        }
+
+        .container {
+            padding: 20px;
+        }
+
+        h1 {
+            text-align: center;
+        }
+
+        .function-selector, .controls, .info-panel {
+            margin: 20px 0;
+            text-align: center;
+        }
+
+        .graph-container {
+            position: relative;
+            width: 100%;
+            max-width: 800px;
+            margin: 0 auto;
+        }
+
+        #graphCanvas {
+            border: 1px solid #ccc;
+            touch-action: manipulation;
+            display: block;
+            width: 100%;
+        }
+
+        button {
+            margin: 5px;
+        }
+
+        .info-panel p {
+            margin: 5px;
+        }
+
+        .yellow {
+            color: #ffc107; /* Amarelo */
+        }
+
+        .green {
+            color: #28a745; /* Verde */
+        }
+
+        /* Estilo para os inputs na equação */
+        .equation-input {
+            width: 50px;
+            margin: 0 5px;
+            text-align: center;
+        }
+    </style>
+</head>
+<body>
+
+    <div class="container">
+        <h1>DOUG.FÍSICA - Soma de Riemann</h1>
+
+        <!-- Seleção do polinômio -->
+        <div class="function-selector">
+            <label for="polyDegree">Grau do polinômio:</label>
+            <input type="number" id="polyDegree" value="2" min="0" max="10" step="1">
+            <button id="setDegreeButton">Definir Grau</button>
+            <div id="coefficientsContainer"></div>
+        </div>
+
+        <!-- Controles de interatividade -->
+        <div class="controls">
+            <label for="intervalStart">Início do intervalo (a):</label>
+            <input type="number" id="intervalStart" value="0" step="0.1" min="-100" max="100">
+            <label for="intervalEnd">Fim do intervalo (b):</label>
+            <input type="number" id="intervalEnd" value="10" step="0.1" min="-100" max="100">
+            <br>
+            <label for="numRectangles">Número de retângulos (n):</label>
+            <input type="range" id="numRectangles" min="1" max="100" value="10">
+            <span id="numRectanglesValue">10</span>
+        </div>
+
+        <!-- Gráfico -->
+        <div class="graph-container">
+            <canvas id="graphCanvas" width="800" height="400"></canvas>
+        </div>
+
+        <!-- Painel de informações -->
+        <div class="info-panel">
+            <p>Soma de Riemann: <span id="riemannSum"></span></p>
+            <p>Valor Exato da Integral: <span id="exactIntegral"></span></p>
+            <p>Erro: <span id="errorValue"></span></p>
+        </div>
+    </div>
+
+    <script>
+        // Envolva todo o código dentro do evento DOMContentLoaded
+        document.addEventListener('DOMContentLoaded', function() {
+            // Elementos do DOM
+            const polyDegreeInput = document.getElementById('polyDegree');
+            const setDegreeButton = document.getElementById('setDegreeButton');
+            const coefficientsContainer = document.getElementById('coefficientsContainer');
+            const graphCanvas = document.getElementById('graphCanvas');
+            const intervalStartInput = document.getElementById('intervalStart');
+            const intervalEndInput = document.getElementById('intervalEnd');
+            const numRectanglesInput = document.getElementById('numRectangles');
+            const numRectanglesValue = document.getElementById('numRectanglesValue');
+            const riemannSumDisplay = document.getElementById('riemannSum');
+            const exactIntegralDisplay = document.getElementById('exactIntegral');
+            const errorValueDisplay = document.getElementById('errorValue');
+
+            // Configuração do Canvas
+            const canvas = graphCanvas;
+            const ctx = canvas.getContext('2d');
+
+            // Margens
+            const margin = 50;
+            const plotWidth = canvas.width - 2 * margin;
+            const plotHeight = canvas.height - 2 * margin;
+
+            // Variáveis Globais
+            let polyDegree = parseInt(polyDegreeInput.value);
+            let coefficients = Array(polyDegree + 1).fill(0);
+            let intervalStart = parseFloat(intervalStartInput.value);
+            let intervalEnd = parseFloat(intervalEndInput.value);
+            let numRectangles = parseInt(numRectanglesInput.value);
+            let xMin = Math.min(intervalStart, intervalEnd);
+            let xMax = Math.max(intervalStart, intervalEnd);
+            let yMin = -100; // Valores iniciais, serão atualizados
+            let yMax = 100;
+
+            // Eventos
+            setDegreeButton.addEventListener('click', function() {
+                polyDegree = parseInt(polyDegreeInput.value);
+                generateCoefficientInputs();
+                updateCoefficients();
+                updateYRange();
+                drawGraph();
+                updateInfoPanel();
+            });
+
+            coefficientsContainer.addEventListener('input', function() {
+                updateCoefficients();
+                updateYRange();
+                drawGraph();
+                updateInfoPanel();
+            });
+
+            intervalStartInput.addEventListener('input', function() {
+                intervalStart = parseFloat(this.value);
+                xMin = Math.min(intervalStart, intervalEnd);
+                xMax = Math.max(intervalStart, intervalEnd);
+                updateYRange();
+                drawGraph();
+                updateInfoPanel();
+            });
+
+            intervalEndInput.addEventListener('input', function() {
+                intervalEnd = parseFloat(this.value);
+                xMin = Math.min(intervalStart, intervalEnd);
+                xMax = Math.max(intervalStart, intervalEnd);
+                updateYRange();
+                drawGraph();
+                updateInfoPanel();
+            });
+
+            numRectanglesInput.addEventListener('input', function() {
+                numRectangles = parseInt(this.value);
+                numRectanglesValue.textContent = numRectangles;
+                drawGraph();
+                updateInfoPanel();
+            });
+
+            // Funções para gerar inputs dos coeficientes
+            function generateCoefficientInputs() {
+                coefficientsContainer.innerHTML = ''; // Limpa o container
+                const equation = document.createElement('div');
+                equation.style.fontSize = '18px';
+                equation.style.display = 'inline-block';
+
+                const equationText = document.createElement('span');
+                equationText.textContent = 'y = ';
+                equation.appendChild(equationText);
+
+                for (let i = polyDegree; i >= 0; i--) {
+                    // Cria o input
+                    const input = document.createElement('input');
+                    input.type = 'number';
+                    input.value = '1';
+                    input.step = '0.1';
+                    input.style.width = '50px';
+                    input.style.margin = '0 5px';
+                    input.className = 'equation-input';
+                    input.dataset.exponent = i;
+                    equation.appendChild(input);
+
+                    // Cria o termo x^i
+                    if (i > 0) {
+                        const xTerm = document.createElement('span');
+                        xTerm.innerHTML = ` x${i > 1 ? `<sup>${i}</sup>` : ''} `;
+                        equation.appendChild(xTerm);
+                    }
+
+                    // Adiciona o sinal de mais, exceto no último termo
+                    if (i > 0) {
+                        const plusSign = document.createElement('span');
+                        plusSign.textContent = '+';
+                        plusSign.style.margin = '0 5px';
+                        equation.appendChild(plusSign);
+                    }
+                }
+
+                coefficientsContainer.appendChild(equation);
+            }
+
+            // Atualizar os coeficientes com base nos inputs
+            function updateCoefficients() {
+                const inputs = coefficientsContainer.querySelectorAll('input');
+                coefficients = Array(polyDegree + 1).fill(0);
+                inputs.forEach(input => {
+                    const exponent = parseInt(input.dataset.exponent);
+                    coefficients[polyDegree - exponent] = parseFloat(input.value) || 0;
+                });
+            }
+
+            // Funções Principais
+            function drawGraph() {
+                ctx.clearRect(0, 0, canvas.width, canvas.height);
+                drawGrid();
+                drawAxes();
+                plotFunction();
+                drawRectangles();
+            }
+
+            function drawGrid() {
+                ctx.strokeStyle = '#e9e9e9';
+                ctx.lineWidth = 1;
+
+                const gridSizeX = plotWidth / 10; // Dividir o eixo X em 10 partes
+                const gridSizeY = plotHeight / 10; // Dividir o eixo Y em 10 partes
+
+                // Linhas verticais
+                for (let i = 0; i <= 10; i++) {
+                    const x = margin + i * gridSizeX;
+                    ctx.beginPath();
+                    ctx.moveTo(x, margin);
+                    ctx.lineTo(x, canvas.height - margin);
+                    ctx.stroke();
+                }
+
+                // Linhas horizontais
+                for (let i = 0; i <= 10; i++) {
+                    const y = margin + i * gridSizeY;
+                    ctx.beginPath();
+                    ctx.moveTo(margin, y);
+                    ctx.lineTo(canvas.width - margin, y);
+                    ctx.stroke();
+                }
+            }
+
+            function drawAxes() {
+                ctx.strokeStyle = '#000';
+                ctx.lineWidth = 2;
+                ctx.beginPath();
+                // Eixo X
+                const yZero = mapYToCanvas(0);
+                ctx.moveTo(margin, yZero);
+                ctx.lineTo(canvas.width - margin, yZero);
+                // Eixo Y
+                const xZero = mapXToCanvas(0);
+                ctx.moveTo(xZero, margin);
+                ctx.lineTo(xZero, canvas.height - margin);
+                ctx.stroke();
+
+                // Rótulos e marcas no eixo X
+                ctx.fillStyle = '#000';
+                ctx.font = '12px Arial';
+                const xStep = (xMax - xMin) / 10; // Incremento adaptativo
+                for (let i = 0; i <= 10; i++) {
+                    const xValue = xMin + i * xStep;
+                    const x = mapXToCanvas(xValue);
+                    ctx.beginPath();
+                    ctx.moveTo(x, yZero - 5);
+                    ctx.lineTo(x, yZero + 5);
+                    ctx.stroke();
+                    ctx.fillText(xValue.toFixed(1), x - 10, yZero + 20);
+                }
+
+                // Rótulos e marcas no eixo Y
+                ctx.fillStyle = '#000';
+                ctx.font = '12px Arial';
+                const yStep = (yMax - yMin) / 10; // Incremento adaptativo
+                for (let i = 0; i <= 10; i++) {
+                    const yValue = yMin + i * yStep;
+                    const y = mapYToCanvas(yValue);
+                    ctx.beginPath();
+                    ctx.moveTo(xZero - 5, y);
+                    ctx.lineTo(xZero + 5, y);
+                    ctx.stroke();
+                    ctx.fillText(yValue.toFixed(1), xZero - 50, y + 5);
+                }
+
+                // Rótulos dos eixos
+                ctx.fillStyle = '#000';
+                ctx.font = '14px Arial';
+                ctx.fillText('x', canvas.width - margin - 20, yZero - 10);
+                ctx.fillText('y', xZero + 10, margin + 20);
+            }
+
+            function plotFunction() {
+                ctx.strokeStyle = '#007bff';
+                ctx.lineWidth = 2;
+                ctx.beginPath();
+                let firstPoint = true;
+                const step = (xMax - xMin) / plotWidth;
+                for (let x = xMin; x <= xMax; x += step) {
+                    const canvasX = mapXToCanvas(x);
+                    const yValue = evaluateFunction(x);
+                    const canvasY = mapYToCanvas(yValue);
+                    if (firstPoint) {
+                        ctx.moveTo(canvasX, canvasY);
+                        firstPoint = false;
+                    } else {
+                        ctx.lineTo(canvasX, canvasY);
+                    }
+                }
+                ctx.stroke();
+            }
+
+            function drawRectangles() {
+                const dx = (intervalEnd - intervalStart) / numRectangles;
+                let sum = 0;
+                for (let i = 0; i < numRectangles; i++) {
+                    const xLeft = intervalStart + i * dx;
+                    const xRight = xLeft + dx;
+                    const xMid = (xLeft + xRight) / 2;
+
+                    const yValue = evaluateFunction(xMid);
+                    sum += yValue * dx;
+
+                    const canvasX = mapXToCanvas(xLeft);
+                    const canvasWidth = mapXToCanvas(xRight) - canvasX;
+                    const canvasY = mapYToCanvas(yValue);
+                    const canvasHeight = mapYToCanvas(0) - canvasY;
+
+                    ctx.fillStyle = 'rgba(255, 165, 0, 0.5)'; // Laranja semi-transparente
+                    ctx.fillRect(canvasX, canvasY, canvasWidth, canvasHeight);
+                    ctx.strokeStyle = '#ffa500';
+                    ctx.strokeRect(canvasX, canvasY, canvasWidth, canvasHeight);
+                }
+                riemannSumDisplay.textContent = sum.toFixed(4) + ' unidades';
+            }
+
+            function evaluateFunction(x) {
+                let y = 0;
+                for (let i = 0; i <= polyDegree; i++) {
+                    y += coefficients[i] * Math.pow(x, polyDegree - i);
+                }
+                return y;
+            }
+
+            function evaluateIntegral() {
+                let integral = 0;
+                for (let i = 0; i <= polyDegree; i++) {
+                    const exponent = polyDegree - i;
+                    const coef = coefficients[i] / (exponent + 1);
+                    integral += coef * (Math.pow(intervalEnd, exponent + 1) - Math.pow(intervalStart, exponent + 1));
+                }
+                return integral;
+            }
+
+            function updateYRange() {
+                yMin = Infinity;
+                yMax = -Infinity;
+                const step = (xMax - xMin) / 100;
+                for (let x = xMin; x <= xMax; x += step) {
+                    const y = evaluateFunction(x);
+                    if (y < yMin) yMin = y;
+                    if (y > yMax) yMax = y;
+                }
+                // Ajustar para valores próximos
+                const yRange = yMax - yMin;
+                if (yRange === 0) {
+                    yMin -= 1;
+                    yMax += 1;
+                } else {
+                    yMin -= yRange * 0.1;
+                    yMax += yRange * 0.1;
+                }
+            }
+
+            function mapXToCanvas(x) {
+                return margin + ((x - xMin) / (xMax - xMin)) * plotWidth;
+            }
+
+            function mapYToCanvas(y) {
+                return margin + ((yMax - y) / (yMax - yMin)) * plotHeight;
+            }
+
+            function updateInfoPanel() {
+                const sumText = riemannSumDisplay.textContent;
+                const sum = parseFloat(sumText);
+                const exact = evaluateIntegral();
+                exactIntegralDisplay.textContent = exact.toFixed(4) + ' unidades';
+                const error = Math.abs(exact - sum);
+                errorValueDisplay.textContent = error.toFixed(4) + ' unidades';
+            }
+
+            // Inicialização
+            generateCoefficientInputs();
+            updateCoefficients();
+            updateYRange();
+            drawGraph();
+            updateInfoPanel();
+        });
+    </script>
+</body>
+</html>

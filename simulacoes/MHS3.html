@@ -1,0 +1,378 @@
+<!DOCTYPE html>
+<html lang="pt-BR" class="scroll-smooth">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>DOUG.FÍSICA - Movimento Harmônico Simples</title>
+
+  <!-- Tailwind via CDN -->
+  <script src="https://cdn.tailwindcss.com"></script>
+  <script>
+    tailwind.config = {
+      darkMode: 'class',
+      theme: {
+        extend: {
+          fontFamily: { inter: ['Inter', 'sans-serif'] },
+          colors: { springBlue: '#60a5fa', massBlue: '#2563eb' },
+          dropShadow: { glass: '0 10px 25px rgba(0,0,0,0.15)' }
+        }
+      }
+    };
+  </script>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;700&display=swap" rel="stylesheet">
+
+  <style>
+    html, body { height: 100%; }
+    body      { font-family: 'Inter', sans-serif; }
+    canvas    { border-radius: .75rem; background: white; }
+    input[type="range"]::-webkit-slider-runnable-track { background: transparent; }
+  </style>
+</head>
+<body class="min-h-full bg-gradient-to-br from-indigo-50 to-sky-100 dark:from-slate-900 dark:to-slate-800 text-slate-800 dark:text-slate-200 transition-colors">
+
+  <!-- Botão modo escuro -->
+  <button id="darkModeToggle"
+          class="fixed top-4 right-4 p-2 rounded-full bg-white/60 dark:bg-slate-700/60 backdrop-blur-md shadow-md hover:scale-105 transition"
+          title="Alternar modo claro/escuro">
+      <!-- ícone lua -->
+      <svg id="iconMoon" xmlns="http://www.w3.org/2000/svg" class="h-5 w-5 dark:hidden" viewBox="0 0 24 24" fill="currentColor">
+        <path d="M21.752 15.002A9.718 9.718 0 0112 21.75 9.75 9.75 0 0012 2.25c.256 0 .509.013.76.038a.75.75 0 01.475 1.265 7.463 7.463 0 00.764 10.95 7.463 7.463 0 007.743 1.296.75.75 0 01.01 1.203z"/>
+      </svg>
+      <!-- ícone sol -->
+      <svg id="iconSun" xmlns="http://www.w3.org/2000/svg" class="h-5 w-5 hidden dark:block" viewBox="0 0 24 24" fill="currentColor">
+        <path d="M12 18a6 6 0 100-12 6 6 0 000 12z"/><path d="M12 2.25a.75.75 0 01.75.75v1.5a.75.75 0 01-1.5 0v-1.5A.75.75 0 0112 2.25zm0 16.5a.75.75 0 01.75.75v1.5a.75.75 0 01-1.5 0v-1.5a.75.75 0 01.75-.75zM4.469 4.47a.75.75 0 011.061 0l1.061 1.061a.75.75 0 11-1.06 1.06L4.47 5.53a.75.75 0 010-1.06zm12.939 12.94a.75.75 0 011.061 0l1.061 1.06a.75.75 0 11-1.06 1.062l-1.063-1.062a.75.75 0 010-1.06zM2.25 12a.75.75 0 01.75-.75h1.5a.75.75 0 010 1.5h-1.5A.75.75 0 012.25 12zm16.5 0a.75.75 0 01.75-.75h1.5a.75.75 0 010 1.5h-1.5a.75.75 0 01-.75-.75zM4.469 19.531a.75.75 0 010-1.062l1.061-1.06a.75.75 0 111.06 1.061l-1.06 1.062a.75.75 0 01-1.061 0zm12.939-12.94a.75.75 0 010-1.062l1.061-1.06a.75.75 0 111.06 1.06l-1.06 1.062a.75.75 0 01-1.061 0z"/>
+      </svg>
+  </button>
+
+  <main class="container mx-auto p-6 max-w-5xl">
+    <div class="rounded-2xl bg-white/60 dark:bg-slate-900/40 shadow-2xl drop-shadow-glass ring-1 ring-slate-200 dark:ring-slate-700 backdrop-blur-md px-8 py-10">
+      <!-- Título -->
+      <h1 class="text-3xl sm:text-4xl font-extrabold text-center bg-gradient-to-r from-indigo-600 via-sky-600 to-emerald-500 bg-clip-text text-transparent mb-8 select-none">
+        DOUG.FÍSICA - Movimento Harmônico Simples 
+      </h1>
+
+      <!-- Equações -->
+      <div class="text-lg sm:text-xl font-mono text-center mb-4 p-3 rounded-lg bg-slate-200/60 dark:bg-slate-800/60">
+        x(t) = <span class="text-red-500 font-semibold">A</span> · cos(<span class="text-emerald-500 font-semibold">ω</span>t + <span class="text-purple-500 font-semibold">φ</span>)
+      </div>
+      <div id="dynamicEquation" class="text-lg sm:text-xl font-mono text-center mb-8 p-3 rounded-lg bg-cyan-100/60 dark:bg-cyan-900/40 font-medium"></div>
+
+      <!-- Controles -->
+      <div class="grid gap-6 sm:grid-cols-3">
+        <div class="border-4 border-red-400/60 dark:border-red-500/40 rounded-xl p-4">
+          <label class="font-medium text-sm" for="amplitudeSlider">
+            Amplitude (<span class="text-red-500">A</span>): <span id="amplitudeValue" class="font-semibold text-red-500">50</span> m
+          </label>
+          <input type="range" id="amplitudeSlider" class="w-full accent-red-500 mt-2" min="10" max="100" value="50" step="1">
+        </div>
+        <div class="border-4 border-emerald-400/60 dark:border-emerald-500/40 rounded-xl p-4">
+          <label class="font-medium text-sm" for="omegaSlider">
+            Frequência Angular (<span class="text-emerald-500">ω</span>): <span id="omegaValue" class="font-semibold text-emerald-500">1.0</span> rad/s
+          </label>
+          <input type="range" id="omegaSlider" class="w-full accent-emerald-500 mt-2" min="0.1" max="3" value="1" step="0.1">
+        </div>
+        <div class="border-4 border-purple-400/60 dark:border-purple-500/40 rounded-xl p-4">
+          <label class="font-medium text-sm" for="phiSlider">
+            Fase Inicial (<span class="text-purple-500">φ</span>): <span id="phiValue" class="font-semibold text-purple-500">0.00</span> rad
+          </label>
+          <input type="range" id="phiSlider" class="w-full accent-purple-500 mt-2" min="0" max="6.28" value="0" step="0.01">
+        </div>
+      </div>
+
+      <!-- Botões -->
+      <div class="flex flex-wrap justify-center gap-4 my-8">
+        <button id="pauseButton" class="inline-flex items-center gap-2 px-5 py-2.5 rounded-lg bg-amber-500 hover:bg-amber-600 text-white font-medium shadow transition active:scale-95">
+          <svg xmlns="http://www.w3.org/2000/svg" class="h-5 w-5" viewBox="0 0 24 24" fill="currentColor"><path d="M14.25 4.5a.75.75 0 01.75.75v13.5a.75.75 0 01-1.5 0V5.25a.75.75 0 01.75-.75zM9.75 4.5a.75.75 0 01.75.75v13.5a.75.75 0 01-1.5 0V5.25a.75.75 0 01.75-.75z"/></svg>Pausar
+        </button>
+        <button id="continueButton" class="inline-flex items-center gap-2 px-5 py-2.5 rounded-lg bg-emerald-500 hover:bg-emerald-600 text-white font-medium shadow transition active:scale-95">
+          <svg xmlns="http://www.w3.org/2000/svg" class="h-5 w-5" viewBox="0 0 24 24" fill="currentColor"><path d="M5.25 4.5A.75.75 0 016 3.75h.75a.75.75 0 01.75.75v13.5a.75.75 0 01-1.5 0V4.5zM9.75 4.5A.75.75 0 0110.5 3.75h.75a.75.75 0 01.75.75v13.5a.75.75 0 01-1.5 0V4.5zM14.25 4.5A.75.75 0 0115 3.75h.75a.75.75 0 01.75.75v13.5a.75.75 0 01-1.5 0V4.5z"/></svg>Continuar
+        </button>
+        <button id="resetButton" class="inline-flex items-center gap-2 px-5 py-2.5 rounded-lg bg-slate-500 hover:bg-slate-600 text-white font-medium shadow transition active:scale-95">
+          <svg xmlns="http://www.w3.org/2000/svg" class="h-5 w-5" viewBox="0 0 24 24" fill="currentColor"><path d="M12 6V4.5a.75.75 0 011.24-.557l3.5 3.25a.75.75 0 010 1.114l-3.5 3.25A.75.75 0 0112 10.5V9a5 5 0 100 10h.25a.75.75 0 010 1.5H12a6.5 6.5 0 010-13z"/></svg>Reiniciar
+        </button>
+      </div>
+
+      <!-- Zona de simulação e gráfico: lado a lado em telas médias -->
+      <div class="flex flex-col md:flex-row items-center justify-center gap-8">
+        <canvas id="shmCanvas" width="600" height="350" class="w-full md:w-1/2"></canvas>
+
+        <div class="w-full md:w-1/2">
+          <h2 class="text-2xl font-semibold text-center mb-4 select-none">Gráfico: Posição (x) × Tempo (t)</h2>
+          <canvas id="positionGraphCanvas" class="block w-full h-60"></canvas>
+        </div>
+      </div>
+    </div>
+  </main>
+  <!-- JavaScript -->
+  <script>
+    /* ======= modo escuro ======= */
+    const toggleBtn = document.getElementById('darkModeToggle');
+    const iconSun  = document.getElementById('iconSun');
+    const iconMoon = document.getElementById('iconMoon');
+    toggleBtn.addEventListener('click', () => {
+      document.documentElement.classList.toggle('dark');
+      iconSun.classList.toggle('hidden');
+      iconMoon.classList.toggle('hidden');
+    });
+
+    /* ======= elementos DOM ======= */
+    const shmCanvas = document.getElementById('shmCanvas');
+    const ctx       = shmCanvas.getContext('2d');
+
+    const amplitudeSlider = document.getElementById('amplitudeSlider');
+    const omegaSlider     = document.getElementById('omegaSlider');
+    const phiSlider       = document.getElementById('phiSlider');
+
+    const amplitudeValueSpan = document.getElementById('amplitudeValue');
+    const omegaValueSpan     = document.getElementById('omegaValue');
+    const phiValueSpan       = document.getElementById('phiValue');
+    const dynamicEquationDiv = document.getElementById('dynamicEquation');
+
+    const graphCanvas = document.getElementById('positionGraphCanvas');
+    const graphCtx    = graphCanvas.getContext('2d');
+    graphCanvas.width = graphCanvas.offsetWidth;
+
+    const pauseButton    = document.getElementById('pauseButton');
+    const continueButton = document.getElementById('continueButton');
+    const resetButton    = document.getElementById('resetButton');
+
+    /* ======= parâmetros ======= */
+    const A_initial = 50;
+    const omega_initial = 1.0;
+    const phi_initial = 0.0;
+
+    let A = A_initial;
+    let omega = omega_initial;
+    let phi = phi_initial;
+
+    let simTime = 0;
+    let animationFrameId = null;
+    let isRunning = true;
+
+    /* ======= propriedades da mola ======= */
+    const massWidth  = 40;
+    const massHeight = 40;
+
+    const wallHeight     = 15;              // barra fixa
+    const springAttachY  = wallHeight;      // ponto de fixação
+    const equilibriumY   = shmCanvas.height / 2.5;
+    const numSpringTurns = 12;
+    const springCoilWidth = 18;
+
+    const springColor = '#60a5fa';
+    const massColor   = '#2563eb';
+
+    /* ======= gráfico ======= */
+    let positionHistory = [];
+    const maxGraphPoints = 250;
+    const graphPadding   = 30;
+
+    /* ======= util ======= */
+    const clear = c => c.clearRect(0, 0, c.canvas.width, c.canvas.height);
+
+    function updateDynamicEquation() {
+      dynamicEquationDiv.innerHTML =
+        `x(t) = <span class="text-red-500 font-semibold">${A.toFixed(0)}</span>` +
+        ` · cos(<span class="text-emerald-500 font-semibold">${omega.toFixed(1)}</span>t + ` +
+        `<span class="text-purple-500 font-semibold">${phi.toFixed(2)}</span>)`;
+    }
+
+    /* ======= desenho ======= */
+    function drawWall() {
+      ctx.fillStyle = '#475569';            // slate‑600
+      ctx.fillRect(0, 0, shmCanvas.width, wallHeight);
+    }
+
+    function drawSpring(massY) {
+      ctx.beginPath();
+      ctx.strokeStyle = springColor;
+      ctx.lineWidth = 3;
+
+      const topY = springAttachY;
+      const bottomY = massY - massHeight / 2;
+      const seg = (bottomY - topY) / numSpringTurns;
+      let y = topY;
+
+      ctx.moveTo(shmCanvas.width/2, y);
+      for (let i=0; i<numSpringTurns; i++) {
+        const nextY = y + seg;
+        const xOff  = (i % 2 === 0) ? springCoilWidth : -springCoilWidth;
+        ctx.quadraticCurveTo(shmCanvas.width/2 + xOff, y + seg/2, shmCanvas.width/2, nextY);
+        y = nextY;
+      }
+      ctx.lineTo(shmCanvas.width/2, bottomY);
+      ctx.stroke();
+    }
+
+    function drawMass(yPosition) {
+      ctx.fillStyle = massColor;
+      ctx.beginPath();
+      ctx.roundRect(
+        shmCanvas.width/2 - massWidth/2,
+        yPosition - massHeight/2,
+        massWidth,
+        massHeight,
+        [8]
+      );
+      ctx.fill();
+      ctx.fillStyle = 'rgba(255,255,255,0.25)';
+      ctx.roundRect(
+        shmCanvas.width/2 - massWidth/2 + 4,
+        yPosition - massHeight/2 + 4,
+        massWidth - 8,
+        8,
+        [4]
+      );
+      ctx.fill();
+    }
+
+    /* ======= gráfico ======= */
+    function drawGraphAxes() {
+      clear(graphCtx);
+      graphCtx.strokeStyle = '#4b5563';
+      graphCtx.fillStyle   = '#4b5563';
+      graphCtx.lineWidth   = 1;
+      graphCtx.font        = '12px Inter';
+
+      // eixo Y
+      graphCtx.beginPath();
+      graphCtx.moveTo(graphPadding, graphPadding/2);
+      graphCtx.lineTo(graphPadding, graphCanvas.height - graphPadding);
+      graphCtx.stroke();
+      graphCtx.fillText('x (m)', graphPadding - 25, graphPadding/1.5);
+
+      // eixo X
+      graphCtx.beginPath();
+      graphCtx.moveTo(graphPadding, graphCanvas.height - graphPadding);
+      graphCtx.lineTo(graphCanvas.width - graphPadding/2, graphCanvas.height - graphPadding);
+      graphCtx.stroke();
+      graphCtx.fillText('t (s)', graphCanvas.width - graphPadding, graphCanvas.height - graphPadding + 15);
+
+      // marcadores
+      const graphAmp = A || 50;
+      const midY = graphCanvas.height / 2;
+      graphCtx.fillText('0', graphPadding - 15, midY + 5);
+      graphCtx.fillText(`+${graphAmp.toFixed(0)}`, graphPadding - 25, graphPadding + 5);
+      graphCtx.fillText(`-${graphAmp.toFixed(0)}`, graphPadding - 25, graphCanvas.height - graphPadding - 5);
+
+      // linha de equilíbrio
+      graphCtx.beginPath();
+      graphCtx.strokeStyle = '#cbd5e1';
+      graphCtx.setLineDash([2,2]);
+      graphCtx.moveTo(graphPadding, midY);
+      graphCtx.lineTo(graphCanvas.width - graphPadding/2, midY);
+      graphCtx.stroke();
+      graphCtx.setLineDash([]);
+    }
+
+    function plotPositionHistory() {
+      drawGraphAxes();
+      if (positionHistory.length < 2) return;
+
+      graphCtx.beginPath();
+      graphCtx.strokeStyle = massColor;
+      graphCtx.lineWidth = 2;
+
+      const graphHeight = graphCanvas.height - 2*graphPadding;
+      const graphWidth  = graphCanvas.width  - 1.5*graphPadding;
+      const midYGraph   = graphPadding + graphHeight/2;
+
+      const maxAbsPos = A ? A*1.1 : 55;
+
+      positionHistory.forEach((pt,i)=>{
+        const x = graphPadding + (i/(maxGraphPoints-1))*graphWidth;
+        const y = midYGraph - (pt.position/maxAbsPos)*(graphHeight/2);
+        i===0 ? graphCtx.moveTo(x,y) : graphCtx.lineTo(x,y);
+      });
+      graphCtx.stroke();
+    }
+
+    /* ======= animação ======= */
+    function animationLoop() {
+      if (!isRunning) { animationFrameId=null; return; }
+      clear(ctx);
+      drawWall();
+
+      // linha de equilíbrio
+      ctx.beginPath();
+      ctx.strokeStyle = '#94a3b8';
+      ctx.lineWidth = 1;
+      ctx.setLineDash([5,5]);
+      ctx.moveTo(0, equilibriumY);
+      ctx.lineTo(shmCanvas.width, equilibriumY);
+      ctx.stroke();
+      ctx.setLineDash([]);
+
+      const x_disp = A * Math.cos(omega * simTime + phi);
+      const massY  = equilibriumY + x_disp;
+
+      drawSpring(massY);
+      drawMass(massY);
+
+      // histórico p/ gráfico
+      positionHistory.push({time: simTime, position: x_disp});
+      if (positionHistory.length > maxGraphPoints) positionHistory.shift();
+      plotPositionHistory();
+
+      simTime += 0.05;
+      animationFrameId = requestAnimationFrame(animationLoop);
+    }
+
+    /* ======= controles ======= */
+    function pauseAnimation(){ isRunning=false; }
+    function continueAnimation(){ if(!isRunning){ isRunning=true; animationLoop(); } }
+
+    function resetSimulation(){
+      pauseAnimation();
+      simTime = 0;
+      A = A_initial; omega = omega_initial; phi = phi_initial;
+      amplitudeSlider.value = A;
+      omegaSlider.value = omega;
+      phiSlider.value = phi;
+      amplitudeValueSpan.textContent = A;
+      omegaValueSpan.textContent = omega.toFixed(1);
+      phiValueSpan.textContent   = phi.toFixed(2);
+      updateDynamicEquation();
+      positionHistory=[];
+      drawGraphAxes();
+      clear(ctx);
+      drawWall();
+      const initY = equilibriumY + A*Math.cos(phi);
+      drawSpring(initY); drawMass(initY);
+      isRunning=true; animationLoop();
+    }
+
+    amplitudeSlider.addEventListener('input', e=>{
+      A = parseFloat(e.target.value);
+      amplitudeValueSpan.textContent = A;
+      updateDynamicEquation();
+    });
+    omegaSlider.addEventListener('input', e=>{
+      omega=parseFloat(e.target.value);
+      omegaValueSpan.textContent = omega.toFixed(1);
+      updateDynamicEquation();
+    });
+    phiSlider.addEventListener('input', e=>{
+      phi=parseFloat(e.target.value);
+      phiValueSpan.textContent = phi.toFixed(2);
+      updateDynamicEquation();
+      simTime=0; positionHistory=[];
+    });
+
+    pauseButton.addEventListener('click', pauseAnimation);
+    continueButton.addEventListener('click', continueAnimation);
+    resetButton.addEventListener('click', resetSimulation);
+
+    /* ======= responsividade gráfico ======= */
+    window.addEventListener('resize', ()=>{
+      graphCanvas.width = graphCanvas.offsetWidth;
+      isRunning ? plotPositionHistory() : drawGraphAxes();
+    });
+
+    /* ======= start ======= */
+    updateDynamicEquation();
+    drawGraphAxes();
+    resetSimulation();
+  </script>
+</body>
+</html>

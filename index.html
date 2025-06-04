@@ -2,50 +2,249 @@
 <html lang="pt-BR">
 <head>
   <meta charset="UTF-8">
-  <title>Doug Física - Landing Page</title>
+  <title>Doug Física | Conteúdo, Simuladores e Recursos de Física</title>
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta name="description" content="Doug Física: simuladores, conteúdos interativos, calendário UFPR, materiais Halliday e muito mais para estudantes de física. Venha aprender com experiências visuais e recursos de qualidade.">
+  <meta name="keywords" content="física, simulador, halliday, calendário UFPR, ensino, ciência, doug física, vestibular, ENEM">
+  <meta name="author" content="Doug Física">
+  <link rel="icon" type="image/png" href="/favicon.png">
+  <!-- Google Fonts: Montserrat + Roboto -->
+  <link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@800&family=Roboto:wght@400;500&display=swap" rel="stylesheet">
+  <!-- Open Graph para redes sociais -->
+  <meta property="og:title" content="Doug Física | Aprenda Física de Forma Visual e Prática">
+  <meta property="og:description" content="Simuladores, conteúdos Halliday, calendário UFPR e mais!">
+  <meta property="og:image" content="https://dougfisica.com/Botoes/halliday.png">
+  <meta property="og:url" content="https://dougfisica.com/">
+  <meta property="og:type" content="website">
+  <meta name="twitter:card" content="summary_large_image">
+  <!-- Google Analytics -->
+  <script async src="https://www.googletagmanager.com/gtag/js?id=G-83359NB2SY"></script>
+  <script>
+    window.dataLayer = window.dataLayer || [];
+    function gtag(){dataLayer.push(arguments);}
+    gtag('js', new Date());
+    gtag('config', 'G-83359NB2SY');
+  </script>
   <style>
-    body {
-      font-family: Arial, sans-serif;
-      text-align: center;
-      background: #f7f7f7;
+    :root {
+      --primary: #194BFB;
+      --secondary: #13DED6;
+      --bg-gradient: linear-gradient(135deg, #eaf0ff 0%, #ffffff 100%);
+      --card-bg: #ffffffcc;
+      --text: #222a3f;
+      --shadow: 0 8px 32px 0 rgba(25,75,251,0.10), 0 1.5px 8px 0 rgba(0,0,0,0.07);
+      --radius: 1.5rem;
+      --btn-title-bg: #e3e9f8;
+      --btn-desc-bg: #f6f8fd;
+      --btn-border: #e0e4f2;
+    }
+    html, body {
+      height: 100%;
       margin: 0;
       padding: 0;
+      background: var(--bg-gradient);
+      font-family: 'Roboto', Arial, sans-serif;
+      color: var(--text);
+      min-height: 100vh;
+      scroll-behavior: smooth;
+    }
+    body {
+      display: flex;
+      min-height: 100vh;
+      align-items: center;
+      justify-content: center;
     }
     .container {
-      margin-top: 80px;
+      display: flex;
+      flex-direction: row;
+      align-items: stretch;
+      background: var(--card-bg);
+      border-radius: var(--radius);
+      box-shadow: var(--shadow);
+      padding: 0;
+      overflow: hidden;
+      max-width: 900px;
+      width: 95vw;
+      min-height: 420px;
+      animation: fadein 0.7s cubic-bezier(.55,0,.1,1);
     }
-    h1 {
-      color: #222;
+    @keyframes fadein {
+      from { opacity: 0; transform: translateY(24px);}
+      to { opacity: 1; transform: none;}
     }
-    .img-btn {
-      width: 200px;
-      margin: 20px 0;
-      transition: transform 0.1s;
-      /* border-radius e box-shadow removidos para manter o formato da imagem PNG */
-      background: none;
-      border: none;
-      outline: none;
+    .side {
+      background: linear-gradient(135deg, var(--primary) 30%, var(--secondary) 100%);
+      color: #fff;
+      min-width: 300px;
+      max-width: 340px;
+      padding: 3rem 2rem;
+      display: flex;
+      flex-direction: column;
+      justify-content: center;
+      align-items: flex-start;
+      border-radius: var(--radius) 0 0 var(--radius);
+      box-shadow: 4px 0 24px 0 rgba(25,75,251,0.07);
+      position: relative;
+      overflow: hidden;
+    }
+    .side h1 {
+      font-family: 'Montserrat', Arial, sans-serif;
+      font-size: 2.45rem;
+      font-weight: 800;
+      margin: 0 0 1.2rem 0;
+      letter-spacing: -1.2px;
+      color: #fff;
+      text-shadow: 0 4px 18px rgba(25,75,251,0.09);
+    }
+    .side p {
+      font-size: 1.17rem;
+      color: #e5f4ff;
+      margin: 0;
+      font-weight: 400;
+    }
+    .links-area {
+      flex: 1;
+      display: flex;
+      flex-direction: column;
+      justify-content: center;
+      align-items: center;
+      padding: 3rem 2.2rem;
+      min-width: 0;
+    }
+    .links-grid {
+      display: grid;
+      gap: 1.7rem 1.4rem;
+      grid-template-columns: repeat(2, 1fr);
+      width: 100%;
+      max-width: 420px;
+    }
+    .link-btn {
+      display: flex;
+      flex-direction: column;
+      align-items: stretch;
+      background: var(--btn-desc-bg);
+      border-radius: 1.3rem;
+      box-shadow: 0 3px 12px 0 rgba(25,75,251,0.07);
+      border: 2px solid var(--btn-border);
+      transition: 
+        box-shadow 0.15s,
+        border 0.15s,
+        background 0.2s,
+        transform 0.09s;
       cursor: pointer;
-      display: inline-block;
+      text-decoration: none;
+      font-size: 1.06rem;
+      font-weight: 500;
+      color: var(--text);
+      min-width: 0;
+      position: relative;
+      overflow: hidden;
+      padding: 0;
     }
-    .img-btn:hover {
-      transform: scale(1.06);
+    .link-btn:hover, .link-btn:focus {
+      border: 2px solid var(--secondary);
+      box-shadow: 0 7px 24px 0 rgba(25,75,251,0.13), 0 1.5px 8px 0 rgba(0,0,0,0.12);
+      background: #e7f1fb;
+      transform: translateY(-2px) scale(1.025);
+      outline: none;
+      z-index: 1;
+    }
+    .btn-title-part {
+      background: var(--btn-title-bg);
+      border-radius: 1.3rem 1.3rem 0 0;
+      padding: 1.05rem 1.2rem 0.6rem 1.2rem;
+      font-size: 1.15rem;
+      font-family: 'Montserrat', Arial, sans-serif;
+      color: var(--primary);
+      font-weight: 700;
+      text-align: center;
+      letter-spacing: -0.5px;
+      box-shadow: 0 2px 8px 0 rgba(25,75,251,0.04);
+      border-bottom: 1px solid #e0e4f2;
+      transition: background 0.2s;
+    }
+    .link-btn:hover .btn-title-part, .link-btn:focus .btn-title-part {
+      background: #d7dff2;
+    }
+    .btn-desc-part {
+      background: var(--btn-desc-bg);
+      border-radius: 0 0 1.3rem 1.3rem;
+      padding: 0.7rem 1.2rem 1rem 1.2rem;
+      font-size: 0.99rem;
+      color: #586080;
+      text-align: center;
+      font-weight: 400;
+      line-height: 1.4;
+    }
+    @media (max-width: 900px) {
+      .container { flex-direction: column; max-width: 99vw; min-height: 0; }
+      .side { border-radius: var(--radius) var(--radius) 0 0; box-shadow: none; min-width: 0; max-width: 100vw; align-items: center; padding: 2rem 1.2rem;}
+      .links-area { padding: 2rem 0.5rem;}
+      .links-grid { max-width: 99vw; grid-template-columns: 1fr; }
+    }
+    @media (max-width: 600px) {
+      .container { margin: 0; }
+      .links-area { padding: 1.2rem 0.2rem;}
+      .side { padding: 1.7rem 0.8rem;}
+      .links-grid { gap: 1rem; }
+    }
+    footer {
+      position: fixed;
+      left: 0;
+      right: 0;
+      bottom: 0;
+      text-align: center;
+      font-size: 0.97rem;
+      color: #9fa4b4;
+      margin: 0 0 12px 0;
+      letter-spacing: 0.02em;
+      opacity: 0.8;
+      z-index: 999;
+      pointer-events: none;
+      background: none;
+    }
+    /* Extra "glow" para premium */
+    .side::after {
+      content: "";
+      position: absolute;
+      right: -70px;
+      top: 70px;
+      width: 180px;
+      height: 180px;
+      background: radial-gradient(circle at 60% 60%, #fff4, transparent 80%);
+      opacity: 0.7;
+      pointer-events: none;
+      z-index: 0;
+      filter: blur(5px);
     }
   </style>
 </head>
 <body>
-  <div class="container">
-    <h1>Bem-vindo ao Doug Física!</h1>
-    <p>Escolha para onde você quer ir:</p>
-    <a href="https://github.com/dougfisica/seu-projeto-1" target="_blank">
-      <img class="img-btn" src="Botoes/Simul1.png" alt="Projeto 1">
-    </a>
-    <a href="/halliday/halliday.html" target="_blank">
-      <img class="img-btn" src="Botoes/halliday.png" alt="Projeto 2">
-    </a>
-
-    <!-- Adicione mais botões abaixo conforme necessário -->
-  </div>
+  <main class="container" role="main">
+    <aside class="side">
+      <h1>Doug Física</h1>
+      <p>Simuladores, Halliday, calendário UFPR, e conteúdos de física para você dominar a matéria de forma visual e prática.</p>
+    </aside>
+    <section class="links-area">
+      <nav class="links-grid" aria-label="Acessos rápidos Doug Física">
+        <a class="link-btn" href="/simulacoes/simulacoes.html" title="Simulador de Física">
+          <span class="btn-title-part">Simulador de Física</span>
+          <span class="btn-desc-part">Experimente fenômenos físicos direto no navegador.</span>
+        </a>
+        <a class="link-btn" href="/halliday/halliday.html" title="Conteúdo Halliday">
+          <span class="btn-title-part">Recursos Halliday</span>
+          <span class="btn-desc-part">Resumos, exercícios e materiais do Halliday explicados.</span>
+        </a>
+        <a class="link-btn" href="/calendarioUFPR/calendario2025.html" title="Calendário UFPR 2025">
+          <span class="btn-title-part">Calendário UFPR 2025</span>
+          <span class="btn-desc-part">Datas importantes do vestibular e calendário acadêmico atualizado.</span>
+        </a>
+        <!-- Adicione mais links aqui! -->
+      </nav>
+    </section>
+  </main>
+  <footer>
+    &copy; 2025 Doug Física &mdash; Feito com ❤️ para estudantes e curiosos.
+  </footer>
 </body>
 </html>
