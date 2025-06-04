@@ -1,0 +1,280 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+  <meta charset="UTF-8">
+  <title>Grade dos Cursos - UFPR</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta name="description" content="Lista de cursos da UFPR com suas respectivas grades curriculares">
+  <meta name="keywords" content="UFPR, cursos, grade curricular, graduação">
+  <meta name="author" content="Doug Física">
+  <link rel="icon" type="image/png" href="/favicon.png">
+  <!-- Google Fonts: Montserrat + Roboto -->
+  <link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@800&family=Roboto:wght@400;500&display=swap" rel="stylesheet">
+  <!-- Open Graph para redes sociais -->
+  <meta property="og:title" content="Grade dos Cursos UFPR | Doug Física">
+  <meta property="og:description" content="Conteúdos criados pelo professor Douglas Oliveira">
+  <meta property="og:url" content="https://dougfisica.com/UFPR/cursos.html">
+  <meta property="og:type" content="website">
+  <meta name="twitter:card" content="summary">
+  <!-- Google Analytics -->
+  <script async src="https://www.googletagmanager.com/gtag/js?id=G-83359NB2SY"></script>
+  <script>
+    window.dataLayer = window.dataLayer || [];
+    function gtag(){dataLayer.push(arguments);}
+    gtag('js', new Date());
+    gtag('config', 'G-83359NB2SY');
+  </script>
+  <style>
+    :root {
+      --primary: #1e40af;
+      --primary-hover: #1e3a8a;
+      --bg: #f8fafc;
+      --card-bg: #fff;
+      --text: #1e293b;
+      --text-light: #64748b;
+      --border: #e2e8f0;
+      --shadow: 0 4px 6px -1px rgb(0 0 0 / 0.1), 0 2px 4px -2px rgb(0 0 0 / 0.1);
+      --shadow-hover: 0 10px 15px -3px rgb(0 0 0 / 0.1), 0 4px 6px -4px rgb(0 0 0 / 0.1);
+    }
+
+    * {
+      margin: 0;
+      padding: 0;
+      box-sizing: border-box;
+      font-family: system-ui, -apple-system, sans-serif;
+    }
+
+    body {
+      background: var(--bg);
+      color: var(--text);
+      line-height: 1.5;
+      padding: 2rem;
+      min-height: 100vh;
+    }
+
+    .container {
+      max-width: 1200px;
+      margin: 0 auto;
+      padding: 0 1rem;
+    }
+
+    header {
+      text-align: center;
+      margin-bottom: 3rem;
+    }
+
+    h1 {
+      font-size: 2.5rem;
+      color: var(--primary);
+      margin-bottom: 1rem;
+      font-weight: 700;
+    }
+
+    .subtitle {
+      font-size: 1.25rem;
+      color: var(--text-light);
+      max-width: 600px;
+      margin: 0 auto;
+    }
+
+    .cursos-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+      gap: 1.5rem;
+      margin-bottom: 3rem;
+    }
+
+    .curso-card {
+      background: var(--card-bg);
+      border-radius: 1rem;
+      padding: 1.5rem;
+      box-shadow: var(--shadow);
+      transition: all 0.3s ease;
+      text-decoration: none;
+      color: var(--text);
+      border: 1px solid var(--border);
+      display: flex;
+      flex-direction: column;
+      gap: 1rem;
+      position: relative;
+      overflow: hidden;
+    }
+
+    .curso-card::before {
+      content: '';
+      position: absolute;
+      top: 0;
+      left: 0;
+      width: 4px;
+      height: 100%;
+      background: var(--primary);
+      transition: width 0.3s ease;
+    }
+
+    .curso-card:hover {
+      transform: translateY(-4px);
+      box-shadow: var(--shadow-hover);
+    }
+
+    .curso-card:hover::before {
+      width: 8px;
+    }
+
+    .curso-nome {
+      font-size: 1.5rem;
+      font-weight: 600;
+      color: var(--primary);
+      margin-bottom: 0.5rem;
+    }
+
+    .curso-tipo {
+      font-size: 0.875rem;
+      color: var(--text-light);
+      text-transform: uppercase;
+      letter-spacing: 0.05em;
+      font-weight: 500;
+    }
+
+    .curso-info {
+      display: flex;
+      align-items: center;
+      gap: 0.5rem;
+      color: var(--text-light);
+      font-size: 0.875rem;
+    }
+
+    .curso-info svg {
+      width: 1rem;
+      height: 1rem;
+    }
+
+    .voltar-btn {
+      display: inline-flex;
+      align-items: center;
+      gap: 0.5rem;
+      background: var(--primary);
+      color: white;
+      padding: 0.75rem 1.5rem;
+      border-radius: 0.5rem;
+      text-decoration: none;
+      font-weight: 500;
+      transition: background-color 0.3s ease;
+      margin-top: 2rem;
+    }
+
+    .voltar-btn:hover {
+      background: var(--primary-hover);
+    }
+
+    .voltar-btn svg {
+      width: 1.25rem;
+      height: 1.25rem;
+    }
+
+    @media (max-width: 640px) {
+      body {
+        padding: 1rem;
+      }
+
+      h1 {
+        font-size: 2rem;
+      }
+
+      .subtitle {
+        font-size: 1rem;
+      }
+
+      .cursos-grid {
+        grid-template-columns: 1fr;
+      }
+    }
+  </style>
+</head>
+<body>
+  <div class="container">
+    <header>
+      <h1>Grade dos Cursos</h1>
+      <p class="subtitle">Lista de cursos da UFPR com suas respectivas grades curriculares</p>
+    </header>
+
+    <div class="cursos-grid">
+      <a href="cursos/Física.html" class="curso-card">
+        <div class="curso-nome">LCE - Física</div>
+        <div class="curso-tipo">Licenciatura</div>
+        <div class="curso-info">
+          <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor">
+            <path stroke-linecap="round" stroke-linejoin="round" d="M12 6v6h4.5m4.5 0a9 9 0 1 1-18 0 9 9 0 0 1 18 0Z" />
+          </svg>
+          10 períodos
+        </div>
+      </a>
+
+      <a href="cursos/Matemática.html" class="curso-card">
+        <div class="curso-nome">LCE - Matemática</div>
+        <div class="curso-tipo">Licenciatura</div>
+        <div class="curso-info">
+          <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor">
+            <path stroke-linecap="round" stroke-linejoin="round" d="M12 6v6h4.5m4.5 0a9 9 0 1 1-18 0 9 9 0 0 1 18 0Z" />
+          </svg>
+          10 períodos
+        </div>
+      </a>
+
+      <a href="cursos/Química.html" class="curso-card">
+        <div class="curso-nome">LCE - Química</div>
+        <div class="curso-tipo">Licenciatura</div>
+        <div class="curso-info">
+          <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor">
+            <path stroke-linecap="round" stroke-linejoin="round" d="M12 6v6h4.5m4.5 0a9 9 0 1 1-18 0 9 9 0 0 1 18 0Z" />
+          </svg>
+          10 períodos
+        </div>
+      </a>
+
+      <a href="cursos/Engenharia Agrícola.html" class="curso-card">
+        <div class="curso-nome">Engenharia Agrícola</div>
+        <div class="curso-tipo">Bacharelado</div>
+        <div class="curso-info">
+          <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor">
+            <path stroke-linecap="round" stroke-linejoin="round" d="M12 6v6h4.5m4.5 0a9 9 0 1 1-18 0 9 9 0 0 1 18 0Z" />
+          </svg>
+          10 períodos
+        </div>
+      </a>
+
+      <a href="cursos/Engenharia de Alimentos.html" class="curso-card">
+        <div class="curso-nome">Engenharia de Alimentos</div>
+        <div class="curso-tipo">Bacharelado</div>
+        <div class="curso-info">
+          <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor">
+            <path stroke-linecap="round" stroke-linejoin="round" d="M12 6v6h4.5m4.5 0a9 9 0 1 1-18 0 9 9 0 0 1 18 0Z" />
+          </svg>
+          10 períodos
+        </div>
+      </a>
+
+      <a href="cursos/Engenharia de Produção.html" class="curso-card">
+        <div class="curso-nome">Engenharia de Produção</div>
+        <div class="curso-tipo">Bacharelado</div>
+        <div class="curso-info">
+          <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor">
+            <path stroke-linecap="round" stroke-linejoin="round" d="M12 6v6h4.5m4.5 0a9 9 0 1 1-18 0 9 9 0 0 1 18 0Z" />
+          </svg>
+          10 períodos
+        </div>
+      </a>
+    </div>
+
+    <a href="../index.html" class="voltar-btn">
+      <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor">
+        <path stroke-linecap="round" stroke-linejoin="round" d="M9 15 3 9m0 0 6-6M3 9h12a6 6 0 0 1 0 12h-3" />
+      </svg>
+      Voltar
+    </a>
+  </div>
+
+  <footer>
+
+  </footer>
+</body>
+</html> 
