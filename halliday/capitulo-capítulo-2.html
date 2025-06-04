@@ -1,0 +1,392 @@
+<!DOCTYPE html>
+<html lang="pt-br">
+<head>
+
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Capítulo 2 - Exercícios Resolvidos | Fundamentos de Física</title>
+  <meta name="description" content="Exercícios resolvidos do Capítulo 2 do livro Fundamentos de Física - Halliday & Resnick 10ª Edição. Acesse gratuitamente todos os exercícios com soluções detalhadas.">
+  <meta name="keywords" content="exercícios, física, halliday, resnick, resolvidos, capítulos, livro, solução, pdf">
+  <link rel="canonical" href="capitulo-capítulo-2.html">
+  <!-- Open Graph -->
+  <meta property="og:type" content="website">
+  <meta property="og:title" content="Capítulo 2 - Exercícios Resolvidos | Fundamentos de Física">
+  <meta property="og:description" content="Exercícios resolvidos do Capítulo 2 do livro Fundamentos de Física - Halliday & Resnick 10ª Edição. Acesse gratuitamente todos os exercícios com soluções detalhadas.">
+  <meta property="og:url" content="capitulo-capítulo-2.html">
+  <!-- Twitter Card -->
+  <meta name="twitter:card" content="summary">
+  <meta name="twitter:title" content="Capítulo 2 - Exercícios Resolvidos | Fundamentos de Física">
+  <meta name="twitter:description" content="Exercícios resolvidos do Capítulo 2 do livro Fundamentos de Física - Halliday & Resnick 10ª Edição. Acesse gratuitamente todos os exercícios com soluções detalhadas.">
+  
+<!-- Google tag (gtag.js) -->
+<script async src="https://www.googletagmanager.com/gtag/js?id=G-83359NB2SY"></script>
+<script>
+  window.dataLayer = window.dataLayer || [];
+  function gtag(){dataLayer.push(arguments);}
+  gtag('js', new Date());
+  gtag('config', 'G-83359NB2SY');
+</script>
+
+
+  <style>
+@import url('https://fonts.googleapis.com/css2?family=Montserrat:wght@700&family=Roboto:wght@400;500&display=swap');
+body {
+  font-family: 'Roboto', Arial, sans-serif;
+  margin: 0;
+  background: #fff;
+  color: #222;
+  min-height: 100vh;
+  display: flex;
+  flex-direction: column;
+}
+.main-wrapper {
+  flex: 1 0 auto;
+}
+h1 {
+  font-family: 'Montserrat', Arial, sans-serif;
+  font-size: 3rem;
+  text-align: center;
+  font-weight: 700;
+  margin: 50px 0 0 0;
+  letter-spacing: 2px;
+}
+.title-underline {
+  width: 390px;
+  height: 10px;
+  background: #e74c3c;
+  margin: 18px auto 32px auto;
+  border-radius: 6px;
+}
+.ex-grid {
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: center;
+  gap: 28px 28px;
+  margin: 38px auto 0 auto;
+  max-width: 1100px;
+}
+.btn-ex {
+  position: relative;
+  background: #e74c3c;
+  color: #fff;
+  border: none;
+  border-radius: 8px;
+  min-width: 65px;
+  height: 48px;
+  font-size: 1.35rem;
+  font-family: 'Montserrat', Arial, sans-serif;
+  font-weight: 700;
+  cursor: pointer;
+  transition: background 0.17s, transform 0.13s;
+  box-shadow: 0 2px 8px 0 rgba(231,76,60,0.09);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  outline: none;
+  text-decoration: none;
+  margin-bottom: 8px;
+}
+.btn-ex:hover,
+.btn-ex:focus {
+  background: #c0392b;
+  transform: translateY(-2px) scale(1.06);
+}
+.btn-ex[aria-label]:hover::after,
+.btn-ex[aria-label]:focus::after {
+  opacity: 1;
+  pointer-events: auto;
+}
+.btn-ex[aria-label]::after {
+  content: attr(aria-label);
+  position: absolute;
+  bottom: 120%;
+  left: 50%;
+  transform: translateX(-50%);
+  background: #444;
+  color: #fff;
+  font-size: 0.9rem;
+  border-radius: 6px;
+  padding: 3.5px 12px;
+  white-space: nowrap;
+  opacity: 0;
+  pointer-events: none;
+  transition: opacity 0.14s;
+  z-index: 10;
+}
+@media (max-width: 600px) {
+  h1 { font-size: 2rem; margin-top: 26px;}
+  .title-underline { width: 130px; height: 6px; }
+  .ex-grid { gap: 14px 9px; max-width: 98vw; }
+  .btn-ex { font-size: 1.1rem; min-width: 41px; height: 37px; border-radius: 5px;}
+}
+footer {
+  width: 100%;
+  text-align: center;
+  color: #222;
+  font-size: 1.08rem;
+  padding: 24px 0 19px 0;
+  background: transparent;
+  font-family: 'Roboto', Arial, sans-serif;
+  opacity: 0.85;
+  letter-spacing: .2px;
+}
+a.voltar {
+  display: block;
+  margin: 50px auto 0 auto;
+  width: fit-content;
+  text-align: center;
+  font-size: 1.13rem;
+  color: #e74c3c;
+  text-decoration: underline;
+  font-weight: 500;
+  opacity: .88;
+}
+a.voltar:hover { opacity: 1; color: #c0392b;}
+/* Landing page cards */
+.cap-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+  gap: 40px 40px;
+  margin: 44px auto 0 auto;
+  max-width: 1120px;
+  justify-content: center;
+}
+.cap-card {
+  background: linear-gradient(122deg, #e74c3c 77%, #fff3f0 100%);
+  color: #fff;
+  border-radius: 20px;
+  box-shadow: 0 6px 32px 0 rgba(231,76,60,0.11), 0 1.5px 5px 0 rgba(255,255,255,0.04);
+  padding: 44px 16px 36px 16px;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  min-height: 170px;
+  transition: box-shadow .16s, transform .14s;
+  text-decoration: none;
+  position: relative;
+  font-family: 'Montserrat', Arial, sans-serif;
+  font-weight: 700;
+  font-size: 2.1rem;
+  text-align: center;
+  letter-spacing: .5px;
+  cursor: pointer;
+  border: none;
+  outline: none;
+}
+.cap-card:hover, .cap-card:focus {
+  box-shadow: 0 12px 48px 0 rgba(231,76,60,0.20), 0 1.5px 5px 0 rgba(255,255,255,0.04);
+  transform: translateY(-6px) scale(1.04);
+  background: linear-gradient(120deg, #c0392b 90%, #fff3f0 100%);
+  color: #fff;
+}
+.cap-card .cap-n {
+  font-size: 2.3rem;
+  font-family: 'Montserrat', Arial, sans-serif;
+  letter-spacing: 2px;
+}
+.cap-card .cap-desc {
+  margin-top: 12px;
+  font-size: 1.03rem;
+  font-family: 'Roboto', Arial, sans-serif;
+  color: #ffe;
+  opacity: .90;
+  font-weight: 400;
+  letter-spacing: .4px;
+}
+@media (max-width: 900px) {
+  .cap-grid { gap: 18px 6px; grid-template-columns: 1fr 1fr; }
+  .cap-card { font-size: 1.2rem; min-height: 100px; border-radius: 13px; }
+  .cap-card .cap-n { font-size: 1.1rem; }
+}
+@media (max-width: 600px) {
+  .cap-grid { grid-template-columns: 1fr; gap: 15px 0;}
+  .cap-card { padding: 27px 7px 22px 7px; border-radius: 7px; font-size: 1rem; }
+}
+</style>
+</head>
+<body>
+<div class="main-wrapper">
+  <h1>CAPÍTULO 2</h1>
+  <div class="title-underline"></div>
+  <section class="ex-grid" aria-label="Lista de exercícios do capítulo 2">
+
+    <a class="btn-ex" href="https://youtu.be/d8rmvK4dHiw" target="_blank" aria-label="Exercício 1">
+      1
+    </a>
+    <a class="btn-ex" href="https://youtu.be/PaeWlOsxVWs" target="_blank" aria-label="Exercício 2">
+      2
+    </a>
+    <a class="btn-ex" href="https://youtu.be/DC8tlF4zYes" target="_blank" aria-label="Exercício 3">
+      3
+    </a>
+    <a class="btn-ex" href="https://youtu.be/EphIt1qIobE" target="_blank" aria-label="Exercício 4">
+      4
+    </a>
+    <a class="btn-ex" href="https://youtu.be/x_Me4DMdbLc" target="_blank" aria-label="Exercício 5">
+      5
+    </a>
+    <a class="btn-ex" href="https://youtu.be/fRvtYKNE5cM" target="_blank" aria-label="Exercício 6">
+      6
+    </a>
+    <a class="btn-ex" href="https://youtu.be/jvo7P3eAoag" target="_blank" aria-label="Exercício 7">
+      7
+    </a>
+    <a class="btn-ex" href="https://youtu.be/XHTunkmdDEk" target="_blank" aria-label="Exercício 8">
+      8
+    </a>
+    <a class="btn-ex" href="https://youtu.be/9jK6d9Vqcg4" target="_blank" aria-label="Exercício 9">
+      9
+    </a>
+    <a class="btn-ex" href="https://youtu.be/EOP-7z8PKF4" target="_blank" aria-label="Exercício 10">
+      10
+    </a>
+    <a class="btn-ex" href="https://youtu.be/sOWVt7W_Ujs" target="_blank" aria-label="Exercício 11">
+      11
+    </a>
+    <a class="btn-ex" href="https://youtu.be/y_IF0Q2C7v4" target="_blank" aria-label="Exercício 12">
+      12
+    </a>
+    <a class="btn-ex" href="https://youtu.be/-goxCtHXV8E" target="_blank" aria-label="Exercício 13">
+      13
+    </a>
+    <a class="btn-ex" href="https://youtu.be/z9I3Nhk24yA" target="_blank" aria-label="Exercício 14">
+      14
+    </a>
+    <a class="btn-ex" href="https://youtu.be/K7vQK_hBCDo" target="_blank" aria-label="Exercício 15">
+      15
+    </a>
+    <a class="btn-ex" href="https://youtu.be/qpC0B2C8MQ8" target="_blank" aria-label="Exercício 16">
+      16
+    </a>
+    <a class="btn-ex" href="https://youtu.be/g0BsPKNwaUM" target="_blank" aria-label="Exercício 17">
+      17
+    </a>
+    <a class="btn-ex" href="https://youtu.be/1HumLnTfvXU" target="_blank" aria-label="Exercício 18">
+      18
+    </a>
+    <a class="btn-ex" href="https://youtu.be/wfVG6kinu2c" target="_blank" aria-label="Exercício 19">
+      19
+    </a>
+    <a class="btn-ex" href="https://youtu.be/wrm_J4h8Ggw" target="_blank" aria-label="Exercício 20">
+      20
+    </a>
+    <a class="btn-ex" href="https://youtu.be/VXvFMeY-aX0" target="_blank" aria-label="Exercício 22">
+      22
+    </a>
+    <a class="btn-ex" href="https://youtu.be/Ui71iI2QDks" target="_blank" aria-label="Exercício 23">
+      23
+    </a>
+    <a class="btn-ex" href="https://youtu.be/tDjR3ZNlu9A" target="_blank" aria-label="Exercício 24">
+      24
+    </a>
+    <a class="btn-ex" href="https://youtu.be/ritGrL-GSIQ" target="_blank" aria-label="Exercício 25">
+      25
+    </a>
+    <a class="btn-ex" href="https://youtu.be/cZaQhH2e_aw" target="_blank" aria-label="Exercício 26">
+      26
+    </a>
+    <a class="btn-ex" href="https://youtu.be/z4RQmtPRZu0" target="_blank" aria-label="Exercício 27">
+      27
+    </a>
+    <a class="btn-ex" href="https://youtu.be/ZbVZAjK5S1A" target="_blank" aria-label="Exercício 28">
+      28
+    </a>
+    <a class="btn-ex" href="https://youtu.be/iHFJ8XT9SU0" target="_blank" aria-label="Exercício 29">
+      29
+    </a>
+    <a class="btn-ex" href="https://youtu.be/ruu3pKCSoqA" target="_blank" aria-label="Exercício 30">
+      30
+    </a>
+    <a class="btn-ex" href="https://youtu.be/5xbHIfNOoyY" target="_blank" aria-label="Exercício 31">
+      31
+    </a>
+    <a class="btn-ex" href="https://youtu.be/WvdhTar2tBM" target="_blank" aria-label="Exercício 32">
+      32
+    </a>
+    <a class="btn-ex" href="https://youtu.be/gg2K_CcQnc0" target="_blank" aria-label="Exercício 33">
+      33
+    </a>
+    <a class="btn-ex" href="https://youtu.be/vtSFdyMziik" target="_blank" aria-label="Exercício 34">
+      34
+    </a>
+    <a class="btn-ex" href="https://youtu.be/16ew83Zqfws" target="_blank" aria-label="Exercício 35">
+      35
+    </a>
+    <a class="btn-ex" href="https://youtu.be/0w6MTLbcnTw" target="_blank" aria-label="Exercício 36">
+      36
+    </a>
+    <a class="btn-ex" href="https://youtu.be/FuZ5ULnYPGo" target="_blank" aria-label="Exercício 37">
+      37
+    </a>
+    <a class="btn-ex" href="https://youtu.be/CB80e3OKnqw" target="_blank" aria-label="Exercício 40">
+      40
+    </a>
+    <a class="btn-ex" href="https://youtu.be/MjaVcDXHndw" target="_blank" aria-label="Exercício 41">
+      41
+    </a>
+    <a class="btn-ex" href="https://youtu.be/vMU2pNagxPU" target="_blank" aria-label="Exercício 42">
+      42
+    </a>
+    <a class="btn-ex" href="https://youtu.be/TQSRqzA2wsI" target="_blank" aria-label="Exercício 44">
+      44
+    </a>
+    <a class="btn-ex" href="https://youtu.be/hMwnpxrcnrI" target="_blank" aria-label="Exercício 46">
+      46
+    </a>
+    <a class="btn-ex" href="https://youtu.be/hMwnpxrcnrI" target="_blank" aria-label="Exercício 47">
+      47
+    </a>
+    <a class="btn-ex" href="https://youtu.be/-bBKzGjz60E" target="_blank" aria-label="Exercício 48">
+      48
+    </a>
+    <a class="btn-ex" href="https://youtu.be/Pe-RHAcIpwQ" target="_blank" aria-label="Exercício 49">
+      49
+    </a>
+    <a class="btn-ex" href="https://youtu.be/N5CdKBx9Hl8" target="_blank" aria-label="Exercício 50">
+      50
+    </a>
+    <a class="btn-ex" href="https://youtu.be/a94R2UpYrX8" target="_blank" aria-label="Exercício 51">
+      51
+    </a>
+    <a class="btn-ex" href="https://youtu.be/gFs8aqOSvpY" target="_blank" aria-label="Exercício 52">
+      52
+    </a>
+    <a class="btn-ex" href="https://youtu.be/vgtELism3vk" target="_blank" aria-label="Exercício 53">
+      53
+    </a>
+    <a class="btn-ex" href="https://youtu.be/EuHPOWxBEOw" target="_blank" aria-label="Exercício 55">
+      55
+    </a>
+    <a class="btn-ex" href="https://youtu.be/WVYV4w__svs" target="_blank" aria-label="Exercício 56">
+      56
+    </a>
+    <a class="btn-ex" href="https://youtu.be/jZb2zhJVODI" target="_blank" aria-label="Exercício 60">
+      60
+    </a>
+    <a class="btn-ex" href="https://youtu.be/bdReqnH3ieo" target="_blank" aria-label="Exercício 65">
+      65
+    </a>
+    <a class="btn-ex" href="https://youtu.be/Od2LBLkcEYQ" target="_blank" aria-label="Exercício 66">
+      66
+    </a>
+    <a class="btn-ex" href="https://youtu.be/siWBm0Sq5YI" target="_blank" aria-label="Exercício 67">
+      67
+    </a>
+    <a class="btn-ex" href="https://youtu.be/ZXzHjhobQA4" target="_blank" aria-label="Exercício 68">
+      68
+    </a>
+    <a class="btn-ex" href="https://youtu.be/kj-oBItUsE0" target="_blank" aria-label="Exercício 69">
+      69
+    </a>
+    <a class="btn-ex" href="https://youtu.be/OzRm__3raPM" target="_blank" aria-label="Exercício 70">
+      70
+    </a>
+  </section>
+  <a class="voltar" href="index.html" title="Voltar à página inicial">&larr; Voltar</a>
+</div>
+<footer>
+  Exercícios Resolvidos do Capítulo 2 do livro Fundamentos de Física - Halliday & Resnick 10ª Edição (Décima Edição)
+</footer>
+</body>
+</html>
