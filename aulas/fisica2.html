@@ -1,0 +1,306 @@
+<!DOCTYPE html>
+<html lang="pt-br">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Física 2 | Aulas</title>
+  <meta name="description" content="Aulas de Física 2: Rotações, Fluidos, Oscilações, Ondas e Termodinâmica. Material didático completo com vídeos e exercícios.">
+  <meta name="keywords" content="física 2, rotações, fluidos, oscilações, ondas, termodinâmica, aulas, UFPR">
+  <link rel="canonical" href="fisica2.html">
+  <!-- Open Graph -->
+  <meta property="og:type" content="website">
+  <meta property="og:title" content="Física 2 | Aulas">
+  <meta property="og:description" content="Aulas de Física 2: Rotações, Fluidos, Oscilações, Ondas e Termodinâmica. Material didático completo com vídeos e exercícios.">
+  <meta property="og:url" content="fisica2.html">
+  <!-- Twitter Card -->
+  <meta name="twitter:card" content="summary">
+  <meta name="twitter:title" content="Física 2 | Aulas">
+  <meta name="twitter:description" content="Aulas de Física 2: Rotações, Fluidos, Oscilações, Ondas e Termodinâmica. Material didático completo com vídeos e exercícios.">
+  
+  <!-- Google tag (gtag.js) -->
+  <script async src="https://www.googletagmanager.com/gtag/js?id=G-83359NB2SY"></script>
+  <script>
+    window.dataLayer = window.dataLayer || [];
+    function gtag(){dataLayer.push(arguments);}
+    gtag('js', new Date());
+    gtag('config', 'G-83359NB2SY');
+  </script>
+
+  <style>
+    @import url('https://fonts.googleapis.com/css2?family=Montserrat:wght@700&family=Roboto:wght@400;500&display=swap');
+    body {
+      font-family: 'Roboto', Arial, sans-serif;
+      margin: 0;
+      background: #fff;
+      color: #222;
+      min-height: 100vh;
+      display: flex;
+      flex-direction: column;
+    }
+    .main-wrapper {
+      flex: 1 0 auto;
+    }
+    h1 {
+      font-family: 'Montserrat', Arial, sans-serif;
+      font-size: 2.8rem;
+      text-align: center;
+      font-weight: 700;
+      margin: 50px 0 0 0;
+      letter-spacing: 1px;
+    }
+    .title-underline {
+      width: 320px;
+      height: 8px;
+      background: #FFCDD2;
+      margin: 18px auto 32px auto;
+      border-radius: 4px;
+    }
+    .aulas-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+      gap: 24px;
+      margin: 36px auto;
+      max-width: 1200px;
+      padding: 0 16px;
+    }
+    .aula-card {
+      background: #fff;
+      border-radius: 12px;
+      box-shadow: 0 4px 16px rgba(0,0,0,0.1);
+      overflow: hidden;
+      transition: all 0.2s ease;
+      text-decoration: none;
+      color: inherit;
+      display: flex;
+      flex-direction: column;
+    }
+    .aula-card:hover {
+      transform: translateY(-4px);
+      box-shadow: 0 6px 24px rgba(0,0,0,0.15);
+    }
+    .aula-thumb {
+      width: 100%;
+      aspect-ratio: 16/9;
+      object-fit: cover;
+    }
+    .aula-content {
+      padding: 20px;
+      display: flex;
+      flex-direction: column;
+      gap: 8px;
+    }
+    .aula-numero {
+      font-family: 'Montserrat', Arial, sans-serif;
+      font-size: 1.2rem;
+      color: #D32F2F;
+      font-weight: 700;
+      margin: 0;
+    }
+    .aula-titulo {
+      font-family: 'Montserrat', Arial, sans-serif;
+      font-size: 1.4rem;
+      color: #222;
+      font-weight: 700;
+      margin: 0;
+      line-height: 1.3;
+    }
+    .aula-desc {
+      font-size: 0.95rem;
+      color: #666;
+      margin: 0;
+      line-height: 1.5;
+      display: -webkit-box;
+      -webkit-line-clamp: 3;
+      -webkit-box-orient: vertical;
+      overflow: hidden;
+    }
+    footer {
+      width: 100%;
+      text-align: center;
+      color: #222;
+      font-size: 1.08rem;
+      padding: 24px 0 19px 0;
+      background: transparent;
+      font-family: 'Roboto', Arial, sans-serif;
+      opacity: 0.85;
+      letter-spacing: .2px;
+    }
+    a.voltar {
+      display: block;
+      margin: 50px auto 0 auto;
+      width: fit-content;
+      text-align: center;
+      font-size: 1.13rem;
+      color: #D32F2F;
+      text-decoration: underline;
+      font-weight: 500;
+      opacity: .88;
+    }
+    a.voltar:hover { 
+      opacity: 1; 
+      color: #B71C1C;
+    }
+    @media (max-width: 600px) {
+      h1 { 
+        font-size: 2rem; 
+        margin-top: 26px;
+      }
+      .title-underline { 
+        width: 200px; 
+        height: 6px; 
+      }
+      .aulas-grid { 
+        gap: 16px; 
+        padding: 0 12px;
+      }
+      .aula-content { 
+        padding: 16px;
+      }
+      .aula-numero {
+        font-size: 1.1rem;
+      }
+      .aula-titulo {
+        font-size: 1.2rem;
+      }
+      .aula-desc {
+        font-size: 0.9rem;
+      }
+    }
+  </style>
+</head>
+<body>
+  <div class="main-wrapper">
+    <h1>Física 2</h1>
+    <div class="title-underline"></div>
+    
+    <div class="aulas-grid">
+      <a href="https://youtu.be/KJhjIFD7OVY" class="aula-card" target="_blank">
+        <img src="https://i.ytimg.com/vi/KJhjIFD7OVY/hqdefault.jpg" alt="Aula 1" class="aula-thumb">
+        <div class="aula-content">
+          <p class="aula-numero">Aula 1</p>
+          <h2 class="aula-titulo">Cinemática de Rotações</h2>
+          <p class="aula-desc">Variáveis de rotação, Posição Angular, Velocidade Angular, Aceleração Angular, Período, Aceleração Centrípeta, Caso Especial da Aceleração Angular Constante.</p>
+        </div>
+      </a>
+      <a href="https://youtu.be/ASZe5M-SOQc" class="aula-card" target="_blank">
+        <img src="https://i.ytimg.com/vi/ASZe5M-SOQc/hqdefault.jpg" alt="Aula 2" class="aula-thumb">
+        <div class="aula-content">
+          <p class="aula-numero">Aula 2</p>
+          <h2 class="aula-titulo">Dinâmica de Rotações</h2>
+          <p class="aula-desc">Energia Cinética para Rotações, Momento de Inércia, Cálculo do Momento de Inércia, Teorema dos Eixos Paralelos.</p>
+        </div>
+      </a>
+      <a href="https://youtu.be/U9bJXIWEAOk" class="aula-card" target="_blank">
+        <img src="https://i.ytimg.com/vi/U9bJXIWEAOk/hqdefault.jpg" alt="Aula 3" class="aula-thumb">
+        <div class="aula-content">
+          <p class="aula-numero">Aula 3</p>
+          <h2 class="aula-titulo">Torque e Segunda Lei de Newton para Rotações</h2>
+          <p class="aula-desc">O que é e como calcular Torque, Segunda Lei de Newton para Rotações, Exercícios do Halliday.</p>
+        </div>
+      </a>
+      <a href="https://youtu.be/-wHxG-7JVvk" class="aula-card" target="_blank">
+        <img src="https://i.ytimg.com/vi/-wHxG-7JVvk/hqdefault.jpg" alt="Aula 4" class="aula-thumb">
+        <div class="aula-content">
+          <p class="aula-numero">Aula 4</p>
+          <h2 class="aula-titulo">Torque e Momento Angular - Parte 1</h2>
+          <p class="aula-desc">Torque na sua forma vetorial, Produto Vetorial, Vetor Torque, 2ª Lei de Newton para Rotações, Momento Angular.</p>
+        </div>
+      </a>
+      <a href="https://youtu.be/haQfpn9JWXs" class="aula-card" target="_blank">
+        <img src="https://i.ytimg.com/vi/haQfpn9JWXs/hqdefault.jpg" alt="Aula 5" class="aula-thumb">
+        <div class="aula-content">
+          <p class="aula-numero">Aula 5</p>
+          <h2 class="aula-titulo">Torque e Momento Angular - Parte 2</h2>
+          <p class="aula-desc">Conservação do Momento Angular, Momento Angular de um Sistema de Partículas, Corpo Rígido Rodando em Relação a um Eixo Fixo.</p>
+        </div>
+      </a>
+      <a href="https://youtu.be/qKoM6Krp1Oo" class="aula-card" target="_blank">
+        <img src="https://i.ytimg.com/vi/qKoM6Krp1Oo/hqdefault.jpg" alt="Aula 6" class="aula-thumb">
+        <div class="aula-content">
+          <p class="aula-numero">Aula 6</p>
+          <h2 class="aula-titulo">Pressão e Densidade</h2>
+          <p class="aula-desc">O que são fluidos, Densidade, Pressão, Pressão com a Profundidade, Exercícios do Halliday.</p>
+        </div>
+      </a>
+      <a href="https://youtu.be/H_kfntqjBmY" class="aula-card" target="_blank">
+        <img src="https://i.ytimg.com/vi/H_kfntqjBmY/hqdefault.jpg" alt="Aula 7" class="aula-thumb">
+        <div class="aula-content">
+          <p class="aula-numero">Aula 7</p>
+          <h2 class="aula-titulo">Empuxo e Equação da Continuidade</h2>
+          <p class="aula-desc">Empuxo, Princípio de Pascal, Introdução Hidrodinâmica, Equação da Continuidade, Introdução Equação de Bernoulli.</p>
+        </div>
+      </a>
+      <a href="https://youtu.be/kIeADMl23lc" class="aula-card" target="_blank">
+        <img src="https://i.ytimg.com/vi/kIeADMl23lc/hqdefault.jpg" alt="Aula 8" class="aula-thumb">
+        <div class="aula-content">
+          <p class="aula-numero">Aula 8</p>
+          <h2 class="aula-titulo">Oscilações e Movimento Harmônico Simples (MHS)</h2>
+          <p class="aula-desc">O que é uma oscilação, Movimento Harmônico Simples, Sistema Massa Mola, Descrição Matemática do MHS.</p>
+        </div>
+      </a>
+      <a href="https://youtu.be/zKlQTlXScIU" class="aula-card" target="_blank">
+        <img src="https://i.ytimg.com/vi/zKlQTlXScIU/hqdefault.jpg" alt="Aula 9" class="aula-thumb">
+        <div class="aula-content">
+          <p class="aula-numero">Aula 9</p>
+          <h2 class="aula-titulo">Oscilações e MHS, Velocidade e Aceleração</h2>
+          <p class="aula-desc">Velocidade no sistema massa mola, Aceleração no sistema massa mola, Relação entre posição, velocidade e aceleração, Energia do sistema massa mola, MHS amortecido, Ressonância.</p>
+        </div>
+      </a>
+      <a href="https://youtu.be/6icSwLz334c" class="aula-card" target="_blank">
+        <img src="https://i.ytimg.com/vi/6icSwLz334c/hqdefault.jpg" alt="Aula 10" class="aula-thumb">
+        <div class="aula-content">
+          <p class="aula-numero">Aula 10</p>
+          <h2 class="aula-titulo">Introdução a Ondas</h2>
+          <p class="aula-desc">O que são ondas, Tipos de ondas, Ondas Transversais e Longitudinais, Formato das Funções de Onda, Ondas Senoidais, Interferência, Ondas Estacionárias.</p>
+        </div>
+      </a>
+      <a href="https://youtu.be/zpuvyOUtq2c" class="aula-card" target="_blank">
+        <img src="https://i.ytimg.com/vi/zpuvyOUtq2c/hqdefault.jpg" alt="Aula 11" class="aula-thumb">
+        <div class="aula-content">
+          <p class="aula-numero">Aula 11</p>
+          <h2 class="aula-titulo">Ondas Sonoras (Som), Decibel, Velocidade do Som</h2>
+          <p class="aula-desc">O que é o Som, Velocidade do Som, Frequência do Som, Intensidade do Som, Escala Decibel, Efeito Doppler.</p>
+        </div>
+      </a>
+      <a href="https://youtu.be/Ivcc7Z7r5E8" class="aula-card" target="_blank">
+        <img src="https://i.ytimg.com/vi/Ivcc7Z7r5E8/hqdefault.jpg" alt="Aula 12" class="aula-thumb">
+        <div class="aula-content">
+          <p class="aula-numero">Aula 12</p>
+          <h2 class="aula-titulo">Temperatura e Dilatação Térmica</h2>
+          <p class="aula-desc">Equilíbrio Térmico, Lei 0 da Termodinâmica, Escala Kelvin, Escala Farenheit e Escala Celsius, Expansão Térmica Linear e Volumétrica.</p>
+        </div>
+      </a>
+      <a href="https://youtu.be/-wNlnxFCsso" class="aula-card" target="_blank">
+        <img src="https://i.ytimg.com/vi/-wNlnxFCsso/hqdefault.jpg" alt="Aula 13" class="aula-thumb">
+        <div class="aula-content">
+          <p class="aula-numero">Aula 13</p>
+          <h2 class="aula-titulo">Absorção e Transferência de Calor</h2>
+          <p class="aula-desc">Absorção e Transferência de Calor, Calor específico, Calor Latente, Condução.</p>
+        </div>
+      </a>
+      <a href="https://youtu.be/Q-uRFzcejVo" class="aula-card" target="_blank">
+        <img src="https://i.ytimg.com/vi/Q-uRFzcejVo/hqdefault.jpg" alt="Aula 14" class="aula-thumb">
+        <div class="aula-content">
+          <p class="aula-numero">Aula 14</p>
+          <h2 class="aula-titulo">Diagrama PV, 1ª Lei da Termodinâmica</h2>
+          <p class="aula-desc">Diagrama PV, Trabalho em um processo termodinâmico e a primeira lei da termodinâmica.</p>
+        </div>
+      </a>
+      <a href="https://youtu.be/jd8OsQjcWQ4" class="aula-card" target="_blank">
+        <img src="https://i.ytimg.com/vi/jd8OsQjcWQ4/hqdefault.jpg" alt="Aula 15" class="aula-thumb">
+        <div class="aula-content">
+          <p class="aula-numero">Aula 15</p>
+          <h2 class="aula-titulo">Motores Térmicos, Ciclo de Carnot e Entropia</h2>
+          <p class="aula-desc">Motores Térmicos, Eficiência, Ciclo de Carnot e Entropia.</p>
+        </div>
+      </a>
+    </div>
+
+    <a href="index.html" class="voltar">Voltar para a página de Física</a>
+  </div>
+
+  <footer>
+    <p>© 2024 DougFísica. Todos os direitos reservados.</p>
+  </footer>
+</body>
+</html> 

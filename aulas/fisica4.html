@@ -1,0 +1,314 @@
+<!DOCTYPE html>
+<html lang="pt-br">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Física 4 | Aulas</title>
+  <meta name="description" content="Aulas de Física 4: Ondas Eletromagnéticas, Óptica e Relatividade. Material didático completo com vídeos e exercícios.">
+  <meta name="keywords" content="física 4, ondas eletromagnéticas, óptica, relatividade, física moderna, aulas, UFPR">
+  <link rel="canonical" href="fisica4.html">
+  <!-- Open Graph -->
+  <meta property="og:type" content="website">
+  <meta property="og:title" content="Física 4 | Aulas">
+  <meta property="og:description" content="Aulas de Física 4: Ondas Eletromagnéticas, Óptica e Relatividade. Material didático completo com vídeos e exercícios.">
+  <meta property="og:url" content="fisica4.html">
+  <!-- Twitter Card -->
+  <meta name="twitter:card" content="summary">
+  <meta name="twitter:title" content="Física 4 | Aulas">
+  <meta name="twitter:description" content="Aulas de Física 4: Ondas Eletromagnéticas, Óptica e Relatividade. Material didático completo com vídeos e exercícios.">
+  
+  <!-- Google tag (gtag.js) -->
+  <script async src="https://www.googletagmanager.com/gtag/js?id=G-83359NB2SY"></script>
+  <script>
+    window.dataLayer = window.dataLayer || [];
+    function gtag(){dataLayer.push(arguments);}
+    gtag('js', new Date());
+    gtag('config', 'G-83359NB2SY');
+  </script>
+
+  <style>
+    @import url('https://fonts.googleapis.com/css2?family=Montserrat:wght@700&family=Roboto:wght@400;500&display=swap');
+    body {
+      font-family: 'Roboto', Arial, sans-serif;
+      margin: 0;
+      background: #fff;
+      color: #222;
+      min-height: 100vh;
+      display: flex;
+      flex-direction: column;
+    }
+    .main-wrapper {
+      flex: 1 0 auto;
+    }
+    h1 {
+      font-family: 'Montserrat', Arial, sans-serif;
+      font-size: 2.8rem;
+      text-align: center;
+      font-weight: 700;
+      margin: 50px 0 0 0;
+      letter-spacing: 1px;
+    }
+    .title-underline {
+      width: 320px;
+      height: 8px;
+      background: #FFCDD2;
+      margin: 18px auto 32px auto;
+      border-radius: 4px;
+    }
+    .aulas-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+      gap: 24px;
+      margin: 36px auto;
+      max-width: 1200px;
+      padding: 0 16px;
+    }
+    .aula-card {
+      background: #fff;
+      border-radius: 12px;
+      box-shadow: 0 4px 16px rgba(0,0,0,0.1);
+      overflow: hidden;
+      transition: all 0.2s ease;
+      text-decoration: none;
+      color: inherit;
+      display: flex;
+      flex-direction: column;
+    }
+    .aula-card:hover {
+      transform: translateY(-4px);
+      box-shadow: 0 6px 24px rgba(0,0,0,0.15);
+    }
+    .aula-thumb {
+      width: 100%;
+      aspect-ratio: 16/9;
+      object-fit: cover;
+    }
+    .aula-content {
+      padding: 20px;
+      display: flex;
+      flex-direction: column;
+      gap: 8px;
+    }
+    .aula-numero {
+      font-family: 'Montserrat', Arial, sans-serif;
+      font-size: 1.2rem;
+      color: #D32F2F;
+      font-weight: 700;
+      margin: 0;
+    }
+    .aula-titulo {
+      font-family: 'Montserrat', Arial, sans-serif;
+      font-size: 1.4rem;
+      color: #222;
+      font-weight: 700;
+      margin: 0;
+      line-height: 1.3;
+    }
+    .aula-desc {
+      font-size: 0.95rem;
+      color: #666;
+      margin: 0;
+      line-height: 1.5;
+      display: -webkit-box;
+      -webkit-line-clamp: 3;
+      -webkit-box-orient: vertical;
+      overflow: hidden;
+    }
+    footer {
+      width: 100%;
+      text-align: center;
+      color: #222;
+      font-size: 1.08rem;
+      padding: 24px 0 19px 0;
+      background: transparent;
+      font-family: 'Roboto', Arial, sans-serif;
+      opacity: 0.85;
+      letter-spacing: .2px;
+    }
+    a.voltar {
+      display: block;
+      margin: 50px auto 0 auto;
+      width: fit-content;
+      text-align: center;
+      font-size: 1.13rem;
+      color: #D32F2F;
+      text-decoration: underline;
+      font-weight: 500;
+      opacity: .88;
+    }
+    a.voltar:hover { 
+      opacity: 1; 
+      color: #B71C1C;
+    }
+    @media (max-width: 600px) {
+      h1 { 
+        font-size: 2rem; 
+        margin-top: 26px;
+      }
+      .title-underline { 
+        width: 200px; 
+        height: 6px; 
+      }
+      .aulas-grid { 
+        gap: 16px; 
+        padding: 0 12px;
+      }
+      .aula-content { 
+        padding: 16px;
+      }
+      .aula-numero {
+        font-size: 1.1rem;
+      }
+      .aula-titulo {
+        font-size: 1.2rem;
+      }
+      .aula-desc {
+        font-size: 0.9rem;
+      }
+    }
+  </style>
+</head>
+<body>
+  <div class="main-wrapper">
+    <h1>Física 4</h1>
+    <div class="title-underline"></div>
+    
+    <div class="aulas-grid">
+      <a href="https://youtu.be/4EkWR3bBLy0" class="aula-card" target="_blank">
+        <img src="https://i.ytimg.com/vi/4EkWR3bBLy0/hqdefault.jpg" alt="Aula 1" class="aula-thumb">
+        <div class="aula-content">
+          <p class="aula-numero">Aula 1</p>
+          <h2 class="aula-titulo">O que são Ondas Eletromagnéticas</h2>
+          <p class="aula-desc">Introdução sobre ondas eletromagnéticas, tipos de ondas eletromagnéticas, velocidade de uma onda eletromagnética.</p>
+        </div>
+      </a>
+      <a href="https://youtu.be/4rzfzrAsxo4" class="aula-card" target="_blank">
+        <img src="https://i.ytimg.com/vi/4rzfzrAsxo4/hqdefault.jpg" alt="Aula 2" class="aula-thumb">
+        <div class="aula-content">
+          <p class="aula-numero">Aula 2</p>
+          <h2 class="aula-titulo">Ondas Eletromagnéticas (Descrição Matemática)</h2>
+          <p class="aula-desc">Descrição matemática de uma onda eletromagnética, vetor de Poynting, intensidade de uma onda eletromagnética, fontes isotrópicas, pressão da radiação.</p>
+        </div>
+      </a>
+      <a href="https://youtu.be/blbfnG3Boss" class="aula-card" target="_blank">
+        <img src="https://i.ytimg.com/vi/blbfnG3Boss/hqdefault.jpg" alt="Aula 3" class="aula-thumb">
+        <div class="aula-content">
+          <p class="aula-numero">Aula 3</p>
+          <h2 class="aula-titulo">Polarização</h2>
+          <p class="aula-desc">O que é polarização, como calcular a intensidade de um feixe que passa por um polarizador.</p>
+        </div>
+      </a>
+      <a href="https://youtu.be/kE8Vx9w3y8E" class="aula-card" target="_blank">
+        <img src="https://i.ytimg.com/vi/kE8Vx9w3y8E/hqdefault.jpg" alt="Aula 4" class="aula-thumb">
+        <div class="aula-content">
+          <p class="aula-numero">Aula 4</p>
+          <h2 class="aula-titulo">Reflexão e Refração</h2>
+          <p class="aula-desc">Óptica geométrica, reflexão, refração, reflexão interna total, dispersão.</p>
+        </div>
+      </a>
+      <a href="https://youtu.be/b30j5ED58AU" class="aula-card" target="_blank">
+        <img src="https://i.ytimg.com/vi/b30j5ED58AU/hqdefault.jpg" alt="Aula 5" class="aula-thumb">
+        <div class="aula-content">
+          <p class="aula-numero">Aula 5</p>
+          <h2 class="aula-titulo">Espelhos Esféricos</h2>
+          <p class="aula-desc">Formação de imagens, espelhos planos, espelhos esféricos, espelhos côncavos, espelhos convexos.</p>
+        </div>
+      </a>
+      <a href="https://youtu.be/c6Tj9Pg7iQQ" class="aula-card" target="_blank">
+        <img src="https://i.ytimg.com/vi/c6Tj9Pg7iQQ/hqdefault.jpg" alt="Aula 6" class="aula-thumb">
+        <div class="aula-content">
+          <p class="aula-numero">Aula 6</p>
+          <h2 class="aula-titulo">Refração em Interfaces Esféricas</h2>
+          <p class="aula-desc">Interfaces esféricas, interfaces planas.</p>
+        </div>
+      </a>
+      <a href="https://youtu.be/ny8lHZwHSVQ" class="aula-card" target="_blank">
+        <img src="https://i.ytimg.com/vi/ny8lHZwHSVQ/hqdefault.jpg" alt="Aula 7" class="aula-thumb">
+        <div class="aula-content">
+          <p class="aula-numero">Aula 7</p>
+          <h2 class="aula-titulo">Lentes Delgadas</h2>
+          <p class="aula-desc">Lentes convergentes, lentes divergentes, problemas de visão, equação do fabricante de lentes, formando imagens.</p>
+        </div>
+      </a>
+      <a href="https://youtu.be/RVHEmwpFGyc" class="aula-card" target="_blank">
+        <img src="https://i.ytimg.com/vi/RVHEmwpFGyc/hqdefault.jpg" alt="Aula 8" class="aula-thumb">
+        <div class="aula-content">
+          <p class="aula-numero">Aula 8</p>
+          <h2 class="aula-titulo">Interferência (Parte 1)</h2>
+          <p class="aula-desc">Interferência de ondas, mudança de fase por diferença de percurso, experimento da dupla fenda.</p>
+        </div>
+      </a>
+      <a href="https://youtu.be/0BfGcAyEEkE" class="aula-card" target="_blank">
+        <img src="https://i.ytimg.com/vi/0BfGcAyEEkE/hqdefault.jpg" alt="Aula 9" class="aula-thumb">
+        <div class="aula-content">
+          <p class="aula-numero">Aula 9</p>
+          <h2 class="aula-titulo">Interferência (Parte 2)</h2>
+          <p class="aula-desc">Mudança de fase por diferença de índice de refração, mudança de fase por reflexão.</p>
+        </div>
+      </a>
+      <a href="https://youtu.be/U2B1Rs6-1mo" class="aula-card" target="_blank">
+        <img src="https://i.ytimg.com/vi/U2B1Rs6-1mo/hqdefault.jpg" alt="Aula 10" class="aula-thumb">
+        <div class="aula-content">
+          <p class="aula-numero">Aula 10</p>
+          <h2 class="aula-titulo">Difração (Parte 1)</h2>
+          <p class="aula-desc">O que é difração, difração por uma fenda.</p>
+        </div>
+      </a>
+      <a href="https://youtu.be/BdXuJT326cE" class="aula-card" target="_blank">
+        <img src="https://i.ytimg.com/vi/BdXuJT326cE/hqdefault.jpg" alt="Aula 11" class="aula-thumb">
+        <div class="aula-content">
+          <p class="aula-numero">Aula 11</p>
+          <h2 class="aula-titulo">Difração (Parte 2)</h2>
+          <p class="aula-desc">O que é resolução, critério de Rayleigh.</p>
+        </div>
+      </a>
+      <a href="https://youtu.be/e6uwVEsEkug" class="aula-card" target="_blank">
+        <img src="https://i.ytimg.com/vi/e6uwVEsEkug/hqdefault.jpg" alt="Aula 12" class="aula-thumb">
+        <div class="aula-content">
+          <p class="aula-numero">Aula 12</p>
+          <h2 class="aula-titulo">Relatividade (Parte 1)</h2>
+          <p class="aula-desc">Histórico da relatividade, Galileu Galilei, Isaac Newton, Maxwell, Experimento de Michelson-Morley, Albert Einstein.</p>
+        </div>
+      </a>
+      <a href="https://youtu.be/kr26NKUwiQ4" class="aula-card" target="_blank">
+        <img src="https://i.ytimg.com/vi/kr26NKUwiQ4/hqdefault.jpg" alt="Aula 13" class="aula-thumb">
+        <div class="aula-content">
+          <p class="aula-numero">Aula 13</p>
+          <h2 class="aula-titulo">Relatividade (Parte 2)</h2>
+          <p class="aula-desc">Dilatação do tempo, equações de dilatação do tempo, demonstração da dilatação do tempo.</p>
+        </div>
+      </a>
+      <a href="https://youtu.be/LuyBnLGMmWY" class="aula-card" target="_blank">
+        <img src="https://i.ytimg.com/vi/LuyBnLGMmWY/hqdefault.jpg" alt="Aula 14" class="aula-thumb">
+        <div class="aula-content">
+          <p class="aula-numero">Aula 14</p>
+          <h2 class="aula-titulo">Relatividade (Parte 3)</h2>
+          <p class="aula-desc">Contração do espaço, equações de contração do espaço, demonstração da contração do espaço.</p>
+        </div>
+      </a>
+      <a href="https://youtu.be/67OL9mHgYrk" class="aula-card" target="_blank">
+        <img src="https://i.ytimg.com/vi/67OL9mHgYrk/hqdefault.jpg" alt="Aula 15" class="aula-thumb">
+        <div class="aula-content">
+          <p class="aula-numero">Aula 15</p>
+          <h2 class="aula-titulo">Relatividade (Parte 4)</h2>
+          <p class="aula-desc">Quebra da simultaneidade, transformações de Lorentz, soma de velocidades relativísticas.</p>
+        </div>
+      </a>
+      <a href="https://youtu.be/wgCwSiyKdeQ" class="aula-card" target="_blank">
+        <img src="https://i.ytimg.com/vi/wgCwSiyKdeQ/hqdefault.jpg" alt="Aula 16" class="aula-thumb">
+        <div class="aula-content">
+          <p class="aula-numero">Aula 16</p>
+          <h2 class="aula-titulo">Relatividade (Parte 5)</h2>
+          <p class="aula-desc">Efeito Doppler relativístico, equivalência massa e energia (E=mc²).</p>
+        </div>
+      </a>
+    </div>
+
+    <a href="index.html" class="voltar">Voltar para a página de Física</a>
+  </div>
+
+  <footer>
+    <p>© 2024 DougFísica. Todos os direitos reservados.</p>
+  </footer>
+</body>
+</html> 

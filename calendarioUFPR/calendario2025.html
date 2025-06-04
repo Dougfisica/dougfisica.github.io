@@ -1,0 +1,416 @@
+
+
+<div id="ufprcal" style="max-width:600px;margin:0 auto;font-family:sans-serif;background:#f6f9fc;">
+  <div style="text-align:center;padding:12px 4px 6px 4px;color:#02539a;">
+<h1 style="margin: 2px 0 10px 0; font-size: 1.6rem; font-weight: 700; color: #02539a;">
+  Calendário UFPR 2025
+</h1>
+    <!-- Botões de Aluno/Professor -->
+    <div style="text-align:center; margin-bottom: 8px;">
+      <button id="ufprcal-btn-aluno" class="ufprcal-user ufprcal-user-active" onclick="ufprcalSetUser('aluno')" style="background:#2196f3;color:#fff;border:none;padding:9px 18px;margin:4px 2px 6px 2px;font-size:1rem;border-radius:7px;cursor:pointer;">Aluno</button>
+      <button id="ufprcal-btn-prof" class="ufprcal-user" onclick="ufprcalSetUser('professor')" style="background:#fff;color:#2196f3;border:1.5px solid #2196f3;padding:9px 18px;margin:4px 2px 6px 2px;font-size:1rem;border-radius:7px;cursor:pointer;">Professor</button>
+    </div>
+    <!-- Título -->
+
+    <!-- Botões de semestre -->
+<div style="display:flex; justify-content:center; gap:7px; margin-bottom: 10px;">
+  <button id="sem1" class="ufprcal-sem ufprcal-sem-active"
+    data-sem="1" onclick="ufprcalSetSemester(1)"
+    style="flex:1 1 120px; min-width:100px; max-width:170px; padding:8px 6px;
+    background:#2196f3; color:#fff; border:none; font-size:0.99rem;
+    border-radius:7px; cursor:pointer;">1º SEMESTRE</button>
+  <button id="sem2" class="ufprcal-sem"
+    data-sem="2" onclick="ufprcalSetSemester(2)"
+    style="flex:1 1 120px; min-width:100px; max-width:170px; padding:8px 6px;
+    background:#fff; color:#2196f3; border:1.5px solid #2196f3;
+    font-size:0.99rem; border-radius:7px; cursor:pointer;">2º SEMESTRE</button>
+</div>
+
+    <input id="ufprcal-search" type="text" placeholder="Buscar evento..." style="width:90%;max-width:260px;font-size:1rem;padding:8px 8px;margin:4px auto 8px auto;border-radius:7px;border:1.5px solid #2196f3;outline:none;"/>
+    <!-- Filtros de tipo -->
+    <div style="display:flex;flex-wrap:wrap;justify-content:center;gap:6px;margin:4px 0 12px 0;">
+      <button id="filt-all" class="ufprcal-filter ufprcal-filter-active" data-type="all" onclick="ufprcalSetFilter('all')" style="padding:8px 12px;border:none;background:#2196f3;color:#fff;border-radius:7px;cursor:pointer;font-size:.97rem;">Todos</button>
+      <button id="filt-iniciofim" class="ufprcal-filter" data-type="iniciofim" onclick="ufprcalSetFilter('iniciofim')" style="padding:8px 12px;border:1px solid #2196f3;background:#e3f1fc;color:#02539a;border-radius:7px;cursor:pointer;font-size:.97rem;">Início/Fim</button>
+      <button id="filt-exames" class="ufprcal-filter" data-type="exames" onclick="ufprcalSetFilter('exames')" style="padding:8px 12px;border:1px solid #2196f3;background:#e3f1fc;color:#02539a;border-radius:7px;cursor:pointer;font-size:.97rem;">Exames</button>
+      <button id="filt-feriado" class="ufprcal-filter" data-type="feriado" onclick="ufprcalSetFilter('feriado')" style="padding:8px 12px;border:1px solid #2196f3;background:#e3f1fc;color:#02539a;border-radius:7px;cursor:pointer;font-size:.97rem;">Feriados</button>
+      <button id="filt-matricula" class="ufprcal-filter" data-type="matricula" onclick="ufprcalSetFilter('matricula')" style="padding:8px 12px;border:1px solid #2196f3;background:#e3f1fc;color:#02539a;border-radius:7px;cursor:pointer;font-size:.97rem;">Matrícula</button>
+      <button id="filt-nota" class="ufprcal-filter" data-type="nota" onclick="ufprcalSetFilter('nota')" style="padding:8px 12px;border:1px solid #2196f3;background:#e3f1fc;color:#02539a;border-radius:7px;cursor:pointer;font-size:.97rem;">Notas</button>
+      <button id="filt-trancamento" class="ufprcal-filter" data-type="trancamento" onclick="ufprcalSetFilter('trancamento')" style="padding:8px 12px;border:1px solid #2196f3;background:#e3f1fc;color:#02539a;border-radius:7px;cursor:pointer;font-size:.97rem;">Trancamento</button>
+      <button id="filt-evento" class="ufprcal-filter" data-type="evento" onclick="ufprcalSetFilter('evento')" style="padding:8px 12px;border:1px solid #2196f3;background:#e3f1fc;color:#02539a;border-radius:7px;cursor:pointer;font-size:.97rem;">Eventos</button>
+      <button id="filt-prazo" class="ufprcal-filter" data-type="prazo" onclick="ufprcalSetFilter('prazo')" style="padding:8px 12px;border:1px solid #2196f3;background:#e3f1fc;color:#02539a;border-radius:7px;cursor:pointer;font-size:.97rem;">Prazos</button>
+    </div>
+  </div>
+  <div id="ufprcal-main" style="padding:3px 2vw 18px 2vw;"></div>
+  <style>
+    /* Apenas para garantir visualização dos botões ativos */
+    .ufprcal-user-active {
+      background: #2196f3 !important;
+      color: #fff !important;
+      border: none !important;
+    }
+  </style>
+  <script>
+function getDiaSemana(dataStr) {
+  const dias = ['domingo', 'segunda', 'terça', 'quarta', 'quinta', 'sexta', 'sábado'];
+  const [ano, mes, dia] = dataStr.split('-').map(Number);
+  const dt = new Date(ano, mes - 1, dia);
+  return dias[dt.getDay()];
+}
+    // ---- Configuração rápida para Google Sites (com onclick) ----
+    const ufprcalEvents=[
+  {date:'2024-12-09', title:'Prazo final para mudança de habilitação', desc:'Coordenações comunicam à COPAP.', type:'prazo', semester:1, target:'professor'},
+  {date:'2024-12-09', title:'Destrancamento automático de curso', desc:'Discentes que completaram o prazo de trancamento.', type:'trancamento', semester:1, target:'aluno'},
+  {date:'2024-12-13', title:'Prazo final para devolução de oferta de turmas', desc:'Departamentos devolvem às Coordenações.', type:'matricula', semester:1, target:'professor'},
+  {date:'2024-12-14', title:'Feriado em Toledo', desc:'Aniversário do município.', type:'feriado', semester:1, target:'ambos'},
+  {date:'2024-12-14', title:'Feriado em Jandaia do Sul', desc:'Aniversário do município.', type:'feriado', semester:1, target:'ambos'},
+  {date:'2024-12-20', title:'Feriado em Pontal do Paraná', desc:'Aniversário do município.', type:'feriado', semester:1, target:'ambos'},
+  {date:'2024-12-25', title:'Feriado: Natal', desc:'Todos os campi.', type:'feriado', semester:1, target:'ambos'},
+  {date:'2024-12-31', title:'Prazo final para lançamento de notas e encerramento das turmas (15 semanas)', desc:'Turmas de 15 semanas.', type:'nota', semester:1, target:'professor'},
+
+  // JANEIRO 2025
+  {date:'2025-01-01', title:'Feriado: Confraternização Universal', desc:'Todos os campi.', type:'feriado', semester:1, target:'ambos'},
+  {date:'2025-01-06', title:'Início do período para dispensa de pré-requisito/correquisito', desc:'Até 14/mar.', type:'prazo', semester:1, target:'aluno'},
+  {date:'2025-01-06', title:'Início do destrancamento antecipado de curso (1º semestre)', desc:'Até 17/mar.', type:'trancamento', semester:1, target:'aluno'},
+  {date:'2025-01-06', title:'Início do prazo para colegiado deliberar sobre dispensa de pré-requisito/correquisito', desc:'Até 21/mar.', type:'prazo', semester:1, target:'professor'},
+  {date:'2025-01-22', title:'Feriado em Palotina', desc:'Padroeiro do município.', type:'feriado', semester:1, target:'ambos'},
+
+  // FEVEREIRO 2025
+  {date:'2025-02-10', title:'Prazo final para disponibilização das turmas para matrícula', desc:'Coordenação.', type:'matricula', semester:1, target:'professor'},
+  {date:'2025-02-17', title:'Prazo final para lançamento de notas (18 semanas)', desc:'Cursos de 18 semanas.', type:'nota', semester:1, target:'professor'},
+  {date:'2025-02-18', title:'Processamento da oferta de turmas', desc:'De 18 a 20/fev.', type:'matricula', semester:1, target:'ambos'},
+  {date:'2025-02-21', title:'Início da solicitação de matrícula', desc:'De 21 a 25/fev.', type:'matricula', semester:1, target:'aluno'},
+  {date:'2025-02-21', title:'Início do período de avaliação de cursos e disciplinas', desc:'De 21/fev a 20/mar.', type:'evento', semester:1, target:'ambos'},
+
+  // MARÇO 2025
+  {date:'2025-03-03', title:'Feriado: Carnaval', desc:'De 3 a 5 de março.', type:'feriado', semester:1, target:'ambos'},
+  {date:'2025-03-06', title:'Processamento dos ajustes on-line de matrícula', desc:'', type:'matricula', semester:1, target:'ambos'},
+  {date:'2025-03-07', title:'Início do período de solicitação de ajuste de matrícula na Coordenação', desc:'Até 19/mar.', type:'matricula', semester:1, target:'aluno'},
+  {date:'2025-03-10', title:'Início do período letivo 2025/1', desc:'Início do semestre.', type:'iniciofim', semester:1, target:'ambos'},
+  {date:'2025-03-10', title:'Semana de recepção de discentes', desc:'De 10 a 14/mar.', type:'evento', semester:1, target:'ambos'},
+  {date:'2025-03-17', title:'Prazo final para destrancamento antecipado de curso', desc:'Para o primeiro semestre.', type:'trancamento', semester:1, target:'aluno'},
+  {date:'2025-03-17', title:'Período para matrícula em disciplina eletiva/isolada', desc:'17 e 18/mar.', type:'matricula', semester:1, target:'aluno'},
+  {date:'2025-03-19', title:'Prazo final para solicitação de ajuste de matrícula na Coordenação', desc:'', type:'matricula', semester:1, target:'aluno'},
+  {date:'2025-03-19', title:'Feriado em Pontal do Paraná', desc:'Padroeiro do município.', type:'feriado', semester:1, target:'ambos'},
+  {date:'2025-03-21', title:'Prazo final para solicitação de exames de adiantamento de conhecimento', desc:'', type:'prazo', semester:1, target:'aluno'},
+  {date:'2025-03-24', title:'Prazo final para a Coordenação realizar o ajuste de matrícula', desc:'', type:'matricula', semester:1, target:'professor'},
+  {date:'2025-03-24', title:'Início do período de trancamento de curso semestral com matrícula', desc:'De 24/mar a 06/mai.', type:'trancamento', semester:1, target:'aluno'},
+  {date:'2025-03-24', title:'Início do período de cancelamento de matrícula em disciplina semestral', desc:'De 24/mar a 06/mai.', type:'trancamento', semester:1, target:'aluno'},
+  {date:'2025-03-24', title:'Início do período de solicitação de mudança de habilitação (2º semestre)', desc:'De 24/mar a 02/jun.', type:'prazo', semester:1, target:'aluno'},
+
+  // ABRIL 2025
+  {date:'2025-04-04', title:'Prazo final para registro de trancamento de curso sem matrícula', desc:'', type:'trancamento', semester:1, target:'professor'}, // Coordenação registra
+  {date:'2025-04-18', title:'Feriado: Sexta-feira Santa', desc:'', type:'feriado', semester:1, target:'ambos'},
+  {date:'2025-04-21', title:'Feriado: Tiradentes', desc:'', type:'feriado', semester:1, target:'ambos'},
+  {date:'2025-04-22', title:'Prazo final para solicitar correções no histórico escolar', desc:'Ano letivo 2024.', type:'prazo', semester:1, target:'aluno'},
+
+  // MAIO 2025
+  {date:'2025-05-01', title:'Feriado: Dia do Trabalho', desc:'', type:'feriado', semester:1, target:'ambos'},
+  {date:'2025-05-05', title:'Início da oferta de turmas para o 2º semestre', desc:'De 5/mai a 24/jun.', type:'matricula', semester:1, target:'professor'},
+  {date:'2025-05-06', title:'Prazo final para cancelamento de matrícula em disciplina semestral', desc:'', type:'trancamento', semester:1, target:'aluno'},
+  {date:'2025-05-06', title:'Prazo final para trancamento de curso semestral com matrícula', desc:'', type:'trancamento', semester:1, target:'aluno'},
+  {date:'2025-05-12', title:'Inativação das turmas sem matrícula', desc:'', type:'evento', semester:1, target:'professor'}, // Impacta planejamento do departamento/coordenação
+  {date:'2025-05-26', title:'Prazo final para lançamento de equivalência de disciplinas', desc:'Inclui análise pelo colegiado.', type:'nota', semester:1, target:'professor'},
+
+  // JUNHO 2025
+  {date:'2025-06-02', title:'Prazo final para solicitação de mudança de habilitação (2º semestre)', desc:'', type:'prazo', semester:1, target:'aluno'},
+  {date:'2025-05-22', title:'Universo UFPR', desc:'De 22 a 25/maio.', type:'evento', semester:1, target:'ambos'},
+  {date:'2025-06-06', title:'Prazo final para exame de aproveitamento de conhecimento', desc:'', type:'prazo', semester:1, target:'aluno'}, // Prazo para o aluno realizar
+  {date:'2025-06-06', title:'Prazo final para solicitação de permanência em curso 2025/2', desc:'', type:'prazo', semester:1, target:'aluno'},
+  {date:'2025-06-09', title:'Início dos exames de aproveitamento de conhecimento', desc:'De 9/jun a 02/jul.', type:'evento', semester:1, target:'ambos'}, // Aluno faz, professor aplica
+  {date:'2025-06-12', title:'Feriado em Matinhos', desc:'Aniversário do município.', type:'feriado', semester:1, target:'ambos'},
+  {date:'2025-06-19', title:'Feriado: Corpus Christi', desc:'', type:'feriado', semester:1, target:'ambos'},
+  {date:'2025-06-23', title:'Início do lançamento de notas e frequência', desc:'De 23/jun a 19/jul.', type:'nota', semester:1, target:'professor'},
+  {date:'2025-06-24', title:'Prazo final de oferta de turmas (2º semestre)', desc:'Coordenação para Departamentos.', type:'matricula', semester:1, target:'professor'},
+  {date:'2025-06-29', title:'Feriado em Matinhos', desc:'Padroeiro do município.', type:'feriado', semester:1, target:'ambos'},
+
+  // JULHO 2025
+  {date:'2025-07-01', title:'Prazo final para correções de matrícula (2025/1 e anuais)', desc:'Motivos administrativos.', type:'matricula', semester:1, target:'professor'}, // Correção administrativa
+  {date:'2025-07-02', title:'Fim do período letivo 2025/1 (15 semanas)', desc:'', type:'iniciofim', semester:1, target:'ambos'},
+  {date:'2025-07-07', title:'Destrancamento automático de curso', desc:'Discentes que completaram um ano de trancamento.', type:'trancamento', semester:1, target:'aluno'},
+  {date:'2025-07-07', title:'Exames Primeiro Semestre (15 semanas)', desc:'De 7 a 12/jul.', type:'exames', semester:1, target:'ambos'}, // Aluno faz, professor aplica
+  {date:'2025-07-08', title:'Prazo final para devolução de oferta de turmas (2º semestre)', desc:'', type:'matricula', semester:1, target:'professor'},
+  {date:'2025-07-12', title:'Fim do período letivo 2025/1 (18 semanas)', desc:'', type:'iniciofim', semester:1, target:'ambos'},
+  {date:'2025-07-12', title:'Fim do período letivo do Curso Técnico de Petróleo e Gás', desc:'', type:'iniciofim', semester:1, target:'professor'},
+  {date:'2025-07-14', title:'Exames Primeiro Semestre (18 semanas)', desc:'De 14 a 19/jul.', type:'exames', semester:1, target:'professor'}, // Aluno faz, professor aplica (Corrigido 'Exames' para 'exames')
+
+  {date:'2025-07-24', title:'Solicitação de Matrícula em Disciplinas (2º semestre)', desc:'De 24 a 27/jul', type:'matricula', semester:2, target:'ambos'},
+  // SEGUNDO SEMESTRE (AGO-DEZ)
+  // AGOSTO 2025
+  {date:'2025-08-01', title:'Processamento dos ajustes on-line de matrícula', desc:'', type:'matricula', semester:2, target:'ambos'},
+  {date:'2025-08-02', title:'Início do ajuste de matrícula na Coordenação', desc:'De 2 a 13/ago.', type:'matricula', semester:2, target:'aluno'}, // Aluno solicita, coordenação ajusta
+  {date:'2025-08-04', title:'Início do período letivo 2025/2', desc:'', type:'iniciofim', semester:2, target:'ambos'},
+  {date:'2025-08-04', title:'Semana de recepção de discentes', desc:'De 4 a 8/ago.', type:'evento', semester:2, target:'ambos'},
+  {date:'2025-08-08', title:'Prazo final para cancelamento de matrícula em disciplina anual', desc:'', type:'trancamento', semester:2, target:'professor'},
+  {date:'2025-08-08', title:'Prazo final para trancamento de curso anual com matrícula', desc:'', type:'trancamento', semester:2, target:'professor'},
+  {date:'2025-08-11', title:'Prazo final para destrancamento antecipado de curso', desc:'Para o segundo semestre.', type:'trancamento', semester:2, target:'professor'},
+  {date:'2025-08-12', title:'Término do período letivo para o Curso Técnico de Petróleo e Gás', desc:'', type:'iniciofim', semester:2, target:'professor'},
+  {date:'2025-08-15', title:'Prazo final para solicitação de trancamento de curso sem matrícula', desc:'', type:'trancamento', semester:2, target:'aluno'},
+  {date:'2025-08-18', title:'Prazo final para solicitação de equivalência de disciplinas', desc:'', type:'prazo', semester:2, target:'aluno'},
+
+  // SETEMBRO 2025
+  {date:'2025-09-05', title:'Prazo final para colegiado deliberar sobre adiantamento de conhecimento', desc:'', type:'prazo', semester:2, target:'professor'},
+  {date:'2025-09-07', title:'Feriado: Independência do Brasil', desc:'', type:'feriado', semester:2, target:'ambos'},
+  {date:'2025-09-08', title:'Feriado em Curitiba', desc:'Padroeira do município.', type:'feriado', semester:2, target:'ambos'},
+  {date:'2025-09-13', title:'Prazo final para correções no histórico escolar relativas a 2025/1', desc:'', type:'prazo', semester:2, target:'professor'},
+  {date:'2025-09-22', title:'Prazo final para cadastramento de matrícula em mobilidade acadêmica', desc:'Para saída em 2025/2.', type:'matricula', semester:2, target:'professor'},
+  {date:'2025-09-26', title:'Prazo final para ajuste e adição curricular (início 1º semestre)', desc:'Colegiados encaminham à PROGRAD.', type:'prazo', semester:2, target:'professor'},
+  {date:'2025-09-30', title:'Prazo final para colação de grau (2025/1)', desc:'Coordenação de curso envia à COPAP.', type:'prazo', semester:2, target:'professor'}, // Coordenação envia, mas é sobre alunos concluintes
+
+  // OUTUBRO 2025
+  {date:'2025-10-06', title:'Prazo final para cancelamento de matrícula em disciplina semestral', desc:'', type:'trancamento', semester:2, target:'aluno'},
+  {date:'2025-10-06', title:'Prazo final para trancamento de curso semestral com matrícula', desc:'', type:'trancamento', semester:2, target:'aluno'},
+  {date:'2025-10-10', title:'Prazo final para lançamento de notas de adiantamento de conhecimento', desc:'', type:'nota', semester:2, target:'professor'},
+  {date:'2025-10-12', title:'Feriado: Nossa Senhora Aparecida', desc:'', type:'feriado', semester:2, target:'ambos'},
+  {date:'2025-10-15', title:'Prazo final para cancelamento de registro acadêmico', desc:'Para discentes sem matrícula e sem trancamento.', type:'trancamento', semester:2, target:'aluno'}, // Impacta diretamente o aluno
+  {date:'2025-10-17', title:'Prazo final para lançamento de equivalência de disciplinas', desc:'', type:'nota', semester:2, target:'professor'},
+  {date:'2025-10-18', title:'Recesso acadêmico para ensalamento do Processo Seletivo', desc:'De 18 a 19/out.', type:'evento', semester:2, target:'ambos'},
+  {date:'2025-10-19', title:'Realização da 1ª Fase do Processo Seletivo UFPR 2025/2026', desc:'', type:'evento', semester:2, target:'professor'}, // Interessados no vestibular, mas a universidade para
+  {date:'2025-10-20', title:'Festival UFPR da Ciência, Cultura e Inovação / SIEPE', desc:'De 20 a 24/out.', type:'evento', semester:2, target:'ambos'},
+  {date:'2025-10-28', title:'Dia do Servidor Público', desc:'', type:'evento', semester:2, target:'ambos'}, // Feriado/ponto facultativo para servidores, incluindo professores
+  {date:'2025-10-31', title:'Prazo final para solicitação de exame de aproveitamento de conhecimento', desc:'', type:'prazo', semester:2, target:'aluno'},
+
+  // NOVEMBRO 2025
+  {date:'2025-11-02', title:'Feriado: Finados', desc:'', type:'feriado', semester:2, target:'ambos'},
+  {date:'2025-11-12', title:'Prazo final para solicitação de permanência em curso (2026/1)', desc:'Alunos protocolam nas coordenações.', type:'prazo', semester:2, target:'professor'},
+  {date:'2025-11-15', title:'Feriado: Proclamação da República', desc:'', type:'feriado', semester:2, target:'ambos'},
+  {date:'2025-11-20', title:'Feriado: Dia Nacional da Consciência Negra', desc:'', type:'feriado', semester:2, target:'ambos'},
+  {date:'2025-11-28', title:'Prazo final de oferta de turmas anuais e do 1º semestre', desc:'Coordenação para Departamentos.', type:'matricula', semester:2, target:'professor'},
+
+  // DEZEMBRO 2025
+  {date:'2025-12-01', title:'Prazo final para correções de matrícula em disciplinas semestrais (2025/2)', desc:'Motivos administrativos.', type:'matricula', semester:2, target:'professor'}, // Correção administrativa
+  {date:'2025-12-06', title:'Fim do período letivo 2025/2', desc:'', type:'iniciofim', semester:2, target:'ambos'},
+  {date:'2025-12-11', title:'Prazo final para comunicar mudança de habilitação', desc:'Coordenação comunica à COPAP.', type:'prazo', semester:2, target:'professor'},
+  {date:'2025-12-11', title:'Destrancamento automático de curso', desc:'Discentes que completaram o período de trancamento.', type:'trancamento', semester:2, target:'aluno'},
+  {date:'2025-12-14', title:'Feriado em Toledo', desc:'Aniversário do município.', type:'feriado', semester:2, target:'ambos'},
+  {date:'2025-12-14', title:'Feriado em Jandaia do Sul', desc:'Aniversário do município.', type:'feriado', semester:2, target:'ambos'},
+  {date:'2025-12-15', title:'Exames Segundo Semestre', desc:'De 15 a 20/dez.', type:'exames', semester:2, target:'ambos'}, // Aluno faz, professor aplica
+  {date:'2025-12-20', title:'Feriado em Pontal do Paraná', desc:'Aniversário do município.', type:'feriado', semester:2, target:'ambos'},
+  {date:'2025-12-22', title:'Início do período para segunda avaliação final (disciplinas anuais)', desc:'De 22/dez a 02/jan.', type:'evento', semester:2, target:'ambos'}, // Aluno faz, professor aplica
+  {date:'2025-12-25', title:'Feriado: Natal', desc:'', type:'feriado', semester:2, target:'ambos'},
+  {date:'2025-12-31', title:'Prazo final para lançamento de notas e frequência e encerramento das turmas', desc:'', type:'nota', semester:2, target:'professor'},
+
+  // JANEIRO 2026
+  {date:'2026-01-01', title:'Feriado: Confraternização Universal', desc:'', type:'feriado', semester:2, target:'ambos'},
+  {date:'2026-01-12', title:'Período para segunda avaliação final (disciplinas anuais)', desc:'De 12 a 17/jan.', type:'evento', semester:2, target:'ambos'}, // Aluno faz, professor aplica
+  {date:'2026-01-12', title:'Prazo final para devolução de oferta de turmas às Coordenações', desc:'', type:'matricula', semester:2, target:'professor'},
+  {date:'2026-01-27', title:'Prazo final para Coordenação disponibilizar turmas para matrícula', desc:'', type:'matricula', semester:2, target:'professor'},
+
+  // FEVEREIRO 2026
+  {date:'2026-02-16', title:'Feriado: Carnaval', desc:'De 16 a 18/fev.', type:'feriado', semester:2, target:'ambos'},
+
+  // MARÇO 2026
+  {date:'2026-03-02', title:'Provável início do período letivo 2026/1', desc:'', type:'iniciofim', semester:2, target:'ambos'},
+
+  {date:'2025-02-21', title:'Início do período de trancamento de curso sem matrícula', desc:'De 21/fev a 21/mar.', type:'trancamento', semester:1, target:'aluno'},
+  {date:'2025-02-21', title:'Início do prazo para Coordenação registrar trancamento de curso sem matrícula', desc:'De 21/fev a 04/abr.', type:'trancamento', semester:1, target:'professor'}, // Coordenação registra
+  {date:'2025-02-26', title:'Processamento de matrículas', desc:'26 e 27/fev.', type:'matricula', semester:1, target:'ambos'},
+  {date:'2025-02-27', title:'Segundo processamento de turmas', desc:'', type:'matricula', semester:1, target:'ambos'},
+  {date:'2025-02-28', title:'Início do período para alteração de vagas nas turmas', desc:'De 28/fev a 21/mar.', type:'matricula', semester:1, target:'professor'}, // Coordenação/Departamento altera
+  {date:'2025-02-28', title:'Início do ajuste on-line de matrícula', desc:'De 28/fev a 05/mar.', type:'matricula', semester:1, target:'aluno'},
+  {date:'2025-03-10', title:'Início da confirmação de matrícula e ocupação da vaga', desc:'De 10 a 12/mar.', type:'matricula', semester:1, target:'aluno'},
+  {date:'2025-03-10', title:'Início da solicitação de exame de adiantamento de conhecimento', desc:'De 10 a 21/mar.', type:'prazo', semester:1, target:'aluno'},
+  {date:'2025-03-10', title:'Início do pedido de equivalência de disciplinas', desc:'De 10 a 26/mar.', type:'prazo', semester:1, target:'aluno'},
+  {date:'2025-03-10', title:'Início do lançamento de equivalência de disciplinas', desc:'De 10/mar a 26/mai.', type:'nota', semester:1, target:'professor'},
+  {date:'2025-03-19', title:'Início da análise de pedidos de disciplinas eletivas', desc:'De 19 a 26/mar.', type:'evento', semester:1, target:'professor'}, // Coordenação/Colegiado analisa
+  {date:'2025-03-21', title:'Prazo final para Coordenações de Curso enviarem à COPAP a relação de estudantes que pediram permanência em curso e concluíram o curso em 2024/2', desc:'', type:'prazo', semester:1, target:'professor'},
+  {date:'2025-03-21', title:'Prazo final para colegiado deliberar sobre dispensa de pré-requisito/correquisito', desc:'', type:'prazo', semester:1, target:'professor'},
+  {date:'2025-03-21', title:'Prazo final para trancamento de curso sem matrícula', desc:'', type:'trancamento', semester:1, target:'aluno'},
+  {date:'2025-04-04', title:'Prazo final para colegiado encaminhar ajuste e adição curricular (2º semestre)', desc:'', type:'prazo', semester:1, target:'professor'},
+  {date:'2025-04-11', title:'Prazo final para colegiado deliberar sobre adiantamento de conhecimento', desc:'', type:'prazo', semester:1, target:'professor'},
+  {date:'2025-04-11', title:'Prazo final para Coordenação tramitar exames de adiantamento de conhecimento', desc:'', type:'prazo', semester:1, target:'professor'},
+  {date:'2025-04-14', title:'Início dos exames de adiantamento de conhecimento', desc:'De 14/abr a 05/mai.', type:'evento', semester:1, target:'ambos'}, // Aluno faz, professor aplica
+  {date:'2025-05-02', title:'Prazo final para processos de colação de grau (2024/2)', desc:'', type:'prazo', semester:1, target:'professor'}, // Coordenação lida com os processos
+  {date:'2025-05-14', title:'Início do lançamento de notas de adiantamento de conhecimento', desc:'De 14 a 16/mai.', type:'nota', semester:1, target:'professor'},
+  {date:'2025-05-16', title:'Prazo final para departamentos lançarem resultados de adiantamento de conhecimento', desc:'', type:'nota', semester:1, target:'professor'},
+  {date:'2025-05-18', title:'Prazo final para cadastramento de mobilidade acadêmica (saída 2025/1)', desc:'', type:'prazo', semester:1, target:'aluno'},
+  {date:'2025-05-21', title:'Prazo final para cancelamento de registro acadêmico (sem matrícula e sem trancamento)', desc:'', type:'trancamento', semester:1, target:'aluno'}, // Impacta diretamente o aluno
+  {date:'2025-05-26', title:'Início do período para exame de aproveitamento de conhecimento', desc:'De 26/mai a 06/jun.', type:'prazo', semester:1, target:'ambos'}, // Aluno faz, professor aplica
+  {date:'2025-05-30', title:'Prazo final para proposta de reformulação curricular', desc:'', type:'prazo', semester:1, target:'professor'},
+  {date:'2025-06-24', title:'Feriado em Jandaia do Sul', desc:'Padroeiro do município.', type:'feriado', semester:1, target:'ambos'},
+  {date:'2025-06-30', title:'Início do ajuste de matrículas (Período Especial 2025/1)', desc:'De 30/jun a 19/jul.', type:'matricula', semester:1, target:'aluno'},
+  {date:'2025-07-02', title:'Prazo final para envio de processos à COPAP (Período Especial 2025/1)', desc:'', type:'prazo', semester:1, target:'professor'},
+  {date:'2025-07-03', title:'Início do cancelamento de matrícula (Período Especial 2025/1)', desc:'De 3 a 24/jul.', type:'trancamento', semester:1, target:'aluno'},
+  {date:'2025-07-03', title:'Início das aulas (Período Especial 2025/1)', desc:'De 3/jul a 02/ago.', type:'iniciofim', semester:1, target:'ambos'},
+  {date:'2025-07-07', title:'Prazo final para Coordenação comunicar mudança de habilitação (2025/1)', desc:'', type:'prazo', semester:1, target:'professor'},
+  {date:'2025-07-09', title:'Início do lançamento de notas de aproveitamento de conhecimento', desc:'De 9 a 15/jul.', type:'nota', semester:1, target:'professor'},
+  {date:'2025-07-09', title:'Início do lançamento de atividades formativas', desc:'De 9 a 18/jul.', type:'evento', semester:1, target:'professor'}, // Geralmente professor/coordenação que lança
+  {date:'2025-07-15', title:'Prazo final para Departamentos registrarem resultados dos exames de aproveitamento de conhecimento', desc:'', type:'nota', semester:1, target:'professor'},
+  {date:'2025-07-18', title:'Prazo final para Coordenação disponibilizar as turmas para matrícula (2º semestre)', desc:'', type:'matricula', semester:2, target:'professor'},
+  {date:'2025-07-18', title:'Prazo final para lançamento de atividades formativas', desc:'', type:'evento', semester:1, target:'professor'},
+  {date:'2025-07-19', title:'Prazo final para lançamento de notas e frequência e encerramento das turmas', desc:'', type:'nota', semester:1, target:'professor'},
+  {date:'2025-07-21', title:'Início do período de avaliação de disciplinas (CPA)', desc:'De 21/jul a 14/ago.', type:'evento', semester:1, target:'ambos'}, // Alunos avaliam, disciplinas/professores são avaliados
+  {date:'2025-07-25', title:'Feriado em Palotina', desc:'Aniversário do município.', type:'feriado', semester:1, target:'ambos'},
+  {date:'2025-07-29', title:'Início do lançamento de notas (Período Especial 2025/1)', desc:'De 29/jul a 09/ago.', type:'nota', semester:1, target:'professor'},
+  {date:'2025-07-30', title:'Solicitação de ajuste on-line de matrícula (2º semestre)', desc:'30 e 31/jul.', type:'matricula', semester:2, target:'aluno'},
+  {date:'2025-07-31', title:'Prazo final para Colegiados enviarem à PROGRAD a implantação de currículo para novos cursos (início em 2027)', desc:'', type:'prazo', semester:1, target:'professor'},
+  {date:'2025-07-07', title:'Início do destrancamento antecipado de curso (2º semestre)', desc:'De 7/jul a 11/ago.', type:'trancamento', semester:2, target:'aluno'},
+  {date:'2025-07-16', title:'Início da dispensa de pré-requisito/correquisito (2º semestre)', desc:'De 16/jul a 08/ago.', type:'prazo', semester:2, target:'aluno'},
+  {date:'2025-07-16', title:'Início do prazo para colegiado deliberar sobre dispensa de pré-requisito/correquisito', desc:'De 16/jul a 15/ago.', type:'prazo', semester:2, target:'professor'},
+  {date:'2025-08-04', title:'Início da confirmação de matrícula e ocupação da vaga (2º semestre)', desc:'De 4 a 6/ago.', type:'matricula', semester:2, target:'aluno'},
+  {date:'2025-08-04', title:'Início da solicitação de exame de adiantamento de conhecimento', desc:'De 4 a 15/ago.', type:'prazo', semester:2, target:'aluno'},
+  {date:'2025-08-04', title:'Início do pedido de equivalência de disciplinas', desc:'De 4 a 18/ago.', type:'prazo', semester:2, target:'aluno'},
+  {date:'2025-08-04', title:'Início do lançamento de equivalência de disciplinas', desc:'De 4/ago a 17/out.', type:'nota', semester:2, target:'professor'},
+  {date:'2025-08-11', title:'Período de matrícula em disciplina eletiva/isolada', desc:'11 e 12/ago.', type:'matricula', semester:2, target:'aluno'},
+  {date:'2025-08-13', title:'Prazo final para solicitação de ajuste de matrícula na Coordenação', desc:'', type:'matricula', semester:2, target:'aluno'},
+  {date:'2025-08-13', title:'Início da análise de pedidos de disciplinas eletivas', desc:'De 13 a 20/ago.', type:'evento', semester:2, target:'professor'}, // Coordenação/Colegiado analisa
+  {date:'2025-08-15', title:'Prazo final para Coordenação encaminhar permanência em curso (2025/1)', desc:'', type:'prazo', semester:2, target:'professor'},
+  {date:'2025-08-15', title:'Prazo final para solicitação de exame de adiantamento de conhecimento', desc:'', type:'prazo', semester:2, target:'aluno'},
+  {date:'2025-08-18', title:'Início do período para colegiado deliberar sobre adiantamento de conhecimento', desc:'De 18/ago a 05/set.', type:'prazo', semester:2, target:'professor'},
+  {date:'2025-08-18', title:'Início do cancelamento de matrícula em disciplina semestral', desc:'De 18/ago a 06/out.', type:'trancamento', semester:2, target:'aluno'},
+  {date:'2025-08-18', title:'Início do trancamento de curso semestral com matrícula', desc:'De 18/ago a 06/out.', type:'trancamento', semester:2, target:'aluno'},
+  {date:'2025-08-18', title:'Início do pedido de mudança de habilitação (semestre seguinte)', desc:'De 18/ago a 12/nov.', type:'prazo', semester:2, target:'aluno'},
+  {date:'2025-08-29', title:'Prazo final para Coordenação registrar trancamento de curso sem matrícula', desc:'', type:'trancamento', semester:2, target:'professor'}, // Coordenação registra
+  {date:'2025-09-05', title:'Prazo final para colegiado deliberar sobre adiantamento de conhecimento', desc:'', type:'prazo', semester:2, target:'professor'},
+  {date:'2025-09-05', title:'Prazo final para Coordenação tramitar exames de adiantamento de conhecimento', desc:'', type:'prazo', semester:2, target:'professor'},
+  {date:'2025-09-08', title:'Início dos exames de adiantamento de conhecimento', desc:'De 8 a 27/set.', type:'evento', semester:2, target:'ambos'}, // Aluno faz, professor aplica
+  {date:'2025-10-07', title:'Inativação das turmas sem matrícula', desc:'', type:'evento', semester:2, target:'professor'}, // Impacta planejamento do departamento/coordenação
+  {date:'2025-10-08', title:'Início do lançamento de notas de adiantamento de conhecimento', desc:'De 8 a 10/out.', type:'nota', semester:2, target:'professor'},
+  {date:'2025-10-20', title:'Início do pedido de exame de aproveitamento de conhecimento', desc:'De 20 a 31/out.', type:'prazo', semester:2, target:'aluno'},
+  {date:'2025-10-29', title:'Início da oferta de turmas anuais e do 1º semestre', desc:'De 29/out a 28/nov.', type:'matricula', semester:2, target:'professor'},
+  {date:'2025-10-29', title:'Início do ajuste e tramitação de turmas pelos Departamentos', desc:'De 29/out a 12/dez.', type:'matricula', semester:2, target:'professor'},
+  {date:'2025-11-04', title:'Semana Acadêmica Integrada de Artes, Comunicação e Design', desc:'De 4 a 7/nov.', type:'evento', semester:2, target:'ambos'},
+  {date:'2025-11-10', title:'Início dos exames de aproveitamento de conhecimento', desc:'De 10/nov a 06/dez.', type:'evento', semester:2, target:'ambos'}, // Aluno faz, professor aplica
+  {date:'2025-11-10', title:'Início do lançamento de notas de aproveitamento de conhecimento', desc:'De 10/nov a 31/dez.', type:'nota', semester:2, target:'professor'},
+  {date:'2025-11-10', title:'Início do lançamento de atividades formativas', desc:'De 10/nov a 31/dez.', type:'evento', semester:2, target:'professor'}, // Geralmente professor/coordenação que lança
+  {date:'2025-11-12', title:'Prazo final para solicitação de mudança de habilitação', desc:'', type:'prazo', semester:2, target:'aluno'},
+  {date:'2025-11-29', title:'Recesso acadêmico para 2ª Fase do Processo Seletivo', desc:'De 29/nov a 01/dez.', type:'evento', semester:2, target:'ambos'},
+  {date:'2025-11-30', title:'2ª Fase do Processo Seletivo UFPR 2025/2026', desc:'30/nov e 01/dez.', type:'evento', semester:2, target:'ambos'}, // Interessados no vestibular, mas a universidade para
+  {date:'2025-12-01', title:'Início do período de lançamento de notas e frequência', desc:'De 1 a 31/dez.', type:'nota', semester:2, target:'professor'},
+  {date:'2025-12-01', title:'Início do ajuste de matrículas (Período Especial 2025/2)', desc:'De 1/dez a 16/jan.', type:'matricula', semester:2, target:'aluno'},
+  {date:'2025-12-12', title:'Prazo final para envio de processos à COPAP (Período Especial 2025/2)', desc:'', type:'prazo', semester:2, target:'professor'},
+  {date:'2025-12-13', title:'Fim do período letivo do Curso Técnico de Petróleo e Gás', desc:'', type:'iniciofim', semester:2, target:'professor'},
+  {date:'2026-01-11', title:'Início das aulas (Período Especial 2025/2)', desc:'De 11/jan a 21/fev.', type:'iniciofim', semester:2, target:'ambos'},
+  {date:'2026-01-11', title:'Início do cancelamento de matrícula (Período Especial 2025/2)', desc:'De 11 a 23/jan.', type:'trancamento', semester:2, target:'aluno'},
+      {date:'2026-01-22', title:'Feriado em Palotina', desc:'Padroeiro do município.', type:'feriado', semester:2, target:'ambos'},
+      {date:'2026-01-26', title:'Início do lançamento de notas (Período Especial 2025/2)', desc:'De 26/jan a 27/fev.', type:'nota', semester:2, target:'professor'}
+
+    ];
+
+    const ufprcalICONS={
+      feriado:'🎉',
+      exames:'💀',
+      prazo:'⏰',
+      matricula:'📝',
+      nota:'📊',
+      evento:'📅',
+      trancamento:'🚪',
+      iniciofim:'🏁'
+    };
+    let ufprcalSemester=1,ufprcalType='all',ufprcalSearch='';
+    let ufprcalUser='aluno'; // aluno é o padrão inicial
+
+    window.ufprcalSetUser = function(user) {
+      ufprcalUser = user;
+      document.getElementById('ufprcal-btn-aluno').classList.remove('ufprcal-user-active');
+      document.getElementById('ufprcal-btn-prof').classList.remove('ufprcal-user-active');
+      document.getElementById('ufprcal-btn-aluno').style.background = '#fff';
+      document.getElementById('ufprcal-btn-aluno').style.color = '#2196f3';
+      document.getElementById('ufprcal-btn-aluno').style.border = '1.5px solid #2196f3';
+      document.getElementById('ufprcal-btn-prof').style.background = '#fff';
+      document.getElementById('ufprcal-btn-prof').style.color = '#2196f3';
+      document.getElementById('ufprcal-btn-prof').style.border = '1.5px solid #2196f3';
+      let btn = document.getElementById(user === 'aluno' ? 'ufprcal-btn-aluno' : 'ufprcal-btn-prof');
+      btn.classList.add('ufprcal-user-active');
+      btn.style.background = '#2196f3';
+      btn.style.color = '#fff';
+      btn.style.border = 'none';
+      ufprcalRender();
+    };
+
+    function ufprcalRender(){
+      let evs=ufprcalEvents.filter(e=>e.semester===ufprcalSemester);
+
+      // FILTRO POR USUÁRIO
+      if(ufprcalUser === 'aluno'){
+        evs = evs.filter(e => e.target === 'aluno' || e.target === 'ambos');
+      }
+
+      // filtro por tipo
+      if(ufprcalType!=='all')evs=evs.filter(e=>e.type===ufprcalType);
+
+      // filtro busca
+      if(ufprcalSearch.length>0){
+        const st=ufprcalSearch.toLowerCase();
+        evs=evs.filter(e=>(e.title+e.desc).toLowerCase().includes(st)||ufprcalFmt(e.date).includes(st));
+      }
+evs.sort((a, b) => a.date.localeCompare(b.date));
+const today = (new Date()).toISOString().slice(0,10);
+const futuros = evs.filter(e => e.date >= today);
+const passados = evs.filter(e => e.date < today);
+const ordenados = [...futuros, ...passados];
+
+let html = '';
+if (!ordenados.length) {
+  html = '<div style="color:#999;padding:26px 0;text-align:center;">Nenhum evento.</div>';
+} else ordenados.forEach(e => {
+  let faded=e.date<today?'opacity:.52;filter:grayscale(0.45);background:#ececec;':'';
+  let border={
+    feriado:'#ff9800',
+    prazo:'#f44336',
+    matricula:'#4caf50',
+    nota:'#8e24aa',
+    evento:'#2196f3',
+    trancamento:'#90a4ae',
+    iniciofim:'#ff4a92'
+  }[e.type]||'#2196f3';
+
+  // Adicionar dia da semana para feriados
+  let descExtra = '';
+  if (e.type === 'feriado') {
+    descExtra = `<span style="font-weight:500;color:#026;">(${getDiaSemana(e.date)})</span>`;
+  }
+
+  html += `
+    <div style="display:flex;gap:11px;background:#fff;border-left:6px solid ${border};border-radius:11px;margin:8px 0;padding:11px 13px;align-items:flex-start;${faded}">
+      <div style="font-weight:700;font-size:1.1rem;min-width:55px;color:#02539a;text-align:center;">${ufprcalFmt(e.date)}</div>
+      <div style="flex:1;">
+        <div style="font-weight:600;font-size:1rem;margin-bottom:2px;"><span style="font-size:1.23rem;">${ufprcalICONS[e.type]||''}</span> ${e.title}</div>
+        <div style="font-size:.94rem;color:#37474f;">${e.desc||''} ${descExtra}</div>
+      </div>
+    </div>`;
+});
+document.getElementById('ufprcal-main').innerHTML=html;
+    }
+
+    function ufprcalFmt(s){let d=s.split('-');return d[2]+'/'+d[1];}
+
+    window.ufprcalSetSemester=function(sem){
+      ufprcalSemester=sem;
+      document.getElementById('sem1').classList.remove('ufprcal-sem-active');
+      document.getElementById('sem2').classList.remove('ufprcal-sem-active');
+      document.getElementById('sem1').style.background='#fff';
+      document.getElementById('sem1').style.color='#2196f3';
+      document.getElementById('sem1').style.border='1.5px solid #2196f3';
+      document.getElementById('sem2').style.background='#fff';
+      document.getElementById('sem2').style.color='#2196f3';
+      document.getElementById('sem2').style.border='1.5px solid #2196f3';
+      let btn=document.getElementById(sem===1?'sem1':'sem2');
+      btn.classList.add('ufprcal-sem-active');
+      btn.style.background='#2196f3';
+      btn.style.color='#fff';
+      btn.style.border='none';
+      ufprcalRender();
+    };
+
+    window.ufprcalSetFilter=function(type){
+      ufprcalType=type;
+      ['all','iniciofim', 'exames', 'feriado','matricula','nota','trancamento','evento','prazo'].forEach(t=>{
+        let btn=document.getElementById('filt-'+t);
+        btn.classList.remove('ufprcal-filter-active');
+        btn.style.background='#e3f1fc';
+        btn.style.color='#02539a';
+      });
+      let abtn=document.getElementById('filt-'+type);
+      abtn.classList.add('ufprcal-filter-active');
+      abtn.style.background='#2196f3';
+      abtn.style.color='#fff';
+      ufprcalRender();
+    };
+
+    document.getElementById('ufprcal-search').addEventListener('input',function(){
+      ufprcalSearch=this.value.trim();ufprcalRender();
+    });
+
+    ufprcalRender();
+  </script>
+</div>

@@ -1,0 +1,260 @@
+<!DOCTYPE html>
+<html lang="pt-br">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Aulas de Física | Material Didático</title>
+  <meta name="description" content="Acesse material didático, slides, exercícios e recursos para suas aulas de física. Conteúdo organizado por tópicos e níveis.">
+  <meta name="keywords" content="aulas, física, material didático, slides, exercícios, ensino">
+  <link rel="canonical" href="index.html">
+  <!-- Open Graph -->
+  <meta property="og:type" content="website">
+  <meta property="og:title" content="Aulas de Física | Material Didático">
+  <meta property="og:description" content="Conteúdos criados pelo professor Douglas Oliveira">
+  <meta property="og:url" content="index.html">
+  <!-- Twitter Card -->
+  <meta name="twitter:card" content="summary">
+  <meta name="twitter:title" content="Aulas de Física | Material Didático">
+  <meta name="twitter:description" content="Conteúdos criados pelo professor Douglas Oliveira">
+  
+  <!-- Google tag (gtag.js) -->
+  <script async src="https://www.googletagmanager.com/gtag/js?id=G-83359NB2SY"></script>
+  <script>
+    window.dataLayer = window.dataLayer || [];
+    function gtag(){dataLayer.push(arguments);}
+    gtag('js', new Date());
+    gtag('config', 'G-83359NB2SY');
+  </script>
+
+  <style>
+    :root {
+      --primary: #194BFB;
+      --secondary: #13DED6;
+      --bg-gradient: linear-gradient(135deg, #eaf0ff 0%, #ffffff 100%);
+      --card-bg: #ffffffcc;
+      --text: #222a3f;
+      --shadow: 0 8px 32px 0 rgba(25,75,251,0.10), 0 1.5px 8px 0 rgba(0,0,0,0.07);
+      --radius: 1.5rem;
+      --btn-border: #e0e4f2;
+
+      /* Cores para os cards */
+      --card1-title-bg: #bbdefb;  /* Azul mais escuro */
+      --card1-desc-bg: #e3f2fd;   /* Azul mais claro */
+      --card1-color: #1976d2;
+      --card1-hover: #90caf9;
+
+      --card2-title-bg: #c8e6c9;  /* Verde mais escuro */
+      --card2-desc-bg: #e8f5e9;   /* Verde mais claro */
+      --card2-color: #2e7d32;
+      --card2-hover: #a5d6a7;
+
+      --card3-title-bg: #ffe0b2;  /* Laranja mais escuro */
+      --card3-desc-bg: #fff3e0;   /* Laranja mais claro */
+      --card3-color: #f57c00;
+      --card3-hover: #ffcc80;
+
+      --card4-title-bg: #e1bee7;  /* Roxo mais escuro */
+      --card4-desc-bg: #f3e5f5;   /* Roxo mais claro */
+      --card4-color: #7b1fa2;
+      --card4-hover: #ce93d8;
+    }
+    @import url('https://fonts.googleapis.com/css2?family=Montserrat:wght@700&family=Roboto:wght@400;500&display=swap');
+    body {
+      font-family: 'Roboto', Arial, sans-serif;
+      margin: 0;
+      background: var(--bg-gradient);
+      color: var(--text);
+      min-height: 100vh;
+      display: flex;
+      flex-direction: column;
+    }
+    .main-wrapper {
+      flex: 1 0 auto;
+      padding: 2rem 0;
+    }
+    h1 {
+      font-family: 'Montserrat', Arial, sans-serif;
+      font-size: 2.8rem;
+      text-align: center;
+      font-weight: 700;
+      margin: 50px 0 0 0;
+      letter-spacing: 1px;
+      color: var(--text);
+    }
+    .title-underline {
+      width: 320px;
+      height: 8px;
+      background: var(--primary);
+      margin: 18px auto 32px auto;
+      border-radius: 4px;
+      opacity: 0.8;
+    }
+    .fisica-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+      gap: 24px;
+      margin: 36px auto;
+      max-width: 1200px;
+      padding: 0 16px;
+    }
+    .fisica-card {
+      display: flex;
+      flex-direction: column;
+      border-radius: var(--radius);
+      box-shadow: var(--shadow);
+      border: 2px solid var(--btn-border);
+      transition: all 0.2s ease;
+      text-decoration: none;
+      color: var(--text);
+      overflow: hidden;
+      background: var(--btn-desc-bg);
+    }
+    .fisica-card:hover {
+      transform: translateY(-4px);
+      box-shadow: 0 7px 24px 0 rgba(25,75,251,0.13), 0 1.5px 8px 0 rgba(0,0,0,0.12);
+      border-color: var(--btn-color);
+      background: var(--btn-hover);
+    }
+
+    /* Estilos específicos para cada card */
+    .fisica-card:nth-child(1) {
+      --btn-title-bg: var(--card1-title-bg);
+      --btn-desc-bg: var(--card1-desc-bg);
+      --btn-color: var(--card1-color);
+      --btn-hover: var(--card1-hover);
+    }
+    .fisica-card:nth-child(2) {
+      --btn-title-bg: var(--card2-title-bg);
+      --btn-desc-bg: var(--card2-desc-bg);
+      --btn-color: var(--card2-color);
+      --btn-hover: var(--card2-hover);
+    }
+    .fisica-card:nth-child(3) {
+      --btn-title-bg: var(--card3-title-bg);
+      --btn-desc-bg: var(--card3-desc-bg);
+      --btn-color: var(--card3-color);
+      --btn-hover: var(--card3-hover);
+    }
+    .fisica-card:nth-child(4) {
+      --btn-title-bg: var(--card4-title-bg);
+      --btn-desc-bg: var(--card4-desc-bg);
+      --btn-color: var(--card4-color);
+      --btn-hover: var(--card4-hover);
+    }
+
+    .fisica-card:hover .btn-title-part {
+      background: var(--btn-hover);
+    }
+
+    .btn-title-part {
+      background: var(--btn-title-bg);
+      padding: 1.2rem;
+      font-family: 'Montserrat', Arial, sans-serif;
+      font-size: 1.4rem;
+      color: var(--btn-color);
+      font-weight: 700;
+      text-align: center;
+      letter-spacing: -0.5px;
+      border-bottom: 1px solid var(--btn-border);
+      transition: background 0.2s;
+    }
+
+    .btn-desc-part {
+      background: transparent;
+      padding: 1rem 1.2rem;
+      font-size: 1rem;
+      color: #586080;
+      text-align: center;
+      font-weight: 400;
+      line-height: 1.5;
+    }
+
+    footer {
+      width: 100%;
+      text-align: center;
+      color: #9fa4b4;
+      font-size: 0.97rem;
+      padding: 24px 0 19px 0;
+      background: transparent;
+      font-family: 'Roboto', Arial, sans-serif;
+      opacity: 0.8;
+      letter-spacing: 0.02em;
+    }
+    a.voltar {
+      display: block;
+      margin: 50px auto 0 auto;
+      width: fit-content;
+      text-align: center;
+      font-size: 1.13rem;
+      color: var(--primary);
+      text-decoration: underline;
+      font-weight: 500;
+      opacity: 0.88;
+    }
+    a.voltar:hover { 
+      opacity: 1; 
+      color: #0d3fd9;
+    }
+    @media (max-width: 900px) {
+      .fisica-grid {
+        grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+        gap: 20px;
+        padding: 0 20px;
+      }
+    }
+    @media (max-width: 600px) {
+      h1 { 
+        font-size: 2rem; 
+        margin-top: 26px;
+      }
+      .title-underline { 
+        width: 200px; 
+        height: 6px; 
+      }
+      .fisica-grid { 
+        gap: 16px; 
+        padding: 0 16px;
+      }
+      .btn-title-part {
+        font-size: 1.2rem;
+        padding: 1rem;
+      }
+      .btn-desc-part {
+        font-size: 0.95rem;
+        padding: 0.8rem 1rem;
+      }
+    }
+  </style>
+</head>
+<body>
+  <div class="main-wrapper">
+    <h1>Aulas de Física</h1>
+    <div class="title-underline"></div>
+    
+    <div class="fisica-grid">
+      <a href="fisica1.html" class="fisica-card">
+        <div class="btn-title-part">Física 1</div>
+        <div class="btn-desc-part">Mecânica Clássica, Leis de Newton, Energia e Momento Linear</div>
+      </a>
+      <a href="fisica2.html" class="fisica-card">
+        <div class="btn-title-part">Física 2</div>
+        <div class="btn-desc-part">Rotacionais, Fluidos, Oscilações e Ondas</div>
+      </a>
+      <a href="fisica3.html" class="fisica-card">
+        <div class="btn-title-part">Física 3</div>
+        <div class="btn-desc-part">Eletricidade, Magnetismo e Circuitos</div>
+      </a>
+      <a href="fisica4.html" class="fisica-card">
+        <div class="btn-title-part">Física 4</div>
+        <div class="btn-desc-part">Óptica, Termodinâmica e Física Moderna</div>
+      </a>
+    </div>
+
+    <a href="../index.html" class="voltar">Voltar para a página principal</a>
+  </div>
+
+  <footer>
+    <p>© 2024 DougFísica. Todos os direitos reservados.</p>
+  </footer>
+</body>
+</html> 

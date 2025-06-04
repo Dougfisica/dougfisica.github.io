@@ -1,0 +1,306 @@
+<!DOCTYPE html>
+<html lang="pt-br">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Física 1 | Aulas</title>
+  <meta name="description" content="Aulas de Física 1: Mecânica Clássica, Leis de Newton, Energia e Momento Linear. Material didático completo com vídeos e exercícios.">
+  <meta name="keywords" content="física 1, mecânica, newton, energia, momento linear, aulas, UFPR">
+  <link rel="canonical" href="fisica1.html">
+  <!-- Open Graph -->
+  <meta property="og:type" content="website">
+  <meta property="og:title" content="Física 1 | Aulas">
+  <meta property="og:description" content="Aulas de Física 1: Mecânica Clássica, Leis de Newton, Energia e Momento Linear. Material didático completo com vídeos e exercícios.">
+  <meta property="og:url" content="fisica1.html">
+  <!-- Twitter Card -->
+  <meta name="twitter:card" content="summary">
+  <meta name="twitter:title" content="Física 1 | Aulas">
+  <meta name="twitter:description" content="Aulas de Física 1: Mecânica Clássica, Leis de Newton, Energia e Momento Linear. Material didático completo com vídeos e exercícios.">
+  
+  <!-- Google tag (gtag.js) -->
+  <script async src="https://www.googletagmanager.com/gtag/js?id=G-83359NB2SY"></script>
+  <script>
+    window.dataLayer = window.dataLayer || [];
+    function gtag(){dataLayer.push(arguments);}
+    gtag('js', new Date());
+    gtag('config', 'G-83359NB2SY');
+  </script>
+
+  <style>
+    @import url('https://fonts.googleapis.com/css2?family=Montserrat:wght@700&family=Roboto:wght@400;500&display=swap');
+    body {
+      font-family: 'Roboto', Arial, sans-serif;
+      margin: 0;
+      background: #fff;
+      color: #222;
+      min-height: 100vh;
+      display: flex;
+      flex-direction: column;
+    }
+    .main-wrapper {
+      flex: 1 0 auto;
+    }
+    h1 {
+      font-family: 'Montserrat', Arial, sans-serif;
+      font-size: 2.8rem;
+      text-align: center;
+      font-weight: 700;
+      margin: 50px 0 0 0;
+      letter-spacing: 1px;
+    }
+    .title-underline {
+      width: 320px;
+      height: 8px;
+      background: #FFCDD2;
+      margin: 18px auto 32px auto;
+      border-radius: 4px;
+    }
+    .aulas-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+      gap: 24px;
+      margin: 36px auto;
+      max-width: 1200px;
+      padding: 0 16px;
+    }
+    .aula-card {
+      background: #fff;
+      border-radius: 12px;
+      box-shadow: 0 4px 16px rgba(0,0,0,0.1);
+      overflow: hidden;
+      transition: all 0.2s ease;
+      text-decoration: none;
+      color: inherit;
+      display: flex;
+      flex-direction: column;
+    }
+    .aula-card:hover {
+      transform: translateY(-4px);
+      box-shadow: 0 6px 24px rgba(0,0,0,0.15);
+    }
+    .aula-thumb {
+      width: 100%;
+      aspect-ratio: 16/9;
+      object-fit: cover;
+    }
+    .aula-content {
+      padding: 20px;
+      display: flex;
+      flex-direction: column;
+      gap: 8px;
+    }
+    .aula-numero {
+      font-family: 'Montserrat', Arial, sans-serif;
+      font-size: 1.2rem;
+      color: #D32F2F;
+      font-weight: 700;
+      margin: 0;
+    }
+    .aula-titulo {
+      font-family: 'Montserrat', Arial, sans-serif;
+      font-size: 1.4rem;
+      color: #222;
+      font-weight: 700;
+      margin: 0;
+      line-height: 1.3;
+    }
+    .aula-desc {
+      font-size: 0.95rem;
+      color: #666;
+      margin: 0;
+      line-height: 1.5;
+      display: -webkit-box;
+      -webkit-line-clamp: 3;
+      -webkit-box-orient: vertical;
+      overflow: hidden;
+    }
+    footer {
+      width: 100%;
+      text-align: center;
+      color: #222;
+      font-size: 1.08rem;
+      padding: 24px 0 19px 0;
+      background: transparent;
+      font-family: 'Roboto', Arial, sans-serif;
+      opacity: 0.85;
+      letter-spacing: .2px;
+    }
+    a.voltar {
+      display: block;
+      margin: 50px auto 0 auto;
+      width: fit-content;
+      text-align: center;
+      font-size: 1.13rem;
+      color: #D32F2F;
+      text-decoration: underline;
+      font-weight: 500;
+      opacity: .88;
+    }
+    a.voltar:hover { 
+      opacity: 1; 
+      color: #B71C1C;
+    }
+    @media (max-width: 600px) {
+      h1 { 
+        font-size: 2rem; 
+        margin-top: 26px;
+      }
+      .title-underline { 
+        width: 200px; 
+        height: 6px; 
+      }
+      .aulas-grid { 
+        gap: 16px; 
+        padding: 0 12px;
+      }
+      .aula-content { 
+        padding: 16px;
+      }
+      .aula-numero {
+        font-size: 1.1rem;
+      }
+      .aula-titulo {
+        font-size: 1.2rem;
+      }
+      .aula-desc {
+        font-size: 0.9rem;
+      }
+    }
+  </style>
+</head>
+<body>
+  <div class="main-wrapper">
+    <h1>Física 1</h1>
+    <div class="title-underline"></div>
+    
+    <div class="aulas-grid">
+      <a href="https://youtu.be/BBz2U0PZpUs" class="aula-card" target="_blank">
+        <img src="https://i.ytimg.com/vi/BBz2U0PZpUs/hqdefault.jpg" alt="Aula 0" class="aula-thumb">
+        <div class="aula-content">
+          <p class="aula-numero">Aula 0</p>
+          <h2 class="aula-titulo">Sistema Internacional de Unidades e Notação Científica</h2>
+          <p class="aula-desc">Sistema Internacional de unidades, Notação Científica. Disciplina de Física 1 ministrada na UFPR em 2021.</p>
+        </div>
+      </a>
+      <a href="https://youtu.be/U6-59tZtExI" class="aula-card" target="_blank">
+        <img src="https://i.ytimg.com/vi/U6-59tZtExI/hqdefault.jpg" alt="Aula 1" class="aula-thumb">
+        <div class="aula-content">
+          <p class="aula-numero">Aula 1</p>
+          <h2 class="aula-titulo">Deslocamento, Velocidade e Aceleração</h2>
+          <p class="aula-desc">Deslocamento, Velocidade média, Velocidade instantânea, Aceleração média, Aceleração instantânea, Derivada de Polinômio.</p>
+        </div>
+      </a>
+      <a href="https://youtu.be/8eX7hzZ95LQ" class="aula-card" target="_blank">
+        <img src="https://i.ytimg.com/vi/8eX7hzZ95LQ/hqdefault.jpg" alt="Aula 2" class="aula-thumb">
+        <div class="aula-content">
+          <p class="aula-numero">Aula 2</p>
+          <h2 class="aula-titulo">Gráficos</h2>
+          <p class="aula-desc">Como construir gráficos, Gráfico V x t, Gráfico a x t. Exercícios do Halliday incluídos.</p>
+        </div>
+      </a>
+      <a href="https://youtu.be/P_kUPPVQIZs" class="aula-card" target="_blank">
+        <img src="https://i.ytimg.com/vi/P_kUPPVQIZs/hqdefault.jpg" alt="Aula 3" class="aula-thumb">
+        <div class="aula-content">
+          <p class="aula-numero">Aula 3</p>
+          <h2 class="aula-titulo">Aceleração Constante</h2>
+          <p class="aula-desc">Caso especial da aceleração constante. Equações: x=x0+v0t+at²/2, v=v0+at, v²=v0²+2ax. Vários exercícios resolvidos.</p>
+        </div>
+      </a>
+      <a href="https://youtu.be/cJt7PooEEXU" class="aula-card" target="_blank">
+        <img src="https://i.ytimg.com/vi/cJt7PooEEXU/hqdefault.jpg" alt="Aula 4" class="aula-thumb">
+        <div class="aula-content">
+          <p class="aula-numero">Aula 4</p>
+          <h2 class="aula-titulo">Vetores</h2>
+          <p class="aula-desc">O que são vetores, Soma de vetores, Subtração de vetores, Grandeza escalar, Grandeza vetorial, Decomposição de vetores.</p>
+        </div>
+      </a>
+      <a href="https://youtu.be/Dwm6whI_trA" class="aula-card" target="_blank">
+        <img src="https://i.ytimg.com/vi/Dwm6whI_trA/hqdefault.jpg" alt="Aula 5" class="aula-thumb">
+        <div class="aula-content">
+          <p class="aula-numero">Aula 5</p>
+          <h2 class="aula-titulo">Movimento em 2D e 3D</h2>
+          <p class="aula-desc">Vetor Posição, Vetor Deslocamento, Vetor Velocidade, Vetor Aceleração, Aceleração Constante para 2D e 3D.</p>
+        </div>
+      </a>
+      <a href="https://youtu.be/cnZwZHlJIIM" class="aula-card" target="_blank">
+        <img src="https://i.ytimg.com/vi/cnZwZHlJIIM/hqdefault.jpg" alt="Aula 6" class="aula-thumb">
+        <div class="aula-content">
+          <p class="aula-numero">Aula 6</p>
+          <h2 class="aula-titulo">Leis de Newton - Parte 1</h2>
+          <p class="aula-desc">Primeira Lei de Newton, Segunda Lei de Newton, Vetor Força, Força Normal, Plano Inclinado.</p>
+        </div>
+      </a>
+      <a href="https://youtu.be/uEuSBvtXZZI" class="aula-card" target="_blank">
+        <img src="https://i.ytimg.com/vi/uEuSBvtXZZI/hqdefault.jpg" alt="Aula 7" class="aula-thumb">
+        <div class="aula-content">
+          <p class="aula-numero">Aula 7</p>
+          <h2 class="aula-titulo">Leis de Newton - Parte 2</h2>
+          <p class="aula-desc">Terceira Lei de Newton, Tração. Exercícios do Halliday e questões de vestibular incluídos.</p>
+        </div>
+      </a>
+      <a href="https://youtu.be/EGqZ8UYAcpo" class="aula-card" target="_blank">
+        <img src="https://i.ytimg.com/vi/EGqZ8UYAcpo/hqdefault.jpg" alt="Aula 8" class="aula-thumb">
+        <div class="aula-content">
+          <p class="aula-numero">Aula 8</p>
+          <h2 class="aula-titulo">Atrito</h2>
+          <p class="aula-desc">Atrito, Força de atrito, Força de arrasto. Exercícios do Halliday resolvidos.</p>
+        </div>
+      </a>
+      <a href="https://youtu.be/40k9nfQJa1k" class="aula-card" target="_blank">
+        <img src="https://i.ytimg.com/vi/40k9nfQJa1k/hqdefault.jpg" alt="Aula 9" class="aula-thumb">
+        <div class="aula-content">
+          <p class="aula-numero">Aula 9</p>
+          <h2 class="aula-titulo">Energia Cinética e Trabalho - Parte 1</h2>
+          <p class="aula-desc">O que é Energia, Energia Cinética, Trabalho, Produto Escalar, Relação Trabalho x Energia.</p>
+        </div>
+      </a>
+      <a href="https://youtu.be/zaSFD-bIVqM" class="aula-card" target="_blank">
+        <img src="https://i.ytimg.com/vi/zaSFD-bIVqM/hqdefault.jpg" alt="Aula 10" class="aula-thumb">
+        <div class="aula-content">
+          <p class="aula-numero">Aula 10</p>
+          <h2 class="aula-titulo">Energia Cinética e Trabalho - Parte 2</h2>
+          <p class="aula-desc">Trabalho da Força Gravitacional, Trabalho do Atrito, Potência, Trabalho de uma mola, Introdução a Energia Potencial.</p>
+        </div>
+      </a>
+      <a href="https://youtu.be/vxfK6OtjXWg" class="aula-card" target="_blank">
+        <img src="https://i.ytimg.com/vi/vxfK6OtjXWg/hqdefault.jpg" alt="Aula 11" class="aula-thumb">
+        <div class="aula-content">
+          <p class="aula-numero">Aula 11</p>
+          <h2 class="aula-titulo">Energia Potencial</h2>
+          <p class="aula-desc">Energia Potencial Gravitacional, Energia Potencial Elástica, Conservação de Energia. Exercícios do Halliday resolvidos.</p>
+        </div>
+      </a>
+      <a href="https://youtu.be/QoX-KQPRBzI" class="aula-card" target="_blank">
+        <img src="https://i.ytimg.com/vi/QoX-KQPRBzI/hqdefault.jpg" alt="Aula 12" class="aula-thumb">
+        <div class="aula-content">
+          <p class="aula-numero">Aula 12</p>
+          <h2 class="aula-titulo">Centro de Massa e Momento Linear</h2>
+          <p class="aula-desc">Centro de Massa, Momento Linear, Segunda Lei de Newton para o Centro de Massa. Exercícios do Halliday resolvidos.</p>
+        </div>
+      </a>
+      <a href="https://youtu.be/rFtT6iJuNM0" class="aula-card" target="_blank">
+        <img src="https://i.ytimg.com/vi/rFtT6iJuNM0/hqdefault.jpg" alt="Aula 13" class="aula-thumb">
+        <div class="aula-content">
+          <p class="aula-numero">Aula 13</p>
+          <h2 class="aula-titulo">Impulso</h2>
+          <p class="aula-desc">Impulso e mudança do momento linear. Exercício do Halliday resolvido.</p>
+        </div>
+      </a>
+      <a href="https://youtu.be/_Z9G4P22pJQ" class="aula-card" target="_blank">
+        <img src="https://i.ytimg.com/vi/_Z9G4P22pJQ/hqdefault.jpg" alt="Aula 14" class="aula-thumb">
+        <div class="aula-content">
+          <p class="aula-numero">Aula 14</p>
+          <h2 class="aula-titulo">Colisões</h2>
+          <p class="aula-desc">Colisões, Colisão Inelástica, Colisão Elástica, Colisão em 2 dimensões. Exercício do Halliday resolvido.</p>
+        </div>
+      </a>
+    </div>
+
+    <a href="index.html" class="voltar">Voltar para a página de Física</a>
+  </div>
+
+  <footer>
+    <p>© 2024 DougFísica. Todos os direitos reservados.</p>
+  </footer>
+</body>
+</html> 

@@ -40,9 +40,11 @@
 
         .simulations-grid {
             display: grid;
-            grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+            grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
             gap: 25px;
             padding: 15px;
+            max-width: 900px;
+            margin: 0 auto;
         }
 
         .simulation-card {
@@ -53,8 +55,11 @@
             transition: transform 0.3s ease, box-shadow 0.3s ease;
             text-decoration: none;
             color: inherit;
-            max-width: 300px;
+            width: 200px;
+            height: 200px;
             margin: 0 auto;
+            display: flex;
+            flex-direction: column;
         }
 
         .simulation-card:hover {
@@ -63,39 +68,17 @@
         }
 
         .card-header {
-            padding: 15px;
+            flex: 1;
+            display: flex;
+            align-items: center;
+            justify-content: center;
             color: white;
             text-align: center;
             font-weight: 600;
             font-size: 1.2em;
             text-shadow: 1px 1px 2px rgba(0,0,0,0.2);
-        }
-
-        .card-content {
             padding: 20px;
-        }
-
-        .card-description {
-            color: #34495e;
-            line-height: 1.5;
-            font-size: 0.95em;
-            margin-bottom: 15px;
-        }
-
-        .card-button {
-            display: inline-block;
-            padding: 8px 16px;
-            background: linear-gradient(145deg, #4CAF50, #43A047);
-            color: white;
-            text-decoration: none;
-            border-radius: 20px;
-            font-weight: 500;
-            font-size: 0.9em;
-            transition: transform 0.2s ease;
-        }
-
-        .card-button:hover {
-            transform: scale(1.05);
+            word-wrap: break-word;
         }
 
         .back-button {
@@ -129,6 +112,23 @@
         .riemann-header {
             background: linear-gradient(45deg, #9b59b6, #8e44ad);
         }
+
+        @media (max-width: 600px) {
+            .simulations-grid {
+                grid-template-columns: repeat(2, 1fr);
+                gap: 15px;
+            }
+            
+            .simulation-card {
+                width: 150px;
+                height: 150px;
+            }
+
+            .card-header {
+                font-size: 1em;
+                padding: 15px;
+            }
+        }
     </style>
 </head>
 <body>
@@ -143,27 +143,11 @@
                 <div class="card-header waves-header">
                     Ondas Senoidais
                 </div>
-                <div class="card-content">
-                    <p class="card-description">
-                        Explore o comportamento das ondas senoidais através de uma simulação interativa. 
-                        Ajuste parâmetros como amplitude, número de onda, frequência angular e fase inicial 
-                        para visualizar como eles afetam a propagação da onda.
-                    </p>
-                    <div class="card-button">Acessar Simulação</div>
-                </div>
             </a>
 
             <a href="MHS3.html" class="simulation-card">
                 <div class="card-header mhs-header">
                     Movimento Harmônico Simples
-                </div>
-                <div class="card-content">
-                    <p class="card-description">
-                        Visualize o movimento harmônico simples de uma massa presa a uma mola. 
-                        Experimente diferentes amplitudes, frequências angulares e fases iniciais, 
-                        observando o movimento em tempo real e seu gráfico correspondente.
-                    </p>
-                    <div class="card-button">Acessar Simulação</div>
                 </div>
             </a>
 
@@ -171,27 +155,11 @@
                 <div class="card-header force-header">
                     Segunda Lei de Newton
                 </div>
-                <div class="card-content">
-                    <p class="card-description">
-                        Experimente a Segunda Lei de Newton em ação! Aplique forças em um bloco 
-                        e observe como sua aceleração, velocidade e posição mudam em tempo real. 
-                        Uma excelente ferramenta para entender a relação entre força, massa e aceleração.
-                    </p>
-                    <div class="card-button">Acessar Simulação</div>
-                </div>
             </a>
 
             <a href="Soma de Riemann.html" class="simulation-card">
                 <div class="card-header riemann-header">
                     Soma de Riemann
-                </div>
-                <div class="card-content">
-                    <p class="card-description">
-                        Explore o conceito de integração através da Soma de Riemann. 
-                        Visualize como a área sob uma curva pode ser aproximada usando retângulos, 
-                        ajuste o número de retângulos e observe a precisão da aproximação.
-                    </p>
-                    <div class="card-button">Acessar Simulação</div>
                 </div>
             </a>
         </div>

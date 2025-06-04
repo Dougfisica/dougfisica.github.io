@@ -1,0 +1,354 @@
+<!DOCTYPE html>
+<html lang="pt-br">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Física 3 | Aulas</title>
+  <meta name="description" content="Aulas de Física 3: Eletricidade, Magnetismo e Circuitos. Material didático completo com vídeos e exercícios.">
+  <meta name="keywords" content="física 3, eletricidade, magnetismo, circuitos, eletromagnetismo, aulas, UFPR">
+  <link rel="canonical" href="fisica3.html">
+  <!-- Open Graph -->
+  <meta property="og:type" content="website">
+  <meta property="og:title" content="Física 3 | Aulas">
+  <meta property="og:description" content="Aulas de Física 3: Eletricidade, Magnetismo e Circuitos. Material didático completo com vídeos e exercícios.">
+  <meta property="og:url" content="fisica3.html">
+  <!-- Twitter Card -->
+  <meta name="twitter:card" content="summary">
+  <meta name="twitter:title" content="Física 3 | Aulas">
+  <meta name="twitter:description" content="Aulas de Física 3: Eletricidade, Magnetismo e Circuitos. Material didático completo com vídeos e exercícios.">
+  
+  <!-- Google tag (gtag.js) -->
+  <script async src="https://www.googletagmanager.com/gtag/js?id=G-83359NB2SY"></script>
+  <script>
+    window.dataLayer = window.dataLayer || [];
+    function gtag(){dataLayer.push(arguments);}
+    gtag('js', new Date());
+    gtag('config', 'G-83359NB2SY');
+  </script>
+
+  <style>
+    @import url('https://fonts.googleapis.com/css2?family=Montserrat:wght@700&family=Roboto:wght@400;500&display=swap');
+    body {
+      font-family: 'Roboto', Arial, sans-serif;
+      margin: 0;
+      background: #fff;
+      color: #222;
+      min-height: 100vh;
+      display: flex;
+      flex-direction: column;
+    }
+    .main-wrapper {
+      flex: 1 0 auto;
+    }
+    h1 {
+      font-family: 'Montserrat', Arial, sans-serif;
+      font-size: 2.8rem;
+      text-align: center;
+      font-weight: 700;
+      margin: 50px 0 0 0;
+      letter-spacing: 1px;
+    }
+    .title-underline {
+      width: 320px;
+      height: 8px;
+      background: #FFCDD2;
+      margin: 18px auto 32px auto;
+      border-radius: 4px;
+    }
+    .aulas-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+      gap: 24px;
+      margin: 36px auto;
+      max-width: 1200px;
+      padding: 0 16px;
+    }
+    .aula-card {
+      background: #fff;
+      border-radius: 12px;
+      box-shadow: 0 4px 16px rgba(0,0,0,0.1);
+      overflow: hidden;
+      transition: all 0.2s ease;
+      text-decoration: none;
+      color: inherit;
+      display: flex;
+      flex-direction: column;
+    }
+    .aula-card:hover {
+      transform: translateY(-4px);
+      box-shadow: 0 6px 24px rgba(0,0,0,0.15);
+    }
+    .aula-thumb {
+      width: 100%;
+      aspect-ratio: 16/9;
+      object-fit: cover;
+    }
+    .aula-content {
+      padding: 20px;
+      display: flex;
+      flex-direction: column;
+      gap: 8px;
+    }
+    .aula-numero {
+      font-family: 'Montserrat', Arial, sans-serif;
+      font-size: 1.2rem;
+      color: #D32F2F;
+      font-weight: 700;
+      margin: 0;
+    }
+    .aula-titulo {
+      font-family: 'Montserrat', Arial, sans-serif;
+      font-size: 1.4rem;
+      color: #222;
+      font-weight: 700;
+      margin: 0;
+      line-height: 1.3;
+    }
+    .aula-desc {
+      font-size: 0.95rem;
+      color: #666;
+      margin: 0;
+      line-height: 1.5;
+      display: -webkit-box;
+      -webkit-line-clamp: 3;
+      -webkit-box-orient: vertical;
+      overflow: hidden;
+    }
+    footer {
+      width: 100%;
+      text-align: center;
+      color: #222;
+      font-size: 1.08rem;
+      padding: 24px 0 19px 0;
+      background: transparent;
+      font-family: 'Roboto', Arial, sans-serif;
+      opacity: 0.85;
+      letter-spacing: .2px;
+    }
+    a.voltar {
+      display: block;
+      margin: 50px auto 0 auto;
+      width: fit-content;
+      text-align: center;
+      font-size: 1.13rem;
+      color: #D32F2F;
+      text-decoration: underline;
+      font-weight: 500;
+      opacity: .88;
+    }
+    a.voltar:hover { 
+      opacity: 1; 
+      color: #B71C1C;
+    }
+    @media (max-width: 600px) {
+      h1 { 
+        font-size: 2rem; 
+        margin-top: 26px;
+      }
+      .title-underline { 
+        width: 200px; 
+        height: 6px; 
+      }
+      .aulas-grid { 
+        gap: 16px; 
+        padding: 0 12px;
+      }
+      .aula-content { 
+        padding: 16px;
+      }
+      .aula-numero {
+        font-size: 1.1rem;
+      }
+      .aula-titulo {
+        font-size: 1.2rem;
+      }
+      .aula-desc {
+        font-size: 0.9rem;
+      }
+    }
+  </style>
+</head>
+<body>
+  <div class="main-wrapper">
+    <h1>Física 3</h1>
+    <div class="title-underline"></div>
+    
+    <div class="aulas-grid">
+      <a href="https://youtu.be/jiTeuOrlkgw" class="aula-card" target="_blank">
+        <img src="https://i.ytimg.com/vi/jiTeuOrlkgw/hqdefault.jpg" alt="Aula 1" class="aula-thumb">
+        <div class="aula-content">
+          <p class="aula-numero">Aula 1</p>
+          <h2 class="aula-titulo">Lei de Coulomb</h2>
+          <p class="aula-desc">Introdução ao eletromagnetismo, carga elementar, condutores e isolantes, Lei de Coulomb, superposição de forças.</p>
+        </div>
+      </a>
+      <a href="https://youtu.be/2cp04QAbgdc" class="aula-card" target="_blank">
+        <img src="https://i.ytimg.com/vi/2cp04QAbgdc/hqdefault.jpg" alt="Aula 2 Parte 1" class="aula-thumb">
+        <div class="aula-content">
+          <p class="aula-numero">Aula 2 Parte 1</p>
+          <h2 class="aula-titulo">Campo Elétrico</h2>
+          <p class="aula-desc">O que é campo elétrico, força a partir do campo elétrico, linhas de campo, exercícios do Halliday.</p>
+        </div>
+      </a>
+      <a href="https://youtu.be/yWYHrWE5o_s" class="aula-card" target="_blank">
+        <img src="https://i.ytimg.com/vi/yWYHrWE5o_s/hqdefault.jpg" alt="Aula 2 Parte 2" class="aula-thumb">
+        <div class="aula-content">
+          <p class="aula-numero">Aula 2 Parte 2</p>
+          <h2 class="aula-titulo">Campo Elétrico Produzido por uma Partícula Carregada</h2>
+          <p class="aula-desc">Campo elétrico produzido por uma partícula carregada, princípio da superposição, exemplos com duas e três cargas.</p>
+        </div>
+      </a>
+      <a href="https://youtu.be/Pw1nI1k0Eys" class="aula-card" target="_blank">
+        <img src="https://i.ytimg.com/vi/Pw1nI1k0Eys/hqdefault.jpg" alt="Aula 2 Parte 3" class="aula-thumb">
+        <div class="aula-content">
+          <p class="aula-numero">Aula 2 Parte 3</p>
+          <h2 class="aula-titulo">Campo Elétrico Produzido por um Dipolo</h2>
+          <p class="aula-desc">O que é um dipolo elétrico, campo elétrico produzido por um dipolo.</p>
+        </div>
+      </a>
+      <a href="https://youtu.be/thUKdJ47_Q8" class="aula-card" target="_blank">
+        <img src="https://i.ytimg.com/vi/thUKdJ47_Q8/hqdefault.jpg" alt="Aula 2 Parte 4" class="aula-thumb">
+        <div class="aula-content">
+          <p class="aula-numero">Aula 2 Parte 4</p>
+          <h2 class="aula-titulo">Campo Elétrico Produzido por uma Linha de Carga</h2>
+          <p class="aula-desc">Campo elétrico produzido por uma linha de carga.</p>
+        </div>
+      </a>
+      <a href="https://youtu.be/R_eBDhZkqFo" class="aula-card" target="_blank">
+        <img src="https://i.ytimg.com/vi/R_eBDhZkqFo/hqdefault.jpg" alt="Aula 2 Parte 5" class="aula-thumb">
+        <div class="aula-content">
+          <p class="aula-numero">Aula 2 Parte 5</p>
+          <h2 class="aula-titulo">Campo Elétrico Produzido por um Disco Carregado</h2>
+          <p class="aula-desc">Campo elétrico produzido por um disco carregado.</p>
+        </div>
+      </a>
+      <a href="https://youtu.be/d8nDzIsIGwM" class="aula-card" target="_blank">
+        <img src="https://i.ytimg.com/vi/d8nDzIsIGwM/hqdefault.jpg" alt="Aula 3" class="aula-thumb">
+        <div class="aula-content">
+          <p class="aula-numero">Aula 3</p>
+          <h2 class="aula-titulo">Fluxo de Campo Elétrico</h2>
+          <p class="aula-desc">Fluxo de campo elétrico, cálculo do fluxo, exemplos práticos com cubo e exercícios do Halliday.</p>
+        </div>
+      </a>
+      <a href="https://youtu.be/OJ1HIri99y0" class="aula-card" target="_blank">
+        <img src="https://i.ytimg.com/vi/OJ1HIri99y0/hqdefault.jpg" alt="Aula 4" class="aula-thumb">
+        <div class="aula-content">
+          <p class="aula-numero">Aula 4</p>
+          <h2 class="aula-titulo">Lei de Gauss</h2>
+          <p class="aula-desc">Lei de Gauss, aplicações para carga pontual, condutor carregado, simetria cilíndrica, simetria plana e simetria esférica.</p>
+        </div>
+      </a>
+      <a href="https://youtu.be/l-1KybQV_yw" class="aula-card" target="_blank">
+        <img src="https://i.ytimg.com/vi/l-1KybQV_yw/hqdefault.jpg" alt="Aula 5" class="aula-thumb">
+        <div class="aula-content">
+          <p class="aula-numero">Aula 5</p>
+          <h2 class="aula-titulo">Potencial Elétrico (Parte 1)</h2>
+          <p class="aula-desc">Potencial elétrico e voltagem, energia potencial elétrica, escolhendo V=0 e U=0 no infinito, cálculo do potencial elétrico, superfícies equipotenciais.</p>
+        </div>
+      </a>
+      <a href="https://youtu.be/iN9Dd_DTRRU" class="aula-card" target="_blank">
+        <img src="https://i.ytimg.com/vi/iN9Dd_DTRRU/hqdefault.jpg" alt="Aula 6" class="aula-thumb">
+        <div class="aula-content">
+          <p class="aula-numero">Aula 6</p>
+          <h2 class="aula-titulo">Potencial Elétrico (Parte 2)</h2>
+          <p class="aula-desc">Potencial de uma partícula carregada, campo elétrico a partir do potencial, energia potencial de um sistema de partículas, potencial dentro de um condutor.</p>
+        </div>
+      </a>
+      <a href="https://youtu.be/2pcaKzzFhZw" class="aula-card" target="_blank">
+        <img src="https://i.ytimg.com/vi/2pcaKzzFhZw/hqdefault.jpg" alt="Aula 7" class="aula-thumb">
+        <div class="aula-content">
+          <p class="aula-numero">Aula 7</p>
+          <h2 class="aula-titulo">Capacitância (Parte 1)</h2>
+          <p class="aula-desc">Capacitores, capacitância, capacitor de placas paralelas, capacitor cilíndrico, capacitor esférico, esfera isolada.</p>
+        </div>
+      </a>
+      <a href="https://youtu.be/c0ZJ7XDbhaE" class="aula-card" target="_blank">
+        <img src="https://i.ytimg.com/vi/c0ZJ7XDbhaE/hqdefault.jpg" alt="Aula 8" class="aula-thumb">
+        <div class="aula-content">
+          <p class="aula-numero">Aula 8</p>
+          <h2 class="aula-titulo">Capacitância (Parte 2)</h2>
+          <p class="aula-desc">Capacitores em paralelo e em série, energia armazenada em um capacitor, densidade de energia, capacitor com um dielétrico.</p>
+        </div>
+      </a>
+      <a href="https://youtu.be/Q_cvD3HPso4" class="aula-card" target="_blank">
+        <img src="https://i.ytimg.com/vi/Q_cvD3HPso4/hqdefault.jpg" alt="Aula 9" class="aula-thumb">
+        <div class="aula-content">
+          <p class="aula-numero">Aula 9</p>
+          <h2 class="aula-titulo">Corrente e Resistência (Parte 1)</h2>
+          <p class="aula-desc">Corrente elétrica, densidade de corrente, resistência, resistividade.</p>
+        </div>
+      </a>
+      <a href="https://youtu.be/jfJ9aBxQ6aI" class="aula-card" target="_blank">
+        <img src="https://i.ytimg.com/vi/jfJ9aBxQ6aI/hqdefault.jpg" alt="Aula 10" class="aula-thumb">
+        <div class="aula-content">
+          <p class="aula-numero">Aula 10</p>
+          <h2 class="aula-titulo">Corrente e Resistência (Parte 2)</h2>
+          <p class="aula-desc">Lei de Ohm, potência, potência devido a resistência, semicondutores, supercondutividade.</p>
+        </div>
+      </a>
+      <a href="https://youtu.be/zAZCjml2V5M" class="aula-card" target="_blank">
+        <img src="https://i.ytimg.com/vi/zAZCjml2V5M/hqdefault.jpg" alt="Aula 11" class="aula-thumb">
+        <div class="aula-content">
+          <p class="aula-numero">Aula 11</p>
+          <h2 class="aula-titulo">Circuitos (Parte 1)</h2>
+          <p class="aula-desc">Baterias reais e ideais, circuitos com resistências, regra dos nós (1ª Lei de Kirchoff), regra das malhas (2ª Lei de Kirchoff), associação de resistores.</p>
+        </div>
+      </a>
+      <a href="https://youtu.be/q1tkpZTZse8" class="aula-card" target="_blank">
+        <img src="https://i.ytimg.com/vi/q1tkpZTZse8/hqdefault.jpg" alt="Aula 12" class="aula-thumb">
+        <div class="aula-content">
+          <p class="aula-numero">Aula 12</p>
+          <h2 class="aula-titulo">Circuitos (Parte 2)</h2>
+          <p class="aula-desc">Voltímetro, amperímetro, circuitos mais complexos, circuito RC.</p>
+        </div>
+      </a>
+      <a href="https://youtu.be/pyukjbUhetQ" class="aula-card" target="_blank">
+        <img src="https://i.ytimg.com/vi/pyukjbUhetQ/hqdefault.jpg" alt="Aula 13" class="aula-thumb">
+        <div class="aula-content">
+          <p class="aula-numero">Aula 13</p>
+          <h2 class="aula-titulo">Campo Magnético (Parte 1)</h2>
+          <p class="aula-desc">Campo magnético, força devido a um campo magnético, partícula em um campo magnético, fio em um campo magnético.</p>
+        </div>
+      </a>
+      <a href="https://youtu.be/0i_7sG--3m8" class="aula-card" target="_blank">
+        <img src="https://i.ytimg.com/vi/0i_7sG--3m8/hqdefault.jpg" alt="Aula 14" class="aula-thumb">
+        <div class="aula-content">
+          <p class="aula-numero">Aula 14</p>
+          <h2 class="aula-titulo">Campo Magnético (Parte 2)</h2>
+          <p class="aula-desc">Torque em uma espira, motores elétricos, momento dipolar magnético, descoberta do elétron.</p>
+        </div>
+      </a>
+      <a href="https://youtu.be/BxD2ZyaSwQY" class="aula-card" target="_blank">
+        <img src="https://i.ytimg.com/vi/BxD2ZyaSwQY/hqdefault.jpg" alt="Aula 15" class="aula-thumb">
+        <div class="aula-content">
+          <p class="aula-numero">Aula 15</p>
+          <h2 class="aula-titulo">Biot-Savart e Lei de Ampere (Parte 1)</h2>
+          <p class="aula-desc">Lei de Biot-Savart, Lei de Ampere, campo magnético solenóide, campo magnético no interior de um fio, força entre duas correntes paralelas.</p>
+        </div>
+      </a>
+      <a href="https://youtu.be/IPzSWAz6P7A" class="aula-card" target="_blank">
+        <img src="https://i.ytimg.com/vi/IPzSWAz6P7A/hqdefault.jpg" alt="Aula 16" class="aula-thumb">
+        <div class="aula-content">
+          <p class="aula-numero">Aula 16</p>
+          <h2 class="aula-titulo">Biot-Savart - Fio Infinito e Arco de Circunferência</h2>
+          <p class="aula-desc">Campo magnético fio longo infinito, campo magnético arco de circunferência.</p>
+        </div>
+      </a>
+      <a href="https://youtu.be/TMQW8yxjiYE" class="aula-card" target="_blank">
+        <img src="https://i.ytimg.com/vi/TMQW8yxjiYE/hqdefault.jpg" alt="Aula 17" class="aula-thumb">
+        <div class="aula-content">
+          <p class="aula-numero">Aula 17</p>
+          <h2 class="aula-titulo">Lei de Indução de Faraday e Lei de Lenz</h2>
+          <p class="aula-desc">Lei de Indução de Faraday, fluxo de campo magnético, Lei de Lenz.</p>
+        </div>
+      </a>
+    </div>
+
+    <a href="index.html" class="voltar">Voltar para a página de Física</a>
+  </div>
+
+  <footer>
+    <p>© 2024 DougFísica. Todos os direitos reservados.</p>
+  </footer>
+</body>
+</html> 
