@@ -1,215 +1,52 @@
-<div id="ufprcal" style="max-width:800px;margin:0 auto;font-family:sans-serif;background:#f6f9fc;padding:0 10px;">
+
+
+<div id="ufprcal" style="max-width:600px;margin:0 auto;font-family:sans-serif;background:#f6f9fc;">
   <div style="text-align:center;padding:12px 4px 6px 4px;color:#02539a;">
-    <h1 style="margin: 2px 0 10px 0; font-size: clamp(1.4rem, 4vw, 1.8rem); font-weight: 700; color: #02539a;">
-      Calendário UFPR 2025
-    </h1>
+<h1 style="margin: 2px 0 10px 0; font-size: 1.6rem; font-weight: 700; color: #02539a;">
+  Calendário UFPR 2025
+</h1>
     <!-- Botões de Aluno/Professor -->
-    <div style="display:flex;justify-content:center;gap:8px;margin-bottom:12px;flex-wrap:wrap;">
-      <button id="ufprcal-btn-aluno" class="ufprcal-user ufprcal-user-active" onclick="ufprcalSetUser('aluno')">Aluno</button>
-      <button id="ufprcal-btn-prof" class="ufprcal-user" onclick="ufprcalSetUser('professor')">Professor</button>
+    <div style="text-align:center; margin-bottom: 8px;">
+      <button id="ufprcal-btn-aluno" class="ufprcal-user ufprcal-user-active" onclick="ufprcalSetUser('aluno')" style="background:#2196f3;color:#fff;border:none;padding:9px 18px;margin:4px 2px 6px 2px;font-size:1rem;border-radius:7px;cursor:pointer;">Aluno</button>
+      <button id="ufprcal-btn-prof" class="ufprcal-user" onclick="ufprcalSetUser('professor')" style="background:#fff;color:#2196f3;border:1.5px solid #2196f3;padding:9px 18px;margin:4px 2px 6px 2px;font-size:1rem;border-radius:7px;cursor:pointer;">Professor</button>
     </div>
+    <!-- Título -->
 
     <!-- Botões de semestre -->
-    <div style="display:flex;justify-content:center;gap:8px;margin-bottom:12px;flex-wrap:wrap;">
-      <button id="sem1" class="ufprcal-sem ufprcal-sem-active" data-sem="1" onclick="ufprcalSetSemester(1)">1º SEMESTRE</button>
-      <button id="sem2" class="ufprcal-sem" data-sem="2" onclick="ufprcalSetSemester(2)">2º SEMESTRE</button>
-    </div>
+<div style="display:flex; justify-content:center; gap:7px; margin-bottom: 10px;">
+  <button id="sem1" class="ufprcal-sem ufprcal-sem-active"
+    data-sem="1" onclick="ufprcalSetSemester(1)"
+    style="flex:1 1 120px; min-width:100px; max-width:170px; padding:8px 6px;
+    background:#2196f3; color:#fff; border:none; font-size:0.99rem;
+    border-radius:7px; cursor:pointer;">1º SEMESTRE</button>
+  <button id="sem2" class="ufprcal-sem"
+    data-sem="2" onclick="ufprcalSetSemester(2)"
+    style="flex:1 1 120px; min-width:100px; max-width:170px; padding:8px 6px;
+    background:#fff; color:#2196f3; border:1.5px solid #2196f3;
+    font-size:0.99rem; border-radius:7px; cursor:pointer;">2º SEMESTRE</button>
+</div>
 
-    <input id="ufprcal-search" type="text" placeholder="Buscar evento..." />
-
+    <input id="ufprcal-search" type="text" placeholder="Buscar evento..." style="width:90%;max-width:260px;font-size:1rem;padding:8px 8px;margin:4px auto 8px auto;border-radius:7px;border:1.5px solid #2196f3;outline:none;"/>
     <!-- Filtros de tipo -->
-    <div style="display:flex;flex-wrap:wrap;justify-content:center;gap:6px;margin:4px 0 16px 0;">
-      <button id="filt-all" class="ufprcal-filter ufprcal-filter-active" data-type="all" onclick="ufprcalSetFilter('all')">Todos</button>
-      <button id="filt-iniciofim" class="ufprcal-filter" data-type="iniciofim" onclick="ufprcalSetFilter('iniciofim')">Início/Fim</button>
-      <button id="filt-exames" class="ufprcal-filter" data-type="exames" onclick="ufprcalSetFilter('exames')">Exames</button>
-      <button id="filt-feriado" class="ufprcal-filter" data-type="feriado" onclick="ufprcalSetFilter('feriado')">Feriados</button>
-      <button id="filt-matricula" class="ufprcal-filter" data-type="matricula" onclick="ufprcalSetFilter('matricula')">Matrícula</button>
-      <button id="filt-nota" class="ufprcal-filter" data-type="nota" onclick="ufprcalSetFilter('nota')">Notas</button>
-      <button id="filt-trancamento" class="ufprcal-filter" data-type="trancamento" onclick="ufprcalSetFilter('trancamento')">Trancamento</button>
-      <button id="filt-evento" class="ufprcal-filter" data-type="evento" onclick="ufprcalSetFilter('evento')">Eventos</button>
-      <button id="filt-prazo" class="ufprcal-filter" data-type="prazo" onclick="ufprcalSetFilter('prazo')">Prazos</button>
+    <div style="display:flex;flex-wrap:wrap;justify-content:center;gap:6px;margin:4px 0 12px 0;">
+      <button id="filt-all" class="ufprcal-filter ufprcal-filter-active" data-type="all" onclick="ufprcalSetFilter('all')" style="padding:8px 12px;border:none;background:#2196f3;color:#fff;border-radius:7px;cursor:pointer;font-size:.97rem;">Todos</button>
+      <button id="filt-iniciofim" class="ufprcal-filter" data-type="iniciofim" onclick="ufprcalSetFilter('iniciofim')" style="padding:8px 12px;border:1px solid #2196f3;background:#e3f1fc;color:#02539a;border-radius:7px;cursor:pointer;font-size:.97rem;">Início/Fim</button>
+      <button id="filt-exames" class="ufprcal-filter" data-type="exames" onclick="ufprcalSetFilter('exames')" style="padding:8px 12px;border:1px solid #2196f3;background:#e3f1fc;color:#02539a;border-radius:7px;cursor:pointer;font-size:.97rem;">Exames</button>
+      <button id="filt-feriado" class="ufprcal-filter" data-type="feriado" onclick="ufprcalSetFilter('feriado')" style="padding:8px 12px;border:1px solid #2196f3;background:#e3f1fc;color:#02539a;border-radius:7px;cursor:pointer;font-size:.97rem;">Feriados</button>
+      <button id="filt-matricula" class="ufprcal-filter" data-type="matricula" onclick="ufprcalSetFilter('matricula')" style="padding:8px 12px;border:1px solid #2196f3;background:#e3f1fc;color:#02539a;border-radius:7px;cursor:pointer;font-size:.97rem;">Matrícula</button>
+      <button id="filt-nota" class="ufprcal-filter" data-type="nota" onclick="ufprcalSetFilter('nota')" style="padding:8px 12px;border:1px solid #2196f3;background:#e3f1fc;color:#02539a;border-radius:7px;cursor:pointer;font-size:.97rem;">Notas</button>
+      <button id="filt-trancamento" class="ufprcal-filter" data-type="trancamento" onclick="ufprcalSetFilter('trancamento')" style="padding:8px 12px;border:1px solid #2196f3;background:#e3f1fc;color:#02539a;border-radius:7px;cursor:pointer;font-size:.97rem;">Trancamento</button>
+      <button id="filt-evento" class="ufprcal-filter" data-type="evento" onclick="ufprcalSetFilter('evento')" style="padding:8px 12px;border:1px solid #2196f3;background:#e3f1fc;color:#02539a;border-radius:7px;cursor:pointer;font-size:.97rem;">Eventos</button>
+      <button id="filt-prazo" class="ufprcal-filter" data-type="prazo" onclick="ufprcalSetFilter('prazo')" style="padding:8px 12px;border:1px solid #2196f3;background:#e3f1fc;color:#02539a;border-radius:7px;cursor:pointer;font-size:.97rem;">Prazos</button>
     </div>
   </div>
   <div id="ufprcal-main" style="padding:3px 2vw 18px 2vw;"></div>
   <style>
-    /* Estilos base */
+    /* Apenas para garantir visualização dos botões ativos */
     .ufprcal-user-active {
       background: #2196f3 !important;
       color: #fff !important;
       border: none !important;
-      box-shadow: 0 2px 4px rgba(33, 150, 243, 0.3) !important;
-    }
-
-    /* Estilos comuns para todos os botões */
-    #ufprcal button {
-      transition: all 0.2s ease-in-out;
-      box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
-      border: 1.5px solid transparent;
-      font-weight: 500;
-      letter-spacing: 0.3px;
-    }
-
-    #ufprcal button:hover {
-      transform: translateY(-1px);
-      box-shadow: 0 4px 8px rgba(0, 0, 0, 0.15);
-    }
-
-    #ufprcal button:active {
-      transform: translateY(1px);
-      box-shadow: 0 1px 2px rgba(0, 0, 0, 0.1);
-    }
-
-    /* Estilos específicos para botões de usuário */
-    #ufprcal-btn-aluno, 
-    #ufprcal-btn-prof {
-      background: #fff;
-      color: #2196f3;
-      border: 1.5px solid #2196f3;
-      padding: clamp(8px, 2vw, 12px) clamp(16px, 3vw, 24px);
-      margin: 4px 2px;
-      font-size: clamp(0.9rem, 2.5vw, 1.1rem);
-      border-radius: 8px;
-      cursor: pointer;
-      flex: 1 1 auto;
-      min-width: 120px;
-      max-width: 200px;
-    }
-
-    #ufprcal-btn-aluno:hover, 
-    #ufprcal-btn-prof:hover {
-      background: #e3f2fd;
-    }
-
-    /* Estilos para botões de semestre */
-    #sem1, 
-    #sem2 {
-      flex: 1 1 auto;
-      min-width: 140px;
-      max-width: 200px;
-      padding: clamp(8px, 2vw, 12px) clamp(12px, 2vw, 20px);
-      font-size: clamp(0.9rem, 2.5vw, 1.1rem);
-      border-radius: 8px;
-      cursor: pointer;
-      font-weight: 600;
-    }
-
-    #sem1 {
-      background: #2196f3;
-      color: #fff;
-      border: none;
-    }
-
-    #sem2 {
-      background: #fff;
-      color: #2196f3;
-      border: 1.5px solid #2196f3;
-    }
-
-    #sem1:hover {
-      background: #1976d2;
-    }
-
-    #sem2:hover {
-      background: #e3f2fd;
-    }
-
-    /* Estilos para botões de filtro */
-    .ufprcal-filter {
-      padding: clamp(6px, 1.5vw, 10px) clamp(10px, 2vw, 16px);
-      border-radius: 8px;
-      cursor: pointer;
-      font-size: clamp(0.85rem, 2.2vw, 1rem);
-      flex: 1 1 auto;
-      min-width: 80px;
-      max-width: 120px;
-      font-weight: 500;
-      background: #fff;
-      color: #02539a;
-      border: 1.5px solid #2196f3;
-    }
-
-    .ufprcal-filter:hover {
-      background: #e3f2fd;
-    }
-
-    .ufprcal-filter-active {
-      background: #2196f3 !important;
-      color: #fff !important;
-      border: none !important;
-      box-shadow: 0 2px 4px rgba(33, 150, 243, 0.3) !important;
-    }
-
-    .ufprcal-filter-active:hover {
-      background: #1976d2 !important;
-    }
-
-    /* Estilo para o campo de busca */
-    #ufprcal-search {
-      width: 90%;
-      max-width: 400px;
-      font-size: clamp(0.9rem, 2.5vw, 1.1rem);
-      padding: clamp(8px, 2vw, 12px) 16px;
-      margin: 4px auto 12px auto;
-      border-radius: 8px;
-      border: 1.5px solid #2196f3;
-      outline: none;
-      transition: all 0.2s ease-in-out;
-      box-shadow: 0 2px 4px rgba(0, 0, 0, 0.05);
-    }
-
-    #ufprcal-search:focus {
-      box-shadow: 0 4px 8px rgba(33, 150, 243, 0.15);
-      border-color: #1976d2;
-    }
-
-    /* Media queries para responsividade */
-    @media (max-width: 600px) {
-      #ufprcal {
-        padding: 0 5px;
-      }
-      
-      #ufprcal-main {
-        padding: 3px 1vw 12px 1vw;
-      }
-
-      #ufprcal-main > div {
-        flex-direction: column !important;
-        gap: 8px !important;
-        padding: 10px !important;
-      }
-
-      #ufprcal-main > div > div:first-child {
-        min-width: auto !important;
-        text-align: left !important;
-      }
-
-      .ufprcal-filter {
-        min-width: 70px !important;
-        max-width: 100px !important;
-        font-size: 0.8rem !important;
-        padding: 6px 8px !important;
-      }
-    }
-
-    @media (max-width: 360px) {
-      .ufprcal-filter {
-        min-width: 60px !important;
-        max-width: 90px !important;
-        font-size: 0.75rem !important;
-        padding: 4px 6px !important;
-      }
-
-      #ufprcal-btn-aluno, 
-      #ufprcal-btn-prof {
-        min-width: 100px !important;
-        font-size: 0.85rem !important;
-      }
-
-      #sem1, 
-      #sem2 {
-        min-width: 120px !important;
-        font-size: 0.85rem !important;
-      }
     }
   </style>
   <script>
@@ -217,9 +54,7 @@ function getDiaSemana(dataStr) {
   const dias = ['domingo', 'segunda', 'terça', 'quarta', 'quinta', 'sexta', 'sábado'];
   const [ano, mes, dia] = dataStr.split('-').map(Number);
   const dt = new Date(ano, mes - 1, dia);
-  const diaSemana = dias[dt.getDay()];
-  const emoji = (dt.getDay() === 0 || dt.getDay() === 6) ? ' 😢' : '';
-  return diaSemana + emoji;
+  return dias[dt.getDay()];
 }
     // ---- Configuração rápida para Google Sites (com onclick) ----
     const ufprcalEvents=[
@@ -522,23 +357,15 @@ if (!ordenados.length) {
   // Adicionar dia da semana para feriados
   let descExtra = '';
   if (e.type === 'feriado') {
-    const diaSemana = getDiaSemana(e.date);
-    descExtra = `<span style="font-weight:500;color:#026;">(${diaSemana})</span>`;
+    descExtra = `<span style="font-weight:500;color:#026;">(${getDiaSemana(e.date)})</span>`;
   }
 
   html += `
-    <div style="display:flex;gap:clamp(8px, 2vw, 12px);background:#fff;border-left:6px solid ${border};
-    border-radius:11px;margin:8px 0;padding:clamp(10px, 2vw, 14px);align-items:flex-start;${faded}">
-      <div style="font-weight:700;font-size:clamp(1rem, 2.5vw, 1.2rem);min-width:55px;color:#02539a;text-align:center;">
-        ${ufprcalFmt(e.date)}
-      </div>
+    <div style="display:flex;gap:11px;background:#fff;border-left:6px solid ${border};border-radius:11px;margin:8px 0;padding:11px 13px;align-items:flex-start;${faded}">
+      <div style="font-weight:700;font-size:1.1rem;min-width:55px;color:#02539a;text-align:center;">${ufprcalFmt(e.date)}</div>
       <div style="flex:1;">
-        <div style="font-weight:600;font-size:clamp(0.95rem, 2.5vw, 1.1rem);margin-bottom:2px;">
-          <span style="font-size:clamp(1.1rem, 3vw, 1.3rem);">${ufprcalICONS[e.type]||''}</span> ${e.title}
-        </div>
-        <div style="font-size:clamp(0.85rem, 2.2vw, 0.95rem);color:#37474f;line-height:1.4;">
-          ${e.desc||''} ${descExtra}
-        </div>
+        <div style="font-weight:600;font-size:1rem;margin-bottom:2px;"><span style="font-size:1.23rem;">${ufprcalICONS[e.type]||''}</span> ${e.title}</div>
+        <div style="font-size:.94rem;color:#37474f;">${e.desc||''} ${descExtra}</div>
       </div>
     </div>`;
 });
