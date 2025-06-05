@@ -1,0 +1,479 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+  <meta charset="UTF-8">
+  <title>DOUG.FÍSICA - Movimento Uniformemente Variado</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <style>
+    :root {
+      --color-x0: #e74c3c;
+      --color-v0: #27ae60;
+      --color-a: #2980b9;
+      --color-bg1: #eef2f3;
+      --color-bg2: #ffffff;
+      --color-highlight: #f1c40f;
+    }
+    body {
+      font-family: 'Segoe UI', Arial, sans-serif;
+      background: linear-gradient(180deg, var(--color-bg1), var(--color-bg2));
+      margin: 0;
+      min-height: 100vh;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      padding: 1.5rem 0;
+    }
+    h1 {
+      margin-bottom: 0.8rem;
+      font-size: 2.2rem;
+      text-shadow: 0 2px 8px rgba(0,0,0,0.07);
+      letter-spacing: 0.5px;
+      color: #222;
+    }
+    .equation, .equation-values {
+      font-size: 1.7rem;
+      font-weight: 600;
+      margin-bottom: 0.1rem;
+      margin-top: 0.2rem;
+      text-align: center;
+      text-shadow: 0 1px 3px rgba(0,0,0,0.06);
+    }
+    .equation span, .equation-values span {
+      font-weight: bold;
+    }
+    .x0-color { color: var(--color-x0);}
+    .v0-color { color: var(--color-v0);}
+    .a-color { color: var(--color-a);}
+    .slider-group {
+      display: flex;
+      gap: 1rem;
+      width: 900px;
+      max-width: 96vw;
+      justify-content: space-between;
+      margin: 1.2rem auto 0.2rem auto;
+    }
+    .slider-box {
+      flex: 1 1 180px;
+      min-width: 170px;
+      border-radius: 13px;
+      color: #fff;
+      box-shadow: 0 4px 16px rgba(0,0,0,0.11);
+      display: flex;
+      flex-direction: column;
+      align-items: stretch;
+      padding: 0.8rem 1.1rem;
+      font-size: 1rem;
+      background: #fff;
+      border-left: 7px solid;
+    }
+    .slider-x0 { border-color: var(--color-x0); background: linear-gradient(90deg, #fff, #ffeaea); color: var(--color-x0);}
+    .slider-v0 { border-color: var(--color-v0); background: linear-gradient(90deg, #fff, #eafff1); color: var(--color-v0);}
+    .slider-a  { border-color: var(--color-a); background: linear-gradient(90deg, #fff, #eaf3ff); color: var(--color-a);}
+    .slider-box label {
+      font-weight: bold;
+      margin-bottom: 0.1rem;
+    }
+    .slider-box input[type="range"] {
+      width: 100%;
+    }
+    .slider-box .val {
+      margin-top: 0.2rem;
+      font-size: 1.01rem;
+      font-weight: bold;
+      color: #222;
+    }
+    .controls-group {
+      display: flex;
+      gap: 2.5rem;
+      justify-content: center;
+      align-items: center;
+      margin: 1.2rem 0 0.5rem 0;
+      flex-wrap: wrap;
+    }
+    .controls-box {
+      background: #fffbe6;
+      border-radius: 10px;
+      padding: 0.7rem 1.1rem;
+      font-size: 1.06rem;
+      color: #b68c06;
+      box-shadow: 0 2px 8px rgba(0,0,0,0.07);
+      display: flex;
+      align-items: center;
+      gap: 0.5rem;
+    }
+    .controls-box label {
+      margin: 0 0.2rem 0 0;
+      font-weight: bold;
+      color: #bc9800;
+    }
+    .controls-box input[type="number"] {
+      width: 70px;
+      border-radius: 6px;
+      border: 1.2px solid #ffe277;
+      padding: 2px 7px;
+      font-size: 1.08rem;
+      text-align: center;
+      background: #fffbe6;
+      color: #b68c06;
+      outline: none;
+      margin-left: 0.2rem;
+    }
+    .adjust-btn {
+      background: var(--color-highlight);
+      color: #fff;
+      border: none;
+      padding: 0.72rem 2.1rem;
+      font-size: 1.06rem;
+      font-weight: 600;
+      border-radius: 30px;
+      box-shadow: 0 3px 9px rgba(255,215,0,0.15);
+      margin: 1.1rem auto 1.1rem auto;
+      cursor: pointer;
+      transition: transform .16s, box-shadow .16s;
+      display: block;
+      letter-spacing: 0.03em;
+    }
+    .adjust-btn:hover {
+      transform: translateY(-2px) scale(1.03);
+      box-shadow: 0 8px 20px rgba(255,215,0,0.21);
+    }
+    .graph-container {
+      width: 900px;
+      max-width: 97vw;
+      margin: 0 auto;
+      border-radius: 13px;
+      background: #fafcff;
+      box-shadow: 0 4px 18px rgba(46,204,113,0.08);
+      border: 1.2px solid #dde6ee;
+      padding: 1.2rem 0.4rem 0.7rem 0.4rem;
+    }
+    canvas {
+      width: 100%;
+      height: 420px;
+      max-width: 880px;
+      background: #f8fafb;
+      border: 1.5px solid #e0e5e8;
+      border-radius: 10px;
+      display: block;
+      margin: 0 auto;
+    }
+    .info-panel {
+      margin: 1.7rem 0 0.3rem 0;
+      background: linear-gradient(90deg, #e6f4fa 0%, #f6fffa 100%);
+      border-radius: 12px;
+      box-shadow: 0 3px 13px rgba(52,152,219,0.06);
+      padding: 1.15rem 2rem;
+      display: flex;
+      gap: 2.3rem;
+      justify-content: center;
+      font-size: 1.17rem;
+      font-weight: 600;
+      color: #276177;
+      flex-wrap: wrap;
+    }
+    .info-panel span {
+      font-weight: bold;
+      color: #45b7d1;
+      margin-left: 4px;
+      font-size: 1.19em;
+    }
+    @media (max-width: 990px) {
+      .slider-group, .graph-container {max-width: 99vw; width: 100%;}
+      .slider-group {gap: 0.5rem;}
+    }
+    @media (max-width: 720px) {
+      .slider-group {flex-direction: column; gap: 1.2rem;}
+      .graph-container {padding: 0.4rem 0.2rem 0.5rem 0.2rem;}
+      .info-panel {padding: 0.7rem 0.5rem; gap: 1.1rem;}
+    }
+  </style>
+</head>
+<body>
+  <h1>DOUG.FÍSICA - MOVIMENTO UNIFORMEMENTE VARIADO</h1>
+  <div class="equation">
+    x = <span class="x0-color">x₀</span> + <span class="v0-color">v₀</span>·t + ½<span class="a-color">a</span>·t²
+  </div>
+  <div class="equation-values" id="equationValues"></div>
+
+  <div class="slider-group">
+    <div class="slider-box slider-x0">
+      <label>Posição inicial (<span class="x0-color">x₀</span>)</label>
+      <input type="range" id="x0" min="-30" max="30" step="1" value="0">
+      <span class="val" id="x0-val"></span>
+    </div>
+    <div class="slider-box slider-v0">
+      <label>Velocidade inicial (<span class="v0-color">v₀</span>)</label>
+      <input type="range" id="v0" min="-20" max="20" step="0.5" value="0">
+      <span class="val" id="v0-val"></span>
+    </div>
+    <div class="slider-box slider-a">
+      <label>Aceleração (<span class="a-color">a</span>)</label>
+      <input type="range" id="a" min="-10" max="10" step="0.1" value="1">
+      <span class="val" id="a-val"></span>
+    </div>
+  </div>
+
+  <div class="controls-group">
+    <div class="controls-box">
+      <label for="tMin">Tempo mínimo:</label>
+      <input type="number" id="tMin" value="0" min="-10" max="100" step="0.5"> s
+    </div>
+    <div class="controls-box">
+      <label for="tMax">Tempo máximo:</label>
+      <input type="number" id="tMax" value="10" min="0" max="200" step="0.5"> s
+    </div>
+    <button id="adjustY" class="adjust-btn">Ajustar eixo Y</button>
+  </div>
+
+  <div class="graph-container">
+    <canvas id="graphCanvas" width="850" height="420"></canvas>
+  </div>
+
+  <div class="info-panel">
+    <span>Posição final: <span id="finalPosition">0</span> m</span>
+    <span>Velocidade final: <span id="finalVelocity">0</span> m/s</span>
+  </div>
+
+  <script>
+    // Elementos do DOM
+    const x0Slider = document.getElementById('x0');
+    const v0Slider = document.getElementById('v0');
+    const aSlider  = document.getElementById('a');
+    const x0Val = document.getElementById('x0-val');
+    const v0Val = document.getElementById('v0-val');
+    const aVal = document.getElementById('a-val');
+    const equationValues = document.getElementById('equationValues');
+    const tMinInput = document.getElementById('tMin');
+    const tMaxInput = document.getElementById('tMax');
+    const adjustYButton = document.getElementById('adjustY');
+    const finalPositionDisplay = document.getElementById('finalPosition');
+    const finalVelocityDisplay = document.getElementById('finalVelocity');
+    const canvas = document.getElementById('graphCanvas');
+    const ctx = canvas.getContext('2d');
+
+    // Canvas settings
+    let marginL = 62, marginR = 40, marginT = 34, marginB = 56;
+    let plotWidth = canvas.width - marginL - marginR;
+    let plotHeight = canvas.height - marginT - marginB;
+
+    // Estado
+    let yMin = -50, yMax = 50;
+
+    function getVars() {
+      return {
+        x0: parseFloat(x0Slider.value),
+        v0: parseFloat(v0Slider.value),
+        a:  parseFloat(aSlider.value),
+        tMin: parseFloat(tMinInput.value),
+        tMax: parseFloat(tMaxInput.value)
+      }
+    }
+
+    function setSliderDisplays() {
+      x0Val.textContent = `${x0Slider.value} m`;
+      v0Val.textContent = `${v0Slider.value} m/s`;
+      aVal.textContent  = `${parseFloat(aSlider.value).toFixed(2)} m/s²`;
+    }
+
+    function setEquationDisplay() {
+      const {x0, v0, a} = getVars();
+      const v0Sign = v0 < 0 ? '' : '+ '; // Se v0 for negativo, não mostra o sinal de +
+      equationValues.innerHTML = 
+        `x = <span class="x0-color">${x0.toFixed(1)}</span> ${v0Sign}<span class="v0-color">${v0.toFixed(1)}</span>·t + ½(<span class="a-color">${a.toFixed(1)}</span>)·t²`;
+    }
+
+    function calculatePosition({x0, v0, a}, t) {
+      return x0 + v0 * t + 0.5 * a * t * t;
+    }
+    function calculateVelocity({v0, a}, t) {
+      return v0 + a * t;
+    }
+    function calculateAllPositions(vars) {
+      const positions = [];
+      const step = (vars.tMax - vars.tMin) / 120;
+      for(let t = vars.tMin; t <= vars.tMax; t += step) {
+        positions.push(calculatePosition(vars, t));
+      }
+      return positions;
+    }
+
+    function mapXToCanvas(t, tMin, tMax) {
+      return marginL + ((t-tMin) / (tMax-tMin)) * plotWidth;
+    }
+    function mapYToCanvas(x) {
+      return marginT + ((yMax-x) / (yMax-yMin)) * plotHeight;
+    }
+
+    function drawGrid(vars) {
+      ctx.save();
+      ctx.strokeStyle = '#e9eef7';
+      ctx.lineWidth = 1;
+
+      // Eixo t
+      let tStep = Math.ceil((vars.tMax - vars.tMin) / 8);
+      if (tStep === 0) tStep = 1;
+      ctx.font = '14px Segoe UI';
+      ctx.fillStyle = '#888';
+      ctx.textAlign = 'center';
+
+      for(let t = Math.ceil(vars.tMin); t <= Math.floor(vars.tMax); t += tStep) {
+        const x = mapXToCanvas(t, vars.tMin, vars.tMax);
+        ctx.beginPath();
+        ctx.moveTo(x, marginT);
+        ctx.lineTo(x, canvas.height - marginB);
+        ctx.stroke();
+        ctx.fillText(t.toFixed(0), x, canvas.height - marginB + 24);
+      }
+
+      // Eixo x (y)
+      let yStep = Math.ceil((yMax - yMin) / 8);
+      if (yStep === 0) yStep = 1;
+      
+      // Garantir que o passo inclua o zero
+      let yStart = Math.floor(yMin / yStep) * yStep;
+      let yEnd = Math.ceil(yMax / yStep) * yStep;
+      
+      // Se o zero não estiver incluído, ajustar o passo
+      if (yStart > 0 || yEnd < 0) {
+        yStep = Math.max(Math.abs(yStart), Math.abs(yEnd)) / 4;
+        yStart = Math.floor(yMin / yStep) * yStep;
+        yEnd = Math.ceil(yMax / yStep) * yStep;
+      }
+
+      ctx.textAlign = 'right';
+      for(let y = yStart; y <= yEnd; y += yStep) {
+        const yC = mapYToCanvas(y);
+        ctx.beginPath();
+        ctx.moveTo(marginL, yC);
+        // Limitando o tamanho da linha para não ultrapassar a seta
+        ctx.lineTo(canvas.width - marginR, yC);
+        ctx.stroke();
+        // Só desenha o texto se não for o último tick (que pode estar muito próximo da seta)
+        if (y < yEnd || yC > marginT + 20) {
+          ctx.fillText(y.toFixed(0), marginL - 9, yC + 5);
+        }
+      }
+      ctx.restore();
+    }
+
+    function drawAxes(vars) {
+      ctx.save();
+      ctx.strokeStyle = '#444';
+      ctx.lineWidth = 2;
+      ctx.beginPath();
+      // Eixo X (t)
+      const yZero = mapYToCanvas(0);
+      ctx.moveTo(marginL, yZero);
+      ctx.lineTo(canvas.width - marginR, yZero);
+      ctx.stroke();
+
+      // Eixo Y (x)
+      const xZero = (vars.tMin<=0&&vars.tMax>=0) ? mapXToCanvas(0, vars.tMin, vars.tMax) : marginL;
+      ctx.beginPath();
+      ctx.moveTo(xZero, marginT);
+      ctx.lineTo(xZero, canvas.height - marginB - 10);
+      ctx.stroke();
+
+      // Setas
+      ctx.fillStyle = '#444';
+      // t
+      ctx.beginPath();
+      ctx.moveTo(canvas.width - marginR, yZero);
+      ctx.lineTo(canvas.width - marginR - 12, yZero - 6);
+      ctx.lineTo(canvas.width - marginR - 12, yZero + 6);
+      ctx.closePath(); ctx.fill();
+      // x
+      ctx.beginPath();
+      ctx.moveTo(xZero, marginT);
+      ctx.lineTo(xZero-5, marginT+10);
+      ctx.lineTo(xZero+5, marginT+10);
+      ctx.closePath(); ctx.fill();
+
+      // Labels
+      ctx.font = '17px Segoe UI';
+      ctx.fillText('t (s)', canvas.width - marginR + 2, yZero + 18);
+      ctx.save();
+      ctx.translate(xZero-20, marginT - 8);
+      ctx.rotate(-0.17);
+      ctx.fillText('x (m)', 0, 0);
+      ctx.restore();
+      ctx.restore();
+    }
+
+    function plotFunction(vars) {
+      ctx.save();
+      ctx.strokeStyle = '#0090ff';
+      ctx.lineWidth = 3.1;
+      ctx.beginPath();
+      const step = (vars.tMax - vars.tMin) / 300;
+      let first = true;
+      for(let t = vars.tMin; t <= vars.tMax; t += step) {
+        const x = calculatePosition(vars, t);
+        const px = mapXToCanvas(t, vars.tMin, vars.tMax);
+        const py = mapYToCanvas(x);
+        if(first) { ctx.moveTo(px, py); first = false; }
+        else ctx.lineTo(px, py);
+      }
+      ctx.shadowColor = '#98e1ff';
+      ctx.shadowBlur = 8;
+      ctx.stroke();
+      ctx.restore();
+    }
+
+    function updateGraph() {
+      const vars = getVars();
+      if(vars.tMin >= vars.tMax) {
+        vars.tMin = vars.tMax - 1;
+        tMinInput.value = vars.tMin;
+      }
+      ctx.clearRect(0,0,canvas.width,canvas.height);
+      drawGrid(vars);
+      drawAxes(vars);
+      plotFunction(vars);
+
+      // Atualiza infos finais
+      const finalPos = calculatePosition(vars, vars.tMax);
+      const finalVel = calculateVelocity(vars, vars.tMax);
+      finalPositionDisplay.textContent = finalPos.toFixed(2);
+      finalVelocityDisplay.textContent = finalVel.toFixed(2);
+    }
+
+    function adjustY() {
+      const vars = getVars();
+      const pos = calculateAllPositions(vars);
+      let minPos = Math.min(...pos), maxPos = Math.max(...pos);
+      // padding visual extra
+      const delta = Math.max(2, 0.08*(maxPos-minPos));
+      if(minPos >= 0) {
+        yMin = 0;
+        yMax = Math.ceil(maxPos + delta);
+      } else if(maxPos <= 0) {
+        yMin = Math.floor(minPos - delta);
+        yMax = 0;
+      } else {
+        yMin = Math.floor(minPos - delta);
+        yMax = Math.ceil(maxPos + delta);
+      }
+      updateGraph();
+    }
+
+    // Eventos
+    [x0Slider, v0Slider, aSlider].forEach(el => {
+      el.addEventListener('input', () => {
+        setSliderDisplays();
+        setEquationDisplay();
+        updateGraph();
+      });
+    });
+    [tMinInput, tMaxInput].forEach(el => {
+      el.addEventListener('input', updateGraph);
+    });
+    adjustYButton.addEventListener('click', adjustY);
+
+    // Inicialização
+    setSliderDisplays();
+    setEquationDisplay();
+    updateGraph();
+  </script>
+</body>
+</html>
