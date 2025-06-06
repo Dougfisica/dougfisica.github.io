@@ -332,7 +332,7 @@
 </head>
 <body>
   <div class="container">
-    <h1>Física 2 - 1s 2025 - manhã</h1>
+    <h1>Física 2 - 1s 2025</h1>
     <div class="input-container">
       <label for="grrInput">Digite seu GRR:</label>
       <input type="text" id="grrInput" placeholder="Ex: 20201234" maxlength="8" pattern="[0-9]*" inputmode="numeric">
@@ -343,19 +343,49 @@
   </div>
 
 <script>
-const urlAPI = "https://script.google.com/macros/s/AKfycbxPityOQM9KLlTlEWZfvPBk6BOj6hc-JI-wgAWOfm35F9ZJIM51Z1s0htVyedfviFB6kw/exec";
+const urlsAPI = [
+  "https://script.google.com/macros/s/AKfycbxPityOQM9KLlTlEWZfvPBk6BOj6hc-JI-wgAWOfm35F9ZJIM51Z1s0htVyedfviFB6kw/exec",
+  "https://script.google.com/macros/s/AKfycbzjeofh934wP2Jds87Blhnu7i5aJteI2rCjIjjrfVyBy8zGYgb4-YJXSLbefVDjmsDkVQ/exec"
+];
 
 let avaliacoes = [];
 let alunos = [];
 
-// Carregar dados da API
-fetch(urlAPI)
-  .then(res => res.json())
-  .then(dados => {
-    avaliacoes = dados.avaliacoes;
-    alunos = dados.alunos;
+// Carregar dados de todas as APIs
+Promise.all(urlsAPI.map(url => fetch(url).then(res => res.json())))
+  .then(dadosArray => {
+    // Combinar dados de todas as APIs
+    dadosArray.forEach(dados => {
+      // Adicionar avaliações únicas
+      dados.avaliacoes.forEach(av => {
+        if (!avaliacoes.includes(av)) {
+          avaliacoes.push(av);
+        }
+      });
+      
+      // Combinar alunos, atualizando notas existentes
+      dados.alunos.forEach(novoAluno => {
+        const alunoExistente = alunos.find(a => a.grr === novoAluno.grr);
+        if (alunoExistente) {
+          // Atualizar notas existentes e adicionar novas
+          novoAluno.notas.forEach((nota, i) => {
+            if (nota !== '-' && nota !== '') {
+              alunoExistente.notas[i] = nota;
+            }
+          });
+          // Atualizar presença se disponível
+          if (novoAluno.presenca !== undefined) {
+            alunoExistente.presenca = novoAluno.presenca;
+          }
+        } else {
+          // Adicionar novo aluno
+          alunos.push(novoAluno);
+        }
+      });
+    });
   })
   .catch(erro => {
+    console.error('Erro ao carregar dados:', erro);
     mostrarErro('Erro ao carregar dados. Por favor, tente novamente mais tarde.');
   });
 
