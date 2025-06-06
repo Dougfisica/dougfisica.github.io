@@ -199,6 +199,63 @@
         padding: 0.8rem 1rem;
       }
     }
+
+    .ufpr-card.disciplinas {
+      background: #fff8e1;
+      border: 1px solid #ffe082;
+      transition: all 0.3s ease;
+    }
+
+    .ufpr-card.disciplinas .btn-title-part {
+      background: #ffecb3;
+      color: #ffa000;
+      font-size: 1.2rem;
+      font-weight: 600;
+      padding: 1rem;
+      border-bottom: 1px solid #ffe082;
+      transition: all 0.3s ease;
+    }
+
+    .ufpr-card.disciplinas .btn-desc-part {
+      color: #333;
+      padding: 1rem;
+      font-size: 0.95rem;
+      line-height: 1.4;
+      transition: all 0.3s ease;
+    }
+
+    .ufpr-card.disciplinas:hover {
+      transform: translateY(-5px);
+      box-shadow: 0 8px 16px rgba(255, 193, 7, 0.2);
+      background: #ffe082;
+      border-color: #ffb300;
+    }
+
+    .ufpr-card.disciplinas:hover .btn-title-part {
+      background: #ffe082;
+      border-bottom: 1px solid #ffd54f;
+    }
+
+    .ufpr-card.disciplinas:hover .btn-desc-part {
+      color: #000;
+    }
+
+    @media (max-width: 768px) {
+      .ufpr-card.disciplinas .btn-title-part {
+        font-size: 1.1rem;
+        padding: 0.8rem;
+      }
+
+      .ufpr-card.disciplinas .btn-desc-part {
+        font-size: 0.9rem;
+        padding: 0.8rem;
+      }
+
+      .ufpr-card.disciplinas:hover {
+        transform: translateY(-3px);
+        box-shadow: 0 4px 8px rgba(255, 193, 7, 0.2);
+      }
+    }
   </style>
 </head>
 <body>
@@ -207,13 +264,17 @@
     <div class="title-underline"></div>
     
     <div class="ufpr-grid">
+      <a href="cursos.html" class="ufpr-card">
+        <div class="btn-title-part">Grade dos Cursos</div>
+        <div class="btn-desc-part">Lista de cursos da UFPR com suas respectivas grades curriculares</div>
+      </a>
       <a href="calendarioUFPR/calendario2025.html" class="ufpr-card">
         <div class="btn-title-part">Calendário UFPR 2025</div>
         <div class="btn-desc-part">Calendário acadêmico 2025 da UFPR com todas as datas importantes</div>
       </a>
-      <a href="cursos.html" class="ufpr-card">
-        <div class="btn-title-part">Grade dos Cursos</div>
-        <div class="btn-desc-part">Lista de cursos da UFPR com suas respectivas grades curriculares</div>
+      <a href="disciplinas.html" class="ufpr-card disciplinas">
+        <div class="btn-title-part">Disciplinas Graduação</div>
+        <div class="btn-desc-part">Informações sobre as disciplinas de graduação</div>
       </a>
     </div>
 
