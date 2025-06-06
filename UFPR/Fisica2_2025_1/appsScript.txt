@@ -1,0 +1,27 @@
+function doGet(e) {
+  var ss = SpreadsheetApp.getActiveSpreadsheet();
+  var sheet = ss.getSheets()[0];
+  var data = sheet.getDataRange().getValues();
+
+  var avaliacoes = data[3].slice(2, 14);
+
+  var alunos = [];
+  for (var i = 4; i < data.length; i++) {
+    var l = data[i];
+    var grr = (l[1] || '').toString().trim().toUpperCase();
+    if (grr.indexOf('GRR') === 0) {
+      alunos.push({
+        grr: grr,
+        notas: l.slice(2, 14)
+      });
+    }
+  }
+
+  var output = {
+    avaliacoes: avaliacoes,
+    alunos: alunos
+  };
+
+  return ContentService.createTextOutput(JSON.stringify(output))
+      .setMimeType(ContentService.MimeType.JSON); // só até aqui!
+}
