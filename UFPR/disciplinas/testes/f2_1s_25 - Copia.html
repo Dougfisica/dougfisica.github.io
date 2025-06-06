@@ -467,8 +467,7 @@ function buscarNotas() {
       .map((av, i) => av.startsWith('G') ? i : -1)
       .filter(i => i !== -1);
     
-    const indiceMediaG = avaliacoes.indexOf("Média G");
-const mediaG = formatarNota(aluno.notas[indiceMediaG]);
+    const mediaG = calcularMedia(aluno.notas, indicesG);
     
     html += `
       <div class="notas-container">
@@ -503,8 +502,7 @@ const mediaG = formatarNota(aluno.notas[indiceMediaG]);
       .map((av, i) => av.startsWith('P') ? i : -1)
       .filter(i => i !== -1);
     
-const indiceMediaP = avaliacoes.indexOf("Média P");
-const mediaP = formatarNota(aluno.notas[indiceMediaP]);
+    const mediaP = calcularMedia(aluno.notas, indicesP);
     
     html += `
       <div class="notas-container">
