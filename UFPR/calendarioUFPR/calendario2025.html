@@ -1,36 +1,17 @@
-<div id="ufprcal" style="max-width:800px;margin:0 auto;font-family:sans-serif;background:#f6f9fc;padding:0 10px;">
-  <div style="text-align:center;padding:12px 4px 6px 4px;color:#02539a;">
-    <h1 style="margin: 2px 0 10px 0; font-size: clamp(1.4rem, 4vw, 1.8rem); font-weight: 700; color: #02539a;">
-      Calendário UFPR 2025
-    </h1>
-    <!-- Botões de Aluno/Professor -->
-    <div style="display:flex;justify-content:center;gap:8px;margin-bottom:12px;flex-wrap:wrap;">
-      <button id="ufprcal-btn-aluno" class="ufprcal-user ufprcal-user-active" onclick="ufprcalSetUser('aluno')">Aluno</button>
-      <button id="ufprcal-btn-prof" class="ufprcal-user" onclick="ufprcalSetUser('professor')">Professor</button>
-    </div>
-
-    <!-- Botões de semestre -->
-    <div style="display:flex;justify-content:center;gap:8px;margin-bottom:12px;flex-wrap:wrap;">
-      <button id="sem1" class="ufprcal-sem ufprcal-sem-active" data-sem="1" onclick="ufprcalSetSemester(1)">1º SEMESTRE</button>
-      <button id="sem2" class="ufprcal-sem" data-sem="2" onclick="ufprcalSetSemester(2)">2º SEMESTRE</button>
-    </div>
-
-    <input id="ufprcal-search" type="text" placeholder="Buscar evento..." />
-
-    <!-- Filtros de tipo -->
-    <div style="display:flex;flex-wrap:wrap;justify-content:center;gap:6px;margin:4px 0 16px 0;">
-      <button id="filt-all" class="ufprcal-filter ufprcal-filter-active" data-type="all" onclick="ufprcalSetFilter('all')">Todos</button>
-      <button id="filt-iniciofim" class="ufprcal-filter" data-type="iniciofim" onclick="ufprcalSetFilter('iniciofim')">Início/Fim</button>
-      <button id="filt-exames" class="ufprcal-filter" data-type="exames" onclick="ufprcalSetFilter('exames')">Exames</button>
-      <button id="filt-feriado" class="ufprcal-filter" data-type="feriado" onclick="ufprcalSetFilter('feriado')">Feriados</button>
-      <button id="filt-matricula" class="ufprcal-filter" data-type="matricula" onclick="ufprcalSetFilter('matricula')">Matrícula</button>
-      <button id="filt-nota" class="ufprcal-filter" data-type="nota" onclick="ufprcalSetFilter('nota')">Notas</button>
-      <button id="filt-trancamento" class="ufprcal-filter" data-type="trancamento" onclick="ufprcalSetFilter('trancamento')">Trancamento</button>
-      <button id="filt-evento" class="ufprcal-filter" data-type="evento" onclick="ufprcalSetFilter('evento')">Eventos</button>
-      <button id="filt-prazo" class="ufprcal-filter" data-type="prazo" onclick="ufprcalSetFilter('prazo')">Prazos</button>
-    </div>
-  </div>
-  <div id="ufprcal-main" style="padding:3px 2vw 18px 2vw;"></div>
+<!DOCTYPE html>
+<html lang="pt-br">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Calendário UFPR 2025</title>
+  <!-- Google Analytics -->
+  <script async src="https://www.googletagmanager.com/gtag/js?id=G-83359NB2SY"></script>
+  <script>
+    window.dataLayer = window.dataLayer || [];
+    function gtag(){dataLayer.push(arguments);}
+    gtag('js', new Date());
+    gtag('config', 'G-83359NB2SY');
+  </script>
   <style>
     /* Estilos base */
     .ufprcal-user-active {
@@ -212,6 +193,41 @@
       }
     }
   </style>
+</head>
+<body>
+<div id="ufprcal" style="max-width:800px;margin:0 auto;font-family:sans-serif;background:#f6f9fc;padding:0 10px;">
+  <div style="text-align:center;padding:12px 4px 6px 4px;color:#02539a;">
+    <h1 style="margin: 2px 0 10px 0; font-size: clamp(1.4rem, 4vw, 1.8rem); font-weight: 700; color: #02539a;">
+      Calendário UFPR 2025
+    </h1>
+    <!-- Botões de Aluno/Professor -->
+    <div style="display:flex;justify-content:center;gap:8px;margin-bottom:12px;flex-wrap:wrap;">
+      <button id="ufprcal-btn-aluno" class="ufprcal-user ufprcal-user-active" onclick="ufprcalSetUser('aluno')">Aluno</button>
+      <button id="ufprcal-btn-prof" class="ufprcal-user" onclick="ufprcalSetUser('professor')">Professor</button>
+    </div>
+
+    <!-- Botões de semestre -->
+    <div style="display:flex;justify-content:center;gap:8px;margin-bottom:12px;flex-wrap:wrap;">
+      <button id="sem1" class="ufprcal-sem ufprcal-sem-active" data-sem="1" onclick="ufprcalSetSemester(1)">1º SEMESTRE</button>
+      <button id="sem2" class="ufprcal-sem" data-sem="2" onclick="ufprcalSetSemester(2)">2º SEMESTRE</button>
+    </div>
+
+    <input id="ufprcal-search" type="text" placeholder="Buscar evento..." />
+
+    <!-- Filtros de tipo -->
+    <div style="display:flex;flex-wrap:wrap;justify-content:center;gap:6px;margin:4px 0 16px 0;">
+      <button id="filt-all" class="ufprcal-filter ufprcal-filter-active" data-type="all" onclick="ufprcalSetFilter('all')">Todos</button>
+      <button id="filt-iniciofim" class="ufprcal-filter" data-type="iniciofim" onclick="ufprcalSetFilter('iniciofim')">Início/Fim</button>
+      <button id="filt-exames" class="ufprcal-filter" data-type="exames" onclick="ufprcalSetFilter('exames')">Exames</button>
+      <button id="filt-feriado" class="ufprcal-filter" data-type="feriado" onclick="ufprcalSetFilter('feriado')">Feriados</button>
+      <button id="filt-matricula" class="ufprcal-filter" data-type="matricula" onclick="ufprcalSetFilter('matricula')">Matrícula</button>
+      <button id="filt-nota" class="ufprcal-filter" data-type="nota" onclick="ufprcalSetFilter('nota')">Notas</button>
+      <button id="filt-trancamento" class="ufprcal-filter" data-type="trancamento" onclick="ufprcalSetFilter('trancamento')">Trancamento</button>
+      <button id="filt-evento" class="ufprcal-filter" data-type="evento" onclick="ufprcalSetFilter('evento')">Eventos</button>
+      <button id="filt-prazo" class="ufprcal-filter" data-type="prazo" onclick="ufprcalSetFilter('prazo')">Prazos</button>
+    </div>
+  </div>
+  <div id="ufprcal-main" style="padding:3px 2vw 18px 2vw;"></div>
   <script>
 function getDiaSemana(dataStr) {
   const dias = ['domingo', 'segunda', 'terça', 'quarta', 'quinta', 'sexta', 'sábado'];
