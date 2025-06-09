@@ -45,6 +45,12 @@
       --card2-desc-bg: #e8f5e9;   /* Verde mais claro */
       --card2-color: #2e7d32;
       --card2-hover: #a5d6a7;
+
+      /* Cores para o card do calendário */
+      --card3-title-bg: #ffcdd2;  /* Vermelho mais escuro */
+      --card3-desc-bg: #ffebee;   /* Vermelho mais claro */
+      --card3-color: #d32f2f;
+      --card3-hover: #ef9a9a;
     }
     body {
       font-family: 'Roboto', Arial, sans-serif;
@@ -115,6 +121,12 @@
       --btn-desc-bg: var(--card2-desc-bg);
       --btn-color: var(--card2-color);
       --btn-hover: var(--card2-hover);
+    }
+    .ufpr-card.calendario {
+      --btn-title-bg: var(--card3-title-bg);
+      --btn-desc-bg: var(--card3-desc-bg);
+      --btn-color: var(--card3-color);
+      --btn-hover: var(--card3-hover);
     }
 
     .ufpr-card:hover .btn-title-part {
@@ -268,7 +280,11 @@
         <div class="btn-title-part">Grade dos Cursos</div>
         <div class="btn-desc-part">Lista de cursos da UFPR com suas respectivas grades curriculares</div>
       </a>
-      <a href="calendarioUFPR/calendario2025.html" class="ufpr-card">
+      <a href="grade/index.html" class="ufpr-card">
+        <div class="btn-title-part">Grade Horária</div>
+        <div class="btn-desc-part">Visualize as grades horárias dos cursos da UFPR</div>
+      </a>
+      <a href="calendarioUFPR/calendario2025.html" class="ufpr-card calendario">
         <div class="btn-title-part">Calendário UFPR 2025</div>
         <div class="btn-desc-part">Calendário acadêmico 2025 da UFPR com todas as datas importantes</div>
       </a>
