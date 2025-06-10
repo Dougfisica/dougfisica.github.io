@@ -175,8 +175,19 @@ function setupEventListeners() {
     // Validação de horários
     document.getElementById('startTime').addEventListener('change', validateTimeRange);
     document.getElementById('endTime').addEventListener('change', validateTimeRange);
+    // Logout
+    document.getElementById('logoutBtn').addEventListener('click', handleLogout);
 }
-
+async function handleLogout() {
+    try {
+        await firebase.auth().signOut();
+        // Redireciona para a página de login após o logout
+        window.location.replace('login.html');
+    } catch (error) {
+        console.error('Erro ao fazer logout:', error);
+        showToast('Erro ao sair. Tente novamente.', 'error');
+    }
+}
 // Validar intervalo de horários
 function validateTimeRange() {
     const startTime = document.getElementById('startTime').value;
