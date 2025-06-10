@@ -17,6 +17,14 @@ const confirmModal = document.getElementById('confirmModal');
 const overlay = document.getElementById('overlay');
 const toast = document.getElementById('toast');
 
+// --- Autenticação / logout ---
+let firebaseInitialized = false;   // será marcado true depois da init
+let currentUser         = null;    // usuário logado
+
+const authSection   = document.getElementById('authSection');
+const userEmailElem = document.getElementById('userEmail');
+const logoutBtn     = document.getElementById('logoutBtn');
+
 // Mapeamento de dias da semana
 const daysOfWeek = {
     'Segunda': 1,
@@ -54,6 +62,9 @@ async function initializeApp() {
         if (firebaseOk) {
             // Inicializar autenticação
             initializeAuth();
+            firebaseInitialized = true;
+setupAuthStateListener();   // cria o listener de auth
+
             showToast('Sistema carregado com Firebase!', 'success');
         } else {
             showToast('Sistema carregado (modo local)', 'success');
@@ -175,6 +186,49 @@ function setupEventListeners() {
     // Validação de horários
     document.getElementById('startTime').addEventListener('change', validateTimeRange);
     document.getElementById('endTime').addEventListener('change', validateTimeRange);
+}
+// Escuta mudanças de autenticação do Firebase
+function setupAuthStateListener() {
+    firebase.auth().onAuthStateChanged(user => {
+        currentUser = (user && user.emailVerified) ? user : null;
+        updateAuthUI(currentUser);
+
+        // se não estiver logado, volta para a tela de login
+        if (!currentUser) {
+            setTimeout(() => window.location.replace('login.html'), 1500);
+        }
+    });
+}
+
+// Mostra / esconde a barra de usuário
+function updateAuthUI(user) {
+    if (!authSection) return;
+
+    if (user) {
+        userEmailElem.textContent = user.email;
+        authSection.classList.remove('hidden');
+
+        // garante que o listener de logout seja adicionado apenas uma vez
+        if (!logoutBtn.dataset.listener) {
+            logoutBtn.addEventListener('click', handleLogout);
+            logoutBtn.dataset.listener = 'true';
+        }
+    } else {
+        authSection.classList.add('hidden');
+    }
+}
+
+// Logout
+async function handleLogout() {
+    try {
+        await firebase.auth().signOut();
+        showToast('Sessão encerrada!', 'success');
+        updateAuthUI(null);
+        setTimeout(() => window.location.replace('login.html'), 1200);
+    } catch (err) {
+        console.error(err);
+        showToast('Erro ao sair', 'error');
+    }
 }
 
 // Validar intervalo de horários
