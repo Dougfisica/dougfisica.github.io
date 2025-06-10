@@ -227,31 +227,63 @@
                 const registerForm = document.getElementById('registerForm');
                 console.log('Formulário de registro encontrado:', !!registerForm);
                 
-                registerForm.addEventListener('submit', async (e) => {
-                    console.log('Formulário de registro submetido');
-                    e.preventDefault();
-                    
-                    const email = document.getElementById('registerEmail').value;
-                    const password = document.getElementById('registerPassword').value;
-                    const confirmPassword = document.getElementById('confirmPassword').value;
-                    
-                    console.log('Tentando registrar:', { email, passwordLength: password.length });
-                    
-                    if (password !== confirmPassword) {
-                        showToast('As senhas não coincidem', 'error');
-                        return;
-                    }
-                    
-                    try {
-                        const user = await registerUser(email, password);
-                        console.log('Usuário registrado:', user);
-                        showToast('Registro realizado! Por favor, verifique seu email.', 'success');
-                        showAuthButtons();
-                    } catch (error) {
-                        console.error('Erro no registro:', error);
-                        showToast(error.message, 'error');
-                    }
-                });
+                if (registerForm) {
+                    registerForm.addEventListener('submit', async function(e) {
+                        e.preventDefault();
+                        console.log('Formulário de registro submetido');
+                        
+                        const email = document.getElementById('registerEmail').value;
+                        const password = document.getElementById('registerPassword').value;
+                        const confirmPassword = document.getElementById('confirmPassword').value;
+                        
+                        console.log('Tentando registrar:', { email, passwordLength: password.length });
+                        
+                        if (password !== confirmPassword) {
+                            showToast('As senhas não coincidem', 'error');
+                            return;
+                        }
+                        
+                        try {
+                            // Mostrar mensagem de carregamento
+                            showToast('Registrando usuário...', 'info');
+                            
+                            // Registrar usuário
+                            const user = await firebase.auth().createUserWithEmailAndPassword(email, password);
+                            console.log('Usuário registrado:', user);
+                            
+                            // Enviar email de verificação
+                            await user.user.sendEmailVerification();
+                            console.log('Email de verificação enviado');
+                            
+                            showToast('Registro realizado! Por favor, verifique seu email.', 'success');
+                            showAuthButtons();
+                            
+                        } catch (error) {
+                            console.error('Erro no registro:', error);
+                            let errorMessage = 'Erro ao registrar';
+                            
+                            // Mensagens de erro mais amigáveis
+                            switch (error.code) {
+                                case 'auth/email-already-in-use':
+                                    errorMessage = 'Este email já está em uso';
+                                    break;
+                                case 'auth/invalid-email':
+                                    errorMessage = 'Email inválido';
+                                    break;
+                                case 'auth/operation-not-allowed':
+                                    errorMessage = 'Registro de usuários está desativado';
+                                    break;
+                                case 'auth/weak-password':
+                                    errorMessage = 'A senha é muito fraca';
+                                    break;
+                                default:
+                                    errorMessage = error.message;
+                            }
+                            
+                            showToast(errorMessage, 'error');
+                        }
+                    });
+                }
                 
             } catch (error) {
                 console.error('Erro ao inicializar:', error);

@@ -156,13 +156,13 @@ async function logoutUser() {
     
     try {
         // Verificar se há um usuário logado
-        const currentUser = firebase.auth().currentUser;
-        if (!currentUser) {
+        const user = firebase.auth().currentUser;
+        if (!user) {
             console.log('Nenhum usuário logado para fazer logout');
             return;
         }
 
-        console.log('Fazendo logout do usuário:', currentUser.email);
+        console.log('Fazendo logout do usuário:', user.email);
         
         // Fazer logout
         await firebase.auth().signOut();
@@ -276,7 +276,7 @@ document.addEventListener('DOMContentLoaded', function() {
     // Event listener para logout (apenas se o botão existir)
     if (logoutBtn) {
         console.log('Botão de logout encontrado, adicionando event listener...');
-        logoutBtn.onclick = async function(e) {
+        logoutBtn.addEventListener('click', async function(e) {
             e.preventDefault();
             e.stopPropagation();
             console.log('Botão de logout clicado');
@@ -287,7 +287,7 @@ document.addEventListener('DOMContentLoaded', function() {
                 showToast(error.message, 'error');
             }
             return false;
-        };
+        });
     } else {
         console.log('Botão de logout não encontrado');
     }
