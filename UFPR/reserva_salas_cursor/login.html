@@ -4,6 +4,7 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Login - Sistema de Reservas UFPR</title>
+    <link rel="icon" type="image/x-icon" href="https://ufpr.br/wp-content/uploads/2024/06/ufpr_25_-1-2.png">
     <link rel="stylesheet" href="style.css">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.4/css/all.min.css">
 </head>
@@ -83,11 +84,35 @@
     <!-- Firebase SDK -->
     <script src="https://www.gstatic.com/firebasejs/9.15.0/firebase-app-compat.js"></script>
     <script src="https://www.gstatic.com/firebasejs/9.15.0/firebase-auth-compat.js"></script>
+    <script src="https://www.gstatic.com/firebasejs/9.15.0/firebase-database-compat.js"></script>
     
     <!-- Scripts -->
     <script src="firebase-config.js"></script>
     <script src="auth.js"></script>
     <script>
+        // Função para mostrar mensagens toast
+        function showToast(message, type = 'info') {
+            const toast = document.getElementById('toast');
+            const toastMessage = document.getElementById('toastMessage');
+            
+            // Remover classes anteriores
+            toast.classList.remove('success', 'error', 'info');
+            
+            // Adicionar nova classe
+            toast.classList.add(type);
+            
+            // Atualizar mensagem
+            toastMessage.textContent = message;
+            
+            // Mostrar toast
+            toast.classList.remove('hidden');
+            
+            // Esconder após 5 segundos
+            setTimeout(() => {
+                toast.classList.add('hidden');
+            }, 5000);
+        }
+
         // Verificar autenticação ao carregar a página
         document.addEventListener('DOMContentLoaded', async function() {
             try {
