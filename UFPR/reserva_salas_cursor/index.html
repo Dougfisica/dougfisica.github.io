@@ -12,8 +12,27 @@
     <div class="container">
         <header class="header">
             <div class="header-content">
-                <h1><i class="fas fa-university"></i> Sistema de Reservas - UFPR</h1>
-                <p class="subtitle">Gerencie reservas de salas de forma fácil e intuitiva</p>
+                <div class="logo">
+                    <img src="https://ufpr.br/wp-content/uploads/2024/06/ufpr_25_-1-2.png" alt="UFPR Logo">
+                    <div class="logo-text">
+                        <h1><i class="fas fa-university"></i> Sistema de Reservas - UFPR</h1>
+                        <p>Gerencie reservas de salas de forma fácil e intuitiva</p>
+                    </div>
+                </div>
+                
+                <!-- Seção de Autenticação -->
+                <div id="authSection" class="auth-section">
+                    <!-- Informações do Usuário -->
+                    <div id="userInfo" class="user-info hidden">
+                        <div class="user-details">
+                            <i class="fas fa-user"></i>
+                            <span id="userEmail"></span>
+                        </div>
+                        <button id="logoutBtn" class="btn btn-danger">
+                            <i class="fas fa-sign-out-alt"></i> Sair
+                        </button>
+                    </div>
+                </div>
             </div>
         </header>
 
@@ -203,6 +222,9 @@
                 const firebaseOk = initializeFirebase();
                 
                 if (firebaseOk) {
+                    // Inicializar autenticação
+                    initializeAuth();
+                    
                     // Aguardar a inicialização do Firebase Auth
                     await new Promise(resolve => {
                         const unsubscribe = firebase.auth().onAuthStateChanged((user) => {
