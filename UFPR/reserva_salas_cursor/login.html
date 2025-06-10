@@ -39,7 +39,7 @@
                 </div>
                 <div class="form-actions">
                     <button type="submit" class="btn btn-primary btn-large">Entrar</button>
-                    <button type="button" id="backToAuthBtn" class="btn btn-secondary">Voltar</button>
+                    <button type="button" id="backToAuthFromLogin" class="btn btn-secondary">Voltar</button>
                 </div>
             </form>
 
@@ -61,7 +61,7 @@
                 </div>
                 <div class="form-actions">
                     <button type="submit" class="btn btn-primary btn-large">Registrar</button>
-                    <button type="button" id="backToAuthBtn" class="btn btn-secondary">Voltar</button>
+                    <button type="button" id="backToAuthFromRegister" class="btn btn-secondary">Voltar</button>
                 </div>
             </form>
         </div>
@@ -106,6 +106,10 @@
                         });
                     });
                 }
+
+                // Adicionar event listeners para os botões de voltar
+                document.getElementById('backToAuthFromLogin').addEventListener('click', showAuthButtons);
+                document.getElementById('backToAuthFromRegister').addEventListener('click', showAuthButtons);
             } catch (error) {
                 console.error('Erro ao verificar autenticação:', error);
                 showToast('Erro ao inicializar o sistema. Por favor, tente novamente.', 'error');
@@ -122,27 +126,6 @@
                 await loginUser(email, password);
                 showToast('Login realizado com sucesso!', 'success');
                 window.location.href = 'index.html';
-            } catch (error) {
-                showToast(error.message, 'error');
-            }
-        });
-
-        // Modificar o comportamento do registro
-        document.getElementById('registerForm').addEventListener('submit', async (e) => {
-            e.preventDefault();
-            const email = document.getElementById('registerEmail').value;
-            const password = document.getElementById('registerPassword').value;
-            const confirmPassword = document.getElementById('confirmPassword').value;
-            
-            if (password !== confirmPassword) {
-                showToast('As senhas não coincidem', 'error');
-                return;
-            }
-            
-            try {
-                await registerUser(email, password);
-                showToast('Registro realizado! Por favor, verifique seu email.', 'success');
-                showAuthButtons();
             } catch (error) {
                 showToast(error.message, 'error');
             }

@@ -167,7 +167,8 @@ document.addEventListener('DOMContentLoaded', function() {
     // Event listeners para os botões
     document.getElementById('showLoginBtn').addEventListener('click', showLoginForm);
     document.getElementById('showRegisterBtn').addEventListener('click', showRegisterForm);
-    document.getElementById('backToAuthBtn').addEventListener('click', showAuthButtons);
+    document.getElementById('backToAuthFromLogin').addEventListener('click', showAuthButtons);
+    document.getElementById('backToAuthFromRegister').addEventListener('click', showAuthButtons);
     document.getElementById('logoutBtn').addEventListener('click', async () => {
         try {
             await logoutUser();
