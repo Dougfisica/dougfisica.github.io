@@ -127,40 +127,51 @@ async function logoutUser() {
 
 // Atualizar interface baseado no estado de autenticação
 function updateAuthUI() {
+    // Elementos que podem não existir em todas as páginas
     const authSection = document.getElementById('authSection');
     const userInfo = document.getElementById('userInfo');
     const authButtons = document.getElementById('authButtons');
     const loginForm = document.getElementById('loginForm');
     const registerForm = document.getElementById('registerForm');
+    const userEmail = document.getElementById('userEmail');
+    const reserveButtons = document.querySelectorAll('.reserve-btn');
+    
+    // Se estiver na página de login, não precisa atualizar a UI
+    if (window.location.pathname.includes('login.html')) {
+        console.log('Na página de login, pulando atualização da UI');
+        return;
+    }
     
     if (currentUser) {
         // Usuário está logado
-        authSection.classList.remove('hidden');
-        userInfo.classList.remove('hidden');
-        authButtons.classList.add('hidden');
-        loginForm.classList.add('hidden');
-        registerForm.classList.add('hidden');
+        if (authSection) authSection.classList.remove('hidden');
+        if (userInfo) userInfo.classList.remove('hidden');
+        if (authButtons) authButtons.classList.add('hidden');
+        if (loginForm) loginForm.classList.add('hidden');
+        if (registerForm) registerForm.classList.add('hidden');
         
         // Atualizar informações do usuário
-        document.getElementById('userEmail').textContent = currentUser.email;
+        if (userEmail) userEmail.textContent = currentUser.email;
         
-        // Atualizar botão de reserva
-        const reserveButtons = document.querySelectorAll('.reserve-btn');
+        // Atualizar botões de reserva
         reserveButtons.forEach(btn => {
-            btn.disabled = false;
-            btn.title = '';
+            if (btn) {
+                btn.disabled = false;
+                btn.title = '';
+            }
         });
     } else {
         // Usuário não está logado
-        authSection.classList.add('hidden');
-        userInfo.classList.add('hidden');
-        authButtons.classList.remove('hidden');
+        if (authSection) authSection.classList.add('hidden');
+        if (userInfo) userInfo.classList.add('hidden');
+        if (authButtons) authButtons.classList.remove('hidden');
         
         // Desabilitar botões de reserva
-        const reserveButtons = document.querySelectorAll('.reserve-btn');
         reserveButtons.forEach(btn => {
-            btn.disabled = true;
-            btn.title = 'Faça login para reservar salas';
+            if (btn) {
+                btn.disabled = true;
+                btn.title = 'Faça login para reservar salas';
+            }
         });
     }
 }

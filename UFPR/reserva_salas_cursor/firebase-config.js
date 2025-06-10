@@ -21,15 +21,16 @@ function initializeFirebase() {
         }
         
         // Configuração do Firebase
-        const firebaseConfig = {
-            apiKey: "AIzaSyDxXxXxXxXxXxXxXxXxXxXxXxXxXxXxXx",
-            authDomain: "reserva-salas-ufpr.firebaseapp.com",
-            databaseURL: "https://reserva-salas-ufpr.firebaseio.com",
-            projectId: "reserva-salas-ufpr",
-            storageBucket: "reserva-salas-ufpr.appspot.com",
-            messagingSenderId: "123456789012",
-            appId: "1:123456789012:web:abcdef1234567890"
-        };
+const firebaseConfig = {
+  apiKey: "AIzaSyDiCeCx-uNjVLksCUWev6rP2d6jRq6qfsc",
+  authDomain: "salasufpr.firebaseapp.com",
+  databaseURL: "https://salasufpr-default-rtdb.firebaseio.com",
+  projectId: "salasufpr",
+  storageBucket: "salasufpr.firebasestorage.app",
+  messagingSenderId: "1044395782294",
+  appId: "1:1044395782294:web:d2e00a83a43d1952a892b7",
+  measurementId: "G-8BFC3PGW91"
+};
         
         // Inicializar Firebase
         firebase.initializeApp(firebaseConfig);
