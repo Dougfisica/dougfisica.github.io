@@ -143,10 +143,22 @@
                     console.log('Tentando fazer login:', { email });
                     
                     try {
+                        // Mostrar mensagem de carregamento
+                        showToast('Tentando fazer login...', 'info');
+                        
                         const user = await loginUser(email, password);
                         console.log('Login bem sucedido:', user);
-                        showToast('Login realizado com sucesso!', 'success');
-                        window.location.href = 'index.html';
+                        
+                        if (user && user.emailVerified) {
+                            showToast('Login realizado com sucesso! Redirecionando...', 'success');
+                            // Pequeno delay para mostrar a mensagem antes de redirecionar
+                            setTimeout(() => {
+                                window.location.href = 'index.html';
+                            }, 1500);
+                        } else {
+                            showToast('Por favor, verifique seu email antes de fazer login', 'error');
+                            await firebase.auth().signOut();
+                        }
                     } catch (error) {
                         console.error('Erro no login:', error);
                         showToast(error.message, 'error');

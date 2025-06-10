@@ -328,7 +328,7 @@ function renderAvailableRooms(rooms) {
     }
     
     availableRoomsList.innerHTML = rooms.map(room => `
-        <div class="room-card available" onclick="selectRoom('${room}')">
+        <div class="room-card available" onclick="window.selectRoom('${room}')">
             <div class="room-header">
                 <div class="room-name">Sala ${room}</div>
                 <div class="room-status status-available">Disponível</div>
@@ -370,12 +370,19 @@ function renderOccupiedRooms(rooms) {
 
 // Selecionar sala para reserva
 function selectRoom(roomName) {
-    if (!currentSearchData) return;
+    console.log('Sala selecionada:', roomName);
+    if (!currentSearchData) {
+        console.error('Dados de busca não encontrados');
+        showToast('Erro ao selecionar sala. Por favor, faça uma nova busca.', 'error');
+        return;
+    }
     
     const { day, month, year, startTime, endTime } = currentSearchData;
     const date = new Date(year, month - 1, day);
     const dayOfWeek = daysOfWeekReverse[date.getDay()];
     const dateStr = `${day.toString().padStart(2, '0')}/${month.toString().padStart(2, '0')}/${year}`;
+    
+    console.log('Detalhes da reserva:', { roomName, dateStr, dayOfWeek, startTime, endTime });
     
     // Atualizar modal com detalhes da reserva
     document.getElementById('reservationDetails').innerHTML = `
@@ -389,7 +396,6 @@ function selectRoom(roomName) {
     
     // Limpar campos do modal
     document.getElementById('reservationPurpose').value = '';
-    document.getElementById('teacherName').value = '';
     
     // Armazenar dados da reserva
     confirmModal.dataset.roomName = roomName;
