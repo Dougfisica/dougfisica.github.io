@@ -214,10 +214,32 @@
     <script src="firebase-config.js"></script>
     <script src="auth.js"></script>
     <script src="script.js"></script>
-<script>
-    // O arquivo script.js agora cuida de toda a inicialização e lógica.
-    // Não é mais necessário código de autenticação aqui.
-    console.log('Página index.html carregada. O script.js vai gerenciar a aplicação.');
-</script>
+    <script>
+        // Verificar autenticação ao carregar a página
+        document.addEventListener('DOMContentLoaded', function() {
+            console.log('Página index.html carregada');
+            
+            // Inicializar Firebase e Auth
+            initializeFirebase();
+            initializeAuth();
+            
+            // Configurar listener de autenticação
+            firebase.auth().onAuthStateChanged(async (user) => {
+                console.log('Estado de autenticação mudou:', user ? user.email : 'não logado');
+                
+                if (user && user.emailVerified) {
+                    console.log('Usuário autenticado e verificado:', user.email);
+                    document.getElementById('userEmail').textContent = user.email;
+                    updateAuthUI();
+                } else {
+                    console.log('Usuário não autenticado ou não verificado, redirecionando...');
+                    // Pequeno delay para garantir que o Firebase teve tempo de restaurar a sessão
+                    setTimeout(() => {
+                        window.location.replace('login.html');
+                    }, 2000);
+                }
+            });
+        });
+    </script>
 </body>
 </html> 
