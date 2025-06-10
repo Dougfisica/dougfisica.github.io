@@ -70,15 +70,44 @@ async function saveToFirebase(path, data) {
 
 // Carregar dados do Firebase
 async function loadFromFirebase(path) {
-    if (!firebaseInitialized) {
-        throw new Error('Firebase não está inicializado');
-    }
+    console.log('Carregando dados do Firebase:', path);
     
+    if (!firebaseInitialized) {
+        console.error('Firebase não inicializado');
+        throw new Error('Firebase não inicializado');
+    }
+
     try {
         const snapshot = await firebase.database().ref(path).once('value');
-        return snapshot.val();
+        const data = snapshot.val();
+        console.log('Dados carregados do Firebase:', path, data);
+        
+        // Se for um objeto, converter para array
+        if (data && typeof data === 'object' && !Array.isArray(data)) {
+            console.log('Convertendo objeto para array...');
+            const array = Object.values(data);
+            console.log('Array convertido:', array);
+            return array;
+        }
+        
+        // Se for null ou undefined, retornar array vazio
+        if (!data) {
+            console.log('Nenhum dado encontrado, retornando array vazio');
+            return [];
+        }
+        
+        // Se já for array, retornar como está
+        if (Array.isArray(data)) {
+            console.log('Dados já são um array');
+            return data;
+        }
+        
+        // Se chegou aqui, algo deu errado
+        console.warn('Formato de dados inesperado:', typeof data);
+        return [];
+        
     } catch (error) {
-        console.error('Erro ao carregar do Firebase:', error);
+        console.error('Erro ao carregar dados do Firebase:', error);
         throw error;
     }
 } 

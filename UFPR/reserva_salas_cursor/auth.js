@@ -174,11 +174,9 @@ async function logoutUser() {
         // Mostrar mensagem de sucesso
         showToast('Logout realizado com sucesso', 'success');
         
-        // Pequeno delay antes do redirecionamento
-        setTimeout(() => {
-            console.log('Redirecionando para login.html...');
-            window.location.replace('login.html');
-        }, 1000);
+        // Redirecionar para login
+        console.log('Redirecionando para login.html...');
+        window.location.href = 'login.html';
         
     } catch (error) {
         console.error('Erro ao fazer logout:', error);
@@ -278,8 +276,9 @@ document.addEventListener('DOMContentLoaded', function() {
     // Event listener para logout (apenas se o botão existir)
     if (logoutBtn) {
         console.log('Botão de logout encontrado, adicionando event listener...');
-        logoutBtn.addEventListener('click', async (e) => {
-            e.preventDefault(); // Prevenir comportamento padrão do botão
+        logoutBtn.onclick = async function(e) {
+            e.preventDefault();
+            e.stopPropagation();
             console.log('Botão de logout clicado');
             try {
                 await logoutUser();
@@ -287,7 +286,8 @@ document.addEventListener('DOMContentLoaded', function() {
                 console.error('Erro no logout:', error);
                 showToast(error.message, 'error');
             }
-        });
+            return false;
+        };
     } else {
         console.log('Botão de logout não encontrado');
     }
