@@ -21,18 +21,49 @@ function isValidUFPRemail(email) {
 
 // Registrar novo usuário
 async function registerUser(email, password) {
+    console.log('Iniciando registro de usuário:', email);
+    
+    if (!firebaseInitialized) {
+        console.error('Firebase não inicializado');
+        throw new Error('Sistema não inicializado corretamente');
+    }
+    
     if (!isValidUFPRemail(email)) {
+        console.error('Email inválido:', email);
         throw new Error('Apenas emails @ufpr.br são permitidos');
     }
 
+    if (password.length < 6) {
+        console.error('Senha muito curta');
+        throw new Error('A senha deve ter pelo menos 6 caracteres');
+    }
+
     try {
+        console.log('Criando usuário no Firebase...');
         const userCredential = await firebase.auth().createUserWithEmailAndPassword(email, password);
-        // Enviar email de verificação
+        console.log('Usuário criado:', userCredential.user.uid);
+        
+        console.log('Enviando email de verificação...');
         await userCredential.user.sendEmailVerification();
+        console.log('Email de verificação enviado');
+        
         return userCredential.user;
     } catch (error) {
-        console.error('Erro no registro:', error);
-        throw error;
+        console.error('Erro detalhado no registro:', error);
+        
+        // Mensagens de erro mais amigáveis
+        switch (error.code) {
+            case 'auth/email-already-in-use':
+                throw new Error('Este email já está em uso');
+            case 'auth/invalid-email':
+                throw new Error('Email inválido');
+            case 'auth/operation-not-allowed':
+                throw new Error('Registro de usuários está desativado');
+            case 'auth/weak-password':
+                throw new Error('A senha é muito fraca');
+            default:
+                throw new Error('Erro ao registrar: ' + error.message);
+        }
     }
 }
 

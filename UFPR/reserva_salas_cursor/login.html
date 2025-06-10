@@ -91,13 +91,20 @@
         // Verificar autenticação ao carregar a página
         document.addEventListener('DOMContentLoaded', async function() {
             try {
+                console.log('Iniciando inicialização...');
                 // Tentar inicializar Firebase
                 const firebaseOk = initializeFirebase();
+                console.log('Firebase inicializado:', firebaseOk);
                 
                 if (firebaseOk) {
+                    // Inicializar autenticação
+                    initializeAuth();
+                    console.log('Auth inicializado');
+                    
                     // Aguardar a inicialização do Firebase Auth
                     await new Promise(resolve => {
                         const unsubscribe = firebase.auth().onAuthStateChanged((user) => {
+                            console.log('Estado de auth mudou:', user ? 'usuário logado' : 'sem usuário');
                             unsubscribe(); // Parar de observar mudanças
                             if (user && user.emailVerified) {
                                 window.location.href = 'index.html';
@@ -105,13 +112,47 @@
                             resolve();
                         });
                     });
+                } else {
+                    console.error('Falha ao inicializar Firebase');
+                    showToast('Erro ao inicializar o sistema. Por favor, tente novamente.', 'error');
                 }
 
                 // Adicionar event listeners para os botões de voltar
                 document.getElementById('backToAuthFromLogin').addEventListener('click', showAuthButtons);
                 document.getElementById('backToAuthFromRegister').addEventListener('click', showAuthButtons);
+                
+                // Adicionar event listener para o formulário de registro
+                const registerForm = document.getElementById('registerForm');
+                console.log('Formulário de registro encontrado:', !!registerForm);
+                
+                registerForm.addEventListener('submit', async (e) => {
+                    console.log('Formulário de registro submetido');
+                    e.preventDefault();
+                    
+                    const email = document.getElementById('registerEmail').value;
+                    const password = document.getElementById('registerPassword').value;
+                    const confirmPassword = document.getElementById('confirmPassword').value;
+                    
+                    console.log('Tentando registrar:', { email, passwordLength: password.length });
+                    
+                    if (password !== confirmPassword) {
+                        showToast('As senhas não coincidem', 'error');
+                        return;
+                    }
+                    
+                    try {
+                        const user = await registerUser(email, password);
+                        console.log('Usuário registrado:', user);
+                        showToast('Registro realizado! Por favor, verifique seu email.', 'success');
+                        showAuthButtons();
+                    } catch (error) {
+                        console.error('Erro no registro:', error);
+                        showToast(error.message, 'error');
+                    }
+                });
+                
             } catch (error) {
-                console.error('Erro ao verificar autenticação:', error);
+                console.error('Erro ao inicializar:', error);
                 showToast('Erro ao inicializar o sistema. Por favor, tente novamente.', 'error');
             }
         });

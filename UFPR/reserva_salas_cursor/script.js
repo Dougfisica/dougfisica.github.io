@@ -412,6 +412,18 @@ function closeModal() {
     document.body.style.overflow = 'auto';
 }
 
+// Função para extrair nome do email
+function getNameFromEmail(email) {
+    // Pega a parte antes do @ e converte para título (primeira letra maiúscula)
+    const name = email.split('@')[0];
+    // Substitui pontos e underscores por espaços
+    const cleanName = name.replace(/[._]/g, ' ');
+    // Converte para título (primeira letra de cada palavra maiúscula)
+    return cleanName.split(' ')
+        .map(word => word.charAt(0).toUpperCase() + word.slice(1).toLowerCase())
+        .join(' ');
+}
+
 // Lidar com reserva
 async function handleReservation() {
     if (!currentUser) {
@@ -421,12 +433,14 @@ async function handleReservation() {
 
     const roomName = confirmModal.dataset.roomName;
     const purpose = document.getElementById('reservationPurpose').value.trim();
-    const teacherName = document.getElementById('teacherName').value.trim();
     
-    if (!purpose || !teacherName) {
-        showToast('Por favor, preencha todos os campos', 'error');
+    if (!purpose) {
+        showToast('Por favor, preencha o motivo da reserva', 'error');
         return;
     }
+    
+    // Extrair nome do email do usuário
+    const teacherName = getNameFromEmail(currentUser.email);
     
     // Criar reserva
     const reservation = {
