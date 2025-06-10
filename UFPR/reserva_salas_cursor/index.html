@@ -226,37 +226,48 @@
                     // Inicializar autenticação
                     initializeAuth();
                     
-                    // Verificar estado atual do usuário
-                    const currentUser = firebase.auth().currentUser;
-                    console.log('Estado atual do usuário:', currentUser ? currentUser.email : 'não logado');
-                    
-                    if (!currentUser) {
-                        console.log('Usuário não está logado, redirecionando para login...');
-                        window.location.href = 'login.html';
-                        return;
-                    }
-                    
-                    if (!currentUser.emailVerified) {
-                        console.log('Email não verificado, redirecionando para login...');
-                        showToast('Por favor, verifique seu email antes de acessar o sistema', 'error');
-                        await firebase.auth().signOut();
-                        window.location.href = 'login.html';
-                        return;
-                    }
-                    
-                    // Usuário está logado e verificado
-                    console.log('Usuário autenticado:', currentUser.email);
-                    document.getElementById('userEmail').textContent = currentUser.email;
+                    // Aguardar a inicialização do Firebase Auth
+                    await new Promise(resolve => {
+                        const unsubscribe = firebase.auth().onAuthStateChanged(async (user) => {
+                            console.log('Estado de auth mudou:', user ? user.email : 'não logado');
+                            
+                            if (!user) {
+                                console.log('Usuário não está logado, redirecionando para login...');
+                                window.location.replace('login.html');
+                                return;
+                            }
+                            
+                            // Recarregar o usuário para garantir dados atualizados
+                            await user.reload();
+                            const updatedUser = firebase.auth().currentUser;
+                            console.log('Estado do email verificado:', updatedUser.emailVerified);
+                            
+                            if (!updatedUser.emailVerified) {
+                                console.log('Email não verificado, redirecionando para login...');
+                                showToast('Por favor, verifique seu email antes de acessar o sistema', 'error');
+                                await firebase.auth().signOut();
+                                window.location.replace('login.html');
+                                return;
+                            }
+                            
+                            // Usuário está logado e verificado
+                            console.log('Usuário autenticado:', updatedUser.email);
+                            document.getElementById('userEmail').textContent = updatedUser.email;
+                            
+                            unsubscribe();
+                            resolve();
+                        });
+                    });
                     
                 } else {
                     console.error('Firebase não inicializado');
                     showToast('Erro ao inicializar o sistema', 'error');
-                    window.location.href = 'login.html';
+                    window.location.replace('login.html');
                 }
             } catch (error) {
                 console.error('Erro ao verificar autenticação:', error);
                 showToast('Erro ao verificar autenticação', 'error');
-                window.location.href = 'login.html';
+                window.location.replace('login.html');
             }
         });
     </script>

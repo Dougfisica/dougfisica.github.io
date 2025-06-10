@@ -172,13 +172,22 @@
                         const user = userCredential.user;
                         console.log('Login bem sucedido:', user.email);
                         
-                        if (user.emailVerified) {
+                        // Recarregar o usuário para garantir que temos os dados mais recentes
+                        await user.reload();
+                        const updatedUser = firebase.auth().currentUser;
+                        console.log('Estado do email verificado:', updatedUser.emailVerified);
+                        
+                        if (updatedUser.emailVerified) {
+                            console.log('Email verificado, redirecionando para index.html...');
                             showToast('Login realizado com sucesso! Redirecionando...', 'success');
-                            // Pequeno delay para mostrar a mensagem antes de redirecionar
+                            
+                            // Forçar redirecionamento após 1.5 segundos
                             setTimeout(() => {
-                                window.location.href = 'index.html';
+                                console.log('Executando redirecionamento...');
+                                window.location.replace('index.html');
                             }, 1500);
                         } else {
+                            console.log('Email não verificado, fazendo logout...');
                             showToast('Por favor, verifique seu email antes de fazer login', 'error');
                             await firebase.auth().signOut();
                         }
