@@ -495,10 +495,8 @@ async function handleReservation() {
         return;
     }
     
-    // Extrair nome do email do usuário
     const teacherName = getNameFromEmail(currentUser.email);
     
-    // Criar reserva
     const reservation = {
         ...currentSearchData,
         sala: roomName,
@@ -509,32 +507,37 @@ async function handleReservation() {
     };
     
     try {
-        // Salvar no Firebase ou localStorage
+        // Etapa 1: Persistir a reserva
         if (firebaseInitialized) {
+            // Salva no Firebase
             await saveToFirebase('reservations', reservation);
-        } else {
+            // Adiciona à lista local para atualização imediata da UI
             reservations.push(reservation);
+        } else {
+            // Adiciona à lista local
+            reservations.push(reservation);
+            // Salva a lista atualizada no localStorage
             await saveReservations();
         }
         
-        // Adicionar à lista local para exibição imediata
-        reservations.push(reservation);
+        // Etapa 2: Atualizar a interface do usuário
+        // A reserva já foi adicionada à lista 'reservations' UMA ÚNICA VEZ.
         
-        // Fechar modal
         closeModal();
-        
-        // Mostrar confirmação
         showToast(`Sala ${roomName} reservada com sucesso!`, 'success');
         
-        // Atualizar resultados da busca
+        // Atualiza os resultados da busca com o novo estado
         performSearch(currentSearchData);
         
     } catch (error) {
         console.error('Erro ao salvar reserva:', error);
         showToast('Erro ao salvar reserva. Tente novamente.', 'error');
+        
+        // Opcional, mas recomendado: se a persistência falhar,
+        // remova a reserva que foi adicionada otimisticamente.
+        reservations.pop();
     }
 }
-
 // Mostrar toast
 function showToast(message, type = 'success') {
     const toastElement = document.getElementById('toast');
