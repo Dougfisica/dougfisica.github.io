@@ -1,0 +1,202 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Reserva de Salas - UFPR</title>
+    <link rel="stylesheet" href="style.css">
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css" rel="stylesheet">
+</head>
+<body>
+    <div class="container">
+        <header class="header">
+            <div class="header-content">
+                <h1><i class="fas fa-university"></i> Sistema de Reservas - UFPR</h1>
+                <p class="subtitle">Gerencie reservas de salas de forma fácil e intuitiva</p>
+            </div>
+        </header>
+
+        <main class="main-content">
+            <!-- Formulário de Busca -->
+            <section class="search-section">
+                <div class="search-card">
+                    <h2><i class="fas fa-search"></i> Quando você precisa de uma sala?</h2>
+                    
+                    <form id="searchForm" class="search-form">
+                        <div class="form-grid">
+                            <div class="form-group">
+                                <label for="day">Dia</label>
+                                <select id="day" name="day" required>
+                                    <option value="">Selecione o dia</option>
+                                    <!-- Preenchido dinamicamente -->
+                                </select>
+                            </div>
+
+                            <div class="form-group">
+                                <label for="month">Mês</label>
+                                <select id="month" name="month" required>
+                                    <option value="">Selecione o mês</option>
+                                    <option value="1">Janeiro</option>
+                                    <option value="2">Fevereiro</option>
+                                    <option value="3">Março</option>
+                                    <option value="4">Abril</option>
+                                    <option value="5">Maio</option>
+                                    <option value="6">Junho</option>
+                                    <option value="7">Julho</option>
+                                    <option value="8">Agosto</option>
+                                    <option value="9">Setembro</option>
+                                    <option value="10">Outubro</option>
+                                    <option value="11">Novembro</option>
+                                    <option value="12">Dezembro</option>
+                                </select>
+                            </div>
+
+                            <div class="form-group">
+                                <label for="year">Ano</label>
+                                <select id="year" name="year" required>
+                                    <option value="2025">2025</option>
+                                    <option value="2026">2026</option>
+                                </select>
+                            </div>
+
+                            <div class="form-group">
+                                <label for="startTime">Horário de Início</label>
+                                <select id="startTime" name="startTime" required>
+                                    <option value="">Selecione</option>
+                                    <option value="07:30">07:30</option>
+                                    <option value="08:30">08:30</option>
+                                    <option value="09:30">09:30</option>
+                                    <option value="10:30">10:30</option>
+                                    <option value="11:30">11:30</option>
+                                    <option value="12:30">12:30</option>
+                                    <option value="13:30">13:30</option>
+                                    <option value="14:30">14:30</option>
+                                    <option value="15:30">15:30</option>
+                                    <option value="16:30">16:30</option>
+                                    <option value="17:30">17:30</option>
+                                    <option value="18:30">18:30</option>
+                                    <option value="19:00">19:00</option>
+                                    <option value="20:00">20:00</option>
+                                    <option value="21:00">21:00</option>
+                                    <option value="22:00">22:00</option>
+                                </select>
+                            </div>
+
+                            <div class="form-group">
+                                <label for="endTime">Horário de Fim</label>
+                                <select id="endTime" name="endTime" required>
+                                    <option value="">Selecione</option>
+                                    <option value="08:30">08:30</option>
+                                    <option value="09:30">09:30</option>
+                                    <option value="10:30">10:30</option>
+                                    <option value="11:30">11:30</option>
+                                    <option value="12:30">12:30</option>
+                                    <option value="13:30">13:30</option>
+                                    <option value="14:30">14:30</option>
+                                    <option value="15:30">15:30</option>
+                                    <option value="16:30">16:30</option>
+                                    <option value="17:30">17:30</option>
+                                    <option value="18:30">18:30</option>
+                                    <option value="19:30">19:30</option>
+                                    <option value="20:00">20:00</option>
+                                    <option value="21:00">21:00</option>
+                                    <option value="22:00">22:00</option>
+                                    <option value="23:00">23:00</option>
+                                </select>
+                            </div>
+                        </div>
+
+                        <button type="submit" class="search-btn">
+                            <i class="fas fa-search"></i>
+                            Verificar Salas Disponíveis
+                        </button>
+                    </form>
+                </div>
+            </section>
+
+            <!-- Loading -->
+            <div id="loading" class="loading hidden">
+                <div class="spinner"></div>
+                <p>Buscando salas disponíveis...</p>
+            </div>
+
+            <!-- Resultados -->
+            <section id="resultsSection" class="results-section hidden">
+                <div class="results-header">
+                    <h3 id="resultsTitle">Salas Disponíveis</h3>
+                    <div id="searchInfo" class="search-info"></div>
+                </div>
+
+                <!-- Salas Disponíveis -->
+                <div id="availableRooms" class="rooms-grid">
+                    <h4 class="section-title">
+                        <i class="fas fa-check-circle text-success"></i>
+                        Salas Disponíveis
+                    </h4>
+                    <div id="availableRoomsList" class="rooms-list"></div>
+                </div>
+
+                <!-- Salas Ocupadas -->
+                <div id="occupiedRooms" class="rooms-grid">
+                    <h4 class="section-title">
+                        <i class="fas fa-times-circle text-danger"></i>
+                        Salas Ocupadas
+                    </h4>
+                    <div id="occupiedRoomsList" class="rooms-list"></div>
+                </div>
+            </section>
+        </main>
+    </div>
+
+    <!-- Modal de Confirmação -->
+    <div id="confirmModal" class="modal hidden">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h3><i class="fas fa-calendar-check"></i> Confirmar Reserva</h3>
+                <button id="closeModal" class="close-btn">&times;</button>
+            </div>
+            <div class="modal-body">
+                <div id="reservationDetails"></div>
+                
+                <div class="form-group">
+                    <label for="reservationPurpose">Motivo da Reserva</label>
+                    <input type="text" id="reservationPurpose" placeholder="Ex: Reunião, Aula particular, Evento..." required>
+                </div>
+
+                <div class="form-group">
+                    <label for="teacherName">Nome do Responsável</label>
+                    <input type="text" id="teacherName" placeholder="Digite seu nome" required>
+                </div>
+            </div>
+            <div class="modal-footer">
+                <button id="cancelReservation" class="btn btn-secondary">
+                    <i class="fas fa-times"></i> Cancelar
+                </button>
+                <button id="confirmReservation" class="btn btn-primary">
+                    <i class="fas fa-check"></i> Confirmar Reserva
+                </button>
+            </div>
+        </div>
+    </div>
+
+    <!-- Overlay -->
+    <div id="overlay" class="overlay hidden"></div>
+
+    <!-- Toast Notifications -->
+    <div id="toast" class="toast hidden">
+        <div class="toast-content">
+            <span id="toastMessage"></span>
+            <button id="closeToast" class="toast-close">&times;</button>
+        </div>
+    </div>
+
+    <!-- Firebase SDK -->
+    <script src="https://www.gstatic.com/firebasejs/9.15.0/firebase-app-compat.js"></script>
+    <script src="https://www.gstatic.com/firebasejs/9.15.0/firebase-database-compat.js"></script>
+    
+    <!-- Scripts -->
+    <script src="firebase-config.js"></script>
+    <script src="script.js"></script>
+</body>
+</html> 

@@ -1,0 +1,272 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+  <meta charset="UTF-8" />
+  <title>Reserva de Salas – Universidade</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <style>
+    /* ——  Reset & layout  —— */
+    * { box-sizing: border-box; }
+    body {
+      margin: 0;
+      padding: 1.5rem;
+      font-family: Arial, Helvetica, sans-serif;
+      background: #f5f5f5;
+      color: #333;
+    }
+
+    h1 {
+      text-align: center;
+      margin-bottom: 1.5rem;
+    }
+
+    .form-row {
+      display: flex;
+      flex-wrap: wrap;
+      justify-content: center;
+      gap: 0.6rem;
+      margin-bottom: 1.5rem;
+    }
+
+    .form-row label {
+      font-size: 0.9rem;
+      margin-right: 0.25rem;
+    }
+
+    .form-row select,
+    .form-row input[type="time"] {
+      padding: 0.45rem 0.6rem;
+      font-size: 1rem;
+      border: 1px solid #bbb;
+      border-radius: 4px;
+    }
+
+    button {
+      padding: 0.6rem 1.4rem;
+      font-size: 1rem;
+      border: none;
+      border-radius: 6px;
+      background: #0077cc;
+      color: #fff;
+      cursor: pointer;
+      transition: background 0.2s;
+    }
+
+    button:hover {
+      background: #005fa3;
+    }
+
+    #roomsContainer {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 1rem;
+      justify-content: center;
+    }
+
+    .card {
+      width: 180px;
+      padding: 1rem;
+      border-radius: 8px;
+      box-shadow: 0 2px 6px rgba(0, 0, 0, 0.1);
+      background: #fff;
+      cursor: pointer;
+      transition: transform 0.2s;
+      text-align: center;
+    }
+
+    .card.available:hover {
+      transform: scale(1.04);
+    }
+
+    .card h3 {
+      margin-top: 0;
+      margin-bottom: 0.5rem;
+      font-size: 1.1rem;
+    }
+
+    .card p {
+      margin: 0.25rem 0;
+      font-size: 0.9rem;
+    }
+
+    /* ——  Estado das salas  —— */
+    .card.occupied {
+      background: #d9d9d9;
+      color: #666;
+      cursor: default;
+    }
+  </style>
+</head>
+<body>
+  <h1>Reserva de Salas</h1>
+
+  <div class="form-row">
+    <label for="day">Dia</label>
+    <select id="day"></select>
+
+    <label for="month">Mês</label>
+    <select id="month"></select>
+
+    <label for="year">Ano</label>
+    <select id="year"></select>
+
+    <label for="start">Início</label>
+    <input type="time" id="start" />
+
+    <label for="end">Fim</label>
+    <input type="time" id="end" />
+
+    <button id="checkBtn">Verificar salas disponíveis</button>
+  </div>
+
+  <div id="roomsContainer"></div>
+
+  <script>
+    // ————————————————  Dados iniciais  ————————————————
+    const rooms = [
+      { id: 1, name: "Sala 101" },
+      { id: 2, name: "Sala 102" },
+      { id: 3, name: "Sala 201" },
+      { id: 4, name: "Sala 202" },
+      { id: 5, name: "Sala 301" },
+      { id: 6, name: "Sala 302" },
+    ];
+
+    // Recupera reservas (ou cria exemplo inicial)
+    let bookings = JSON.parse(localStorage.getItem("bookings") || "[]");
+    if (bookings.length === 0) {
+      bookings.push({
+        roomId: 2,
+        date: "2025-06-14",
+        start: "08:00",
+        end: "10:00",
+        prof: "Prof. Silva",
+        motivo: "Cálculo I",
+      });
+      saveBookings();
+    }
+
+    function saveBookings() {
+      localStorage.setItem("bookings", JSON.stringify(bookings));
+    }
+
+    // ————————————————  Utilidades  ————————————————
+    function dateKey(y, m, d) {
+      return `${y}-${String(m).padStart(2, "0")}-${String(d).padStart(2, "0")}`;
+    }
+
+    function overlaps(aStart, aEnd, bStart, bEnd) {
+      return aStart < bEnd && bStart < aEnd;
+    }
+
+    // ————————————————  Preenche selects  ————————————————
+    function populateSelects() {
+      const daySel = document.getElementById("day");
+      const monthSel = document.getElementById("month");
+      const yearSel = document.getElementById("year");
+
+      for (let d = 1; d <= 31; d++) daySel.add(new Option(d, d));
+      for (let m = 1; m <= 12; m++) monthSel.add(new Option(m, m));
+
+      const baseYear = 2025;
+      for (let y = baseYear; y <= baseYear + 5; y++) yearSel.add(new Option(y, y));
+
+      const today = new Date();
+      daySel.value = today.getDate();
+      monthSel.value = today.getMonth() + 1;
+      yearSel.value = baseYear;
+    }
+
+    populateSelects();
+
+    // ————————————————  Lógica principal  ————————————————
+    document.getElementById("checkBtn").addEventListener("click", () => {
+      const d = parseInt(day.value);
+      const m = parseInt(month.value);
+      const y = parseInt(year.value);
+      const start = document.getElementById("start").value;
+      const end = document.getElementById("end").value;
+
+      if (!start || !end || start >= end) {
+        alert("Horários inválidos");
+        return;
+      }
+
+      const key = dateKey(y, m, d);
+      const available = [];
+      const occupied = [];
+
+      rooms.forEach((room) => {
+        const roomBookings = bookings.filter(
+          (b) => b.roomId === room.id && b.date === key
+        );
+        const livre = roomBookings.every((b) =>
+          overlaps(start, end, b.start, b.end) === false
+        );
+        if (livre) {
+          available.push({ room });
+        } else {
+          const overlap = roomBookings.find((b) =>
+            overlaps(start, end, b.start, b.end)
+          );
+          occupied.push({ room, booking: overlap });
+        }
+      });
+
+      renderCards([...available, ...occupied], { d, m, y, start, end });
+    });
+
+    function renderCards(list, info) {
+      const container = document.getElementById("roomsContainer");
+      container.innerHTML = "";
+
+      list.forEach((item) => {
+        const card = document.createElement("div");
+        card.className = item.booking ? "card occupied" : "card available";
+
+        card.innerHTML = `
+          <h3>${item.room.name}</h3>
+          ${
+            item.booking
+              ? `<p>Ocupada por ${item.booking.prof}</p><p>${item.booking.motivo}</p>`
+              : "<p>Disponível</p>"
+          }
+        `;
+
+        if (!item.booking) {
+          card.addEventListener("click", () => onReserve(item.room, info));
+        }
+
+        container.appendChild(card);
+      });
+    }
+
+    function onReserve(room, info) {
+      const { d, m, y, start, end } = info;
+      const weekday = new Date(y, m - 1, d).toLocaleDateString("pt-BR", {
+        weekday: "long",
+      });
+
+      if (
+        confirm(
+          `Reservar ${room.name} em ${d}/${m}/${y} (${weekday}) das ${start} às ${end}?`
+        )
+      ) {
+        const prof = prompt("Nome do solicitante/docente:", "");
+        const motivo = prompt("Motivo ou disciplina:", "");
+
+        bookings.push({
+          roomId: room.id,
+          date: dateKey(y, m, d),
+          start,
+          end,
+          prof: prof || "Reservado",
+          motivo: motivo || "—",
+        });
+        saveBookings();
+        document.getElementById("checkBtn").click(); // Atualiza lista
+      }
+    }
+  </script>
+</body>
+</html>
