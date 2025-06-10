@@ -101,17 +101,13 @@
                     initializeAuth();
                     console.log('Auth inicializado');
                     
-                    // Aguardar a inicialização do Firebase Auth
-                    await new Promise(resolve => {
-                        const unsubscribe = firebase.auth().onAuthStateChanged((user) => {
-                            console.log('Estado de auth mudou:', user ? 'usuário logado' : 'sem usuário');
-                            unsubscribe(); // Parar de observar mudanças
-                            if (user && user.emailVerified) {
-                                window.location.href = 'index.html';
-                            }
-                            resolve();
-                        });
-                    });
+                    // Verificar se já está logado
+                    const currentUser = firebase.auth().currentUser;
+                    if (currentUser && currentUser.emailVerified) {
+                        console.log('Usuário já está logado:', currentUser.email);
+                        window.location.href = 'index.html';
+                        return;
+                    }
                 } else {
                     console.error('Falha ao inicializar Firebase');
                     showToast('Erro ao inicializar o sistema. Por favor, tente novamente.', 'error');
@@ -146,10 +142,12 @@
                         // Mostrar mensagem de carregamento
                         showToast('Tentando fazer login...', 'info');
                         
-                        const user = await loginUser(email, password);
-                        console.log('Login bem sucedido:', user);
+                        // Tentar fazer login
+                        const userCredential = await firebase.auth().signInWithEmailAndPassword(email, password);
+                        const user = userCredential.user;
+                        console.log('Login bem sucedido:', user.email);
                         
-                        if (user && user.emailVerified) {
+                        if (user.emailVerified) {
                             showToast('Login realizado com sucesso! Redirecionando...', 'success');
                             // Pequeno delay para mostrar a mensagem antes de redirecionar
                             setTimeout(() => {
@@ -161,7 +159,28 @@
                         }
                     } catch (error) {
                         console.error('Erro no login:', error);
-                        showToast(error.message, 'error');
+                        let errorMessage = 'Erro ao fazer login';
+                        
+                        // Mensagens de erro mais amigáveis
+                        switch (error.code) {
+                            case 'auth/user-not-found':
+                            case 'auth/wrong-password':
+                                errorMessage = 'Email ou senha incorretos';
+                                break;
+                            case 'auth/invalid-email':
+                                errorMessage = 'Email inválido';
+                                break;
+                            case 'auth/user-disabled':
+                                errorMessage = 'Esta conta foi desativada';
+                                break;
+                            case 'auth/too-many-requests':
+                                errorMessage = 'Muitas tentativas de login. Tente novamente mais tarde';
+                                break;
+                            default:
+                                errorMessage = error.message;
+                        }
+                        
+                        showToast(errorMessage, 'error');
                     }
                 });
                 

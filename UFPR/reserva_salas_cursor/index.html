@@ -218,6 +218,7 @@
         // Verificar autenticação ao carregar a página
         document.addEventListener('DOMContentLoaded', async function() {
             try {
+                console.log('Verificando autenticação...');
                 // Tentar inicializar Firebase
                 const firebaseOk = initializeFirebase();
                 
@@ -225,22 +226,36 @@
                     // Inicializar autenticação
                     initializeAuth();
                     
-                    // Aguardar a inicialização do Firebase Auth
-                    await new Promise(resolve => {
-                        const unsubscribe = firebase.auth().onAuthStateChanged((user) => {
-                            unsubscribe(); // Parar de observar mudanças
-                            if (!user || !user.emailVerified) {
-                                window.location.href = 'login.html';
-                            }
-                            resolve();
-                        });
-                    });
+                    // Verificar estado atual do usuário
+                    const currentUser = firebase.auth().currentUser;
+                    console.log('Estado atual do usuário:', currentUser ? currentUser.email : 'não logado');
+                    
+                    if (!currentUser) {
+                        console.log('Usuário não está logado, redirecionando para login...');
+                        window.location.href = 'login.html';
+                        return;
+                    }
+                    
+                    if (!currentUser.emailVerified) {
+                        console.log('Email não verificado, redirecionando para login...');
+                        showToast('Por favor, verifique seu email antes de acessar o sistema', 'error');
+                        await firebase.auth().signOut();
+                        window.location.href = 'login.html';
+                        return;
+                    }
+                    
+                    // Usuário está logado e verificado
+                    console.log('Usuário autenticado:', currentUser.email);
+                    document.getElementById('userEmail').textContent = currentUser.email;
+                    
                 } else {
-                    // Se o Firebase não estiver disponível, redirecionar para login
+                    console.error('Firebase não inicializado');
+                    showToast('Erro ao inicializar o sistema', 'error');
                     window.location.href = 'login.html';
                 }
             } catch (error) {
                 console.error('Erro ao verificar autenticação:', error);
+                showToast('Erro ao verificar autenticação', 'error');
                 window.location.href = 'login.html';
             }
         });
