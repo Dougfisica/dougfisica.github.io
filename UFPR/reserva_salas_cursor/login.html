@@ -121,6 +121,14 @@
                 document.getElementById('backToAuthFromLogin').addEventListener('click', showAuthButtons);
                 document.getElementById('backToAuthFromRegister').addEventListener('click', showAuthButtons);
                 
+                // Adicionar event listener para o botão de login
+                const showLoginBtn = document.getElementById('showLoginBtn');
+                console.log('Botão de login encontrado:', !!showLoginBtn);
+                showLoginBtn.addEventListener('click', () => {
+                    console.log('Botão de login clicado');
+                    showLoginForm();
+                });
+                
                 // Adicionar event listener para o formulário de login
                 const loginForm = document.getElementById('loginForm');
                 console.log('Formulário de login encontrado:', !!loginForm);

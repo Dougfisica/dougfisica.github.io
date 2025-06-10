@@ -1,0 +1,26 @@
+{
+  "rules": {
+    "reservations": {
+      // Permite leitura para usuários autenticados
+      ".read": "auth != null && auth.token.email.endsWith('@ufpr.br')",
+      
+      // Permite escrita apenas para o próprio usuário
+      "$reservationId": {
+        ".write": "auth != null && auth.token.email.endsWith('@ufpr.br') && (!data.exists() || data.child('userEmail').val() === auth.token.email)",
+        ".validate": "newData.hasChildren(['sala', 'purpose', 'userEmail', 'timestamp']) && newData.child('userEmail').val() === auth.token.email"
+      }
+    },
+    
+    // Regras para dados da grade (somente leitura)
+    "grade": {
+      ".read": true,
+      ".write": false
+    },
+    
+    // Regras para dados das salas (somente leitura)
+    "rooms": {
+      ".read": true,
+      ".write": false
+    }
+  }
+} 

@@ -190,52 +190,22 @@ function showAuthButtons() {
 document.addEventListener('DOMContentLoaded', function() {
     initializeAuth();
     
-    // Event listeners para os formulários
-    document.getElementById('loginForm').addEventListener('submit', async (e) => {
-        e.preventDefault();
-        const email = document.getElementById('loginEmail').value;
-        const password = document.getElementById('loginPassword').value;
-        
-        try {
-            await loginUser(email, password);
-            showToast('Login realizado com sucesso!', 'success');
-            showAuthButtons();
-        } catch (error) {
-            showToast(error.message, 'error');
-        }
-    });
-    
-    document.getElementById('registerForm').addEventListener('submit', async (e) => {
-        e.preventDefault();
-        const email = document.getElementById('registerEmail').value;
-        const password = document.getElementById('registerPassword').value;
-        const confirmPassword = document.getElementById('confirmPassword').value;
-        
-        if (password !== confirmPassword) {
-            showToast('As senhas não coincidem', 'error');
-            return;
-        }
-        
-        try {
-            await registerUser(email, password);
-            showToast('Registro realizado! Por favor, verifique seu email.', 'success');
-            showAuthButtons();
-        } catch (error) {
-            showToast(error.message, 'error');
-        }
-    });
-    
     // Event listeners para os botões
     document.getElementById('showLoginBtn').addEventListener('click', showLoginForm);
     document.getElementById('showRegisterBtn').addEventListener('click', showRegisterForm);
     document.getElementById('backToAuthFromLogin').addEventListener('click', showAuthButtons);
     document.getElementById('backToAuthFromRegister').addEventListener('click', showAuthButtons);
-    document.getElementById('logoutBtn').addEventListener('click', async () => {
-        try {
-            await logoutUser();
-            showToast('Logout realizado com sucesso!', 'success');
-        } catch (error) {
-            showToast(error.message, 'error');
-        }
-    });
+    
+    // Event listener para logout (apenas se o botão existir)
+    const logoutBtn = document.getElementById('logoutBtn');
+    if (logoutBtn) {
+        logoutBtn.addEventListener('click', async () => {
+            try {
+                await logoutUser();
+                showToast('Logout realizado com sucesso!', 'success');
+            } catch (error) {
+                showToast(error.message, 'error');
+            }
+        });
+    }
 }); 
