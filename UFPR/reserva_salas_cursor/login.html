@@ -121,6 +121,30 @@
                 document.getElementById('backToAuthFromLogin').addEventListener('click', showAuthButtons);
                 document.getElementById('backToAuthFromRegister').addEventListener('click', showAuthButtons);
                 
+                // Adicionar event listener para o formulário de login
+                const loginForm = document.getElementById('loginForm');
+                console.log('Formulário de login encontrado:', !!loginForm);
+                
+                loginForm.addEventListener('submit', async function(e) {
+                    console.log('Formulário de login submetido');
+                    e.preventDefault();
+                    
+                    const email = document.getElementById('loginEmail').value;
+                    const password = document.getElementById('loginPassword').value;
+                    
+                    console.log('Tentando fazer login:', { email });
+                    
+                    try {
+                        const user = await loginUser(email, password);
+                        console.log('Login bem sucedido:', user);
+                        showToast('Login realizado com sucesso!', 'success');
+                        window.location.href = 'index.html';
+                    } catch (error) {
+                        console.error('Erro no login:', error);
+                        showToast(error.message, 'error');
+                    }
+                });
+                
                 // Adicionar event listener para o formulário de registro
                 const registerForm = document.getElementById('registerForm');
                 console.log('Formulário de registro encontrado:', !!registerForm);
@@ -154,21 +178,6 @@
             } catch (error) {
                 console.error('Erro ao inicializar:', error);
                 showToast('Erro ao inicializar o sistema. Por favor, tente novamente.', 'error');
-            }
-        });
-
-        // Modificar o comportamento do login para redirecionar
-        document.getElementById('loginForm').addEventListener('submit', async (e) => {
-            e.preventDefault();
-            const email = document.getElementById('loginEmail').value;
-            const password = document.getElementById('loginPassword').value;
-            
-            try {
-                await loginUser(email, password);
-                showToast('Login realizado com sucesso!', 'success');
-                window.location.href = 'index.html';
-            } catch (error) {
-                showToast(error.message, 'error');
             }
         });
     </script>

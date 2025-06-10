@@ -69,19 +69,49 @@ async function registerUser(email, password) {
 
 // Login do usuário
 async function loginUser(email, password) {
+    console.log('Iniciando login:', email);
+    
+    if (!firebaseInitialized) {
+        console.error('Firebase não inicializado');
+        throw new Error('Sistema não inicializado corretamente');
+    }
+    
+    if (!isValidUFPRemail(email)) {
+        console.error('Email inválido:', email);
+        throw new Error('Apenas emails @ufpr.br são permitidos');
+    }
+
     try {
+        console.log('Tentando autenticar com Firebase...');
         const userCredential = await firebase.auth().signInWithEmailAndPassword(email, password);
         const user = userCredential.user;
+        console.log('Usuário autenticado:', user.uid);
         
         if (!user.emailVerified) {
+            console.log('Email não verificado, fazendo logout...');
             await firebase.auth().signOut();
             throw new Error('Por favor, verifique seu email antes de fazer login');
         }
         
+        console.log('Login bem sucedido');
         return user;
     } catch (error) {
-        console.error('Erro no login:', error);
-        throw error;
+        console.error('Erro detalhado no login:', error);
+        
+        // Mensagens de erro mais amigáveis
+        switch (error.code) {
+            case 'auth/user-not-found':
+            case 'auth/wrong-password':
+                throw new Error('Email ou senha incorretos');
+            case 'auth/invalid-email':
+                throw new Error('Email inválido');
+            case 'auth/user-disabled':
+                throw new Error('Esta conta foi desativada');
+            case 'auth/too-many-requests':
+                throw new Error('Muitas tentativas de login. Tente novamente mais tarde');
+            default:
+                throw new Error('Erro ao fazer login: ' + error.message);
+        }
     }
 }
 
