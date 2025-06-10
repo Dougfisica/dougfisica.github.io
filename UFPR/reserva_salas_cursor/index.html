@@ -216,98 +216,29 @@
     <script src="script.js"></script>
     <script>
         // Verificar autenticação ao carregar a página
-        document.addEventListener('DOMContentLoaded', async function() {
-            console.log('Página index.html carregada, iniciando verificação de autenticação...');
+        document.addEventListener('DOMContentLoaded', function() {
+            console.log('Página index.html carregada');
             
-            try {
-                // Tentar inicializar Firebase
-                console.log('Inicializando Firebase...');
-                const firebaseOk = initializeFirebase();
+            // Inicializar Firebase e Auth
+            initializeFirebase();
+            initializeAuth();
+            
+            // Configurar listener de autenticação
+            firebase.auth().onAuthStateChanged(async (user) => {
+                console.log('Estado de autenticação mudou:', user ? user.email : 'não logado');
                 
-                if (!firebaseOk) {
-                    console.error('Falha ao inicializar Firebase');
-                    showToast('Erro ao inicializar o sistema', 'error');
-                    window.location.replace('login.html');
-                    return;
+                if (user && user.emailVerified) {
+                    console.log('Usuário autenticado e verificado:', user.email);
+                    document.getElementById('userEmail').textContent = user.email;
+                    updateAuthUI();
+                } else {
+                    console.log('Usuário não autenticado ou não verificado, redirecionando...');
+                    // Pequeno delay para garantir que o Firebase teve tempo de restaurar a sessão
+                    setTimeout(() => {
+                        window.location.replace('login.html');
+                    }, 2000);
                 }
-                
-                console.log('Firebase inicializado com sucesso');
-                
-                // Inicializar autenticação
-                console.log('Inicializando autenticação...');
-                initializeAuth();
-                
-                // Aguardar a inicialização do Firebase Auth
-                await new Promise((resolve, reject) => {
-                    console.log('Configurando listener de autenticação...');
-                    
-                    // Timeout de segurança
-                    const timeout = setTimeout(() => {
-                        console.error('Timeout na verificação de autenticação');
-                        reject(new Error('Timeout na verificação de autenticação'));
-                    }, 10000); // 10 segundos
-                    
-                    const unsubscribe = firebase.auth().onAuthStateChanged(async (user) => {
-                        clearTimeout(timeout); // Limpar timeout
-                        
-                        console.log('Estado de auth mudou:', user ? user.email : 'não logado');
-                        
-                        try {
-                            if (!user) {
-                                console.log('Usuário não está logado, redirecionando para login...');
-                                showToast('Por favor, faça login para acessar o sistema', 'error');
-                                window.location.replace('login.html');
-                                return;
-                            }
-                            
-                            // Recarregar o usuário para garantir dados atualizados
-                            console.log('Recarregando dados do usuário...');
-                            await user.reload();
-                            const updatedUser = firebase.auth().currentUser;
-                            
-                            if (!updatedUser) {
-                                console.error('Usuário não encontrado após reload');
-                                showToast('Erro ao verificar autenticação', 'error');
-                                window.location.replace('login.html');
-                                return;
-                            }
-                            
-                            console.log('Estado do email verificado:', updatedUser.emailVerified);
-                            
-                            if (!updatedUser.emailVerified) {
-                                console.log('Email não verificado, redirecionando para login...');
-                                showToast('Por favor, verifique seu email antes de acessar o sistema', 'error');
-                                await firebase.auth().signOut();
-                                window.location.replace('login.html');
-                                return;
-                            }
-                            
-                            // Usuário está logado e verificado
-                            console.log('Usuário autenticado com sucesso:', updatedUser.email);
-                            document.getElementById('userEmail').textContent = updatedUser.email;
-                            
-                            // Atualizar UI
-                            updateAuthUI();
-                            
-                            unsubscribe();
-                            resolve();
-                            
-                        } catch (error) {
-                            console.error('Erro ao verificar usuário:', error);
-                            showToast('Erro ao verificar autenticação', 'error');
-                            window.location.replace('login.html');
-                            reject(error);
-                        }
-                    });
-                });
-                
-                console.log('Verificação de autenticação concluída com sucesso');
-                
-            } catch (error) {
-                console.error('Erro na verificação de autenticação:', error);
-                showToast('Erro ao verificar autenticação: ' + error.message, 'error');
-                window.location.replace('login.html');
-            }
+            });
         });
     </script>
 </body>

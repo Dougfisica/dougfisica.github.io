@@ -3,15 +3,50 @@ let currentUser = null;
 
 // Inicializar autenticação
 function initializeAuth() {
-    if (!firebaseInitialized) return;
+    console.log('Inicializando autenticação...');
     
-    const auth = firebase.auth();
-    
-    // Observar mudanças no estado de autenticação
-    auth.onAuthStateChanged((user) => {
-        currentUser = user;
-        updateAuthUI();
+    if (!firebaseInitialized) {
+        console.error('Firebase não inicializado');
+        throw new Error('Firebase não inicializado');
+    }
+
+    // Configurar listener de autenticação
+    firebase.auth().onAuthStateChanged(async (user) => {
+        console.log('Estado de autenticação mudou:', user ? user.email : 'não logado');
+        
+        try {
+            if (user) {
+                // Recarregar o usuário para garantir dados atualizados
+                console.log('Recarregando dados do usuário...');
+                await user.reload();
+                const updatedUser = firebase.auth().currentUser;
+                
+                if (!updatedUser) {
+                    console.error('Usuário não encontrado após reload');
+                    currentUser = null;
+                    updateAuthUI();
+                    return;
+                }
+                
+                console.log('Estado do email verificado:', updatedUser.emailVerified);
+                currentUser = updatedUser;
+                
+            } else {
+                console.log('Nenhum usuário logado');
+                currentUser = null;
+            }
+            
+            // Atualizar interface
+            updateAuthUI();
+            
+        } catch (error) {
+            console.error('Erro ao atualizar estado de autenticação:', error);
+            currentUser = null;
+            updateAuthUI();
+        }
     });
+    
+    console.log('Autenticação inicializada com sucesso');
 }
 
 // Verificar se o email é @ufpr.br

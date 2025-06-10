@@ -167,6 +167,11 @@
                         // Mostrar mensagem de carregamento
                         showToast('Tentando fazer login...', 'info');
                         
+                        // Configurar persistência LOCAL antes do login
+                        console.log('Configurando persistência LOCAL...');
+                        await firebase.auth().setPersistence(firebase.auth.Auth.Persistence.LOCAL);
+                        console.log('Persistência LOCAL configurada');
+                        
                         // Tentar fazer login
                         const userCredential = await firebase.auth().signInWithEmailAndPassword(email, password);
                         const user = userCredential.user;

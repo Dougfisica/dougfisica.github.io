@@ -10,9 +10,9 @@ let firebaseInitialized = false;
 
 // Inicializar Firebase
 function initializeFirebase() {
+    console.log('Iniciando configuração do Firebase...');
+    
     try {
-        console.log('Iniciando configuração do Firebase...');
-        
         // Verificar se o Firebase já está inicializado
         if (firebase.apps.length > 0) {
             console.log('Firebase já está inicializado');
@@ -34,9 +34,10 @@ const firebaseConfig = {
         
         // Inicializar Firebase
         firebase.initializeApp(firebaseConfig);
+        console.log('Firebase inicializado com sucesso');
         
-        // Verificar se o Database está disponível
-        if (typeof firebase.database === 'function') {
+        // Verificar se o Firebase Database está disponível
+        if (firebase.database) {
             console.log('Firebase Database inicializado com sucesso');
             firebaseInitialized = true;
             return true;
@@ -44,10 +45,8 @@ const firebaseConfig = {
             console.error('Firebase Database não está disponível');
             return false;
         }
-        
     } catch (error) {
         console.error('Erro ao inicializar Firebase:', error);
-        firebaseInitialized = false;
         return false;
     }
 }
