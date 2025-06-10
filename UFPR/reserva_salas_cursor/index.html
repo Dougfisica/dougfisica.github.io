@@ -194,9 +194,73 @@
     <!-- Firebase SDK -->
     <script src="https://www.gstatic.com/firebasejs/9.15.0/firebase-app-compat.js"></script>
     <script src="https://www.gstatic.com/firebasejs/9.15.0/firebase-database-compat.js"></script>
+    <script src="https://www.gstatic.com/firebasejs/9.15.0/firebase-auth-compat.js"></script>
     
     <!-- Scripts -->
     <script src="firebase-config.js"></script>
+    <script src="auth.js"></script>
     <script src="script.js"></script>
+
+    <!-- Seção de Autenticação -->
+    <div id="authSection" class="auth-section hidden">
+        <!-- Botões de Autenticação -->
+        <div id="authButtons" class="auth-buttons">
+            <button id="showLoginBtn" class="btn btn-primary">
+                <i class="fas fa-sign-in-alt"></i> Login
+            </button>
+            <button id="showRegisterBtn" class="btn btn-secondary">
+                <i class="fas fa-user-plus"></i> Registrar
+            </button>
+        </div>
+
+        <!-- Formulário de Login -->
+        <form id="loginForm" class="auth-form hidden">
+            <h3><i class="fas fa-sign-in-alt"></i> Login</h3>
+            <div class="form-group">
+                <label for="loginEmail">Email (@ufpr.br)</label>
+                <input type="email" id="loginEmail" required placeholder="seu.email@ufpr.br">
+            </div>
+            <div class="form-group">
+                <label for="loginPassword">Senha</label>
+                <input type="password" id="loginPassword" required>
+            </div>
+            <div class="form-actions">
+                <button type="submit" class="btn btn-primary">Entrar</button>
+                <button type="button" id="backToAuthBtn" class="btn btn-secondary">Voltar</button>
+            </div>
+        </form>
+
+        <!-- Formulário de Registro -->
+        <form id="registerForm" class="auth-form hidden">
+            <h3><i class="fas fa-user-plus"></i> Registrar</h3>
+            <div class="form-group">
+                <label for="registerEmail">Email (@ufpr.br)</label>
+                <input type="email" id="registerEmail" required placeholder="seu.email@ufpr.br">
+            </div>
+            <div class="form-group">
+                <label for="registerPassword">Senha</label>
+                <input type="password" id="registerPassword" required minlength="6">
+            </div>
+            <div class="form-group">
+                <label for="confirmPassword">Confirmar Senha</label>
+                <input type="password" id="confirmPassword" required minlength="6">
+            </div>
+            <div class="form-actions">
+                <button type="submit" class="btn btn-primary">Registrar</button>
+                <button type="button" id="backToAuthBtn" class="btn btn-secondary">Voltar</button>
+            </div>
+        </form>
+
+        <!-- Informações do Usuário -->
+        <div id="userInfo" class="user-info hidden">
+            <div class="user-details">
+                <i class="fas fa-user-circle"></i>
+                <span id="userEmail"></span>
+            </div>
+            <button id="logoutBtn" class="btn btn-danger">
+                <i class="fas fa-sign-out-alt"></i> Sair
+            </button>
+        </div>
+    </div>
 </body>
 </html> 

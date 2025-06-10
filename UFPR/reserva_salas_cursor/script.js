@@ -51,15 +51,18 @@ async function initializeApp() {
         // Tentar inicializar Firebase
         const firebaseOk = initializeFirebase();
         
-        await loadGradeData();
-        extractAllRooms();
-        await loadReservations();
-        
         if (firebaseOk) {
+            // Inicializar autenticação
+            initializeAuth();
             showToast('Sistema carregado com Firebase!', 'success');
         } else {
             showToast('Sistema carregado (modo local)', 'success');
         }
+        
+        await loadGradeData();
+        extractAllRooms();
+        await loadReservations();
+        
     } catch (error) {
         console.error('Erro ao inicializar aplicação:', error);
         showToast('Erro ao carregar dados das salas', 'error');
@@ -411,6 +414,11 @@ function closeModal() {
 
 // Lidar com reserva
 async function handleReservation() {
+    if (!currentUser) {
+        showToast('Por favor, faça login para reservar salas', 'error');
+        return;
+    }
+
     const roomName = confirmModal.dataset.roomName;
     const purpose = document.getElementById('reservationPurpose').value.trim();
     const teacherName = document.getElementById('teacherName').value.trim();
@@ -426,6 +434,7 @@ async function handleReservation() {
         sala: roomName,
         purpose,
         teacherName,
+        userEmail: currentUser.email,
         timestamp: new Date().toISOString()
     };
     
@@ -473,8 +482,6 @@ function showToast(message, type = 'success') {
 function hideToast() {
     document.getElementById('toast').classList.add('hidden');
 }
-
-
 
 // Função utilitária para debug
 function debugApp() {
