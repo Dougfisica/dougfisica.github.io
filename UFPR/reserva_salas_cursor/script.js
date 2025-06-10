@@ -271,19 +271,25 @@ function performSearch(params) {
     // Atualizar informações da busca
     updateSearchInfo(params, dayOfWeek);
     
-    // Encontrar salas ocupadas neste horário
+    // Salas ocupadas pela grade
     const occupiedRooms = findOccupiedRooms(dayOfWeek, startTime, endTime);
-    
-    // Encontrar salas disponíveis
-    const availableRooms = allRooms.filter(room => !occupiedRooms.some(or => or.sala === room));
-    
-    // Incluir reservas feitas pelo usuário
+    // Reservas que o usuário já fez nesse horário
     const userReservations = findUserReservations(params);
     
-    // Renderizar resultados
+    // Constrói um Set com todas as salas indisponíveis
+    const unavailableRooms = new Set([
+        ...occupiedRooms.map(or => or.sala),
+        ...userReservations.map(r => r.sala)
+    ]);
+    
+    // Disponíveis = todas menos as indisponíveis
+    const availableRooms = allRooms.filter(room => !unavailableRooms.has(room));
+    
+    // Renderiza
     renderAvailableRooms(availableRooms);
     renderOccupiedRooms([...occupiedRooms, ...userReservations]);
 }
+
 
 // Atualizar informações da busca
 function updateSearchInfo(params, dayOfWeek) {
