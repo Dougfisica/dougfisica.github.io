@@ -230,7 +230,7 @@
                 if (user && user.emailVerified) {
                     console.log('Usuário autenticado e verificado:', user.email);
                     document.getElementById('userEmail').textContent = user.email;
-                    updateAuthUI();
+                    updateAuthUI(user);
                 } else {
                     console.log('Usuário não autenticado ou não verificado, redirecionando...');
                     // Pequeno delay para garantir que o Firebase teve tempo de restaurar a sessão
