@@ -154,11 +154,6 @@ async function loginUser(email, password) {
 async function logoutUser() {
     console.log('Iniciando processo de logout...');
     
-    if (!firebaseInitialized) {
-        console.error('Firebase não inicializado');
-        throw new Error('Sistema não inicializado corretamente');
-    }
-
     try {
         // Verificar se há um usuário logado
         const currentUser = firebase.auth().currentUser;
@@ -176,13 +171,18 @@ async function logoutUser() {
         // Limpar dados locais
         currentUser = null;
         
-        // Redirecionar para a página de login
-        console.log('Redirecionando para login.html...');
-        window.location.replace('login.html');
+        // Mostrar mensagem de sucesso
+        showToast('Logout realizado com sucesso', 'success');
+        
+        // Pequeno delay antes do redirecionamento
+        setTimeout(() => {
+            console.log('Redirecionando para login.html...');
+            window.location.replace('login.html');
+        }, 1000);
         
     } catch (error) {
         console.error('Erro ao fazer logout:', error);
-        throw new Error('Erro ao fazer logout: ' + error.message);
+        showToast('Erro ao fazer logout: ' + error.message, 'error');
     }
 }
 
@@ -260,6 +260,7 @@ function showAuthButtons() {
 
 // Inicializar quando o documento estiver pronto
 document.addEventListener('DOMContentLoaded', function() {
+    console.log('Inicializando autenticação...');
     initializeAuth();
     
     // Event listeners para os botões
@@ -277,10 +278,10 @@ document.addEventListener('DOMContentLoaded', function() {
     // Event listener para logout (apenas se o botão existir)
     if (logoutBtn) {
         console.log('Botão de logout encontrado, adicionando event listener...');
-        logoutBtn.addEventListener('click', async () => {
+        logoutBtn.addEventListener('click', async (e) => {
+            e.preventDefault(); // Prevenir comportamento padrão do botão
             console.log('Botão de logout clicado');
             try {
-                showToast('Fazendo logout...', 'info');
                 await logoutUser();
             } catch (error) {
                 console.error('Erro no logout:', error);

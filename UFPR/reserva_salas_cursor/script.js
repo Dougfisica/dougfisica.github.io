@@ -99,20 +99,25 @@ function extractAllRooms() {
 async function loadReservations() {
     try {
         if (firebaseInitialized) {
-            reservations = await loadFromFirebase('reservations');
+            const data = await loadFromFirebase('reservations');
+            // Garantir que reservations seja sempre um array
+            reservations = Array.isArray(data) ? data : [];
+            console.log('Reservas carregadas do Firebase:', reservations.length);
         } else {
             const saved = localStorage.getItem('ufpr_reservations');
-            if (saved) {
-                reservations = JSON.parse(saved);
+            // Garantir que reservations seja sempre um array
+            reservations = saved ? JSON.parse(saved) : [];
+            if (!Array.isArray(reservations)) {
+                console.warn('Dados de reservas inválidos, inicializando array vazio');
+                reservations = [];
             }
+            console.log('Reservas carregadas do localStorage:', reservations.length);
         }
     } catch (error) {
         console.error('Erro ao carregar reservas:', error);
-        // Fallback para localStorage
-        const saved = localStorage.getItem('ufpr_reservations');
-        if (saved) {
-            reservations = JSON.parse(saved);
-        }
+        // Fallback para array vazio
+        reservations = [];
+        console.log('Inicializando array de reservas vazio devido a erro');
     }
 }
 
@@ -122,12 +127,22 @@ async function saveReservations() {
         if (firebaseInitialized) {
             // Para Firebase, vamos salvar apenas a nova reserva
             // As outras já estão salvas
+            console.log('Salvando reserva no Firebase...');
         } else {
+            // Garantir que estamos salvando um array
+            if (!Array.isArray(reservations)) {
+                console.warn('Dados de reservas inválidos, convertendo para array');
+                reservations = [];
+            }
             localStorage.setItem('ufpr_reservations', JSON.stringify(reservations));
+            console.log('Reservas salvas no localStorage:', reservations.length);
         }
     } catch (error) {
         console.error('Erro ao salvar reservas:', error);
         // Fallback para localStorage
+        if (!Array.isArray(reservations)) {
+            reservations = [];
+        }
         localStorage.setItem('ufpr_reservations', JSON.stringify(reservations));
     }
 }
@@ -305,7 +320,22 @@ function findUserReservations(params) {
     const searchStart = timeToMinutes(startTime);
     const searchEnd = timeToMinutes(endTime);
     
-    return reservations.filter(reservation => {
+    // Garantir que reservations é um array
+    if (!Array.isArray(reservations)) {
+        console.warn('reservations não é um array, convertendo...');
+        reservations = [];
+        return [];
+    }
+    
+    console.log('Buscando reservas para:', { day, month, year, startTime, endTime });
+    console.log('Total de reservas:', reservations.length);
+    
+    const filtered = reservations.filter(reservation => {
+        if (!reservation || typeof reservation !== 'object') {
+            console.warn('Reserva inválida encontrada:', reservation);
+            return false;
+        }
+        
         if (reservation.day === day && 
             reservation.month === month && 
             reservation.year === year) {
@@ -318,6 +348,9 @@ function findUserReservations(params) {
         }
         return false;
     });
+    
+    console.log('Reservas encontradas:', filtered.length);
+    return filtered;
 }
 
 // Renderizar salas disponíveis
