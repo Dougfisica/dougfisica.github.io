@@ -117,11 +117,37 @@ async function loginUser(email, password) {
 
 // Logout do usuário
 async function logoutUser() {
+    console.log('Iniciando processo de logout...');
+    
+    if (!firebaseInitialized) {
+        console.error('Firebase não inicializado');
+        throw new Error('Sistema não inicializado corretamente');
+    }
+
     try {
+        // Verificar se há um usuário logado
+        const currentUser = firebase.auth().currentUser;
+        if (!currentUser) {
+            console.log('Nenhum usuário logado para fazer logout');
+            return;
+        }
+
+        console.log('Fazendo logout do usuário:', currentUser.email);
+        
+        // Fazer logout
         await firebase.auth().signOut();
+        console.log('Logout realizado com sucesso');
+        
+        // Limpar dados locais
+        currentUser = null;
+        
+        // Redirecionar para a página de login
+        console.log('Redirecionando para login.html...');
+        window.location.replace('login.html');
+        
     } catch (error) {
-        console.error('Erro no logout:', error);
-        throw error;
+        console.error('Erro ao fazer logout:', error);
+        throw new Error('Erro ao fazer logout: ' + error.message);
     }
 }
 
@@ -202,21 +228,31 @@ document.addEventListener('DOMContentLoaded', function() {
     initializeAuth();
     
     // Event listeners para os botões
-    document.getElementById('showLoginBtn').addEventListener('click', showLoginForm);
-    document.getElementById('showRegisterBtn').addEventListener('click', showRegisterForm);
-    document.getElementById('backToAuthFromLogin').addEventListener('click', showAuthButtons);
-    document.getElementById('backToAuthFromRegister').addEventListener('click', showAuthButtons);
+    const showLoginBtn = document.getElementById('showLoginBtn');
+    const showRegisterBtn = document.getElementById('showRegisterBtn');
+    const backToAuthFromLogin = document.getElementById('backToAuthFromLogin');
+    const backToAuthFromRegister = document.getElementById('backToAuthFromRegister');
+    const logoutBtn = document.getElementById('logoutBtn');
+    
+    if (showLoginBtn) showLoginBtn.addEventListener('click', showLoginForm);
+    if (showRegisterBtn) showRegisterBtn.addEventListener('click', showRegisterForm);
+    if (backToAuthFromLogin) backToAuthFromLogin.addEventListener('click', showAuthButtons);
+    if (backToAuthFromRegister) backToAuthFromRegister.addEventListener('click', showAuthButtons);
     
     // Event listener para logout (apenas se o botão existir)
-    const logoutBtn = document.getElementById('logoutBtn');
     if (logoutBtn) {
+        console.log('Botão de logout encontrado, adicionando event listener...');
         logoutBtn.addEventListener('click', async () => {
+            console.log('Botão de logout clicado');
             try {
+                showToast('Fazendo logout...', 'info');
                 await logoutUser();
-                showToast('Logout realizado com sucesso!', 'success');
             } catch (error) {
+                console.error('Erro no logout:', error);
                 showToast(error.message, 'error');
             }
         });
+    } else {
+        console.log('Botão de logout não encontrado');
     }
 }); 
