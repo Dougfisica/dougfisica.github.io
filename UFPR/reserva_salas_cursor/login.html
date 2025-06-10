@@ -81,215 +81,143 @@
         </div>
     </div>
 
-    <!-- Firebase SDK -->
     <script src="https://www.gstatic.com/firebasejs/9.15.0/firebase-app-compat.js"></script>
-    <script src="https://www.gstatic.com/firebasejs/9.15.0/firebase-auth-compat.js"></script>
-    <script src="https://www.gstatic.com/firebasejs/9.15.0/firebase-database-compat.js"></script>
-    
-    <!-- Scripts -->
-    <script src="firebase-config.js"></script>
-    <script src="auth.js"></script>
-    <script>
-        // Função para mostrar mensagens toast
-        function showToast(message, type = 'info') {
-            const toast = document.getElementById('toast');
-            const toastMessage = document.getElementById('toastMessage');
-            
-            // Remover classes anteriores
-            toast.classList.remove('success', 'error', 'info');
-            
-            // Adicionar nova classe
-            toast.classList.add(type);
-            
-            // Atualizar mensagem
-            toastMessage.textContent = message;
-            
-            // Mostrar toast
-            toast.classList.remove('hidden');
-            
-            // Esconder após 5 segundos
-            setTimeout(() => {
-                toast.classList.add('hidden');
-            }, 5000);
-        }
+<script src="https://www.gstatic.com/firebasejs/9.15.0/firebase-auth-compat.js"></script>
+<script src="https://www.gstatic.com/firebasejs/9.15.0/firebase-database-compat.js"></script>
 
-        // Verificar autenticação ao carregar a página
-        document.addEventListener('DOMContentLoaded', async function() {
-            try {
-                console.log('Iniciando inicialização...');
-                // Tentar inicializar Firebase
-                const firebaseOk = initializeFirebase();
-                console.log('Firebase inicializado:', firebaseOk);
-                
-                if (firebaseOk) {
-                    // Inicializar autenticação
-                    initializeAuth();
-                    console.log('Auth inicializado');
-                    
-                    // Verificar se já está logado
-                    const currentUser = firebase.auth().currentUser;
-                    if (currentUser && currentUser.emailVerified) {
-                        console.log('Usuário já está logado:', currentUser.email);
-                        window.location.href = 'index.html';
-                        return;
-                    }
-                } else {
-                    console.error('Falha ao inicializar Firebase');
-                    showToast('Erro ao inicializar o sistema. Por favor, tente novamente.', 'error');
-                }
+<!-- Seus scripts locais (mantidos) -->
+<script src="firebase-config.js"></script>
+<script src="auth.js"></script>
 
-                // Adicionar event listeners para os botões de voltar
-                document.getElementById('backToAuthFromLogin').addEventListener('click', showAuthButtons);
-                document.getElementById('backToAuthFromRegister').addEventListener('click', showAuthButtons);
-                
-                // Adicionar event listener para o botão de login
-                const showLoginBtn = document.getElementById('showLoginBtn');
-                console.log('Botão de login encontrado:', !!showLoginBtn);
-                showLoginBtn.addEventListener('click', () => {
-                    console.log('Botão de login clicado');
-                    showLoginForm();
-                });
-                
-                // Adicionar event listener para o formulário de login
-                const loginForm = document.getElementById('loginForm');
-                console.log('Formulário de login encontrado:', !!loginForm);
-                
-                loginForm.addEventListener('submit', async function(e) {
-                    console.log('Formulário de login submetido');
-                    e.preventDefault();
-                    
-                    const email = document.getElementById('loginEmail').value;
-                    const password = document.getElementById('loginPassword').value;
-                    
-                    console.log('Tentando fazer login:', { email });
-                    
-                    try {
-                        // Mostrar mensagem de carregamento
-                        showToast('Tentando fazer login...', 'info');
-                        
-                        // Configurar persistência LOCAL antes do login
-                        console.log('Configurando persistência LOCAL...');
-                        await firebase.auth().setPersistence(firebase.auth.Auth.Persistence.LOCAL);
-                        console.log('Persistência LOCAL configurada');
-                        
-                        // Tentar fazer login
-                        const userCredential = await firebase.auth().signInWithEmailAndPassword(email, password);
-                        const user = userCredential.user;
-                        console.log('Login bem sucedido:', user.email);
-                        
-                        // Recarregar o usuário para garantir que temos os dados mais recentes
-                        await user.reload();
-                        const updatedUser = firebase.auth().currentUser;
-                        console.log('Estado do email verificado:', updatedUser.emailVerified);
-                        
-                        if (updatedUser.emailVerified) {
-                            console.log('Email verificado, redirecionando para index.html...');
-                            showToast('Login realizado com sucesso! Redirecionando...', 'success');
-                            
-                            // Forçar redirecionamento após 1.5 segundos
-                            setTimeout(() => {
-                                console.log('Executando redirecionamento...');
-                                window.location.replace('index.html');
-                            }, 1500);
-                        } else {
-                            console.log('Email não verificado, fazendo logout...');
-                            showToast('Por favor, verifique seu email antes de fazer login', 'error');
-                            await firebase.auth().signOut();
-                        }
-                    } catch (error) {
-                        console.error('Erro no login:', error);
-                        let errorMessage = 'Erro ao fazer login';
-                        
-                        // Mensagens de erro mais amigáveis
-                        switch (error.code) {
-                            case 'auth/user-not-found':
-                            case 'auth/wrong-password':
-                                errorMessage = 'Email ou senha incorretos';
-                                break;
-                            case 'auth/invalid-email':
-                                errorMessage = 'Email inválido';
-                                break;
-                            case 'auth/user-disabled':
-                                errorMessage = 'Esta conta foi desativada';
-                                break;
-                            case 'auth/too-many-requests':
-                                errorMessage = 'Muitas tentativas de login. Tente novamente mais tarde';
-                                break;
-                            default:
-                                errorMessage = error.message;
-                        }
-                        
-                        showToast(errorMessage, 'error');
-                    }
-                });
-                
-                // Adicionar event listener para o formulário de registro
-                const registerForm = document.getElementById('registerForm');
-                console.log('Formulário de registro encontrado:', !!registerForm);
-                
-                if (registerForm) {
-                    registerForm.addEventListener('submit', async function(e) {
-                        e.preventDefault();
-                        console.log('Formulário de registro submetido');
-                        
-                        const email = document.getElementById('registerEmail').value;
-                        const password = document.getElementById('registerPassword').value;
-                        const confirmPassword = document.getElementById('confirmPassword').value;
-                        
-                        console.log('Tentando registrar:', { email, passwordLength: password.length });
-                        
-                        if (password !== confirmPassword) {
-                            showToast('As senhas não coincidem', 'error');
-                            return;
-                        }
-                        
-                        try {
-                            // Mostrar mensagem de carregamento
-                            showToast('Registrando usuário...', 'info');
-                            
-                            // Registrar usuário
-                            const user = await firebase.auth().createUserWithEmailAndPassword(email, password);
-                            console.log('Usuário registrado:', user);
-                            
-                            // Enviar email de verificação
-                            await user.user.sendEmailVerification();
-                            console.log('Email de verificação enviado');
-                            
-                            showToast('Registro realizado! Por favor, verifique seu email.', 'success');
-                            showAuthButtons();
-                            
-                        } catch (error) {
-                            console.error('Erro no registro:', error);
-                            let errorMessage = 'Erro ao registrar';
-                            
-                            // Mensagens de erro mais amigáveis
-                            switch (error.code) {
-                                case 'auth/email-already-in-use':
-                                    errorMessage = 'Este email já está em uso';
-                                    break;
-                                case 'auth/invalid-email':
-                                    errorMessage = 'Email inválido';
-                                    break;
-                                case 'auth/operation-not-allowed':
-                                    errorMessage = 'Registro de usuários está desativado';
-                                    break;
-                                case 'auth/weak-password':
-                                    errorMessage = 'A senha é muito fraca';
-                                    break;
-                                default:
-                                    errorMessage = error.message;
-                            }
-                            
-                            showToast(errorMessage, 'error');
-                        }
-                    });
-                }
-                
-            } catch (error) {
-                console.error('Erro ao inicializar:', error);
-                showToast('Erro ao inicializar o sistema. Por favor, tente novamente.', 'error');
+<script>
+/* ---------- Funções utilitárias de UI ---------- */
+// Exibe botão-voltar e oculta formulários
+function showAuthButtons() {
+    document.getElementById('authButtons').classList.remove('hidden');
+    document.getElementById('loginForm').classList.add('hidden');
+    document.getElementById('registerForm').classList.add('hidden');
+}
+// Exibe formulário de login
+function showLoginForm() {
+    document.getElementById('authButtons').classList.add('hidden');
+    document.getElementById('loginForm').classList.remove('hidden');
+    document.getElementById('registerForm').classList.add('hidden');
+}
+// Exibe formulário de registro  (NOVA)
+function showRegisterForm() {
+    document.getElementById('authButtons').classList.add('hidden');
+    document.getElementById('loginForm').classList.add('hidden');
+    document.getElementById('registerForm').classList.remove('hidden');
+}
+// Toast genérico
+function showToast(message, type = 'info') {
+    const toast       = document.getElementById('toast');
+    const toastMsg    = document.getElementById('toastMessage');
+    toast.classList.remove('success', 'error', 'info');
+    toast.classList.add(type);
+    toastMsg.textContent = message;
+    toast.classList.remove('hidden');
+    setTimeout(() => toast.classList.add('hidden'), 5000);
+}
+
+/* ---------- Inicialização ---------- */
+document.addEventListener('DOMContentLoaded', async () => {
+try {
+    /* Firebase */
+    const firebaseOk = initializeFirebase();      // (está no firebase-config.js)
+    if (!firebaseOk) {
+        showToast('Erro ao inicializar Firebase', 'error');
+        return;
+    }
+    initializeAuth();                             // (está no auth.js)
+
+    /* Usuário já logado? */
+    const currentUser = firebase.auth().currentUser;
+    if (currentUser && currentUser.emailVerified) {
+        window.location.href = 'index.html';
+        return;
+    }
+
+    /* Botões “Login” e “Registrar” */
+    document.getElementById('showLoginBtn')
+        .addEventListener('click', () => showLoginForm());
+
+    document.getElementById('showRegisterBtn')     // NOVO listener
+        .addEventListener('click', () => showRegisterForm());
+
+    /* Botões “Voltar” dentro dos formulários */
+    document.getElementById('backToAuthFromLogin')
+        .addEventListener('click', showAuthButtons);
+    document.getElementById('backToAuthFromRegister')
+        .addEventListener('click', showAuthButtons);
+
+    /* ---------- LOGIN ---------- */
+    document.getElementById('loginForm')
+        .addEventListener('submit', async (e) => {
+        e.preventDefault();
+        const email    = document.getElementById('loginEmail').value;
+        const password = document.getElementById('loginPassword').value;
+        try {
+            showToast('Tentando fazer login...', 'info');
+            await firebase.auth()
+                .setPersistence(firebase.auth.Auth.Persistence.LOCAL);
+            const cred = await firebase.auth()
+                .signInWithEmailAndPassword(email, password);
+            await cred.user.reload();
+            if (cred.user.emailVerified) {
+                showToast('Login realizado! Redirecionando...', 'success');
+                setTimeout(() => window.location.replace('index.html'), 1500);
+            } else {
+                showToast('Verifique seu email antes de logar', 'error');
+                await firebase.auth().signOut();
             }
-        });
-    </script>
+        } catch (error) {
+            const map = {
+                'auth/user-not-found'  : 'Email ou senha incorretos',
+                'auth/wrong-password'  : 'Email ou senha incorretos',
+                'auth/invalid-email'   : 'Email inválido',
+                'auth/user-disabled'   : 'Conta desativada',
+                'auth/too-many-requests': 'Muitas tentativas. Tente depois',
+            };
+            showToast(map[error.code] || error.message, 'error');
+        }
+    });
+
+    /* ---------- REGISTRO ---------- */
+    document.getElementById('registerForm')
+        .addEventListener('submit', async (e) => {
+        e.preventDefault();
+        const email           = document.getElementById('registerEmail').value;
+        const password        = document.getElementById('registerPassword').value;
+        const confirmPassword = document.getElementById('confirmPassword').value;
+
+        if (password !== confirmPassword) {
+            showToast('As senhas não coincidem', 'error');
+            return;
+        }
+        try {
+            showToast('Registrando usuário...', 'info');
+            const cred = await firebase.auth()
+                .createUserWithEmailAndPassword(email, password);
+            await cred.user.sendEmailVerification();
+            showToast('Registro realizado! Verifique seu email.', 'success');
+            showAuthButtons();
+        } catch (error) {
+            const map = {
+                'auth/email-already-in-use' : 'Email já em uso',
+                'auth/invalid-email'        : 'Email inválido',
+                'auth/operation-not-allowed': 'Registro desativado',
+                'auth/weak-password'        : 'Senha muito fraca',
+            };
+            showToast(map[error.code] || error.message, 'error');
+        }
+    });
+} catch (error) {
+    console.error(error);
+    showToast('Falha de inicialização', 'error');
+}
+});
+</script>
+
 </body>
 </html> 
