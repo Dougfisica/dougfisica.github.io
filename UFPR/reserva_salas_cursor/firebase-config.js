@@ -17,24 +17,32 @@ const firebaseConfig = {
   measurementId: "G-8BFC3PGW91"
 };
 
-
-
 // Inicializar Firebase
 let database = null;
 let firebaseInitialized = false;
+let firebaseApp = null;
 
 function initializeFirebase() {
     try {
-        if (typeof firebase !== 'undefined' && firebaseConfig.apiKey !== "SUA_API_KEY") {
-            firebase.initializeApp(firebaseConfig);
-            database = firebase.database();
-            firebaseInitialized = true;
-            console.log('Firebase inicializado com sucesso');
-            return true;
-        } else {
-            console.log('Firebase não configurado - usando armazenamento local');
+        // Verificar se o Firebase já está definido
+        if (typeof firebase === 'undefined') {
+            console.error('Firebase SDK não carregado');
             return false;
         }
+
+        // Verificar se já existe uma instância do Firebase
+        if (!firebase.apps.length) {
+            firebaseApp = firebase.initializeApp(firebaseConfig);
+        } else {
+            firebaseApp = firebase.apps[0];
+        }
+
+        // Inicializar serviços
+        database = firebase.database();
+        firebaseInitialized = true;
+        
+        console.log('Firebase inicializado com sucesso');
+        return true;
     } catch (error) {
         console.error('Erro ao inicializar Firebase:', error);
         return false;
@@ -43,7 +51,7 @@ function initializeFirebase() {
 
 // Função para salvar no Firebase
 async function saveToFirebase(path, data) {
-    if (!firebaseInitialized) {
+    if (!firebaseInitialized || !database) {
         throw new Error('Firebase não está configurado');
     }
     
@@ -59,7 +67,7 @@ async function saveToFirebase(path, data) {
 
 // Função para carregar do Firebase
 async function loadFromFirebase(path) {
-    if (!firebaseInitialized) {
+    if (!firebaseInitialized || !database) {
         throw new Error('Firebase não está configurado');
     }
     
