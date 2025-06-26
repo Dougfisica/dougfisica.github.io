@@ -1,0 +1,660 @@
+<!DOCTYPE html>
+<html lang="pt">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <!-- Google Analytics -->
+  <script async src="https://www.googletagmanager.com/gtag/js?id=G-83359NB2SY"></script>
+  <script>
+    window.dataLayer = window.dataLayer || [];
+    function gtag(){dataLayer.push(arguments);}
+    gtag('js', new Date());
+    gtag('config', 'G-83359NB2SY');
+  </script>
+  <title>Consulta de Notas - Física I</title>
+  <style>
+@import url('https://fonts.googleapis.com/css2?family=Press+Start+2P&display=swap');
+
+:root {
+  --primary-bg: #2a1810;
+  --panel-bg: #1a1a2e;
+  --card-bg: #16213e;
+  --pixel-blue: #1579fa;
+  --pixel-green: #01b571;
+  --pixel-pink: #e9358e;
+  --pixel-yellow: #ffe062;
+  --pixel-red: #f54141;
+  --pixel-orange: #ff8800;
+  --pixel-purple: #9c27b0;
+  --pixel-gray: #222;
+  --pixel-white: #fff;
+  --pixel-light: #f4f4e3;
+  --error-color: #f54141;
+  --success-color: #01b571;
+  --shadow: none;
+  --font-family: 'Press Start 2P', 'Consolas', monospace;
+}
+
+* {
+  box-sizing: border-box;
+  margin: 0;
+  padding: 0;
+}
+
+body {
+  font-family: var(--font-family);
+  background: var(--primary-bg);
+  color: var(--pixel-light);
+  min-height: 100vh;
+  padding: 24px;
+  letter-spacing: 1.5px;
+  position: relative;
+  overflow-x: hidden;
+}
+
+/* Scanlines effect */
+body::before {
+  content: "";
+  pointer-events: none;
+  position: fixed;
+  left: 0; top: 0; right: 0; bottom: 0;
+  z-index: 0;
+  opacity: 0.08;
+  background: repeating-linear-gradient(
+    to bottom,
+    transparent 0px,
+    transparent 2px,
+    var(--pixel-green) 3px,
+    transparent 5px
+  );
+}
+
+/* Animated stars background */
+body::after {
+  content: "";
+  position: fixed;
+  top: 0; left: 0; right: 0; bottom: 0;
+  background: 
+    radial-gradient(2px 2px at 20px 30px, var(--pixel-yellow), transparent),
+    radial-gradient(2px 2px at 40px 70px, var(--pixel-blue), transparent),
+    radial-gradient(1px 1px at 90px 40px, var(--pixel-pink), transparent),
+    radial-gradient(1px 1px at 130px 80px, var(--pixel-green), transparent),
+    radial-gradient(2px 2px at 160px 30px, var(--pixel-yellow), transparent);
+  background-repeat: repeat;
+  background-size: 200px 100px;
+  animation: twinkle 4s linear infinite;
+  z-index: 0;
+  opacity: 0.6;
+}
+
+@keyframes twinkle {
+  from { transform: translateY(0); }
+  to { transform: translateY(-100px); }
+}
+
+.container {
+  background: var(--panel-bg);
+  border: 4px solid var(--pixel-blue);
+  border-radius: 0;
+  padding: 2rem 1.5rem 1.5rem 1.5rem;
+  width: 100%;
+  max-width: 440px;
+  margin: 0 auto;
+  box-shadow: 
+    0 0 0 2px var(--pixel-yellow),
+    inset 0 0 20px rgba(21, 121, 250, 0.3);
+  position: relative;
+  z-index: 1;
+  filter: none;
+}
+
+.container::before {
+  content: "◆ CONSULTA DE NOTAS ◆";
+  position: absolute;
+  top: -12px;
+  left: 50%;
+  transform: translateX(-50%);
+  background: var(--primary-bg);
+  color: var(--pixel-yellow);
+  padding: 0 15px;
+  font-size: 0.6rem;
+  letter-spacing: 2px;
+}
+
+h1 {
+  color: var(--pixel-blue);
+  font-size: 1.1rem;
+  margin-bottom: 2rem;
+  text-align: center;
+  letter-spacing: 2px;
+  text-shadow: 3px 3px 0 var(--pixel-yellow);
+  animation: glow 2s ease-in-out infinite alternate;
+}
+
+@keyframes glow {
+  from { text-shadow: 3px 3px 0 var(--pixel-yellow), 0 0 10px var(--pixel-blue); }
+  to { text-shadow: 3px 3px 0 var(--pixel-yellow), 0 0 20px var(--pixel-blue), 0 0 30px var(--pixel-blue); }
+}
+
+.input-container {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 0.6rem;
+  margin-bottom: 1.6rem;
+  text-align: center;
+}
+
+.input-container label {
+  font-size: 0.8rem;
+  color: var(--pixel-pink);
+  text-shadow: 1px 1px 0 var(--pixel-yellow);
+  margin-bottom: 0.2rem;
+}
+
+.input-container input {
+  width: 100%;
+  max-width: 180px;
+  padding: 0.7rem 0.5rem;
+  font-size: 1rem;
+  border: 3px solid var(--pixel-blue);
+  border-radius: 0;
+  background: var(--pixel-light);
+  color: var(--pixel-gray);
+  font-family: var(--font-family);
+  text-align: center;
+  outline: none;
+  box-shadow: 2px 2px 0 var(--pixel-gray);
+  transition: all 0.2s;
+}
+
+.input-container input:focus {
+  border-color: var(--pixel-pink);
+  background: #fce7ff;
+  transform: translate(-1px, -1px);
+  box-shadow: 3px 3px 0 var(--pixel-gray);
+}
+
+.input-container button {
+  margin-top: 0.7rem;
+  padding: 0.8rem 1.6rem;
+  font-size: 0.95rem;
+  background: var(--pixel-pink);
+  color: #fff;
+  border: 3px solid var(--pixel-blue);
+  border-radius: 0;
+  font-family: var(--font-family);
+  cursor: pointer;
+  text-transform: uppercase;
+  box-shadow: 2px 2px 0 var(--pixel-yellow);
+  transition: background 0.2s, color 0.2s, border-color 0.2s;
+}
+
+.input-container button:hover {
+  background: var(--pixel-yellow);
+  color: var(--pixel-blue);
+  border-color: var(--pixel-pink);
+  transform: translate(-1px, -1px);
+  box-shadow: 3px 3px 0 var(--pixel-yellow);
+}
+
+.input-container button:active {
+  transform: translate(1px, 1px);
+  box-shadow: 1px 1px 0 var(--pixel-yellow);
+}
+
+.erro {
+  color: #fff;
+  background: var(--error-color);
+  border: 3px solid var(--pixel-gray);
+  border-radius: 0;
+  padding: 0.9rem 0.7rem;
+  margin: 1rem 0;
+  font-size: 0.85rem;
+  font-family: var(--font-family);
+  display: none;
+  text-align: center;
+  letter-spacing: 1.5px;
+  text-shadow: 1px 1px 0 var(--pixel-gray);
+}
+
+.notas h2 {
+  color: var(--pixel-pink);
+  font-size: 0.95rem;
+  margin-bottom: 0.7rem;
+  text-align: center;
+  text-shadow: 1px 1px 0 var(--pixel-yellow);
+}
+
+.notas-container, .notas {
+  background: var(--card-bg);
+  border: 3px solid var(--pixel-blue);
+  border-radius: 0;
+  margin: 1rem 0;
+  padding: 1rem 0.5rem;
+  box-shadow: 4px 4px 0 var(--pixel-gray);
+  font-family: var(--font-family);
+  position: relative;
+  z-index: 1;
+}
+
+.notas-container h3 {
+  color: var(--pixel-blue);
+  margin-bottom: 0.5rem;
+  font-size: 0.85rem;
+  text-align: center;
+  text-shadow: 1px 1px 0 var(--pixel-yellow);
+}
+
+table {
+  width: 100%;
+  border-collapse: separate;
+  border-spacing: 0;
+  background: transparent;
+  font-size: 0.9rem;
+}
+
+th, td {
+  padding: 0.6rem 0.4rem;
+  text-align: left;
+  border-bottom: 2px solid var(--pixel-yellow);
+  font-family: var(--font-family);
+  color: var(--pixel-light);
+  text-shadow: 1px 1px 0 var(--pixel-gray);
+}
+
+th {
+  background: var(--pixel-yellow);
+  color: var(--pixel-gray);
+  border-bottom: 3px solid var(--pixel-pink);
+  font-weight: 700;
+  text-shadow: 1px 1px 0 var(--pixel-pink);
+}
+
+tr:last-child td {
+  border-bottom: none;
+}
+
+tr:nth-child(even) {
+  background: rgba(21, 121, 250, 0.1);
+}
+
+.notas-container.final {
+  border-width: 4px;
+  margin-top: 1.3rem;
+  text-align: center;
+  padding: 1.3rem 0.7rem;
+}
+
+.notas-container.final.aprovado {
+  border-color: var(--success-color);
+  background: var(--card-bg);
+  box-shadow: 4px 4px 0 var(--success-color);
+}
+.notas-container.final.recuperacao {
+  border-color: var(--pixel-yellow);
+  background: var(--card-bg);
+  box-shadow: 4px 4px 0 var(--pixel-yellow);
+}
+.notas-container.final.reprovado {
+  border-color: var(--error-color);
+  background: var(--card-bg);
+  box-shadow: 4px 4px 0 var(--error-color);
+}
+
+.notas-container.final h3 {
+  font-size: 1rem;
+  margin-bottom: 1rem;
+  color: var(--pixel-pink);
+  text-shadow: 1px 1px 0 var(--pixel-yellow);
+}
+
+.notas-container.final .valor {
+  font-size: 1.2rem;
+  font-weight: bold;
+  margin: 0.4rem 0;
+  color: var(--pixel-blue);
+}
+
+.notas-container.final.reprovado .valor {
+  color: var(--error-color);
+}
+.notas-container.final.recuperacao .valor {
+  color: var(--pixel-yellow);
+}
+.notas-container.final.aprovado .valor {
+  color: var(--success-color);
+}
+
+.presenca-info {
+  background: var(--card-bg);
+  border: 3px solid var(--pixel-blue);
+  border-radius: 0;
+  padding: 1rem;
+  margin: 1.2rem 0 0.6rem 0;
+  text-align: center;
+  font-family: var(--font-family);
+  transition: all 0.3s;
+  color: var(--pixel-light);
+  box-shadow: 4px 4px 0 var(--pixel-gray);
+}
+
+.presenca-info .valor {
+  font-size: 1.1rem;
+  color: var(--pixel-green);
+  text-shadow: 1px 1px 0 var(--pixel-gray);
+}
+
+.presenca-info.irregular {
+  border-color: var(--error-color);
+  color: var(--error-color);
+  background: var(--card-bg);
+  box-shadow: 4px 4px 0 var(--error-color);
+}
+
+.presenca-info.irregular .valor {
+  color: var(--error-color);
+}
+
+.presenca-info .status {
+  font-size: 0.7rem;
+  color: var(--error-color);
+  font-weight: bold;
+  margin-top: 0.2rem;
+}
+
+@media (max-width: 520px) {
+  body {
+    padding: 5px;
+  }
+  .container {
+    padding: 1.2rem 0.3rem 0.8rem 0.3rem;
+  }
+  .container::before {
+    display: none;
+  }
+  h1 {
+    font-size: 0.9rem;
+  }
+  .input-container input {
+    font-size: 0.85rem;
+    padding: 0.5rem 0.4rem;
+    max-width: 120px;
+  }
+  .input-container button {
+    font-size: 0.85rem;
+    padding: 0.5rem 1rem;
+  }
+  th, td {
+    padding: 0.5rem 0.2rem;
+    font-size: 0.82rem;
+  }
+  .notas-container, .notas-container.final {
+    padding: 0.7rem 0.2rem;
+  }
+  .notas-container.final .valor {
+    font-size: 1rem;
+  }
+}
+
+/* Loading animation for the page */
+.container {
+  animation: fadeIn 1s ease-in;
+}
+
+@keyframes fadeIn {
+  from { opacity: 0; transform: translateY(20px); }
+  to { opacity: 1; transform: translateY(0); }
+}
+
+/* Add subtle pulsing to important elements */
+.notas-container.final .valor {
+  animation: pulse 2s infinite alternate;
+}
+
+@keyframes pulse {
+  from { transform: scale(1); }
+  to { transform: scale(1.05); }
+}
+
+  </style>
+</head>
+<body>
+  <div class="container">
+    <h1>FÍSICA 1 - 2S 2025</h1>
+    <div class="input-container">
+      <label for="grrInput">DIGITE SEU GRR:</label>
+      <input type="text" id="grrInput" placeholder="Ex: 20201234" maxlength="8" pattern="[0-9]*" inputmode="numeric">
+      <button onclick="buscarNotas()">CONSULTAR NOTAS</button>
+    </div>
+    <div id="erro" class="erro" style="display: none;"></div>
+    <div id="resultado" style="display: none;"></div>
+  </div>
+
+<script>
+const urlsAPI = [
+  "https://script.google.com/macros/s/AKfycbwiWiLGWG1MsWcnGQB-DNECFikC5YON9iJRNC0HNLeuYV57SdXhLvUJwO_jQ-tlZm7LCQ/exec"
+];
+
+let avaliacoes = [];
+let alunos = [];
+
+// Carregar dados de todas as APIs
+Promise.all(urlsAPI.map(url => fetch(url).then(res => res.json())))
+  .then(dadosArray => {
+    // Combinar dados de todas as APIs
+    dadosArray.forEach(dados => {
+      // Adicionar avaliações únicas
+      dados.avaliacoes.forEach(av => {
+        if (!avaliacoes.includes(av)) {
+          avaliacoes.push(av);
+        }
+      });
+      
+      // Combinar alunos, atualizando notas existentes
+      dados.alunos.forEach(novoAluno => {
+        const alunoExistente = alunos.find(a => a.grr === novoAluno.grr);
+        if (alunoExistente) {
+          // Atualizar notas existentes e adicionar novas
+          novoAluno.notas.forEach((nota, i) => {
+            if (nota !== '-' && nota !== '') {
+              alunoExistente.notas[i] = nota;
+            }
+          });
+          // Atualizar presença se disponível
+          if (novoAluno.presenca !== undefined) {
+            alunoExistente.presenca = novoAluno.presenca;
+          }
+        } else {
+          // Adicionar novo aluno
+          alunos.push(novoAluno);
+        }
+      });
+    });
+  })
+  .catch(erro => {
+    console.error('Erro ao carregar dados:', erro);
+    mostrarErro('Erro ao carregar dados. Por favor, tente novamente mais tarde.');
+  });
+
+// Permitir apenas números no input
+document.getElementById('grrInput').addEventListener('input', function(e) {
+  this.value = this.value.replace(/[^0-9]/g, '');
+});
+
+// Buscar notas ao pressionar Enter
+document.getElementById('grrInput').addEventListener('keypress', function(e) {
+  if (e.key === 'Enter') {
+    buscarNotas();
+  }
+});
+
+function mostrarErro(mensagem) {
+  const erro = document.getElementById('erro');
+  erro.textContent = mensagem;
+  erro.style.display = 'block';
+  document.getElementById('resultado').style.display = 'none';
+}
+
+function formatarNota(nota) {
+  if (nota === null || nota === undefined || nota === '-' || nota === '') return '-';
+  return Number(nota).toFixed(1);
+}
+
+function calcularStatusPresenca(presenca) {
+  return presenca < 75 ? 'Reprovado por falta' : '';
+}
+
+function calcularMedia(notas, indices) {
+  const notasValidas = indices
+    .map(i => parseFloat(notas[i]))
+    .filter(nota => !isNaN(nota));
+  
+  if (notasValidas.length === 0) return '-';
+  return (notasValidas.reduce((a, b) => a + b, 0) / notasValidas.length).toFixed(1);
+}
+
+function getClasseNotaFinal(nota) {
+  if (nota === '-') return '';
+  const valor = parseFloat(nota);
+  if (isNaN(valor)) return '';
+  if (valor < 4) return 'reprovado';
+  if (valor < 7) return 'recuperacao';
+  return 'aprovado';
+}
+
+function buscarNotas() {
+  const grrNumero = document.getElementById('grrInput').value.trim();
+  const resultado = document.getElementById('resultado');
+  const erro = document.getElementById('erro');
+  
+  // Limpar resultados anteriores
+  resultado.style.display = 'none';
+  erro.style.display = 'none';
+
+  // Validar entrada
+  if (grrNumero.length !== 8) {
+    mostrarErro('Digite os 8 números do GRR.');
+    return;
+  }
+
+  const grrCompleto = 'GRR' + grrNumero;
+  const aluno = alunos.find(a => a.grr === grrCompleto);
+  
+  if (!aluno) {
+    mostrarErro('GRR não encontrado. Verifique o número e tente novamente.');
+    return;
+  }
+
+  try {
+    // Exibir notas
+    let html = `<h2>Notas do GRR ${grrNumero}</h2>`;
+
+    // Container de Gravações
+    const indicesG = avaliacoes
+      .map((av, i) => av.startsWith('G') ? i : -1)
+      .filter(i => i !== -1);
+    
+    const indiceMediaG = avaliacoes.indexOf("Média G");
+const mediaG = formatarNota(aluno.notas[indiceMediaG]);
+    
+    html += `
+      <div class="notas-container">
+        <h3>Gravações</h3>
+        <table>
+          <tr>
+            <th>Avaliação</th>
+            <th>Nota</th>
+          </tr>
+    `;
+
+    indicesG.forEach(i => {
+      html += `
+        <tr>
+          <td>${avaliacoes[i]}</td>
+          <td>${formatarNota(aluno.notas[i])}</td>
+        </tr>
+      `;
+    });
+
+    html += `
+          <tr>
+            <td><strong>Média G</strong></td>
+            <td><strong>${mediaG}</strong></td>
+          </tr>
+        </table>
+      </div>
+    `;
+
+    // Container de Provas
+    const indicesP = avaliacoes
+      .map((av, i) => av.startsWith('P') ? i : -1)
+      .filter(i => i !== -1);
+    
+const indiceMediaP = avaliacoes.indexOf("Média P");
+const mediaP = formatarNota(aluno.notas[indiceMediaP]);
+    
+    html += `
+      <div class="notas-container">
+        <h3>Provas</h3>
+        <table>
+          <tr>
+            <th>Avaliação</th>
+            <th>Nota</th>
+          </tr>
+    `;
+
+    indicesP.forEach(i => {
+      html += `
+        <tr>
+          <td>${avaliacoes[i]}</td>
+          <td>${formatarNota(aluno.notas[i])}</td>
+        </tr>
+      `;
+    });
+
+    html += `
+          <tr>
+            <td><strong>Média P</strong></td>
+            <td><strong>${mediaP}</strong></td>
+          </tr>
+        </table>
+      </div>
+    `;
+
+    // Container da Nota Final
+    const notaFinal = formatarNota(aluno.notas[aluno.notas.length - 1]);
+    const classeNotaFinal = getClasseNotaFinal(notaFinal);
+    html += `
+      <div class="notas-container final ${classeNotaFinal}">
+        <h3>Nota Final</h3>
+        <div class="valor">${notaFinal}</div>
+      </div>
+    `;
+
+    // Adicionar informação de presença no final
+    if (aluno.presenca !== undefined) {
+      const statusPresenca = calcularStatusPresenca(aluno.presenca);
+      const classeStatus = aluno.presenca < 75 ? 'irregular' : '';
+      
+      html += `
+        <div class="presenca-info ${classeStatus}">
+          <div>Frequência</div>
+          <div class="valor">${aluno.presenca.toFixed(1)}%</div>
+          ${statusPresenca ? `<div class="status">${statusPresenca}</div>` : ''}
+        </div>
+      `;
+    }
+
+    resultado.innerHTML = html;
+    resultado.style.display = 'block';
+  } catch (error) {
+    console.error('Erro ao processar notas:', error);
+    mostrarErro('Ocorreu um erro ao processar as notas. Por favor, tente novamente.');
+  }
+}
+</script>
+
+</body>
+</html>
+

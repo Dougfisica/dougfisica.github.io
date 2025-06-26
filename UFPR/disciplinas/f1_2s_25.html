@@ -1,0 +1,459 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Física 1 - 2º Semestre 2025 - UFPR</title>
+    <meta name="description" content="Disciplina de Física 1 - 2º Semestre 2025 - UFPR Jandaia do Sul">
+    <meta name="keywords" content="UFPR, Física 1, disciplina, graduação">
+    <meta name="author" content="Doug Física">
+    <link rel="icon" type="image/png" href="/favicon.png">
+    <!-- Google Fonts -->
+    <link href="https://fonts.googleapis.com/css2?family=Press+Start+2P&display=swap" rel="stylesheet">
+    <!-- Google Analytics -->
+    <script async src="https://www.googletagmanager.com/gtag/js?id=G-83359NB2SY"></script>
+    <script>
+        window.dataLayer = window.dataLayer || [];
+        function gtag(){dataLayer.push(arguments);}
+        gtag('js', new Date());
+        gtag('config', 'G-83359NB2SY');
+    </script>
+    <style>
+        @import url('https://fonts.googleapis.com/css2?family=Press+Start+2P&display=swap');
+
+        :root {
+            --primary-bg: #2a1810;
+            --panel-bg: #1a1a2e;
+            --card-bg: #16213e;
+            --pixel-blue: #1579fa;
+            --pixel-green: #01b571;
+            --pixel-pink: #e9358e;
+            --pixel-yellow: #ffe062;
+            --pixel-red: #f54141;
+            --pixel-orange: #ff8800;
+            --pixel-purple: #9c27b0;
+            --pixel-gray: #222;
+            --pixel-white: #fff;
+            --pixel-light: #f4f4e3;
+            --font-family: 'Press Start 2P', 'Consolas', monospace;
+        }
+
+        * {
+            box-sizing: border-box;
+            margin: 0;
+            padding: 0;
+        }
+
+        body {
+            font-family: var(--font-family);
+            background: var(--primary-bg);
+            color: var(--pixel-light);
+            min-height: 100vh;
+            padding: 20px;
+            letter-spacing: 1px;
+            position: relative;
+            overflow-x: hidden;
+        }
+
+        /* Scanlines effect */
+        body::before {
+            content: "";
+            pointer-events: none;
+            position: fixed;
+            left: 0; top: 0; right: 0; bottom: 0;
+            z-index: 0;
+            opacity: 0.08;
+            background: repeating-linear-gradient(
+                to bottom,
+                transparent 0px,
+                transparent 2px,
+                var(--pixel-green) 3px,
+                transparent 5px
+            );
+        }
+
+        /* Animated stars background */
+        body::after {
+            content: "";
+            position: fixed;
+            top: 0; left: 0; right: 0; bottom: 0;
+            background: 
+                radial-gradient(2px 2px at 20px 30px, var(--pixel-yellow), transparent),
+                radial-gradient(2px 2px at 40px 70px, var(--pixel-blue), transparent),
+                radial-gradient(1px 1px at 90px 40px, var(--pixel-pink), transparent),
+                radial-gradient(1px 1px at 130px 80px, var(--pixel-green), transparent),
+                radial-gradient(2px 2px at 160px 30px, var(--pixel-yellow), transparent);
+            background-repeat: repeat;
+            background-size: 200px 100px;
+            animation: twinkle 4s linear infinite;
+            z-index: 0;
+            opacity: 0.6;
+        }
+
+        @keyframes twinkle {
+            from { transform: translateY(0); }
+            to { transform: translateY(-100px); }
+        }
+
+        .container {
+            max-width: 900px;
+            margin: 0 auto;
+            position: relative;
+            z-index: 1;
+        }
+
+        .header {
+            background: var(--panel-bg);
+            border: 4px solid var(--pixel-blue);
+            padding: 2rem 1.5rem;
+            margin-bottom: 2rem;
+            text-align: center;
+            box-shadow: 
+                0 0 0 2px var(--pixel-yellow),
+                inset 0 0 20px rgba(21, 121, 250, 0.3);
+            position: relative;
+        }
+
+        .header::before {
+            content: "◆ FISICA-1 ◆";
+            position: absolute;
+            top: -12px;
+            left: 50%;
+            transform: translateX(-50%);
+            background: var(--primary-bg);
+            color: var(--pixel-yellow);
+            padding: 0 15px;
+            font-size: 0.6rem;
+            letter-spacing: 2px;
+        }
+
+        .voltar-link {
+            display: inline-block;
+            margin-bottom: 1.5rem;
+            color: var(--pixel-pink);
+            text-decoration: none;
+            font-size: 0.7rem;
+            transition: all 0.2s;
+            text-shadow: 1px 1px 0 var(--pixel-gray);
+        }
+
+        .voltar-link:hover {
+            color: var(--pixel-yellow);
+            transform: translateX(-5px);
+            text-shadow: 2px 2px 0 var(--pixel-pink);
+        }
+
+        h1 {
+            color: var(--pixel-blue);
+            font-size: 1.8rem;
+            margin-bottom: 1rem;
+            text-shadow: 3px 3px 0 var(--pixel-yellow);
+            animation: glow 2s ease-in-out infinite alternate;
+        }
+
+        @keyframes glow {
+            from { text-shadow: 3px 3px 0 var(--pixel-yellow), 0 0 10px var(--pixel-blue); }
+            to { text-shadow: 3px 3px 0 var(--pixel-yellow), 0 0 20px var(--pixel-blue), 0 0 30px var(--pixel-blue); }
+        }
+
+        .subtitle {
+            color: var(--pixel-green);
+            font-size: 0.8rem;
+            margin-bottom: 1rem;
+            text-shadow: 1px 1px 0 var(--pixel-gray);
+        }
+
+        .info-badges {
+            display: flex;
+            justify-content: center;
+            gap: 1rem;
+            flex-wrap: wrap;
+            margin-top: 1.5rem;
+        }
+
+        .badge {
+            background: var(--pixel-pink);
+            color: var(--pixel-white);
+            padding: 0.5rem 1rem;
+            border: 2px solid var(--pixel-yellow);
+            font-size: 0.6rem;
+            font-weight: normal;
+            text-transform: uppercase;
+            letter-spacing: 1px;
+            box-shadow: 2px 2px 0 var(--pixel-gray);
+            transition: all 0.2s;
+        }
+
+        .badge:hover {
+            transform: translate(-1px, -1px);
+            box-shadow: 3px 3px 0 var(--pixel-gray);
+        }
+
+        .badge:nth-child(2) {
+            background: var(--pixel-green);
+            border-color: var(--pixel-blue);
+        }
+
+        .badge:nth-child(3) {
+            background: var(--pixel-orange);
+            border-color: var(--pixel-pink);
+        }
+
+        .cards-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+            gap: 1.5rem;
+            margin-top: 2rem;
+        }
+
+        .card {
+            background: var(--card-bg);
+            border: 3px solid var(--pixel-blue);
+            overflow: hidden;
+            transition: all 0.3s;
+            text-decoration: none;
+            color: inherit;
+            display: block;
+            position: relative;
+            box-shadow: 4px 4px 0 var(--pixel-gray);
+        }
+
+        .card:hover {
+            transform: translate(-2px, -2px);
+            box-shadow: 6px 6px 0 var(--pixel-gray);
+            border-color: var(--pixel-yellow);
+        }
+
+        .card-icon {
+            background: linear-gradient(45deg, var(--pixel-blue), var(--pixel-green));
+            color: var(--pixel-white);
+            height: 60px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 1.5rem;
+            position: relative;
+            border-bottom: 3px solid var(--pixel-yellow);
+        }
+
+
+
+        .card-icon.notas {
+            background: linear-gradient(45deg, var(--pixel-green), var(--pixel-blue));
+        }
+
+        .card-icon.material {
+            background: linear-gradient(45deg, var(--pixel-orange), var(--pixel-red));
+        }
+
+        .card-icon.calendario {
+            background: linear-gradient(45deg, var(--pixel-purple), var(--pixel-pink));
+        }
+
+        .card-content {
+            padding: 1rem;
+        }
+
+        .card-title {
+            font-size: 0.9rem;
+            margin-bottom: 0.8rem;
+            color: var(--pixel-yellow);
+            text-shadow: 1px 1px 0 var(--pixel-gray);
+        }
+
+        .card-description {
+            color: var(--pixel-light);
+            line-height: 1.4;
+            margin-bottom: 1rem;
+            font-size: 0.6rem;
+        }
+
+        .card-features {
+            list-style: none;
+            padding: 0;
+        }
+
+        .card-features li {
+            color: var(--pixel-green);
+            font-size: 0.55rem;
+            margin-bottom: 0.3rem;
+            padding-left: 1rem;
+            position: relative;
+        }
+
+        .card-features li:before {
+            content: "▶";
+            color: var(--pixel-pink);
+            position: absolute;
+            left: 0;
+            animation: blink 1.5s infinite;
+        }
+
+        @keyframes blink {
+            0%, 50% { opacity: 1; }
+            51%, 100% { opacity: 0.3; }
+        }
+
+        .coming-soon {
+            opacity: 0.7;
+            cursor: not-allowed;
+            pointer-events: none;
+            border-color: var(--pixel-gray);
+        }
+
+        .coming-soon::after {
+            content: "EM BREVE";
+            position: absolute;
+            top: 8px;
+            right: 8px;
+            background: var(--pixel-red);
+            color: var(--pixel-white);
+            padding: 0.2rem 0.5rem;
+            font-size: 0.5rem;
+            border: 1px solid var(--pixel-yellow);
+            animation: pulse 2s infinite;
+        }
+
+        @keyframes pulse {
+            0% { transform: scale(1); }
+            50% { transform: scale(1.05); }
+            100% { transform: scale(1); }
+        }
+
+        /* Game-like button effect for the active card */
+        .card:not(.coming-soon):active {
+            transform: translate(1px, 1px);
+            box-shadow: 2px 2px 0 var(--pixel-gray);
+        }
+
+        @media (max-width: 768px) {
+            body {
+                padding: 10px;
+            }
+
+            .header {
+                padding: 1.5rem 1rem;
+            }
+
+            h1 {
+                font-size: 1.2rem;
+            }
+
+            .subtitle {
+                font-size: 0.7rem;
+            }
+
+            .info-badges {
+                gap: 0.5rem;
+            }
+
+            .badge {
+                font-size: 0.55rem;
+                padding: 0.4rem 0.8rem;
+            }
+
+            .cards-grid {
+                grid-template-columns: 1fr;
+                gap: 1rem;
+            }
+
+            .card-content {
+                padding: 0.8rem;
+            }
+
+            .card-title {
+                font-size: 0.8rem;
+            }
+
+            .card-description {
+                font-size: 0.55rem;
+            }
+
+            .card-features li {
+                font-size: 0.5rem;
+            }
+        }
+
+        /* Loading animation for the page */
+        .container {
+            animation: fadeIn 1s ease-in;
+        }
+
+        @keyframes fadeIn {
+            from { opacity: 0; transform: translateY(20px); }
+            to { opacity: 1; transform: translateY(0); }
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <div class="header">
+            <a href="../disciplinas.html" class="voltar-link">◀ VOLTAR</a>
+            <h1>FÍSICA 1</h1>
+            <div class="subtitle">2º SEMESTRE 2025 - UFPR JANDAIA DO SUL</div>
+            <div class="info-badges">
+                <span class="badge">MANHÃ & TARDE</span>
+                <span class="badge">PROF. DOUGLAS</span>
+                <span class="badge">2º SEMESTRE</span>
+            </div>
+        </div>
+
+        <div class="cards-grid">
+            <a href="f1_2s_25/notas_f1_2s_25.html" class="card">
+                <div class="card-icon notas">
+                    📊
+                </div>
+                <div class="card-content">
+                    <h3 class="card-title">NOTAS</h3>
+                    <p class="card-description">
+                        Consulte suas notas de provas, trabalhos e atividades. 
+                        Sistema atualizado em tempo.
+                    </p>
+                    <ul class="card-features">
+                        <li>NOTAS DE PROVAS & GRAVAÇÕES</li>
+                        <li>FREQUÊNCIA ATUALIZADA</li>
+                        <li>MÉDIA DA DISCIPLINA</li>
+                        <li>STATUS DE APROVAÇÃO</li>
+                    </ul>
+                </div>
+            </a>
+
+            <a href="f1_2s_25/material_f1_2s_25.html" class="card">
+                <div class="card-icon material">
+                    📚
+                </div>
+                <div class="card-content">
+                    <h3 class="card-title">MATERIAL DE APOIO</h3>
+                    <p class="card-description">
+                        Acesse aulas em vídeo e listas de exercícios.
+                    </p>
+                    <ul class="card-features">
+                        <li>AULAS EM VÍDEO (15 AULAS)</li>
+                        <li>LISTA DE EXERCÍCIOS</li>
+
+                    </ul>
+                </div>
+            </a>
+
+            <div class="card coming-soon">
+                <div class="card-icon calendario">
+                    📅
+                </div>
+                <div class="card-content">
+                    <h3 class="card-title">CRONOGRAMA</h3>
+                    <p class="card-description">
+                        Consulte o cronograma de aulas, datas de provas, 
+                        entregas de trabalhos e demais atividades importantes.
+                    </p>
+                    <ul class="card-features">
+                        <li>CALENDÁRIO DE AULAS</li>
+                        <li>DATAS DAS PROVAS</li>
+                        <li>PRAZOS DE ENTREGA</li>
+                        <li>EVENTOS IMPORTANTES</li>
+                    </ul>
+                </div>
+            </div>
+        </div>
+    </div>
+</body>
+</html> 

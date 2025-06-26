@@ -1,0 +1,873 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Material de Apoio - Física 1 - 2º Semestre 2025</title>
+    <meta name="description" content="Material de apoio da disciplina de Física 1 - Aulas em vídeo, exercícios e recursos didáticos">
+    <meta name="keywords" content="UFPR, Física 1, aulas, vídeos, material didático, mecânica">
+    <meta name="author" content="Doug Física">
+    <link rel="icon" type="image/png" href="/favicon.png">
+    <!-- Google Fonts -->
+    <link href="https://fonts.googleapis.com/css2?family=Press+Start+2P&display=swap" rel="stylesheet">
+    <!-- Google Analytics -->
+    <script async src="https://www.googletagmanager.com/gtag/js?id=G-83359NB2SY"></script>
+    <script>
+        window.dataLayer = window.dataLayer || [];
+        function gtag(){dataLayer.push(arguments);}
+        gtag('js', new Date());
+        gtag('config', 'G-83359NB2SY');
+    </script>
+    <style>
+        @import url('https://fonts.googleapis.com/css2?family=Press+Start+2P&display=swap');
+
+        :root {
+            --primary-bg: #2a1810;
+            --panel-bg: #1a1a2e;
+            --card-bg: #16213e;
+            --pixel-blue: #1579fa;
+            --pixel-green: #01b571;
+            --pixel-pink: #e9358e;
+            --pixel-yellow: #ffe062;
+            --pixel-red: #f54141;
+            --pixel-orange: #ff8800;
+            --pixel-purple: #9c27b0;
+            --pixel-gray: #222;
+            --pixel-white: #fff;
+            --pixel-light: #f4f4e3;
+            --font-family: 'Press Start 2P', 'Consolas', monospace;
+        }
+
+        * {
+            box-sizing: border-box;
+            margin: 0;
+            padding: 0;
+        }
+
+        body {
+            font-family: var(--font-family);
+            background: var(--primary-bg);
+            color: var(--pixel-light);
+            min-height: 100vh;
+            padding: 20px;
+            letter-spacing: 1px;
+            position: relative;
+            overflow-x: hidden;
+        }
+
+        /* Scanlines effect */
+        body::before {
+            content: "";
+            pointer-events: none;
+            position: fixed;
+            left: 0; top: 0; right: 0; bottom: 0;
+            z-index: 0;
+            opacity: 0.08;
+            background: repeating-linear-gradient(
+                to bottom,
+                transparent 0px,
+                transparent 2px,
+                var(--pixel-green) 3px,
+                transparent 5px
+            );
+        }
+
+        /* Animated stars background */
+        body::after {
+            content: "";
+            position: fixed;
+            top: 0; left: 0; right: 0; bottom: 0;
+            background: 
+                radial-gradient(2px 2px at 20px 30px, var(--pixel-yellow), transparent),
+                radial-gradient(2px 2px at 40px 70px, var(--pixel-blue), transparent),
+                radial-gradient(1px 1px at 90px 40px, var(--pixel-pink), transparent),
+                radial-gradient(1px 1px at 130px 80px, var(--pixel-green), transparent),
+                radial-gradient(2px 2px at 160px 30px, var(--pixel-yellow), transparent);
+            background-repeat: repeat;
+            background-size: 200px 100px;
+            animation: twinkle 4s linear infinite;
+            z-index: 0;
+            opacity: 0.6;
+        }
+
+        @keyframes twinkle {
+            from { transform: translateY(0); }
+            to { transform: translateY(-100px); }
+        }
+
+        .container {
+            max-width: 1000px;
+            margin: 0 auto;
+            position: relative;
+            z-index: 1;
+        }
+
+        .header {
+            background: var(--panel-bg);
+            border: 4px solid var(--pixel-orange);
+            padding: 2rem 1.5rem;
+            margin-bottom: 2rem;
+            text-align: center;
+            box-shadow: 
+                0 0 0 2px var(--pixel-yellow),
+                inset 0 0 20px rgba(255, 136, 0, 0.3);
+            position: relative;
+        }
+
+        .header::before {
+            content: "◆ MATERIAL DE APOIO ◆";
+            position: absolute;
+            top: -12px;
+            left: 50%;
+            transform: translateX(-50%);
+            background: var(--primary-bg);
+            color: var(--pixel-yellow);
+            padding: 0 15px;
+            font-size: 0.6rem;
+            letter-spacing: 2px;
+        }
+
+        .voltar-link {
+            display: inline-block;
+            margin-bottom: 1.5rem;
+            color: var(--pixel-pink);
+            text-decoration: none;
+            font-size: 0.7rem;
+            transition: all 0.2s;
+            text-shadow: 1px 1px 0 var(--pixel-gray);
+        }
+
+        .voltar-link:hover {
+            color: var(--pixel-yellow);
+            transform: translateX(-5px);
+            text-shadow: 2px 2px 0 var(--pixel-pink);
+        }
+
+        h1 {
+            color: var(--pixel-orange);
+            font-size: 1.6rem;
+            margin-bottom: 1rem;
+            text-shadow: 3px 3px 0 var(--pixel-yellow);
+            animation: glow 2s ease-in-out infinite alternate;
+        }
+
+        @keyframes glow {
+            from { text-shadow: 3px 3px 0 var(--pixel-yellow), 0 0 10px var(--pixel-orange); }
+            to { text-shadow: 3px 3px 0 var(--pixel-yellow), 0 0 20px var(--pixel-orange), 0 0 30px var(--pixel-orange); }
+        }
+
+        .subtitle {
+            color: var(--pixel-green);
+            font-size: 0.8rem;
+            margin-bottom: 1rem;
+            text-shadow: 1px 1px 0 var(--pixel-gray);
+        }
+
+        .section-buttons {
+            display: flex;
+            gap: 1rem;
+            justify-content: center;
+            margin: 2rem 0 1rem 0;
+            flex-wrap: wrap;
+        }
+
+        .section-btn {
+            background: var(--card-bg);
+            color: var(--pixel-pink);
+            border: 3px solid var(--pixel-pink);
+            padding: 0.7rem 1.5rem;
+            font-family: var(--font-family);
+            font-size: 0.8rem;
+            cursor: pointer;
+            transition: all 0.3s;
+            text-shadow: 1px 1px 0 var(--pixel-gray);
+            box-shadow: 4px 4px 0 var(--pixel-gray);
+            text-transform: uppercase;
+            letter-spacing: 1px;
+        }
+
+        .section-btn:hover {
+            transform: translate(-2px, -2px);
+            box-shadow: 6px 6px 0 var(--pixel-gray);
+            border-color: var(--pixel-yellow);
+            color: var(--pixel-yellow);
+        }
+
+        .section-btn:active {
+            transform: translate(1px, 1px);
+            box-shadow: 2px 2px 0 var(--pixel-gray);
+        }
+
+        .section-btn.active {
+            background: var(--pixel-pink);
+            color: var(--pixel-white);
+            border-color: var(--pixel-yellow);
+            text-shadow: 1px 1px 0 var(--pixel-gray);
+        }
+
+        .section-btn.active:hover {
+            background: var(--pixel-yellow);
+            color: var(--pixel-gray);
+            border-color: var(--pixel-pink);
+        }
+
+        .content-section {
+            display: none;
+        }
+
+        .content-section.active {
+            display: block;
+        }
+
+        .aulas-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+            gap: 1.5rem;
+            margin: 1.5rem 0;
+        }
+
+        .aula-card {
+            background: var(--card-bg);
+            border: 3px solid var(--pixel-blue);
+            overflow: hidden;
+            transition: all 0.3s;
+            text-decoration: none;
+            color: inherit;
+            display: block;
+            position: relative;
+            box-shadow: 4px 4px 0 var(--pixel-gray);
+        }
+
+        .aula-card:hover {
+            transform: translate(-2px, -2px);
+            box-shadow: 6px 6px 0 var(--pixel-gray);
+            border-color: var(--pixel-yellow);
+        }
+
+        .aula-card:active {
+            transform: translate(1px, 1px);
+            box-shadow: 2px 2px 0 var(--pixel-gray);
+        }
+
+        .aula-thumb-container {
+            position: relative;
+            width: 100%;
+            height: 160px;
+            overflow: hidden;
+            border-bottom: 3px solid var(--pixel-yellow);
+            background: var(--pixel-gray);
+        }
+
+        .aula-thumb {
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+            transition: all 0.3s;
+            filter: saturate(1.2) contrast(1.1);
+        }
+
+        .aula-card:hover .aula-thumb {
+            transform: scale(1.05);
+        }
+
+        .play-overlay {
+            position: absolute;
+            top: 50%;
+            left: 50%;
+            transform: translate(-50%, -50%);
+            width: 50px;
+            height: 50px;
+            background: var(--pixel-red);
+            border: 3px solid var(--pixel-white);
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 1.2rem;
+            color: var(--pixel-white);
+            box-shadow: 0 0 10px rgba(0,0,0,0.5);
+            animation: pulse 2s infinite;
+        }
+
+        .aula-content {
+            padding: 1rem;
+        }
+
+        .aula-numero {
+            color: var(--pixel-yellow);
+            font-size: 0.7rem;
+            margin-bottom: 0.5rem;
+            text-shadow: 1px 1px 0 var(--pixel-gray);
+        }
+
+        .aula-titulo {
+            color: var(--pixel-blue);
+            font-size: 0.8rem;
+            margin-bottom: 0.8rem;
+            line-height: 1.3;
+            text-shadow: 1px 1px 0 var(--pixel-yellow);
+        }
+
+        .aula-desc {
+            color: var(--pixel-light);
+            font-size: 0.6rem;
+            line-height: 1.4;
+            opacity: 0.9;
+        }
+
+        .exercicios-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(350px, 1fr));
+            gap: 1.5rem;
+            margin: 1.5rem 0;
+        }
+
+        .exercicio-card {
+            background: var(--card-bg);
+            border: 3px solid var(--pixel-green);
+            padding: 1.5rem;
+            transition: all 0.3s;
+            text-decoration: none;
+            color: inherit;
+            display: block;
+            position: relative;
+            box-shadow: 4px 4px 0 var(--pixel-gray);
+        }
+
+        .exercicio-card:hover {
+            transform: translate(-2px, -2px);
+            box-shadow: 6px 6px 0 var(--pixel-gray);
+            border-color: var(--pixel-yellow);
+        }
+
+        .exercicio-header {
+            display: flex;
+            align-items: center;
+            gap: 1rem;
+            margin-bottom: 1rem;
+            padding-bottom: 0.8rem;
+            border-bottom: 2px solid var(--pixel-yellow);
+        }
+
+        .exercicio-icon {
+            width: 40px;
+            height: 40px;
+            background: var(--pixel-green);
+            border: 2px solid var(--pixel-white);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 1.2rem;
+            color: var(--pixel-white);
+        }
+
+        .exercicio-titulo {
+            color: var(--pixel-green);
+            font-size: 0.9rem;
+            text-shadow: 1px 1px 0 var(--pixel-gray);
+        }
+
+        .exercicio-desc {
+            color: var(--pixel-light);
+            font-size: 0.65rem;
+            line-height: 1.4;
+            margin-bottom: 1rem;
+        }
+
+        .exercicio-topics {
+            list-style: none;
+            padding: 0;
+        }
+
+        .exercicio-topics li {
+            color: var(--pixel-yellow);
+            font-size: 0.6rem;
+            margin-bottom: 0.4rem;
+            padding-left: 1rem;
+            position: relative;
+        }
+
+        .exercicio-topics li:before {
+            content: "◆";
+            color: var(--pixel-pink);
+            position: absolute;
+            left: 0;
+            animation: blink 2s infinite;
+        }
+
+        @media (max-width: 768px) {
+            body {
+                padding: 10px;
+            }
+
+            .header {
+                padding: 1.5rem 1rem;
+            }
+
+            .header::before {
+                font-size: 0.5rem;
+                padding: 0 10px;
+                display: none;
+            }
+
+            h1 {
+                font-size: 1.2rem;
+            }
+
+            .subtitle {
+                font-size: 0.7rem;
+            }
+
+            .section-buttons {
+                margin: 1.5rem 0 1rem 0;
+            }
+
+            .section-btn {
+                font-size: 0.7rem;
+                padding: 0.6rem 1.2rem;
+            }
+
+            .aulas-grid, .exercicios-grid {
+                grid-template-columns: 1fr;
+                gap: 1rem;
+            }
+
+            .exercicio-card {
+                padding: 1rem;
+            }
+
+            .exercicio-header {
+                gap: 0.8rem;
+                margin-bottom: 0.8rem;
+            }
+
+            .exercicio-icon {
+                width: 35px;
+                height: 35px;
+                font-size: 1rem;
+            }
+
+            .exercicio-titulo {
+                font-size: 0.8rem;
+            }
+
+            .exercicio-desc {
+                font-size: 0.6rem;
+            }
+
+            .exercicio-topics li {
+                font-size: 0.55rem;
+            }
+
+            .aula-thumb-container {
+                height: 140px;
+            }
+
+            .aula-content {
+                padding: 0.8rem;
+            }
+
+            .aula-numero {
+                font-size: 0.65rem;
+            }
+
+            .aula-titulo {
+                font-size: 0.7rem;
+            }
+
+            .aula-desc {
+                font-size: 0.55rem;
+            }
+
+            .play-overlay {
+                width: 40px;
+                height: 40px;
+                font-size: 1rem;
+            }
+        }
+
+        /* Loading animation for the page */
+        .container {
+            animation: fadeIn 1s ease-in;
+        }
+
+        @keyframes fadeIn {
+            from { opacity: 0; transform: translateY(20px); }
+            to { opacity: 1; transform: translateY(0); }
+        }
+
+        /* Animated elements */
+        .aula-card:nth-child(odd) {
+            animation: slideInLeft 0.6s ease-out;
+        }
+
+        .aula-card:nth-child(even) {
+            animation: slideInRight 0.6s ease-out;
+        }
+
+        @keyframes slideInLeft {
+            from { transform: translateX(-50px); opacity: 0; }
+            to { transform: translateX(0); opacity: 1; }
+        }
+
+        @keyframes slideInRight {
+            from { transform: translateX(50px); opacity: 0; }
+            to { transform: translateX(0); opacity: 1; }
+        }
+
+        @keyframes pulse {
+            0% { transform: translate(-50%, -50%) scale(1); }
+            50% { transform: translate(-50%, -50%) scale(1.1); }
+            100% { transform: translate(-50%, -50%) scale(1); }
+        }
+
+        @keyframes blink {
+            0%, 50% { opacity: 1; }
+            51%, 100% { opacity: 0.3; }
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <div class="header">
+            <a href="../f1_2s_25.html" class="voltar-link">◀ VOLTAR</a>
+            <h1>MATERIAL DE APOIO</h1>
+            <div class="subtitle">FÍSICA 1 - AULAS EM VÍDEO</div>
+        </div>
+
+        <div class="section-buttons">
+            <button class="section-btn active" onclick="showSection('aulas')">📺 AULAS EM VÍDEO</button>
+            <button class="section-btn" onclick="showSection('exercicios')">📝 LISTA DE EXERCÍCIOS</button>
+        </div>
+
+        <div id="aulas-section" class="content-section active">
+            <div class="aulas-grid">
+            <a href="https://youtu.be/BBz2U0PZpUs" class="aula-card" target="_blank">
+                <div class="aula-thumb-container">
+                    <img src="https://i.ytimg.com/vi/BBz2U0PZpUs/hqdefault.jpg" alt="Aula 0" class="aula-thumb">
+                    <div class="play-overlay">▶</div>
+                </div>
+                <div class="aula-content">
+                    <p class="aula-numero">AULA 0</p>
+                    <h3 class="aula-titulo">SISTEMA INTERNACIONAL DE UNIDADES E NOTAÇÃO CIENTÍFICA</h3>
+                    <p class="aula-desc">Sistema Internacional de unidades, Notação Científica. Disciplina de Física 1 ministrada na UFPR em 2021.</p>
+                </div>
+            </a>
+
+            <a href="https://youtu.be/U6-59tZtExI" class="aula-card" target="_blank">
+                <div class="aula-thumb-container">
+                    <img src="https://i.ytimg.com/vi/U6-59tZtExI/hqdefault.jpg" alt="Aula 1" class="aula-thumb">
+                    <div class="play-overlay">▶</div>
+                </div>
+                <div class="aula-content">
+                    <p class="aula-numero">AULA 1</p>
+                    <h3 class="aula-titulo">DESLOCAMENTO, VELOCIDADE E ACELERAÇÃO</h3>
+                    <p class="aula-desc">Deslocamento, Velocidade média, Velocidade instantânea, Aceleração média, Aceleração instantânea, Derivada de Polinômio.</p>
+                </div>
+            </a>
+
+            <a href="https://youtu.be/8eX7hzZ95LQ" class="aula-card" target="_blank">
+                <div class="aula-thumb-container">
+                    <img src="https://i.ytimg.com/vi/8eX7hzZ95LQ/hqdefault.jpg" alt="Aula 2" class="aula-thumb">
+                    <div class="play-overlay">▶</div>
+                </div>
+                <div class="aula-content">
+                    <p class="aula-numero">AULA 2</p>
+                    <h3 class="aula-titulo">GRÁFICOS</h3>
+                    <p class="aula-desc">Como construir gráficos, Gráfico V x t, Gráfico a x t. Exercícios do Halliday incluídos.</p>
+                </div>
+            </a>
+
+            <a href="https://youtu.be/P_kUPPVQIZs" class="aula-card" target="_blank">
+                <div class="aula-thumb-container">
+                    <img src="https://i.ytimg.com/vi/P_kUPPVQIZs/hqdefault.jpg" alt="Aula 3" class="aula-thumb">
+                    <div class="play-overlay">▶</div>
+                </div>
+                <div class="aula-content">
+                    <p class="aula-numero">AULA 3</p>
+                    <h3 class="aula-titulo">ACELERAÇÃO CONSTANTE</h3>
+                    <p class="aula-desc">Caso especial da aceleração constante. Equações: x=x0+v0t+at²/2, v=v0+at, v²=v0²+2ax. Vários exercícios resolvidos.</p>
+                </div>
+            </a>
+
+            <a href="https://youtu.be/cJt7PooEEXU" class="aula-card" target="_blank">
+                <div class="aula-thumb-container">
+                    <img src="https://i.ytimg.com/vi/cJt7PooEEXU/hqdefault.jpg" alt="Aula 4" class="aula-thumb">
+                    <div class="play-overlay">▶</div>
+                </div>
+                <div class="aula-content">
+                    <p class="aula-numero">AULA 4</p>
+                    <h3 class="aula-titulo">VETORES</h3>
+                    <p class="aula-desc">O que são vetores, Soma de vetores, Subtração de vetores, Grandeza escalar, Grandeza vetorial, Decomposição de vetores.</p>
+                </div>
+            </a>
+
+            <a href="https://youtu.be/Dwm6whI_trA" class="aula-card" target="_blank">
+                <div class="aula-thumb-container">
+                    <img src="https://i.ytimg.com/vi/Dwm6whI_trA/hqdefault.jpg" alt="Aula 5" class="aula-thumb">
+                    <div class="play-overlay">▶</div>
+                </div>
+                <div class="aula-content">
+                    <p class="aula-numero">AULA 5</p>
+                    <h3 class="aula-titulo">MOVIMENTO EM 2D E 3D</h3>
+                    <p class="aula-desc">Vetor Posição, Vetor Deslocamento, Vetor Velocidade, Vetor Aceleração, Aceleração Constante para 2D e 3D.</p>
+                </div>
+            </a>
+
+            <a href="https://youtu.be/cnZwZHlJIIM" class="aula-card" target="_blank">
+                <div class="aula-thumb-container">
+                    <img src="https://i.ytimg.com/vi/cnZwZHlJIIM/hqdefault.jpg" alt="Aula 6" class="aula-thumb">
+                    <div class="play-overlay">▶</div>
+                </div>
+                <div class="aula-content">
+                    <p class="aula-numero">AULA 6</p>
+                    <h3 class="aula-titulo">LEIS DE NEWTON - PARTE 1</h3>
+                    <p class="aula-desc">Primeira Lei de Newton, Segunda Lei de Newton, Vetor Força, Força Normal, Plano Inclinado.</p>
+                </div>
+            </a>
+
+            <a href="https://youtu.be/uEuSBvtXZZI" class="aula-card" target="_blank">
+                <div class="aula-thumb-container">
+                    <img src="https://i.ytimg.com/vi/uEuSBvtXZZI/hqdefault.jpg" alt="Aula 7" class="aula-thumb">
+                    <div class="play-overlay">▶</div>
+                </div>
+                <div class="aula-content">
+                    <p class="aula-numero">AULA 7</p>
+                    <h3 class="aula-titulo">LEIS DE NEWTON - PARTE 2</h3>
+                    <p class="aula-desc">Terceira Lei de Newton, Tração. Exercícios do Halliday e questões de vestibular incluídos.</p>
+                </div>
+            </a>
+
+            <a href="https://youtu.be/EGqZ8UYAcpo" class="aula-card" target="_blank">
+                <div class="aula-thumb-container">
+                    <img src="https://i.ytimg.com/vi/EGqZ8UYAcpo/hqdefault.jpg" alt="Aula 8" class="aula-thumb">
+                    <div class="play-overlay">▶</div>
+                </div>
+                <div class="aula-content">
+                    <p class="aula-numero">AULA 8</p>
+                    <h3 class="aula-titulo">ATRITO</h3>
+                    <p class="aula-desc">Atrito, Força de atrito, Força de arrasto. Exercícios do Halliday resolvidos.</p>
+                </div>
+            </a>
+
+            <a href="https://youtu.be/40k9nfQJa1k" class="aula-card" target="_blank">
+                <div class="aula-thumb-container">
+                    <img src="https://i.ytimg.com/vi/40k9nfQJa1k/hqdefault.jpg" alt="Aula 9" class="aula-thumb">
+                    <div class="play-overlay">▶</div>
+                </div>
+                <div class="aula-content">
+                    <p class="aula-numero">AULA 9</p>
+                    <h3 class="aula-titulo">ENERGIA CINÉTICA E TRABALHO - PARTE 1</h3>
+                    <p class="aula-desc">O que é Energia, Energia Cinética, Trabalho, Produto Escalar, Relação Trabalho x Energia.</p>
+                </div>
+            </a>
+
+            <a href="https://youtu.be/zaSFD-bIVqM" class="aula-card" target="_blank">
+                <div class="aula-thumb-container">
+                    <img src="https://i.ytimg.com/vi/zaSFD-bIVqM/hqdefault.jpg" alt="Aula 10" class="aula-thumb">
+                    <div class="play-overlay">▶</div>
+                </div>
+                <div class="aula-content">
+                    <p class="aula-numero">AULA 10</p>
+                    <h3 class="aula-titulo">ENERGIA CINÉTICA E TRABALHO - PARTE 2</h3>
+                    <p class="aula-desc">Trabalho da Força Gravitacional, Trabalho do Atrito, Potência, Trabalho de uma mola, Introdução a Energia Potencial.</p>
+                </div>
+            </a>
+
+            <a href="https://youtu.be/vxfK6OtjXWg" class="aula-card" target="_blank">
+                <div class="aula-thumb-container">
+                    <img src="https://i.ytimg.com/vi/vxfK6OtjXWg/hqdefault.jpg" alt="Aula 11" class="aula-thumb">
+                    <div class="play-overlay">▶</div>
+                </div>
+                <div class="aula-content">
+                    <p class="aula-numero">AULA 11</p>
+                    <h3 class="aula-titulo">ENERGIA POTENCIAL</h3>
+                    <p class="aula-desc">Energia Potencial Gravitacional, Energia Potencial Elástica, Conservação de Energia. Exercícios do Halliday resolvidos.</p>
+                </div>
+            </a>
+
+            <a href="https://youtu.be/QoX-KQPRBzI" class="aula-card" target="_blank">
+                <div class="aula-thumb-container">
+                    <img src="https://i.ytimg.com/vi/QoX-KQPRBzI/hqdefault.jpg" alt="Aula 12" class="aula-thumb">
+                    <div class="play-overlay">▶</div>
+                </div>
+                <div class="aula-content">
+                    <p class="aula-numero">AULA 12</p>
+                    <h3 class="aula-titulo">CENTRO DE MASSA E MOMENTO LINEAR</h3>
+                    <p class="aula-desc">Centro de Massa, Momento Linear, Segunda Lei de Newton para o Centro de Massa. Exercícios do Halliday resolvidos.</p>
+                </div>
+            </a>
+
+            <a href="https://youtu.be/rFtT6iJuNM0" class="aula-card" target="_blank">
+                <div class="aula-thumb-container">
+                    <img src="https://i.ytimg.com/vi/rFtT6iJuNM0/hqdefault.jpg" alt="Aula 13" class="aula-thumb">
+                    <div class="play-overlay">▶</div>
+                </div>
+                <div class="aula-content">
+                    <p class="aula-numero">AULA 13</p>
+                    <h3 class="aula-titulo">IMPULSO</h3>
+                    <p class="aula-desc">Impulso e mudança do momento linear. Exercício do Halliday resolvido.</p>
+                </div>
+            </a>
+
+            <a href="https://youtu.be/_Z9G4P22pJQ" class="aula-card" target="_blank">
+                <div class="aula-thumb-container">
+                    <img src="https://i.ytimg.com/vi/_Z9G4P22pJQ/hqdefault.jpg" alt="Aula 14" class="aula-thumb">
+                    <div class="play-overlay">▶</div>
+                </div>
+                <div class="aula-content">
+                    <p class="aula-numero">AULA 14</p>
+                    <h3 class="aula-titulo">COLISÕES</h3>
+                    <p class="aula-desc">Colisões, Colisão Inelástica, Colisão Elástica, Colisão em 2 dimensões. Exercício do Halliday resolvido.</p>
+                </div>
+            </a>
+            </div>
+        </div>
+
+        <div id="exercicios-section" class="content-section">
+            <div class="exercicios-grid">
+                <div class="exercicio-card">
+                    <div class="exercicio-header">
+                        <div class="exercicio-icon">📝</div>
+                        <h3 class="exercicio-titulo">LISTA 1</h3>
+                    </div>
+                    <p class="exercicio-desc">CAPÍTULO 2 - MOVIMENTO RETILÍNEO</p>
+                    <ul class="exercicio-topics">
+                        <li>Exercícios: 1, 2, 3, 4, 5, 6, 7, 8</li>
+                        <li>Problemas: 15, 18, 22, 25, 30</li>
+                    </ul>
+                </div>
+
+                <div class="exercicio-card">
+                    <div class="exercicio-header">
+                        <div class="exercicio-icon">📝</div>
+                        <h3 class="exercicio-titulo">LISTA 2</h3>
+                    </div>
+                    <p class="exercicio-desc">CAPÍTULO 3 - VETORES</p>
+                    <ul class="exercicio-topics">
+                        <li>Exercícios: 1, 3, 5, 7, 9, 11, 13</li>
+                        <li>Problemas: 20, 24, 28, 32</li>
+                    </ul>
+                </div>
+
+                <div class="exercicio-card">
+                    <div class="exercicio-header">
+                        <div class="exercicio-icon">📝</div>
+                        <h3 class="exercicio-titulo">LISTA 3</h3>
+                    </div>
+                    <p class="exercicio-desc">CAPÍTULO 4 - MOVIMENTO EM 2D E 3D</p>
+                    <ul class="exercicio-topics">
+                        <li>Exercícios: 2, 4, 6, 8, 10, 12</li>
+                        <li>Problemas: 16, 19, 23, 27, 31</li>
+                    </ul>
+                </div>
+
+                <div class="exercicio-card">
+                    <div class="exercicio-header">
+                        <div class="exercicio-icon">📝</div>
+                        <h3 class="exercicio-titulo">LISTA 4</h3>
+                    </div>
+                    <p class="exercicio-desc">CAPÍTULO 5 - FORÇA E MOVIMENTO I</p>
+                    <ul class="exercicio-topics">
+                        <li>Exercícios: 1, 3, 5, 7, 9, 11, 13, 15</li>
+                        <li>Problemas: 21, 25, 29, 33, 37</li>
+                    </ul>
+                </div>
+
+                <div class="exercicio-card">
+                    <div class="exercicio-header">
+                        <div class="exercicio-icon">📝</div>
+                        <h3 class="exercicio-titulo">LISTA 5</h3>
+                    </div>
+                    <p class="exercicio-desc">CAPÍTULO 6 - FORÇA E MOVIMENTO II</p>
+                    <ul class="exercicio-topics">
+                        <li>Exercícios: 2, 4, 6, 8, 10, 12, 14</li>
+                        <li>Problemas: 18, 22, 26, 30, 34</li>
+                    </ul>
+                </div>
+
+                <div class="exercicio-card">
+                    <div class="exercicio-header">
+                        <div class="exercicio-icon">📝</div>
+                        <h3 class="exercicio-titulo">LISTA 6</h3>
+                    </div>
+                    <p class="exercicio-desc">CAPÍTULO 7 - ENERGIA CINÉTICA E TRABALHO</p>
+                    <ul class="exercicio-topics">
+                        <li>Exercícios: 1, 3, 5, 7, 9, 11</li>
+                        <li>Problemas: 17, 21, 25, 29, 33</li>
+                    </ul>
+                </div>
+
+                <div class="exercicio-card">
+                    <div class="exercicio-header">
+                        <div class="exercicio-icon">📝</div>
+                        <h3 class="exercicio-titulo">LISTA 7</h3>
+                    </div>
+                    <p class="exercicio-desc">CAPÍTULO 8 - ENERGIA POTENCIAL</p>
+                    <ul class="exercicio-topics">
+                        <li>Exercícios: 2, 4, 6, 8, 10, 12, 14</li>
+                        <li>Problemas: 19, 23, 27, 31, 35</li>
+                    </ul>
+                </div>
+
+                <div class="exercicio-card">
+                    <div class="exercicio-header">
+                        <div class="exercicio-icon">📝</div>
+                        <h3 class="exercicio-titulo">LISTA 8</h3>
+                    </div>
+                    <p class="exercicio-desc">CAPÍTULO 9 - CENTRO DE MASSA</p>
+                    <ul class="exercicio-topics">
+                        <li>Exercícios: 1, 3, 5, 7, 9</li>
+                        <li>Problemas: 15, 18, 22, 26, 30</li>
+                    </ul>
+                </div>
+
+                <div class="exercicio-card">
+                    <div class="exercicio-header">
+                        <div class="exercicio-icon">📝</div>
+                        <h3 class="exercicio-titulo">LISTA 9</h3>
+                    </div>
+                    <p class="exercicio-desc">CAPÍTULO 10 - ROTAÇÃO DE EIXO FIXO</p>
+                    <ul class="exercicio-topics">
+                        <li>Exercícios: 2, 4, 6, 8, 10, 12</li>
+                        <li>Problemas: 16, 20, 24, 28, 32</li>
+                    </ul>
+                </div>
+
+                <div class="exercicio-card">
+                    <div class="exercicio-header">
+                        <div class="exercicio-icon">📝</div>
+                        <h3 class="exercicio-titulo">LISTA 10</h3>
+                    </div>
+                    <p class="exercicio-desc">REVISÃO GERAL - TODOS OS CAPÍTULOS</p>
+                    <ul class="exercicio-topics">
+                        <li>Exercícios selecionados de todos os capítulos</li>
+                        <li>Problemas integradores e de vestibular</li>
+                    </ul>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <script>
+        function showSection(section) {
+            // Remove active class from all buttons
+            const buttons = document.querySelectorAll('.section-btn');
+            buttons.forEach(btn => btn.classList.remove('active'));
+            
+            // Hide all sections
+            const sections = document.querySelectorAll('.content-section');
+            sections.forEach(sec => sec.classList.remove('active'));
+            
+            // Show selected section and activate button
+            if (section === 'aulas') {
+                document.getElementById('aulas-section').classList.add('active');
+                buttons[0].classList.add('active');
+            } else if (section === 'exercicios') {
+                document.getElementById('exercicios-section').classList.add('active');
+                buttons[1].classList.add('active');
+            }
+        }
+    </script>
+</body>
+</html> 

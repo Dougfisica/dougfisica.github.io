@@ -10,6 +10,10 @@
     <link rel="icon" type="image/png" href="/favicon.png">
     <!-- Google Fonts -->
     <link href="https://fonts.googleapis.com/css2?family=Roboto:wght@400;500;700&display=swap" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Press+Start+2P&display=swap" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Kalam:wght@400;700&display=swap" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Dancing+Script:wght@400;500;600;700&display=swap" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Comfortaa:wght@300;400;500;700&display=swap" rel="stylesheet">
     <!-- Google Analytics -->
     <script async src="https://www.googletagmanager.com/gtag/js?id=G-83359NB2SY"></script>
     <script>
@@ -25,6 +29,20 @@
             --text-color: #333;
             --border-color: #e0e0e0;
             --transition: all 0.3s ease;
+            
+            /* 8-bit colors */
+            --pixel-blue: #1579fa;
+            --pixel-green: #01b571;
+            --pixel-pink: #e9358e;
+            --pixel-yellow: #ffe062;
+            --pixel-red: #f54141;
+            --pixel-orange: #ff8800;
+            --pixel-gray: #222;
+            --pixel-white: #fff;
+            --pixel-light: #f4f4e3;
+            --pixel-bg: #2a1810;
+            --pixel-panel: #1a1a2e;
+            --pixel-card: #16213e;
         }
 
         * {
@@ -38,12 +56,39 @@
             line-height: 1.6;
             color: var(--text-color);
             background: #f5f5f5;
+            position: relative;
+            overflow-x: hidden;
+        }
+
+        /* Animated stars background */
+        body::after {
+            content: "";
+            position: fixed;
+            top: 0; left: 0; right: 0; bottom: 0;
+            background: 
+                radial-gradient(1px 1px at 20px 30px, var(--pixel-yellow), transparent),
+                radial-gradient(1px 1px at 40px 70px, var(--pixel-blue), transparent),
+                radial-gradient(1px 1px at 90px 40px, var(--pixel-pink), transparent),
+                radial-gradient(1px 1px at 130px 80px, var(--pixel-green), transparent);
+            background-repeat: repeat;
+            background-size: 200px 100px;
+            animation: twinkle 6s linear infinite;
+            z-index: 0;
+            opacity: 0.3;
+            pointer-events: none;
+        }
+
+        @keyframes twinkle {
+            from { transform: translateY(0); }
+            to { transform: translateY(-100px); }
         }
 
         .container {
             max-width: 1200px;
             margin: 0 auto;
             padding: 2rem 1rem;
+            position: relative;
+            z-index: 1;
         }
 
         h1 {
@@ -105,6 +150,200 @@
             margin-top: 0.5rem;
         }
 
+        /* 8-bit Style for Física 1 */
+        .fisica1-card {
+            background: var(--pixel-card);
+            border: 3px solid var(--pixel-blue);
+            border-radius: 0;
+            box-shadow: 4px 4px 0 var(--pixel-gray);
+            font-family: 'Press Start 2P', monospace;
+            color: var(--pixel-light);
+            position: relative;
+        }
+
+        .fisica1-card::before {
+            content: "";
+            position: absolute;
+            top: 0; left: 0; right: 0; bottom: 0;
+            background: repeating-linear-gradient(
+                to bottom,
+                transparent 0px,
+                transparent 2px,
+                var(--pixel-green) 3px,
+                transparent 5px
+            );
+            opacity: 0.1;
+            pointer-events: none;
+        }
+
+        .fisica1-card:hover {
+            transform: translate(-2px, -2px);
+            box-shadow: 6px 6px 0 var(--pixel-gray);
+            border-color: var(--pixel-yellow);
+        }
+
+        .fisica1-card .card-title {
+            background: linear-gradient(45deg, var(--pixel-blue), var(--pixel-green));
+            color: var(--pixel-white);
+            font-size: 0.9rem;
+            text-shadow: 2px 2px 0 var(--pixel-gray);
+            animation: glow 2s ease-in-out infinite alternate;
+            letter-spacing: 1px;
+            text-transform: uppercase;
+        }
+
+        @keyframes glow {
+            from { text-shadow: 2px 2px 0 var(--pixel-gray), 0 0 10px var(--pixel-blue); }
+            to { text-shadow: 2px 2px 0 var(--pixel-gray), 0 0 20px var(--pixel-blue), 0 0 30px var(--pixel-blue); }
+        }
+
+        .fisica1-card .card-info {
+            color: var(--pixel-green);
+            font-size: 0.6rem;
+            margin-bottom: 0.8rem;
+            text-transform: uppercase;
+        }
+
+        .fisica1-card .card-info strong {
+            color: var(--pixel-yellow);
+        }
+
+        .fisica1-card .card-description {
+            color: var(--pixel-light);
+            font-size: 0.6rem;
+            line-height: 1.5;
+        }
+
+        /* Watercolor style for Física 2 */
+        .fisica2-card {
+            background: 
+                radial-gradient(circle at 30% 20%, rgba(168, 216, 234, 0.3) 0%, transparent 60%),
+                radial-gradient(circle at 70% 80%, rgba(186, 225, 204, 0.25) 0%, transparent 50%),
+                radial-gradient(circle at 20% 70%, rgba(255, 179, 186, 0.2) 0%, transparent 45%),
+                rgba(255, 255, 255, 0.95);
+            border: none;
+            border-radius: 30px;
+            box-shadow: 
+                0 15px 40px rgba(0,0,0,0.12),
+                inset 0 1px 0 rgba(255,255,255,0.8);
+            font-family: 'Comfortaa', cursive;
+            color: #4a5568;
+            position: relative;
+            overflow: hidden;
+            backdrop-filter: blur(10px);
+        }
+
+        .fisica2-card::before {
+            content: "";
+            position: absolute;
+            top: -3px;
+            left: -3px;
+            right: -3px;
+            bottom: -3px;
+            background: linear-gradient(135deg, 
+                rgba(168, 216, 234, 0.6), 
+                rgba(255, 179, 186, 0.6), 
+                rgba(186, 225, 204, 0.6), 
+                rgba(219, 196, 240, 0.6)
+            );
+            background-size: 400% 400%;
+            border-radius: 33px;
+            z-index: -1;
+            opacity: 0.6;
+            filter: blur(3px);
+            animation: watercolorCardBorder 12s ease-in-out infinite;
+        }
+
+        .fisica2-card::after {
+            content: "";
+            position: absolute;
+            top: 0; left: 0; right: 0; bottom: 0;
+            z-index: 0;
+            opacity: 0.1;
+            background: 
+                radial-gradient(circle at 25% 35%, rgba(168, 216, 234, 0.8) 8px, transparent 12px),
+                radial-gradient(circle at 75% 15%, rgba(186, 225, 204, 0.6) 6px, transparent 10px),
+                radial-gradient(circle at 45% 85%, rgba(255, 179, 186, 0.4) 4px, transparent 8px);
+            background-size: 120px 120px, 100px 100px, 140px 140px;
+            animation: floatingWatercolorDrops 20s linear infinite;
+            pointer-events: none;
+        }
+
+        @keyframes watercolorCardBorder {
+            0%, 100% { background-position: 0% 50%; }
+            25% { background-position: 100% 0%; }
+            50% { background-position: 100% 100%; }
+            75% { background-position: 0% 100%; }
+        }
+
+        @keyframes floatingWatercolorDrops {
+            0% { transform: translateY(0) rotate(0deg); }
+            100% { transform: translateY(-20px) rotate(360deg); }
+        }
+
+        .fisica2-card:hover {
+            transform: translateY(-8px) scale(1.02);
+            box-shadow: 
+                0 20px 50px rgba(0,0,0,0.15),
+                inset 0 1px 0 rgba(255,255,255,0.9);
+        }
+
+        .fisica2-card .card-title {
+            background: linear-gradient(135deg, 
+                rgba(168, 216, 234, 0.9), 
+                rgba(219, 196, 240, 0.9)
+            );
+            color: white;
+            font-size: 1.4rem;
+            font-weight: 600;
+            text-shadow: 2px 2px 4px rgba(0,0,0,0.2);
+            letter-spacing: 0.5px;
+            position: relative;
+            z-index: 2;
+            backdrop-filter: blur(10px);
+            font-family: 'Dancing Script', cursive;
+        }
+
+        .fisica2-card .card-title::after {
+            content: "🎨";
+            position: absolute;
+            top: 50%;
+            right: 15px;
+            transform: translateY(-50%);
+            font-size: 0.8em;
+            filter: grayscale(0.2);
+            animation: paintbrushCardFloat 4s ease-in-out infinite;
+        }
+
+        @keyframes paintbrushCardFloat {
+            0%, 100% { transform: translateY(-50%) scale(1) rotate(-5deg); opacity: 0.8; }
+            50% { transform: translateY(-60%) scale(1.1) rotate(5deg); opacity: 1; }
+        }
+
+        .fisica2-card .card-content {
+            position: relative;
+            z-index: 2;
+        }
+
+        .fisica2-card .card-info {
+            color: #4a5568;
+            font-size: 1rem;
+            margin-bottom: 0.8rem;
+            font-weight: 500;
+        }
+
+        .fisica2-card .card-info strong {
+            color: #2d3748;
+            font-weight: 700;
+        }
+
+        .fisica2-card .card-description {
+            color: #6b7280;
+            font-size: 0.95rem;
+            line-height: 1.6;
+            font-style: normal;
+        }
+
         .voltar-link {
             display: inline-block;
             margin: 1rem;
@@ -142,6 +381,39 @@
             .card-content {
                 padding: 0.8rem;
             }
+
+            /* Mobile adjustments for 8-bit card */
+            .fisica1-card .card-title {
+                font-size: 0.7rem;
+                padding: 0.8rem;
+            }
+
+            .fisica1-card .card-info {
+                font-size: 0.55rem;
+            }
+
+            .fisica1-card .card-description {
+                font-size: 0.55rem;
+            }
+
+            /* Mobile adjustments for watercolor card */
+            .fisica2-card .card-title {
+                font-size: 1.2rem;
+                padding: 0.8rem;
+            }
+
+            .fisica2-card .card-title::after {
+                right: 10px;
+                font-size: 0.7em;
+            }
+
+            .fisica2-card .card-info {
+                font-size: 0.9rem;
+            }
+
+            .fisica2-card .card-description {
+                font-size: 0.85rem;
+            }
         }
     </style>
 </head>
@@ -151,7 +423,22 @@
         <h1>Disciplinas Graduação</h1>
         
         <div class="disciplinas-grid">
-            <a href="disciplinas/f2_1s_25.html" class="disciplina-card">
+            <a href="disciplinas/f1_2s_25.html" class="disciplina-card fisica1-card">
+                <div class="card-title">◆ FÍSICA 1 ◆</div>
+                <div class="card-content">
+                    <div class="card-info">
+                        <strong>PERÍODO:</strong> 2º SEMESTRE 2025
+                    </div>
+                    <div class="card-info">
+                        <strong>TURMA:</strong> MANHÃ E TARDE
+                    </div>
+                    <div class="card-description">
+                        DISCIPLINA DE FÍSICA 1 DA UFPR JANDAIA DO SUL
+                    </div>
+                </div>
+            </a>
+
+            <a href="disciplinas/f2_1s_25.html" class="disciplina-card fisica2-card">
                 <div class="card-title">Física 2</div>
                 <div class="card-content">
                     <div class="card-info">
