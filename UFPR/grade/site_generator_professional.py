@@ -504,6 +504,8 @@ html_template = """<!DOCTYPE html>
             padding: 2rem;
             border: 1px solid var(--border);
             box-shadow: var(--shadow);
+            overflow-x: auto;
+            width: 100%;
         }
         
         .calendar-header {
@@ -523,8 +525,8 @@ html_template = """<!DOCTYPE html>
             display: grid;
             border: 1px solid var(--border);
             border-radius: var(--radius);
-            overflow-x: auto;
-            width: 100%;
+            width: max-content;
+            min-width: 100%;
         }
         
         .calendar-cell {
@@ -649,8 +651,12 @@ html_template = """<!DOCTYPE html>
                 font-size: 0.8rem;
             }
             
-            .calendar-grid {
+            .calendar-section {
+                padding: 1rem;
                 overflow-x: auto;
+            }
+            
+            .calendar-grid {
                 min-width: 400px;
                 width: max-content;
             }
