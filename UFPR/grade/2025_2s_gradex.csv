@@ -23,7 +23,9 @@ JAG005A - Tratores e motores,Segunda,13:30,15:30,B105,MARCELO_J,AG,4
 JAG005A - Tratores e motores,Segunda,15:30,16:30,B105,MARCELO_J,AG,4
 JAG032A - Pedologia,Sexta,07:30,09:30,B201,OSVALDO,AG,4
 JAN018A - Fenômenos de Transporte,Sexta,09:30,11:30,,,AG,4
+JAN020A - TECNOLOGIA DA DECISÃO I,Sexta,13:30,15:30,,,AG,4
 JAN018A - Fenômenos de Transporte,Terça,09:30,11:30,,,AG,4
+JAN020A - TECNOLOGIA DA DECISÃO I,Terça,13:30,15:30,,,AG,4
 JAN017A - Física III,Terça,15:30,17:30,,,AG,4
 JAG019A - Fundamentos de irrigação e Drenagem,Quarta,09:30,12:30,B204,MAYCON,AG,6
 JAG008A - Geoprocessamento,Quinta,09:30,12:30,C105,CARLOS_HEN,AG,6
@@ -66,8 +68,8 @@ JAN017A - FÍSICA III,Quarta,07:30,09:30,C102,A DEFINIR,AL,4
 JAN016A - Cálculo IV,Quarta,09:30,11:30,C108,IGOR,AL,4
 JAN029A - FÍSICA EXPERIMENTAL III,Quarta,13:30,15:30,,,AL,4
 JAN017A - FÍSICA III,Quinta,07:30,09:30,C102,A DEFINIR,AL,4
-JAL001A - Bioquímica I,Quinta,09:30,11:30,C104,JOSIELLE,AL,4
-JAN020A - TECNOLOGIA DA DECISÃO I,Quinta,15:30,17:30,,,AL,4
+JAL001A - Bioquímica I,Quinta,09:30,11:30,B201,JOSIELLE,AL,4
+JAN020A - TECNOLOGIA DA DECISÃO I,Quinta,13:30,15:30,,,AL,4
 JAL051A - Tópicos Extensionistas em EAL II,Segunda,13:30,15:30,C108,KELLY,AL,4
 JAL051A - Tópicos Extensionistas em EAL II,Segunda,15:30,17:30,C108,KELLY,AL,4
 JAL006A - Físico-Química,Sexta,07:30,09:30,C102,SUB_Quim,AL,4
@@ -99,13 +101,12 @@ JAL022A - Tecnologia de Frutas e Hortaliças,Quarta,09:30,10:30,C107,DIRLEI,AL,8
 JAL027A - Lab de Operações Unitárias II,Quarta,13:30,16:30,C108,ERIKA,AL,8
 JAL021A - Projetos Industriais,Quinta,07:30,09:30,C108,LUANA,AL,8
 JAL021A - Projetos Industriais,Quinta,09:30,11:30,C108,LUANA,AL,8
-JAL054A - Tecnologia e processamento do pescado,Quinta,13:30,16:30,LATAQ,FABIO,AL,8
 JAL024A - Análise Sensorial,Segunda,13:30,17:30,C119,LEOMARA,AL,8
 JAL020A - Operações Unitárias III,Terça,13:30,16:30,B203,ERIKA,AL,8
 JAL031 - Estágio Supervisionado,Sábado,07:30,09:30,,,AL,10
 JAL030 - Trabalho de Conclusão de Curso,Sábado,09:30,11:30,,,AL,10
 JAN022A - METODOLOGIA CIENTÍFICA E TECNOLÓGICA,Quarta,13:30,15:30,B307,MAYTE,EP,2
-JEP010A - PROCESSOS DE FABRICAÇÃO PARA EP,Quinta,08:30,11:30,B105,NETO,EP,2
+JEP010A - PROCESSOS DE FABRICAÇÃO PARA EP,Quinta,13:30,15:30,B105,NETO,EP,2
 JAN007A - FÍSICA I,Quinta,15:30,17:30,C101,DOUGLAS,EP,2
 JAG052A - Desenho assistido por computador,Segunda,08:30,09:30,A102,ALEX_FER,EP,2
 JAG052A - Desenho assistido por computador,Segunda,09:30,11:30,A102,ALEX_FER,EP,2
@@ -114,12 +115,12 @@ JAN007A - FÍSICA I,Sexta,13:30,15:30,C101,DOUGLAS,EP,2
 JAN025A - Física Experimental I,Terça,09:30,11:30,B301,A DEFINIR,EP,2
 JAN009A - ESTATÍSTICA I,Terça,13:30,15:30,,,EP,2
 JAN006A  - CÁLCULO  II,Terça,15:30,17:30,,,EP,2
-JEP009A - CIÊNCIA DOS MATERIAIS PARA EP,Quarta,09:30,11:30,C110,NETO,EP,4
+JEP009A - CIÊNCIA DOS MATERIAIS PARA EP,Quarta,09:30,11:30,,NETO,EP,4
 JAN029A - FÍSICA EXPERIMENTAL III,Quarta,13:30,15:30,B301,GISELE,EP,4
 JAN017A - FÍSICA III,Quarta,15:30,17:30,C110,GISELE,EP,4
-JEP009A - CIÊNCIA DOS MATERIAIS PARA EP,Quinta,13:30,15:30,,NETO,EP,4
-JAN020A - TECNOLOGIA DA DECISÃO I,Quinta,15:30,17:30,C102,JULIANA,EP,4
-JEP007A - PROJETO DO TRABALHO,Segunda,09:30,11:30,B307,WIL_SANTOS,EP,4
+JEP009A - CIÊNCIA DOS MATERIAIS PARA EP,Quinta,09:30,11:30,,NETO,EP,4
+JAN020A - TECNOLOGIA DA DECISÃO I,Quinta,13:30,15:30,C102,JULIANA,EP,4
+JEP007A - PROJETO DO TRABALHO,Segunda,09:30,11:30,,WIL_SANTOS,EP,4
 JEP014A - GESTÃO DA QUALIDADE,Segunda,13:30,15:30,C109,ALEX_FER,EP,4
 JEP006A - ADMINISTRAÇÃO ESTRATÉGICA DE OPERAÇÕES,Segunda,15:30,17:30,C109,GERMANO,EP,4
 JAN018A - Fenômenos de Transporte,Sexta,09:30,11:30,,,EP,4
@@ -131,7 +132,7 @@ JAN017A - FÍSICA III,Terça,15:30,17:30,C110,GISELE,EP,4
 JEP020A - PROJETO E DESENVOLVIMENTO DE PRODUTOS,Quarta,09:30,11:30,B307,WIL_SANTOS,EP,6
 JEP023A - SISTEMAS DE MANUTENÇÃO E CONFIABILIDADE,Quarta,13:30,16:30,C109,NETO,EP,6
 JEP052A - PLANEJAMENTO DE VENDAS E OPERAÇÕES,Quinta,09:30,11:30,B307,GAZOLI,EP,6
-JEP003A - TECNOLOGIA DA DECISÃO II,Quinta,13:30,15:30,C102,JULIANA,EP,6
+JEP003A - TECNOLOGIA DA DECISÃO II,Quinta,15:30,17:30,C102,JULIANA,EP,6
 JEP048A - ECONOMIA CIRCULAR,Segunda,15:30,17:30,B307,GIAN,EP,6
 JEP020A - PROJETO E DESENVOLVIMENTO DE PRODUTOS,Sexta,09:30,11:30,B307,WIL_SANTOS,EP,6
 JEP022A - CONTABILIDADE E CUSTOS INDUSTRIAIS,Sexta,13:30,16:30,A102,WIL_SANTOS,EP,6
@@ -139,14 +140,15 @@ JEP049A - PROJETO INTEGRADOR EXTENSIONISTA III,Terça,07:30,09:30,B307,GIAN,EP,6
 JEP049A - PROJETO INTEGRADOR EXTENSIONISTA III,Terça,09:30,12:30,B307,GIAN,EP,6
 JEP048A - ECONOMIA CIRCULAR,Terça,13:30,15:30,B307,GIAN,EP,6
 JEP003A - TECNOLOGIA DA DECISÃO II,Terça,15:30,17:30,C102,JULIANA,EP,6
-JEP016A - SIMULAÇÃO (PROGRAMAÇÃO DA PRODUÇÃO II),Quarta,09:30,11:30,A102,GAZOLI,EP,8
 JEP012A - PROJETOS DE INSTALAÇÕES INDUSTRIAIS E DE SERVIÇO,Quarta,13:30,15:30,A102,GAZOLI,EP,8
 JEP012A - PROJETOS DE INSTALAÇÕES INDUSTRIAIS E DE SERVIÇO,Quarta,15:30,17:30,A102,GAZOLI,EP,8
 JEP008A - TECNOLOGIA DA DECISÃO III,Quinta,09:30,11:30,C109,MARCO,EP,8
-JEP017A - ENGENHARIA ECONÔMICA,Quinta,13:30,16:30,C110,ALEX_FER,EP,8
-JEP016A - SIMULAÇÃO,Quinta,16:30,18:30,A102,GAZOLI,EP,8
+JEP019A - ENGENHARIA DA QUALIDADE,Quinta,13:30,15:30,C110,MARCO,EP,8
+JEP016A - SIMULAÇÃO,Quinta,15:30,17:30,A102,GAZOLI,EP,8
 JEP018A - EMPREENDEDORISMO,Segunda,13:30,15:30,B307,GIAN,EP,8
-JEP019A - ENGENHARIA DA QUALIDADE,Segunda,15:30,17:30,C110,MARCO,EP,8
+JEP017A - ENGENHARIA ECONÔMICA,Segunda,15:30,17:30,C110,ALEX_FER,EP,8
+JEP017A - ENGENHARIA ECONÔMICA,Sexta,13:30,15:30,C110,ALEX_FER,EP,8
+JEP016A - SIMULAÇÃO,Sexta,15:30,17:30,A102,GAZOLI,EP,8
 JEP008A - TECNOLOGIA DA DECISÃO III,Terça,09:30,11:30,C109,MARCO,EP,8
 JEP019A - ENGENHARIA DA QUALIDADE,Terça,13:30,15:30,C110,MARCO,EP,8
 JEP018A - EMPREENDEDORISMO,Terça,15:30,17:30,B307,GIAN,EP,8
@@ -173,12 +175,11 @@ JCE114 - Língua Brasileira de Sinais,Quinta,21:00,23:00,B201,PAOLA_B,LCE-Físic
 JCE026 - Física II,Segunda,17:00,19:00,B201,ANA_C,LCE-Física,2
 JCE216 - Química Geral I,Segunda,19:00,21:00,B307,VAL,LCE-Física,2
 JCE213 - Introdução à Física,Segunda,21:00,23:00,B307,WIL_NASC,LCE-Física,2
-JCE116 - Pensamento Computacional,Sexta,19:00,21:00,B307,CAMILA,LCE-Física,2
-JCE116 - Pensamento Computacional,Sexta,21:00,23:00,B307,CAMILA,LCE-Física,2
+JCE116 - Pensamento Computacional,Sexta,19:00,21:00,B307,SUB_Comp,LCE-Física,2
+JCE116 - Pensamento Computacional,Sexta,21:00,23:00,B307,SUB_Comp,LCE-Física,2
 JCE052 - TCCII,Sábado,19:00,21:00,,BARBARA,LCE-Física,2
 JCE115 - Fundamentos da Educação,Terça,19:00,21:00,B201,ADRIANO,LCE-Física,2
 JCE214 - Geometria Analítica,Terça,21:00,23:00,B201,JANETE,LCE-Física,2
-JAN035 - Educação Ambiental,Quarta,17:00,19:00,A101,ANDRESSA,LCE-Física,4
 JCE222 - Cálculo II,Quarta,19:00,21:00,A109,GALVAO,LCE-Física,4
 JCE224 - Física II,Quarta,19:00,21:00,B201,ANA_C,LCE-Física,4
 JCE034 - Química IV,Quarta,19:00,21:00,B203,JOSIELLE,LCE-Física,4
@@ -188,7 +189,6 @@ JCE033 - Física IV,Quinta,19:00,21:00,B203,WIL_NASC,LCE-Física,4
 JCE223 - Física Experimental II,Quinta,21:00,23:00,B301,WIL_NASC,LCE-Física,4
 JCE226 - Química geral III,Segunda,19:00,22:00,B210,SUB_Quim,LCE-Física,4
 JCE033 - Física IV,Segunda,19:00,21:00,B203,WIL_NASC,LCE-Física,4
-JCE032 - MATEMÁTICA IV,Segunda,21:00,23:00,B203,IGOR,LCE-Física,4
 JCE225 - Química Geral Experimental III,Segunda,22:00,23:00,B210,SUB_Quim,LCE-Física,4
 JCE119 - Tecnologias educacionais,Sexta,19:00,21:00,A102,PAULO,LCE-Física,4
 JCE119 - Tecnologias educacionais,Sexta,21:00,23:00,A102,PAULO,LCE-Física,4
@@ -196,6 +196,7 @@ JCE118 - Educação Básica e Gestão escolar,Sábado,19:00,20:00,EAD,ADRIANO,LC
 JCE222 - Cálculo II,Terça,19:00,21:00,A109,GALVAO,LCE-Física,4
 JCE034 - Química IV,Terça,19:00,21:00,B203,JOSIELLE,LCE-Física,4
 JCE118 - Educação Básica e Gestão escolar,Terça,21:00,23:00,A109,ADRIANO,LCE-Física,4
+JCE032 - MATEMÁTICA IV,Terça,21:00,23:00,B203,IGOR,LCE-Física,4
 JCE314 - Estágio de Formação Ped. em Fisica I,Quarta,08:30,12:30,A101,HERCILIA,LCE-Física,6
 JCE231 - Estatística I,Quarta,19:00,21:00,A102,IGOR,LCE-Física,6
 JCE121 - Didática geral,Quinta,19:00,21:00,B304,KELLY,LCE-Física,6
@@ -217,7 +218,6 @@ JCE116 - Pensamento Computacional,Sexta,21:00,23:00,,,LCE-Matemática,2
 JCE052 - TCCII,Sábado,19:00,21:00,,,LCE-Matemática,2
 JCE115 - Fundamentos da Educação,Terça,19:00,21:00,,,LCE-Matemática,2
 JCE214 - Geometria Analítica,Terça,21:00,23:00,,,LCE-Matemática,2
-JAN035 - Educação Ambiental,Quarta,17:00,19:00,,,LCE-Matemática,4
 JCE222 - Cálculo II,Quarta,19:00,21:00,,,LCE-Matemática,4
 JCE224 - Física II,Quarta,19:00,21:00,,,LCE-Matemática,4
 JCE034 - Química IV,Quarta,19:00,21:00,,,LCE-Matemática,4
@@ -227,7 +227,6 @@ JCE033 - Física IV,Quinta,19:00,21:00,,,LCE-Matemática,4
 JCE223 - Física Experimental II,Quinta,21:00,23:00,,,LCE-Matemática,4
 JCE226 - Química geral III,Segunda,19:00,22:00,,,LCE-Matemática,4
 JCE033 - Física IV,Segunda,19:00,21:00,,,LCE-Matemática,4
-JCE032 - MATEMÁTICA IV,Segunda,21:00,23:00,,,LCE-Matemática,4
 JCE225 - Química Geral Experimental III,Segunda,22:00,23:00,,,LCE-Matemática,4
 JCE119 - Tecnologias educacionais,Sexta,19:00,21:00,,,LCE-Matemática,4
 JCE119 - Tecnologias educacionais,Sexta,21:00,23:00,,,LCE-Matemática,4
@@ -235,6 +234,7 @@ JCE118 - Educação Básica e Gestão escolar,Sábado,19:00,20:00,,,LCE-Matemát
 JCE222 - Cálculo II,Terça,19:00,21:00,,,LCE-Matemática,4
 JCE034 - Química IV,Terça,19:00,21:00,,,LCE-Matemática,4
 JCE118 - Educação Básica e Gestão escolar,Terça,21:00,23:00,,,LCE-Matemática,4
+JCE032 - MATEMÁTICA IV,Terça,21:00,23:00,,,LCE-Matemática,4
 JCE231 - Estatística I,Quarta,19:00,21:00,,,LCE-Matemática,6
 JCE095 - Estágio Supervisionado de Docência em Mat. II,Quarta,21:00,23:00,A101,WELLINGTON,LCE-Matemática,6
 JCE121 - Didática geral,Quinta,19:00,21:00,,,LCE-Matemática,6
@@ -245,13 +245,13 @@ JCE094 - Prática Pedagógica do Ensino de Matemática II,Segunda,21:00,23:00,A1
 JCE095 - Estágio Supervisionado de Docência em Mat. II,Sábado,13:00,16:00,A101,WELLINGTON,LCE-Matemática,6
 JCE121 - Didática geral,Terça,19:00,21:00,,,LCE-Matemática,6
 JCE095 - Estágio Supervisionado de Docência em Mat. II,Terça,21:00,23:00,A101,WELLINGTON,LCE-Matemática,6
-JCE067 - Modelagem Matemática,Quarta,19:00,21:00,A101,WELLINGTON,LCE-Matemática,8
+JCE067 - Modelagem Matemática,Quarta,19:00,21:00,A109,WELLINGTON,LCE-Matemática,8
 JCE101 - Análise Real,Quinta,19:00,21:00,A102,IGOR,LCE-Matemática,8
 JCE069 - Estágio Supervisionado de Docência em Matemática IV,Segunda,19:00,21:00,B201,BARBARA,LCE-Matemática,8
 JCE069 - Estágio Supervisionado de Docência em Matemática IV,Segunda,21:00,23:00,B201,BARBARA,LCE-Matemática,8
 JCE069 - Estágio Supervisionado de Docência em Matemática IV,Sábado,13:00,16:00,B201,BARBARA,LCE-Matemática,8
-JCE067 - Modelagem Matemática,Terça,19:00,21:00,A101,WELLINGTON,LCE-Matemática,8
-JCE101 - Análise Real,Terça,21:00,23:00,A102,IGOR,LCE-Matemática,8
+JCE067 - Modelagem Matemática,Terça,19:00,21:00,A109,WELLINGTON,LCE-Matemática,8
+JCE101 - Análise Real,Terça,19:00,21:00,A109,IGOR,LCE-Matemática,8
 JCE026 - Física II,Quarta,17:00,19:00,,,LCE-Química,2
 JCE216 - Química Geral I,Quarta,19:00,20:00,,,LCE-Química,2
 JCE215 - Química Geral Experimental I,Quarta,20:00,21:00,,,LCE-Química,2
@@ -266,7 +266,6 @@ JCE116 - Pensamento Computacional,Sexta,21:00,23:00,,,LCE-Química,2
 JCE052 - TCCII,Sábado,19:00,21:00,,,LCE-Química,2
 JCE115 - Fundamentos da Educação,Terça,19:00,21:00,,,LCE-Química,2
 JCE214 - Geometria Analítica,Terça,21:00,23:00,,,LCE-Química,2
-JAN035 - Educação Ambiental,Quarta,17:00,19:00,,,LCE-Química,4
 JCE222 - Cálculo II,Quarta,19:00,21:00,,,LCE-Química,4
 JCE224 - Física II,Quarta,19:00,21:00,,,LCE-Química,4
 JCE034 - Química IV,Quarta,19:00,21:00,,,LCE-Química,4
@@ -276,7 +275,6 @@ JCE033 - Física IV,Quinta,19:00,21:00,,,LCE-Química,4
 JCE223 - Física Experimental II,Quinta,21:00,23:00,,,LCE-Química,4
 JCE226 - Química geral III,Segunda,19:00,22:00,,,LCE-Química,4
 JCE033 - Física IV,Segunda,19:00,21:00,,,LCE-Química,4
-JCE032 - MATEMÁTICA IV,Segunda,21:00,23:00,,,LCE-Química,4
 JCE225 - Química Geral Experimental III,Segunda,22:00,23:00,,,LCE-Química,4
 JCE119 - Tecnologias educacionais,Sexta,19:00,21:00,,,LCE-Química,4
 JCE119 - Tecnologias educacionais,Sexta,21:00,23:00,,,LCE-Química,4
@@ -284,6 +282,7 @@ JCE118 - Educação Básica e Gestão escolar,Sábado,19:00,20:00,,,LCE-Química
 JCE222 - Cálculo II,Terça,19:00,21:00,,,LCE-Química,4
 JCE034 - Química IV,Terça,19:00,21:00,,,LCE-Química,4
 JCE118 - Educação Básica e Gestão escolar,Terça,21:00,23:00,,,LCE-Química,4
+JCE032 - MATEMÁTICA IV,Terça,21:00,23:00,,,LCE-Química,4
 JCE231 - Estatística I,Quarta,19:00,21:00,,,LCE-Química,6
 JCE056 - Química Orgânica II,Quarta,21:00,23:00,B309,EDUARDO,LCE-Química,6
 JCE121 - Didática geral,Quinta,19:00,21:00,,,LCE-Química,6
@@ -291,7 +290,7 @@ JCE231 - Estatística I,Quinta,21:00,23:00,,,LCE-Química,6
 JAN025 - Estatística e Probabilidade,Segunda,13:30,16:30,,,LCE-Química,6
 JCE059 - Estágio Supervisionado de Docência em Química II,Segunda,19:00,21:00,A109,ANDRESSA,LCE-Química,6
 JCE059 - Estágio Supervisionado de Docência em Química II,Segunda,21:00,23:00,A109,ANDRESSA,LCE-Química,6
-JCE059 - Estágio Supervisionado de Docência em Química II,Sábado,08:30,11:30,A109,ANDRESSA,LCE-Química,6
+JCE059 - Estágio Supervisionado de Docência em Química II,Sábado,13:30,16:30,A109,ANDRESSA,LCE-Química,6
 JCE121 - Didática geral,Terça,19:00,21:00,,,LCE-Química,6
 JCE056 - Química Orgânica II,Terça,21:00,23:00,B309,EDUARDO,LCE-Química,6
 JCE070 - Estágio Supervisionado de Docência em Química IV,Quarta,19:00,21:00,B307,ANDRESSA,LCE-Química,8
@@ -313,7 +312,7 @@ JAN021 - Comunicação em Língua Brasileira de Sinais – Libras,Quinta,15:30,1
 JLC010 - Programação Orientada a Objetos,Segunda,13:30,15:30,C103,TINO,LCO,4
 JLC033 - Banco de Dados,Segunda,15:30,17:30,C105,ROGERIO,LCO,4
 JAN030 - História da Ciência e da Tecnologia,Sexta,13:30,16:30,C107,BELETI,LCO,4
-JLC038 - Prática Pedagógica IV,Sexta,16:30,18:30,C107,CAMILA,LCO,4
+JLC038 - Prática Pedagógica IV,Sexta,16:30,18:30,C107,SUB_Comp,LCO,4
 JLC063 - Álgebra Linear,Terça,13:30,15:30,C107,GALVAO,LCO,4
 JLC008 - Sistemas Operacionais,Terça,15:30,17:30,C105,RODRIGO,LCO,4
 JLC054 - Programação para Dispositivos Móveis,Quarta,13:30,15:30,C105,ROGERIO,LCO,6
@@ -327,7 +326,7 @@ JLC045 - Estágio Supervisionado II,Sábado,13:30,17:30,,MARCELO_F,LCO,6
 JLC045 - Estágio Supervisionado II,Sábado,13:30,17:30,C103,BELETI,LCO,6
 JLC045 - Estágio Supervisionado II,Sábado,13:30,17:30,C103,TINO,LCO,6
 JLC020 - Inteligência Artificial e Computacional,Terça,13:30,15:30,C105,RODRIGO,LCO,6
-JLC040 - Prática Pedagógica VIII,Quinta,13:30,16:30,C106,CAMILA,LCO,8
+JLC040 - Prática Pedagógica VIII,Quinta,13:30,16:30,C106,SUB_Comp,LCO,8
 JLC067 - Estágio Supervisionado IV,Sábado,07:30,17:30,C106,TINO,LCO,8
 JLC067 - Estágio Supervisionado IV,Sábado,07:30,17:30,C106,MARCELO_F,LCO,8
 JLC021 - Trabalho de Conclusão de Curso II,Sábado,15:30,17:30,,MAYTE,LCO,8
