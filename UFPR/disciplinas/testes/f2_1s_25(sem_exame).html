@@ -764,8 +764,8 @@ td strong {
 
 <script>
 const urlsAPI = [
-  "https://script.google.com/macros/s/AKfycbydjMpUExVxM7_cVol7eGb4tP8dd08S7ZLfKQDa1avZBzCDkrvdGjw9UPkQysdbSPLqEw/exec",
-  "https://script.google.com/macros/s/AKfycbxkzkF-XBRZiMlYVswbL3mKKL52aNF7k7kidIlfeuUJeVjFUolTgzwIMIQ71mnpTZmJyQ/exec"
+  "https://script.google.com/macros/s/AKfycbxPityOQM9KLlTlEWZfvPBk6BOj6hc-JI-wgAWOfm35F9ZJIM51Z1s0htVyedfviFB6kw/exec",
+  "https://script.google.com/macros/s/AKfycbzjeofh934wP2Jds87Blhnu7i5aJteI2rCjIjjrfVyBy8zGYgb4-YJXSLbefVDjmsDkVQ/exec"
 ];
 
 let avaliacoes = [];
@@ -846,21 +846,13 @@ function calcularMedia(notas, indices) {
   return (notasValidas.reduce((a, b) => a + b, 0) / notasValidas.length).toFixed(1);
 }
 
-function getClasseNotaFinal(nota, isExame = false) {
+function getClasseNotaFinal(nota) {
   if (nota === '-') return '';
   const valor = parseFloat(nota);
   if (isNaN(valor)) return '';
-  
-  if (isExame) {
-    // Para exames: aprovado se >= 5.0
-    if (valor < 5) return 'reprovado';
-    return 'aprovado';
-  } else {
-    // Lógica normal: < 4 reprovado, < 7 recuperação, >= 7 aprovado
-    if (valor < 4) return 'reprovado';
-    if (valor < 7) return 'recuperacao';
-    return 'aprovado';
-  }
+  if (valor < 4) return 'reprovado';
+  if (valor < 7) return 'recuperacao';
+  return 'aprovado';
 }
 
 function buscarNotas() {
@@ -962,56 +954,15 @@ const mediaP = formatarNota(aluno.notas[indiceMediaP]);
       </div>
     `;
 
-    // Verificar se o aluno faz exame
-    const fazExame = aluno.exame === 's' || aluno.exame === 'S';
-    
-    // Container da Nota Final (original)
-    const notaFinalOriginal = formatarNota(aluno.notas[aluno.notas.length - 1]);
-    
-    if (fazExame) {
-      // Mostrar nota final original
-      html += `
-        <div class="notas-container" style="text-align: center;">
-          <h3>Nota Final (Semestre)</h3>
-          <div class="valor" style="font-size: 1.8rem; font-weight: 700; margin: 0.8rem 0; font-family: var(--font-script); color: #f57c00; text-shadow: 2px 2px 4px rgba(245, 124, 0, 0.3);">${notaFinalOriginal}</div>
-        </div>
-      `;
-
-      // Mostrar nota do exame
-      const notaExame = formatarNota(aluno.notaExame);
-      html += `
-        <div class="notas-container" style="text-align: center;">
-          <h3>Nota do Exame</h3>
-          <div class="valor" style="font-size: 1.8rem; font-weight: 700; margin: 0.8rem 0; font-family: var(--font-script); color: #2979ff; text-shadow: 2px 2px 4px rgba(41, 121, 255, 0.3);">${notaExame}</div>
-        </div>
-      `;
-
-      // Calcular e mostrar nota final com exame
-      let notaFinalComExame = '-';
-      let classeNotaFinal = '';
-      
-      if (notaFinalOriginal !== '-' && notaExame !== '-') {
-        const mediaFinal = (parseFloat(notaFinalOriginal) + parseFloat(notaExame)) / 2;
-        notaFinalComExame = mediaFinal.toFixed(1);
-        classeNotaFinal = getClasseNotaFinal(notaFinalComExame, true);
-      }
-
-      html += `
-        <div class="notas-container final ${classeNotaFinal}">
-          <h3>Nota Final (com Exame)</h3>
-          <div class="valor">${notaFinalComExame}</div>
-        </div>
-      `;
-    } else {
-      // Comportamento normal (sem exame)
-      const classeNotaFinal = getClasseNotaFinal(notaFinalOriginal);
-      html += `
-        <div class="notas-container final ${classeNotaFinal}">
-          <h3>Nota Final</h3>
-          <div class="valor">${notaFinalOriginal}</div>
-        </div>
-      `;
-    }
+    // Container da Nota Final
+    const notaFinal = formatarNota(aluno.notas[aluno.notas.length - 1]);
+    const classeNotaFinal = getClasseNotaFinal(notaFinal);
+    html += `
+      <div class="notas-container final ${classeNotaFinal}">
+        <h3>Nota Final</h3>
+        <div class="valor">${notaFinal}</div>
+      </div>
+    `;
 
     // Adicionar informação de presença no final
     if (aluno.presenca !== undefined) {
