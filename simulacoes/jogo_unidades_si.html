@@ -1,0 +1,1031 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <!-- Google Analytics -->
+    <script async src="https://www.googletagmanager.com/gtag/js?id=G-83359NB2SY"></script>
+    <script>
+      window.dataLayer = window.dataLayer || [];
+      function gtag(){dataLayer.push(arguments);}
+      gtag('js', new Date());
+      gtag('config', 'G-83359NB2SY');
+    </script>
+    <title>DOUG.FÍSICA - Quem Quer Ser Um Engenheiro</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            -webkit-touch-callout: none;
+            -webkit-user-select: none;
+            -khtml-user-select: none;
+            -moz-user-select: none;
+            -ms-user-select: none;
+            user-select: none;
+        }
+
+        body {
+            font-family: 'Arial', sans-serif;
+            background: radial-gradient(ellipse at center, #0a0e27 0%, #1a1a2e 50%, #16213e 100%);
+            color: #ffffff;
+            min-height: 100vh;
+            overflow-x: hidden;
+            touch-action: manipulation;
+        }
+
+        .game-container {
+            display: grid;
+            grid-template-columns: 1fr 300px;
+            min-height: 100vh;
+            gap: 20px;
+            padding: 20px;
+        }
+
+        .main-game {
+            display: flex;
+            flex-direction: column;
+            justify-content: space-between;
+        }
+
+        .money-ladder {
+            background: linear-gradient(145deg, #1e3c72, #2a5298);
+            border: 2px solid #ffd700;
+            border-radius: 15px;
+            padding: 20px;
+            box-shadow: 0 0 30px rgba(255, 215, 0, 0.3);
+        }
+
+        .header {
+            text-align: center;
+            margin-bottom: 30px;
+            animation: glow 3s ease-in-out infinite alternate;
+        }
+
+        @keyframes glow {
+            from { text-shadow: 0 0 10px #ffd700, 0 0 20px #ffd700; }
+            to { text-shadow: 0 0 20px #ffd700, 0 0 30px #ffd700, 0 0 40px #ffd700; }
+        }
+
+        .title {
+            font-size: 2.2rem;
+            color: #ffd700;
+            font-weight: bold;
+            margin-bottom: 10px;
+            text-transform: uppercase;
+            letter-spacing: 1px;
+        }
+
+        .subtitle {
+            font-size: 1rem;
+            color: #87ceeb;
+            font-weight: 300;
+        }
+
+        .question-section {
+            flex: 1;
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            padding: 40px;
+        }
+
+        .question-container {
+            background: linear-gradient(145deg, #1e3c72, #2a5298);
+            border: 3px solid #ffd700;
+            border-radius: 20px;
+            padding: 30px;
+            margin-bottom: 40px;
+            text-align: center;
+            box-shadow: 0 0 40px rgba(255, 215, 0, 0.4);
+            position: relative;
+        }
+
+        .question-value {
+            position: absolute;
+            top: -20px;
+            left: 50%;
+            transform: translateX(-50%);
+            background: linear-gradient(145deg, #ffd700, #ffb347);
+            color: #1a1a2e;
+            padding: 10px 30px;
+            border-radius: 25px;
+            font-weight: bold;
+            font-size: 1.2rem;
+            box-shadow: 0 5px 15px rgba(255, 215, 0, 0.5);
+        }
+
+        .question-text {
+            font-size: 1.6rem;
+            margin-bottom: 30px;
+            color: #ffffff;
+            font-weight: 500;
+            line-height: 1.4;
+        }
+
+        .answers-container {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 20px;
+            margin-top: 20px;
+        }
+
+        .answer-btn {
+            background: linear-gradient(145deg, #1a237e, #303f9f);
+            border: 3px solid #5c6bc0;
+            border-radius: 15px;
+            padding: 20px;
+            color: #ffffff;
+            font-size: 1.1rem;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            position: relative;
+            min-height: 80px;
+            display: flex;
+            align-items: center;
+            text-align: left;
+            font-weight: 500;
+        }
+
+        .answer-btn:hover {
+            background: linear-gradient(145deg, #ff9800, #f57c00);
+            border-color: #ffd700;
+            transform: scale(1.02);
+            box-shadow: 0 0 25px rgba(255, 152, 0, 0.6);
+        }
+
+        .answer-letter {
+            background: #ffd700;
+            color: #1a1a2e;
+            width: 35px;
+            height: 35px;
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-weight: bold;
+            font-size: 1.2rem;
+            margin-right: 15px;
+            flex-shrink: 0;
+        }
+
+        .answer-btn.selected {
+            background: linear-gradient(145deg, #ff9800, #f57c00);
+            border-color: #ffd700;
+            box-shadow: 0 0 25px rgba(255, 152, 0, 0.8);
+        }
+
+        .answer-btn.correct {
+            background: linear-gradient(145deg, #4caf50, #388e3c);
+            border-color: #66bb6a;
+            animation: correctPulse 1s ease;
+        }
+
+        .answer-btn.incorrect {
+            background: linear-gradient(145deg, #f44336, #d32f2f);
+            border-color: #ef5350;
+            animation: incorrectShake 0.6s ease;
+        }
+
+        .answer-btn.eliminated {
+            background: linear-gradient(145deg, #424242, #212121);
+            border-color: #616161;
+            opacity: 0.5;
+            cursor: not-allowed;
+            pointer-events: none;
+        }
+
+        .answer-btn.disabled {
+            cursor: not-allowed;
+            pointer-events: none;
+        }
+
+        @keyframes correctPulse {
+            0%, 100% { transform: scale(1); }
+            50% { transform: scale(1.05); }
+        }
+
+        @keyframes incorrectShake {
+            0%, 100% { transform: translateX(0); }
+            25% { transform: translateX(-10px); }
+            75% { transform: translateX(10px); }
+        }
+
+        .lifelines {
+            display: flex;
+            justify-content: center;
+            gap: 20px;
+            margin: 30px 0;
+        }
+
+        .lifeline-btn {
+            background: linear-gradient(145deg, #6a1b9a, #8e24aa);
+            border: 2px solid #ab47bc;
+            border-radius: 50px;
+            padding: 15px 25px;
+            color: #ffffff;
+            font-size: 1rem;
+            font-weight: bold;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            text-transform: uppercase;
+            letter-spacing: 1px;
+            box-shadow: 0 5px 15px rgba(106, 27, 154, 0.4);
+        }
+
+        .lifeline-btn:hover:not(.used) {
+            background: linear-gradient(145deg, #8e24aa, #ab47bc);
+            transform: translateY(-2px);
+            box-shadow: 0 8px 20px rgba(106, 27, 154, 0.6);
+        }
+
+        .lifeline-btn.used {
+            background: linear-gradient(145deg, #424242, #212121);
+            border-color: #616161;
+            opacity: 0.5;
+            cursor: not-allowed;
+        }
+
+        .money-ladder h3 {
+            color: #ffd700;
+            text-align: center;
+            margin-bottom: 20px;
+            font-size: 1.3rem;
+            text-transform: uppercase;
+            letter-spacing: 1px;
+        }
+
+        .money-list {
+            list-style: none;
+        }
+
+        .money-item {
+            background: linear-gradient(145deg, #263238, #37474f);
+            border: 2px solid #546e7a;
+            border-radius: 25px;
+            padding: 10px 20px;
+            margin: 5px 0;
+            text-align: center;
+            font-weight: bold;
+            transition: all 0.3s ease;
+            color: #ffffff;
+        }
+
+        .money-item.current {
+            background: linear-gradient(145deg, #ff9800, #f57c00);
+            border-color: #ffd700;
+            color: #1a1a2e;
+            transform: scale(1.05);
+            box-shadow: 0 0 20px rgba(255, 152, 0, 0.6);
+        }
+
+        .money-item.completed {
+            background: linear-gradient(145deg, #4caf50, #388e3c);
+            border-color: #66bb6a;
+            color: #ffffff;
+        }
+
+        .controls {
+            text-align: center;
+            margin: 20px 0;
+        }
+
+        .btn {
+            background: linear-gradient(145deg, #ffd700, #ffb347);
+            color: #1a1a2e;
+            border: none;
+            border-radius: 25px;
+            padding: 12px 25px;
+            font-size: 1rem;
+            font-weight: bold;
+            cursor: pointer;
+            margin: 5px;
+            transition: all 0.3s ease;
+            text-transform: uppercase;
+            letter-spacing: 1px;
+        }
+
+        .btn:hover {
+            background: linear-gradient(145deg, #ffb347, #ffd700);
+            transform: translateY(-2px);
+            box-shadow: 0 5px 15px rgba(255, 215, 0, 0.4);
+        }
+
+        .modal {
+            display: none;
+            position: fixed;
+            z-index: 1000;
+            left: 0;
+            top: 0;
+            width: 100%;
+            height: 100%;
+            background-color: rgba(0, 0, 0, 0.9);
+        }
+
+        .modal-content {
+            background: linear-gradient(145deg, #1e3c72, #2a5298);
+            margin: 5% auto;
+            padding: 40px;
+            border: 3px solid #ffd700;
+            border-radius: 20px;
+            width: 90%;
+            max-width: 600px;
+            text-align: center;
+            color: #ffffff;
+            box-shadow: 0 0 50px rgba(255, 215, 0, 0.5);
+        }
+
+        .modal h2 {
+            color: #ffd700;
+            font-size: 2.5rem;
+            margin-bottom: 20px;
+            text-transform: uppercase;
+        }
+
+        .final-amount {
+            font-size: 4rem;
+            color: #4caf50;
+            margin: 20px 0;
+            text-shadow: 0 0 20px rgba(76, 175, 80, 0.8);
+            font-weight: bold;
+        }
+
+        .university-help {
+            background: rgba(33, 150, 243, 0.2);
+            border: 2px solid #2196f3;
+            border-radius: 15px;
+            padding: 20px;
+            margin: 20px 0;
+            text-align: left;
+        }
+
+        .professor-name {
+            color: #ffd700;
+            font-weight: bold;
+            margin-bottom: 10px;
+            font-size: 1.1rem;
+        }
+
+        /* Mobile optimizations */
+        @media (max-width: 1024px) {
+            .game-container {
+                grid-template-columns: 1fr;
+                gap: 20px;
+            }
+
+            .money-ladder {
+                order: -1;
+            }
+
+            .money-list {
+                display: flex;
+                flex-wrap: wrap;
+                justify-content: center;
+                gap: 10px;
+            }
+
+            .money-item {
+                flex: 0 0 auto;
+                margin: 2px;
+                padding: 8px 15px;
+                font-size: 0.9rem;
+            }
+        }
+
+        @media (max-width: 768px) {
+            .title {
+                font-size: 1.8rem;
+            }
+
+            .question-text {
+                font-size: 1.3rem;
+            }
+
+            .answers-container {
+                grid-template-columns: 1fr;
+                gap: 15px;
+            }
+
+            .answer-btn {
+                padding: 15px;
+                min-height: 60px;
+                font-size: 1rem;
+            }
+
+            .lifelines {
+                flex-wrap: wrap;
+                gap: 10px;
+            }
+
+            .lifeline-btn {
+                padding: 12px 20px;
+                font-size: 0.9rem;
+            }
+
+            .question-section {
+                padding: 20px;
+            }
+        }
+
+        @media (max-width: 480px) {
+            .game-container {
+                padding: 10px;
+            }
+
+            .title {
+                font-size: 1.5rem;
+            }
+
+            .question-text {
+                font-size: 1.1rem;
+            }
+
+            .question-container {
+                padding: 20px;
+            }
+        }
+
+        .sparkle {
+            position: absolute;
+            width: 4px;
+            height: 4px;
+            background: #ffd700;
+            border-radius: 50%;
+            animation: sparkle 3s linear infinite;
+        }
+
+        @keyframes sparkle {
+            0%, 100% { opacity: 0; transform: scale(0) rotate(0deg); }
+            50% { opacity: 1; transform: scale(1) rotate(180deg); }
+        }
+
+        .celebration {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            pointer-events: none;
+            z-index: 999;
+        }
+    </style>
+</head>
+<body>
+    <div class="game-container">
+        <div class="main-game">
+            <div class="header">
+                <h1 class="title">Quem Quer Ser Um Engenheiro</h1>
+                <p class="subtitle">Domine as Unidades do Sistema Internacional</p>
+            </div>
+
+            <div class="question-section">
+                <div class="question-container">
+                    <div class="question-value" id="questionValue">R$ 1.000</div>
+                    <div class="question-text" id="questionText">
+                        Em um laboratório de física, Maria precisa medir a massa de um pequeno pedaço de metal. Qual unidade do Sistema Internacional ela deve usar?
+                    </div>
+                    
+                    <div class="answers-container">
+                        <button class="answer-btn" id="answerA">
+                            <span class="answer-letter">A</span>
+                            <span class="answer-text">metro (m)</span>
+                        </button>
+                        <button class="answer-btn" id="answerB">
+                            <span class="answer-letter">B</span>
+                            <span class="answer-text">quilograma (kg)</span>
+                        </button>
+                        <button class="answer-btn" id="answerC">
+                            <span class="answer-letter">C</span>
+                            <span class="answer-text">segundo (s)</span>
+                        </button>
+                        <button class="answer-btn" id="answerD">
+                            <span class="answer-letter">D</span>
+                            <span class="answer-text">ampère (A)</span>
+                        </button>
+                    </div>
+                </div>
+
+                <div class="lifelines">
+                    <button class="lifeline-btn" id="skipBtn" onclick="useSkip()">
+                        ⏭️ Pular (3)
+                    </button>
+                    <button class="lifeline-btn" id="cardsBtn" onclick="useCards()">
+                        🎴 Cartas
+                    </button>
+                    <button class="lifeline-btn" id="universityBtn" onclick="useUniversity()">
+                        🎓 Universitários
+                    </button>
+                </div>
+
+                <div id="universityHelp" class="university-help" style="display: none;">
+                    <div class="professor-name" id="professorName"></div>
+                    <div id="professorAdvice"></div>
+                </div>
+            </div>
+
+            <div class="controls">
+                <button class="btn" onclick="startNewGame()">🔄 Novo Jogo</button>
+            </div>
+        </div>
+
+        <div class="money-ladder">
+            <h3>💰 Premiação</h3>
+            <ol class="money-list" id="moneyList">
+                <li class="money-item">R$ 1.000.000</li>
+                <li class="money-item">R$ 500.000</li>
+                <li class="money-item">R$ 300.000</li>
+                <li class="money-item">R$ 200.000</li>
+                <li class="money-item">R$ 100.000</li>
+                <li class="money-item">R$ 50.000</li>
+                <li class="money-item">R$ 30.000</li>
+                <li class="money-item">R$ 20.000</li>
+                <li class="money-item">R$ 10.000</li>
+                <li class="money-item">R$ 5.000</li>
+                <li class="money-item">R$ 3.000</li>
+                <li class="money-item">R$ 2.000</li>
+                <li class="money-item current">R$ 1.000</li>
+            </ol>
+        </div>
+    </div>
+
+    <!-- Modal de Resultado Final -->
+    <div id="resultsModal" class="modal">
+        <div class="modal-content">
+            <h2 id="resultTitle">🏆 Parabéns!</h2>
+            <div class="final-amount" id="finalAmount">R$ 0</div>
+            <p id="resultMessage">Você completou o desafio!</p>
+            <div style="margin-top: 30px;">
+                <button class="btn" onclick="startNewGame()">🔄 Jogar Novamente</button>
+                <button class="btn" onclick="closeModal()">❌ Fechar</button>
+            </div>
+        </div>
+    </div>
+
+    <div class="celebration" id="celebration"></div>
+
+    <script>
+        // Base de dados das perguntas mais criativas sobre unidades SI
+        const questionsDatabase = [
+            // Nível 1-3: R$ 1.000 - R$ 3.000
+            {
+                question: "Em um laboratório de física, Maria precisa medir a massa de um pequeno pedaço de metal. Qual unidade do Sistema Internacional ela deve usar?",
+                correct: "quilograma (kg)",
+                options: ["metro (m)", "quilograma (kg)", "segundo (s)", "ampère (A)"],
+                explanation: "O quilograma (kg) é a unidade fundamental de massa no SI.",
+                university: "Prof. Dr. Carlos: 'Lembrem-se, massa é diferente de peso! A massa é uma propriedade intrínseca da matéria e sempre medida em quilogramas no SI.'"
+            },
+            {
+                question: "João está cronometrando uma corrida de 100 metros rasos nas Olimpíadas. Em qual unidade ele deve marcar o tempo no cronômetro?",
+                correct: "segundo (s)",
+                options: ["metro (m)", "ampère (A)", "segundo (s)", "quilograma (kg)"],
+                explanation: "O segundo (s) é a unidade fundamental de tempo no SI.",
+                university: "Prof. Dra. Ana: 'O segundo é definido pela transição atômica do césio-133. É uma das unidades mais precisas que temos!'"
+            },
+            {
+                question: "Uma engenheira está projetando uma ponte e precisa especificar o comprimento das vigas de aço. Qual unidade ela deve usar nos cálculos oficiais?",
+                correct: "metro (m)",
+                options: ["quilograma (kg)", "metro (m)", "segundo (s)", "kelvin (K)"],
+                explanation: "O metro (m) é a unidade fundamental de comprimento no SI.",
+                university: "Prof. Dr. Roberto: 'O metro foi originalmente definido como um décimo de milionésimo da distância do equador ao polo norte.'"
+            },
+
+            // Nível 4-6: R$ 5.000 - R$ 20.000
+            {
+                question: "Um eletricista está instalando a fiação de uma casa e precisa verificar a corrente que passa pelos fios. Qual unidade aparecerá no amperímetro?",
+                correct: "ampère (A)",
+                options: ["volt (V)", "ampère (A)", "ohm (Ω)", "watt (W)"],
+                explanation: "O ampère (A) é a unidade fundamental de corrente elétrica no SI.",
+                university: "Prof. Dra. Elena: 'André-Marie Ampère foi um físico francês pioneiro no estudo da eletricidade. A unidade leva seu nome!'"
+            },
+            {
+                question: "Em um hospital, a temperatura de um paciente com febre é medida em Celsius, mas para cálculos científicos precisos, os médicos precisam converter para qual unidade SI?",
+                correct: "kelvin (K)",
+                options: ["celsius (°C)", "kelvin (K)", "fahrenheit (°F)", "grau (°)"],
+                explanation: "O kelvin (K) é a unidade fundamental de temperatura termodinâmica no SI.",
+                university: "Prof. Dr. Marcus: 'O zero absoluto corresponde a -273,15°C ou 0 K. É a menor temperatura possível no universo!'"
+            },
+            {
+                question: "Em um laboratório de química, o professor pede aos alunos para calcular quantos átomos há em uma amostra. Eles usarão qual unidade para a quantidade de matéria?",
+                correct: "mol",
+                options: ["grama (g)", "mol", "átomo", "litro (L)"],
+                explanation: "O mol é a unidade fundamental de quantidade de matéria no SI.",
+                university: "Prof. Dra. Carla: 'Um mol contém aproximadamente 6,022 × 10²³ entidades. É o famoso número de Avogadro!'"
+            },
+
+            // Nível 7-9: R$ 30.000 - R$ 100.000
+            {
+                question: "Na famosa equação de Einstein E=mc², a energia (E) é expressa em qual unidade do Sistema Internacional?",
+                correct: "joule (J)",
+                options: ["newton (N)", "joule (J)", "watt (W)", "pascal (Pa)"],
+                explanation: "O joule (J) é a unidade derivada de energia no SI, equivalente a N⋅m.",
+                university: "Prof. Dr. Albert: 'James Prescott Joule estudou a relação entre calor e trabalho mecânico. Que descoberta fundamental!'"
+            },
+            {
+                question: "Um engenheiro aeronáutico calcula a força necessária para lançar um foguete ao espaço. Segundo a Segunda Lei de Newton (F=ma), essa força será medida em:",
+                correct: "newton (N)",
+                options: ["joule (J)", "newton (N)", "pascal (Pa)", "watt (W)"],
+                explanation: "O newton (N) é a unidade derivada de força no SI, equivalente a kg⋅m/s².",
+                university: "Prof. Dra. Valentina: 'Isaac Newton revolucionou a física! A força de 1 N acelera 1 kg a 1 m/s².'"
+            },
+            {
+                question: "Um mergulhador descende até 30 metros de profundidade no oceano. A pressão da água sobre ele será medida em qual unidade SI?",
+                correct: "pascal (Pa)",
+                options: ["newton (N)", "pascal (Pa)", "joule (J)", "bar"],
+                explanation: "O pascal (Pa) é a unidade derivada de pressão no SI, equivalente a N/m².",
+                university: "Prof. Dr. Blaise: 'Blaise Pascal estudou a pressão dos fluidos. A cada 10m de profundidade, a pressão aumenta cerca de 100.000 Pa!'"
+            },
+
+            // Nível 10-12: R$ 200.000 - R$ 500.000
+            {
+                question: "Um técnico em eletrônica mede a diferença de potencial entre dois pontos de um circuito com um multímetro. O display mostrará o resultado em:",
+                correct: "volt (V)",
+                options: ["ampère (A)", "volt (V)", "ohm (Ω)", "watt (W)"],
+                explanation: "O volt (V) é a unidade derivada de potencial elétrico no SI, equivalente a W/A.",
+                university: "Prof. Dr. Alessandro: 'Alessandro Volta inventou a primeira bateria! Um volt representa o trabalho de 1 joule por coulomb de carga.'"
+            },
+            {
+                question: "De acordo com a Lei de Ohm (V=R×I), quando um eletricista mede a resistência de um resistor, o resultado aparece em qual unidade?",
+                correct: "ohm (Ω)",
+                options: ["volt (V)", "ampère (A)", "ohm (Ω)", "farad (F)"],
+                explanation: "O ohm (Ω) é a unidade derivada de resistência elétrica no SI, equivalente a V/A.",
+                university: "Prof. Dra. Georgia: 'Georg Ohm descobriu a famosa lei V=R×I. Curiosamente, sua descoberta foi inicialmente rejeitada pela comunidade científica!'"
+            },
+            {
+                question: "Um físico estuda ondas eletromagnéticas em um laboratório. A frequência da radiação que ele analisa é medida em:",
+                correct: "hertz (Hz)",
+                options: ["hertz (Hz)", "segundo (s)", "metro (m)", "radianos (rad)"],
+                explanation: "O hertz (Hz) é a unidade derivada de frequência no SI, equivalente a s⁻¹.",
+                university: "Prof. Dr. Heinrich: 'Heinrich Hertz foi o primeiro a transmitir e receber ondas de rádio, provando a teoria de Maxwell!'"
+            },
+
+            // Nível 13: R$ 1.000.000
+            {
+                question: "Em experimentos de física de partículas no CERN, os cientistas trabalham com campos magnéticos extremamente intensos. A unidade SI para medir a intensidade desses campos magnéticos é:",
+                correct: "tesla (T)",
+                options: ["weber (Wb)", "tesla (T)", "henry (H)", "gauss (G)"],
+                explanation: "O tesla (T) é a unidade derivada de indução magnética no SI, equivalente a Wb/m².",
+                university: "Prof. Dr. Nikola: 'Nikola Tesla foi um dos maiores inventores da história! Um tesla é um campo magnético muito intenso - a Terra tem apenas 50 microteslas!'"
+            }
+        ];
+
+        // Valores monetários do programa
+        const moneyValues = [
+            "R$ 1.000", "R$ 2.000", "R$ 3.000", "R$ 5.000", "R$ 10.000",
+            "R$ 20.000", "R$ 30.000", "R$ 50.000", "R$ 100.000", "R$ 200.000",
+            "R$ 300.000", "R$ 500.000", "R$ 1.000.000"
+        ];
+
+        // Estado do jogo
+        let currentQuestionIndex = 0;
+        let currentQuestions = [];
+        let selectedAnswer = null;
+        let gameEnded = false;
+        let totalEarned = 0;
+
+        // Ajudas disponíveis
+        let lifelines = {
+            skip: 3,
+            cards: 1,
+            university: 1
+        };
+
+        // Elementos DOM
+        const questionValueEl = document.getElementById('questionValue');
+        const questionTextEl = document.getElementById('questionText');
+        const answerButtons = [
+            document.getElementById('answerA'),
+            document.getElementById('answerB'),
+            document.getElementById('answerC'),
+            document.getElementById('answerD')
+        ];
+        const resultsModal = document.getElementById('resultsModal');
+        const moneyListEl = document.getElementById('moneyList');
+        const skipBtnEl = document.getElementById('skipBtn');
+        const cardsBtnEl = document.getElementById('cardsBtn');
+        const universityBtnEl = document.getElementById('universityBtn');
+
+        // Inicializar jogo
+        function startNewGame() {
+            currentQuestionIndex = 0;
+            gameEnded = false;
+            selectedAnswer = null;
+            totalEarned = 0;
+            
+            // Resetar ajudas
+            lifelines = { skip: 3, cards: 1, university: 1 };
+            updateLifelinesDisplay();
+            
+            // Selecionar 13 perguntas
+            currentQuestions = shuffleArray([...questionsDatabase]).slice(0, 13);
+            
+            closeModal();
+            updateMoneyLadder();
+            showQuestion();
+            
+            createSparkles();
+        }
+
+        // Embaralhar array
+        function shuffleArray(array) {
+            const shuffled = [...array];
+            for (let i = shuffled.length - 1; i > 0; i--) {
+                const j = Math.floor(Math.random() * (i + 1));
+                [shuffled[i], shuffled[j]] = [shuffled[j], shuffled[i]];
+            }
+            return shuffled;
+        }
+
+        // Mostrar pergunta atual
+        function showQuestion() {
+            if (currentQuestionIndex >= currentQuestions.length) {
+                endGame(true);
+                return;
+            }
+
+            const question = currentQuestions[currentQuestionIndex];
+            
+            questionValueEl.textContent = moneyValues[currentQuestionIndex];
+            questionTextEl.textContent = question.question;
+            
+            // Embaralhar as opções
+            const shuffledOptions = shuffleArray(question.options);
+            
+            answerButtons.forEach((btn, index) => {
+                const answerText = btn.querySelector('.answer-text');
+                answerText.textContent = shuffledOptions[index];
+                btn.className = 'answer-btn';
+                btn.disabled = false;
+                btn.onclick = () => selectAnswer(shuffledOptions[index], question.correct);
+            });
+            
+            selectedAnswer = null;
+            
+            // Remover ajuda universitária se estiver visível
+            document.getElementById('universityHelp').style.display = 'none';
+        }
+
+        // Selecionar resposta
+        function selectAnswer(selected, correct) {
+            if (selectedAnswer !== null) return;
+            
+            selectedAnswer = { selected, correct };
+            const isCorrect = selected === correct;
+            
+            // Destacar resposta selecionada primeiro
+            answerButtons.forEach(btn => {
+                const answerText = btn.querySelector('.answer-text').textContent;
+                if (answerText === selected) {
+                    btn.classList.add('selected');
+                }
+            });
+            
+            // Aguardar um momento para mostrar a seleção, depois processar
+            setTimeout(() => {
+                // Marcar todas as respostas
+                answerButtons.forEach(btn => {
+                    const answerText = btn.querySelector('.answer-text').textContent;
+                    btn.disabled = true;
+                    
+                    if (answerText === correct) {
+                        btn.classList.add('correct');
+                    } else if (answerText === selected && !isCorrect) {
+                        btn.classList.add('incorrect');
+                    }
+                });
+                
+                // Processar resultado após mostrar as cores
+                setTimeout(() => {
+                    if (isCorrect) {
+                        totalEarned = parseInt(moneyValues[currentQuestionIndex].replace(/\D/g, ''));
+                        currentQuestionIndex++;
+                        
+                        if (currentQuestionIndex >= currentQuestions.length) {
+                            endGame(true);
+                        } else {
+                            updateMoneyLadder();
+                            setTimeout(() => showQuestion(), 1000);
+                        }
+                    } else {
+                        endGame(false);
+                    }
+                }, 2000);
+            }, 500);
+        }
+
+        // Usar ajuda: Pular pergunta
+        function useSkip() {
+            if (lifelines.skip <= 0 || gameEnded) return;
+            
+            lifelines.skip--;
+            updateLifelinesDisplay();
+            
+            currentQuestionIndex++;
+            if (currentQuestionIndex >= currentQuestions.length) {
+                endGame(true);
+            } else {
+                updateMoneyLadder();
+                showQuestion();
+            }
+        }
+
+        // Usar ajuda: Cartas (eliminar 2 respostas erradas)
+        function useCards() {
+            if (lifelines.cards <= 0 || gameEnded) return;
+            
+            lifelines.cards--;
+            updateLifelinesDisplay();
+            
+            const question = currentQuestions[currentQuestionIndex];
+            let eliminatedCount = 0;
+            
+            answerButtons.forEach(btn => {
+                const answerText = btn.querySelector('.answer-text').textContent;
+                if (answerText !== question.correct && eliminatedCount < 2) {
+                    btn.classList.add('eliminated');
+                    btn.onclick = null;
+                    eliminatedCount++;
+                }
+            });
+        }
+
+        // Usar ajuda: Universitários
+        function useUniversity() {
+            if (lifelines.university <= 0 || gameEnded) return;
+            
+            lifelines.university--;
+            updateLifelinesDisplay();
+            
+            // Array de desculpas engraçadas dos universitários
+            const excuses = [
+                "😴 Desculpa, estava dormindo nessa parte da matéria...",
+                "🥱 Não fui nessa aula, tava com preguiça...",
+                "🎮 Estava jogando durante a explicação do professor...",
+                "📱 Tava no WhatsApp quando ele explicou isso...",
+                "🍕 Saí pra comprar lanche na hora dessa matéria...",
+                "😵 Nossa, essa matéria é muito difícil, não entendi nada...",
+                "🤷‍♂️ Faltei justamente no dia que teve essa aula...",
+                "☕ Estava tomando café no corredor durante a explicação...",
+                "📚 Esqueci de estudar essa parte para a prova...",
+                "🎵 Estava com fone de ouvido ouvindo música...",
+                "😪 Cheguei atrasado e perdi a explicação...",
+                "🤯 Essa pergunta não vai cair na prova, né?",
+                "🙄 Professor, isso não foi matéria da P1...",
+                "😬 Eu sei que sei, mas esqueci agora...",
+                "🤔 Tenho quase certeza que é... na verdade não sei não...",
+                "📖 Estava lendo outro livro embaixo da mesa...",
+                "💤 Acabei cochilando na aula...",
+                "🎪 Não era bem assim que o professor explicou...",
+                "🤪 Confundi com a matéria de outro professor...",
+                "😅 Ops, essa pergunta é muito específica..."
+            ];
+            
+            const randomExcuse = excuses[Math.floor(Math.random() * excuses.length)];
+            
+            const helpDiv = document.getElementById('universityHelp');
+            const professorNameEl = document.getElementById('professorName');
+            const adviceEl = document.getElementById('professorAdvice');
+            
+            professorNameEl.textContent = "🎓 Universitário";
+            adviceEl.textContent = randomExcuse;
+            
+            helpDiv.style.display = 'block';
+        }
+
+        // Atualizar display das ajudas
+        function updateLifelinesDisplay() {
+            skipBtnEl.textContent = `⏭️ Pular (${lifelines.skip})`;
+            skipBtnEl.className = lifelines.skip > 0 ? 'lifeline-btn' : 'lifeline-btn used';
+            
+            cardsBtnEl.className = lifelines.cards > 0 ? 'lifeline-btn' : 'lifeline-btn used';
+            universityBtnEl.className = lifelines.university > 0 ? 'lifeline-btn' : 'lifeline-btn used';
+        }
+
+        // Atualizar escada de dinheiro
+        function updateMoneyLadder() {
+            const items = moneyListEl.querySelectorAll('.money-item');
+            items.forEach((item, index) => {
+                const reverseIndex = items.length - 1 - index;
+                item.className = 'money-item';
+                
+                if (reverseIndex === currentQuestionIndex) {
+                    item.classList.add('current');
+                } else if (reverseIndex < currentQuestionIndex) {
+                    item.classList.add('completed');
+                }
+            });
+        }
+
+        // Finalizar jogo
+        function endGame(won) {
+            gameEnded = true;
+            
+            let title, message, amount;
+            
+            if (won) {
+                title = "🏆 ENGENHEIRO!";
+                message = "Parabéns! Você domina completamente as unidades do Sistema Internacional!";
+                amount = "R$ 1.000.000";
+                createCelebration();
+            } else if (totalEarned >= 100000) {
+                title = "🎉 Excelente!";
+                message = "Muito bem! Você tem um ótimo conhecimento das unidades SI!";
+                amount = `R$ ${totalEarned.toLocaleString()}`;
+            } else if (totalEarned >= 10000) {
+                title = "👍 Bom trabalho!";
+                message = "Você está no caminho certo! Continue estudando as unidades SI!";
+                amount = `R$ ${totalEarned.toLocaleString()}`;
+            } else {
+                title = "📚 Continue estudando!";
+                message = "As unidades do Sistema Internacional são fundamentais na Física!";
+                amount = `R$ ${totalEarned.toLocaleString()}`;
+            }
+            
+            document.getElementById('resultTitle').textContent = title;
+            document.getElementById('resultMessage').textContent = message;
+            document.getElementById('finalAmount').textContent = amount;
+            
+            resultsModal.style.display = 'block';
+        }
+
+        // Fechar modal
+        function closeModal() {
+            resultsModal.style.display = 'none';
+        }
+
+        // Criar efeitos de sparkles
+        function createSparkles() {
+            const container = document.querySelector('.game-container');
+            
+            for (let i = 0; i < 15; i++) {
+                setTimeout(() => {
+                    const sparkle = document.createElement('div');
+                    sparkle.className = 'sparkle';
+                    sparkle.style.left = Math.random() * 100 + '%';
+                    sparkle.style.top = Math.random() * 100 + '%';
+                    sparkle.style.animationDelay = Math.random() * 3 + 's';
+                    
+                    container.appendChild(sparkle);
+                    
+                    setTimeout(() => {
+                        if (sparkle.parentNode) {
+                            sparkle.parentNode.removeChild(sparkle);
+                        }
+                    }, 3000);
+                }, i * 200);
+            }
+        }
+
+        // Criar celebração para o engenheiro
+        function createCelebration() {
+            const celebration = document.getElementById('celebration');
+            
+            for (let i = 0; i < 50; i++) {
+                setTimeout(() => {
+                    const confetti = document.createElement('div');
+                    confetti.style.position = 'absolute';
+                    confetti.style.left = Math.random() * 100 + '%';
+                    confetti.style.top = '-10px';
+                    confetti.style.width = '10px';
+                    confetti.style.height = '10px';
+                    confetti.style.backgroundColor = ['#ffd700', '#ff6b35', '#f7931e', '#4ecdc4'][Math.floor(Math.random() * 4)];
+                    confetti.style.animation = 'fall 3s linear';
+                    
+                    celebration.appendChild(confetti);
+                    
+                    setTimeout(() => {
+                        if (confetti.parentNode) {
+                            confetti.parentNode.removeChild(confetti);
+                        }
+                    }, 3000);
+                }, i * 50);
+            }
+        }
+
+        // Adicionar animação de queda para confetti
+        const style = document.createElement('style');
+        style.textContent = `
+            @keyframes fall {
+                to {
+                    transform: translateY(100vh) rotate(360deg);
+                }
+            }
+        `;
+        document.head.appendChild(style);
+
+        // Fechar modal clicando fora
+        window.addEventListener('click', (event) => {
+            if (event.target === resultsModal) {
+                closeModal();
+            }
+        });
+
+        // Prevenir zoom no mobile
+        document.addEventListener('gesturestart', function (e) {
+            e.preventDefault();
+        });
+
+        // Inicializar o jogo
+        startNewGame();
+    </script>
+</body>
+</html> 
