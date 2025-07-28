@@ -1,0 +1,657 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Cronograma - Física 1 Tarde - 2º Semestre 2025 - UFPR</title>
+    <meta name="description" content="Cronograma de aulas Física 1 - Turma da Tarde - 2º Semestre 2025 - UFPR Jandaia do Sul">
+    <meta name="keywords" content="UFPR, Física 1, cronograma, calendário, tarde">
+    <meta name="author" content="Doug Física">
+    <link rel="icon" type="image/png" href="/favicon.png">
+    <!-- Google Fonts -->
+    <link href="https://fonts.googleapis.com/css2?family=Press+Start+2P&display=swap" rel="stylesheet">
+    <!-- Google Analytics -->
+    <script async src="https://www.googletagmanager.com/gtag/js?id=G-83359NB2SY"></script>
+    <script>
+        window.dataLayer = window.dataLayer || [];
+        function gtag(){dataLayer.push(arguments);}
+        gtag('js', new Date());
+        gtag('config', 'G-83359NB2SY');
+    </script>
+    <style>
+        @import url('https://fonts.googleapis.com/css2?family=Press+Start+2P&display=swap');
+
+        :root {
+            --primary-bg: #2a1810;
+            --panel-bg: #1a1a2e;
+            --card-bg: #16213e;
+            --pixel-blue: #1579fa;
+            --pixel-green: #01b571;
+            --pixel-pink: #e9358e;
+            --pixel-yellow: #ffe062;
+            --pixel-red: #f54141;
+            --pixel-orange: #ff8800;
+            --pixel-purple: #9c27b0;
+            --pixel-gray: #222;
+            --pixel-white: #fff;
+            --pixel-light: #f4f4e3;
+            --font-family: 'Press Start 2P', 'Consolas', monospace;
+        }
+
+        * {
+            box-sizing: border-box;
+            margin: 0;
+            padding: 0;
+        }
+
+        body {
+            font-family: var(--font-family);
+            background: var(--primary-bg);
+            color: var(--pixel-light);
+            min-height: 100vh;
+            padding: 20px;
+            letter-spacing: 1px;
+            position: relative;
+            overflow-x: hidden;
+        }
+
+        /* Scanlines effect */
+        body::before {
+            content: "";
+            pointer-events: none;
+            position: fixed;
+            left: 0; top: 0; right: 0; bottom: 0;
+            z-index: 0;
+            opacity: 0.08;
+            background: repeating-linear-gradient(
+                to bottom,
+                transparent 0px,
+                transparent 2px,
+                var(--pixel-green) 3px,
+                transparent 5px
+            );
+        }
+
+        /* Animated stars background */
+        body::after {
+            content: "";
+            position: fixed;
+            top: 0; left: 0; right: 0; bottom: 0;
+            background: 
+                radial-gradient(2px 2px at 20px 30px, var(--pixel-yellow), transparent),
+                radial-gradient(2px 2px at 40px 70px, var(--pixel-blue), transparent),
+                radial-gradient(1px 1px at 90px 40px, var(--pixel-pink), transparent),
+                radial-gradient(1px 1px at 130px 80px, var(--pixel-green), transparent),
+                radial-gradient(2px 2px at 160px 30px, var(--pixel-yellow), transparent);
+            background-repeat: repeat;
+            background-size: 200px 100px;
+            animation: twinkle 4s linear infinite;
+            z-index: 0;
+            opacity: 0.6;
+        }
+
+        @keyframes twinkle {
+            from { transform: translateY(0); }
+            to { transform: translateY(-100px); }
+        }
+
+        .container {
+            max-width: 1200px;
+            margin: 0 auto;
+            position: relative;
+            z-index: 1;
+        }
+
+        .header {
+            background: var(--panel-bg);
+            border: 4px solid var(--pixel-blue);
+            padding: 2rem 1.5rem;
+            margin-bottom: 2rem;
+            text-align: center;
+            box-shadow: 
+                0 0 0 2px var(--pixel-yellow),
+                inset 0 0 20px rgba(21, 121, 250, 0.3);
+            position: relative;
+        }
+
+        .header::before {
+            content: "◆ CRONOGRAMA ◆";
+            position: absolute;
+            top: -12px;
+            left: 50%;
+            transform: translateX(-50%);
+            background: var(--primary-bg);
+            color: var(--pixel-yellow);
+            padding: 0 15px;
+            font-size: 0.6rem;
+            letter-spacing: 2px;
+        }
+
+        .voltar-link {
+            display: inline-block;
+            margin-bottom: 1.5rem;
+            color: var(--pixel-pink);
+            text-decoration: none;
+            font-size: 0.7rem;
+            transition: all 0.2s;
+            text-shadow: 1px 1px 0 var(--pixel-gray);
+        }
+
+        .voltar-link:hover {
+            color: var(--pixel-yellow);
+            transform: translateX(-5px);
+            text-shadow: 2px 2px 0 var(--pixel-pink);
+        }
+
+        h1 {
+            color: var(--pixel-blue);
+            font-size: 1.8rem;
+            margin-bottom: 1rem;
+            text-shadow: 3px 3px 0 var(--pixel-yellow);
+            animation: glow 2s ease-in-out infinite alternate;
+        }
+
+        @keyframes glow {
+            from { text-shadow: 3px 3px 0 var(--pixel-yellow), 0 0 10px var(--pixel-blue); }
+            to { text-shadow: 3px 3px 0 var(--pixel-yellow), 0 0 20px var(--pixel-blue), 0 0 30px var(--pixel-blue); }
+        }
+
+        .subtitle {
+            color: var(--pixel-green);
+            font-size: 0.8rem;
+            margin-bottom: 1rem;
+            text-shadow: 1px 1px 0 var(--pixel-gray);
+        }
+
+        .info-badges {
+            display: flex;
+            justify-content: center;
+            gap: 1rem;
+            flex-wrap: wrap;
+            margin-top: 1.5rem;
+        }
+
+        .badge {
+            background: var(--pixel-pink);
+            color: var(--pixel-white);
+            padding: 0.5rem 1rem;
+            border: 2px solid var(--pixel-yellow);
+            font-size: 0.6rem;
+            font-weight: normal;
+            text-transform: uppercase;
+            letter-spacing: 1px;
+            box-shadow: 2px 2px 0 var(--pixel-gray);
+        }
+
+        .badge:nth-child(2) {
+            background: var(--pixel-green);
+            border-color: var(--pixel-blue);
+        }
+
+        .badge:nth-child(3) {
+            background: var(--pixel-orange);
+            border-color: var(--pixel-pink);
+        }
+
+        .calendar-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+            gap: 2rem;
+            margin-top: 2rem;
+        }
+
+        .day-card {
+            background: var(--card-bg);
+            border: 3px solid var(--pixel-blue);
+            box-shadow: 4px 4px 0 var(--pixel-gray);
+            overflow: hidden;
+        }
+
+        .day-header {
+            background: linear-gradient(45deg, var(--pixel-blue), var(--pixel-green));
+            color: var(--pixel-white);
+            padding: 1rem;
+            text-align: center;
+            font-size: 1rem;
+            border-bottom: 3px solid var(--pixel-yellow);
+        }
+
+        .day-content {
+            padding: 1rem;
+        }
+
+        .aula-item {
+            background: var(--panel-bg);
+            border: 2px solid var(--pixel-gray);
+            padding: 0.8rem;
+            margin-bottom: 1rem;
+            border-radius: 4px;
+            position: relative;
+            transition: all 0.2s;
+        }
+
+        .aula-item:hover {
+            border-color: var(--pixel-yellow);
+            transform: translateX(5px);
+        }
+
+        .aula-item.prova {
+            border-color: var(--pixel-red);
+            background: linear-gradient(135deg, rgba(245, 65, 65, 0.15), rgba(245, 65, 65, 0.25));
+        }
+
+        .aula-item.prova::before {
+            content: "🎯 PROVA";
+            position: absolute;
+            top: -8px;
+            right: 8px;
+            background: var(--pixel-red);
+            color: var(--pixel-white);
+            padding: 0.2rem 0.5rem;
+            font-size: 0.4rem;
+            border: 1px solid var(--pixel-yellow);
+            border-radius: 2px;
+        }
+
+        .aula-item.gravacao {
+            border-color: var(--pixel-purple);
+            background: linear-gradient(135deg, var(--panel-bg), rgba(156, 39, 176, 0.1));
+        }
+
+        .aula-item.gravacao::before {
+            content: "📹 GRAVAÇÃO";
+            position: absolute;
+            top: -8px;
+            right: 8px;
+            background: var(--pixel-purple);
+            color: var(--pixel-white);
+            padding: 0.2rem 0.5rem;
+            font-size: 0.4rem;
+            border: 1px solid var(--pixel-yellow);
+            border-radius: 2px;
+        }
+
+        .aula-item.feriado {
+            border-color: var(--pixel-orange);
+            background: linear-gradient(135deg, rgba(255, 230, 100, 0.2), rgba(255, 230, 100, 0.3));
+            opacity: 0.8;
+        }
+
+        .aula-item.feriado::before {
+            content: "🏖️ FERIADO";
+            position: absolute;
+            top: -8px;
+            right: 8px;
+            background: var(--pixel-orange);
+            color: var(--pixel-white);
+            padding: 0.2rem 0.5rem;
+            font-size: 0.4rem;
+            border: 1px solid var(--pixel-yellow);
+            border-radius: 2px;
+        }
+
+        .aula-data {
+            color: var(--pixel-yellow);
+            font-size: 0.7rem;
+            margin-bottom: 0.5rem;
+            text-shadow: 1px 1px 0 var(--pixel-gray);
+        }
+
+        .aula-assunto {
+            color: var(--pixel-light);
+            font-size: 0.6rem;
+            margin-bottom: 0.3rem;
+            line-height: 1.3;
+        }
+
+
+
+        .exame-section {
+            background: var(--card-bg);
+            border: 3px solid var(--pixel-red);
+            box-shadow: 4px 4px 0 var(--pixel-gray);
+            margin-top: 2rem;
+            overflow: hidden;
+        }
+
+        .exame-header {
+            background: linear-gradient(45deg, var(--pixel-red), var(--pixel-orange));
+            color: var(--pixel-white);
+            padding: 1rem;
+            text-align: center;
+            font-size: 1rem;
+            border-bottom: 3px solid var(--pixel-yellow);
+        }
+
+        .exame-content {
+            padding: 1.5rem;
+            text-align: center;
+        }
+
+        .exame-data {
+            color: var(--pixel-yellow);
+            font-size: 1.2rem;
+            margin-bottom: 0.5rem;
+            text-shadow: 2px 2px 0 var(--pixel-gray);
+        }
+
+
+
+        @media (max-width: 768px) {
+            body {
+                padding: 10px;
+            }
+
+            .calendar-grid {
+                grid-template-columns: 1fr 1fr;
+                gap: 0.5rem;
+            }
+
+            .day-card {
+                margin-bottom: 1rem;
+            }
+
+            .day-header {
+                font-size: 0.8rem;
+                padding: 0.8rem;
+            }
+
+            .day-content {
+                padding: 0.8rem;
+            }
+
+            .aula-item {
+                padding: 0.6rem;
+                margin-bottom: 0.8rem;
+            }
+
+            .aula-data {
+                font-size: 0.6rem;
+            }
+
+            .aula-assunto {
+                font-size: 0.5rem;
+            }
+
+            h1 {
+                font-size: 1.2rem;
+            }
+
+            .subtitle {
+                font-size: 0.7rem;
+            }
+        }
+
+        @media (max-width: 480px) {
+            body {
+                padding: 5px;
+            }
+
+            .calendar-grid {
+                grid-template-columns: 1fr 1fr;
+                gap: 0.3rem;
+            }
+
+            .day-header {
+                font-size: 0.7rem;
+                padding: 0.6rem;
+            }
+
+            .day-content {
+                padding: 0.6rem;
+            }
+
+            .aula-item {
+                padding: 0.5rem;
+                margin-bottom: 0.6rem;
+            }
+
+            .aula-data {
+                font-size: 0.55rem;
+            }
+
+            .aula-assunto {
+                font-size: 0.45rem;
+                line-height: 1.2;
+            }
+
+            h1 {
+                font-size: 1rem;
+            }
+
+            .subtitle {
+                font-size: 0.6rem;
+            }
+
+            .badge {
+                font-size: 0.5rem;
+                padding: 0.3rem 0.6rem;
+            }
+        }
+
+        .container {
+            animation: fadeIn 1s ease-in;
+        }
+
+        @keyframes fadeIn {
+            from { opacity: 0; transform: translateY(20px); }
+            to { opacity: 1; transform: translateY(0); }
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <div class="header">
+            <a href="../f1_2s_25.html" class="voltar-link">◀ VOLTAR</a>
+            <h1>CRONOGRAMA - TARDE</h1>
+            <div class="subtitle">FÍSICA 1 - 2º SEMESTRE 2025 - UFPR JANDAIA DO SUL</div>
+            <div class="info-badges">
+                <span class="badge">TURMA TARDE</span>
+                <span class="badge">QUINTA & SEXTA</span>
+                <span class="badge">2º SEMESTRE</span>
+            </div>
+        </div>
+
+        <div class="calendar-grid">
+            <!-- QUINTA-FEIRA -->
+            <div class="day-card">
+                <div class="day-header">
+                    📅 QUINTA-FEIRA
+                </div>
+                <div class="day-content">
+                    <div class="aula-item">
+                        <div class="aula-data">07/AGO</div>
+                        <div class="aula-assunto">Sistema Internacional</div>
+                    </div>
+                    
+                    <div class="aula-item">
+                        <div class="aula-data">14/AGO</div>
+                        <div class="aula-assunto">Gráficos</div>
+                    </div>
+                    
+                    <div class="aula-item">
+                        <div class="aula-data">21/AGO</div>
+                        <div class="aula-assunto">Aceleração Constante</div>
+                    </div>
+                    
+                    <div class="aula-item">
+                        <div class="aula-data">28/AGO</div>
+                        <div class="aula-assunto">Aceleração Constante</div>
+                    </div>
+                    
+                    <div class="aula-item">
+                        <div class="aula-data">04/SET</div>
+                        <div class="aula-assunto">Exercícios</div>
+                    </div>
+                    
+                    <div class="aula-item">
+                        <div class="aula-data">11/SET</div>
+                        <div class="aula-assunto">Vetores</div>
+                    </div>
+                    
+                    <div class="aula-item">
+                        <div class="aula-data">18/SET</div>
+                        <div class="aula-assunto">Movimento em 2D e 3D</div>
+                    </div>
+                    
+                    <div class="aula-item">
+                        <div class="aula-data">25/SET</div>
+                        <div class="aula-assunto">FORÇA</div>
+                    </div>
+                    
+                    <div class="aula-item">
+                        <div class="aula-data">02/OUT</div>
+                        <div class="aula-assunto">Atrito e Exercícios</div>
+                    </div>
+                    
+                    <div class="aula-item">
+                        <div class="aula-data">09/OUT</div>
+                        <div class="aula-assunto">Exercícios</div>
+                    </div>
+                    
+                    <div class="aula-item">
+                        <div class="aula-data">16/OUT</div>
+                        <div class="aula-assunto">Energia</div>
+                    </div>
+                    
+                    <div class="aula-item feriado">
+                        <div class="aula-data">23/OUT</div>
+                        <div class="aula-assunto">SIEPE</div>
+                    </div>
+                    
+                    <div class="aula-item">
+                        <div class="aula-data">30/OUT</div>
+                        <div class="aula-assunto">Energia</div>
+                    </div>
+                    
+                    <div class="aula-item">
+                        <div class="aula-data">06/NOV</div>
+                        <div class="aula-assunto">Centro de massa e momento linear</div>
+                    </div>
+                    
+                    <div class="aula-item">
+                        <div class="aula-data">13/NOV</div>
+                        <div class="aula-assunto">Impulso e Colisões</div>
+                    </div>
+                    
+                    <div class="aula-item feriado">
+                        <div class="aula-data">20/NOV</div>
+                        <div class="aula-assunto">Feriado</div>
+                    </div>
+                    
+                    <div class="aula-item">
+                        <div class="aula-data">27/NOV</div>
+                        <div class="aula-assunto">Exercícios</div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- SEXTA-FEIRA -->
+            <div class="day-card">
+                <div class="day-header">
+                    📅 SEXTA-FEIRA
+                </div>
+                <div class="day-content">
+                    <div class="aula-item">
+                        <div class="aula-data">08/AGO</div>
+                        <div class="aula-assunto">Movimento em 1D</div>
+                    </div>
+                    
+                    <div class="aula-item gravacao">
+                        <div class="aula-data">15/AGO</div>
+                        <div class="aula-assunto">Gráficos</div>
+                    </div>
+                    
+                    <div class="aula-item">
+                        <div class="aula-data">22/AGO</div>
+                        <div class="aula-assunto">Aceleração Constante</div>
+                    </div>
+                    
+                    <div class="aula-item gravacao">
+                        <div class="aula-data">29/AGO</div>
+                        <div class="aula-assunto">Aceleração Constante</div>
+                    </div>
+                    
+                    <div class="aula-item prova">
+                        <div class="aula-data">05/SET</div>
+                        <div class="aula-assunto">Prova 1</div>
+                    </div>
+                    
+                    <div class="aula-item">
+                        <div class="aula-data">12/SET</div>
+                        <div class="aula-assunto">Movimento em 2D e 3D</div>
+                    </div>
+                    
+                    <div class="aula-item gravacao">
+                        <div class="aula-data">19/SET</div>
+                        <div class="aula-assunto">Dinâmica da Partícula</div>
+                    </div>
+                    
+                    <div class="aula-item">
+                        <div class="aula-data">26/SET</div>
+                        <div class="aula-assunto">FORÇA</div>
+                    </div>
+                    
+                    <div class="aula-item gravacao">
+                        <div class="aula-data">03/OUT</div>
+                        <div class="aula-assunto">Atrito e Exercícios</div>
+                    </div>
+                    
+                    <div class="aula-item prova">
+                        <div class="aula-data">10/OUT</div>
+                        <div class="aula-assunto">Prova 2</div>
+                    </div>
+                    
+                    <div class="aula-item">
+                        <div class="aula-data">17/OUT</div>
+                        <div class="aula-assunto">Energia</div>
+                    </div>
+                    
+                    <div class="aula-item feriado">
+                        <div class="aula-data">24/OUT</div>
+                        <div class="aula-assunto">SIEPE</div>
+                    </div>
+                    
+                    <div class="aula-item gravacao">
+                        <div class="aula-data">31/OUT</div>
+                        <div class="aula-assunto">Centro de massa e momento linear</div>
+                    </div>
+                    
+                    <div class="aula-item">
+                        <div class="aula-data">07/NOV</div>
+                        <div class="aula-assunto">Impulso e Colisões</div>
+                    </div>
+                    
+                    <div class="aula-item gravacao">
+                        <div class="aula-data">14/NOV</div>
+                        <div class="aula-assunto">Impulso e Colisões</div>
+                    </div>
+                    
+                    <div class="aula-item feriado">
+                        <div class="aula-data">21/NOV</div>
+                        <div class="aula-assunto">RECESSO</div>
+                    </div>
+                    
+                    <div class="aula-item prova">
+                        <div class="aula-data">28/NOV</div>
+                        <div class="aula-assunto">Prova 3</div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- Seção do Exame -->
+        <div class="exame-section">
+            <div class="exame-header">
+                🎯 EXAMES FINAIS
+            </div>
+            <div class="exame-content">
+                <div class="exame-data">18/DEZ</div>
+                <div style="color: var(--pixel-light); font-size: 0.6rem;">Exames para quem não atingiu média 7.0</div>
+            </div>
+        </div>
+
+
+    </div>
+</body>
+</html> 

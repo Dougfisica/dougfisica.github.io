@@ -163,61 +163,7 @@
             text-shadow: 1px 1px 0 var(--pixel-gray);
         }
 
-        .section-buttons {
-            display: flex;
-            gap: 1rem;
-            justify-content: center;
-            margin: 2rem 0 1rem 0;
-            flex-wrap: wrap;
-        }
 
-        .section-btn {
-            background: var(--card-bg);
-            color: var(--pixel-pink);
-            border: 3px solid var(--pixel-pink);
-            padding: 0.7rem 1.5rem;
-            font-family: var(--font-family);
-            font-size: 0.8rem;
-            cursor: pointer;
-            transition: all 0.3s;
-            text-shadow: 1px 1px 0 var(--pixel-gray);
-            box-shadow: 4px 4px 0 var(--pixel-gray);
-            text-transform: uppercase;
-            letter-spacing: 1px;
-        }
-
-        .section-btn:hover {
-            transform: translate(-2px, -2px);
-            box-shadow: 6px 6px 0 var(--pixel-gray);
-            border-color: var(--pixel-yellow);
-            color: var(--pixel-yellow);
-        }
-
-        .section-btn:active {
-            transform: translate(1px, 1px);
-            box-shadow: 2px 2px 0 var(--pixel-gray);
-        }
-
-        .section-btn.active {
-            background: var(--pixel-pink);
-            color: var(--pixel-white);
-            border-color: var(--pixel-yellow);
-            text-shadow: 1px 1px 0 var(--pixel-gray);
-        }
-
-        .section-btn.active:hover {
-            background: var(--pixel-yellow);
-            color: var(--pixel-gray);
-            border-color: var(--pixel-pink);
-        }
-
-        .content-section {
-            display: none;
-        }
-
-        .content-section.active {
-            display: block;
-        }
 
         .aulas-grid {
             display: grid;
@@ -315,85 +261,7 @@
             opacity: 0.9;
         }
 
-        .exercicios-grid {
-            display: grid;
-            grid-template-columns: repeat(auto-fit, minmax(350px, 1fr));
-            gap: 1.5rem;
-            margin: 1.5rem 0;
-        }
 
-        .exercicio-card {
-            background: var(--card-bg);
-            border: 3px solid var(--pixel-green);
-            padding: 1.5rem;
-            transition: all 0.3s;
-            text-decoration: none;
-            color: inherit;
-            display: block;
-            position: relative;
-            box-shadow: 4px 4px 0 var(--pixel-gray);
-        }
-
-        .exercicio-card:hover {
-            transform: translate(-2px, -2px);
-            box-shadow: 6px 6px 0 var(--pixel-gray);
-            border-color: var(--pixel-yellow);
-        }
-
-        .exercicio-header {
-            display: flex;
-            align-items: center;
-            gap: 1rem;
-            margin-bottom: 1rem;
-            padding-bottom: 0.8rem;
-            border-bottom: 2px solid var(--pixel-yellow);
-        }
-
-        .exercicio-icon {
-            width: 40px;
-            height: 40px;
-            background: var(--pixel-green);
-            border: 2px solid var(--pixel-white);
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            font-size: 1.2rem;
-            color: var(--pixel-white);
-        }
-
-        .exercicio-titulo {
-            color: var(--pixel-green);
-            font-size: 0.9rem;
-            text-shadow: 1px 1px 0 var(--pixel-gray);
-        }
-
-        .exercicio-desc {
-            color: var(--pixel-light);
-            font-size: 0.65rem;
-            line-height: 1.4;
-            margin-bottom: 1rem;
-        }
-
-        .exercicio-topics {
-            list-style: none;
-            padding: 0;
-        }
-
-        .exercicio-topics li {
-            color: var(--pixel-yellow);
-            font-size: 0.6rem;
-            margin-bottom: 0.4rem;
-            padding-left: 1rem;
-            position: relative;
-        }
-
-        .exercicio-topics li:before {
-            content: "◆";
-            color: var(--pixel-pink);
-            position: absolute;
-            left: 0;
-            animation: blink 2s infinite;
-        }
 
         @media (max-width: 768px) {
             body {
@@ -418,45 +286,9 @@
                 font-size: 0.7rem;
             }
 
-            .section-buttons {
-                margin: 1.5rem 0 1rem 0;
-            }
-
-            .section-btn {
-                font-size: 0.7rem;
-                padding: 0.6rem 1.2rem;
-            }
-
-            .aulas-grid, .exercicios-grid {
+            .aulas-grid {
                 grid-template-columns: 1fr;
                 gap: 1rem;
-            }
-
-            .exercicio-card {
-                padding: 1rem;
-            }
-
-            .exercicio-header {
-                gap: 0.8rem;
-                margin-bottom: 0.8rem;
-            }
-
-            .exercicio-icon {
-                width: 35px;
-                height: 35px;
-                font-size: 1rem;
-            }
-
-            .exercicio-titulo {
-                font-size: 0.8rem;
-            }
-
-            .exercicio-desc {
-                font-size: 0.6rem;
-            }
-
-            .exercicio-topics li {
-                font-size: 0.55rem;
             }
 
             .aula-thumb-container {
@@ -535,12 +367,9 @@
             <div class="subtitle">FÍSICA 1 - AULAS EM VÍDEO</div>
         </div>
 
-        <div class="section-buttons">
-            <button class="section-btn active" onclick="showSection('aulas')">📺 AULAS EM VÍDEO</button>
-            <button class="section-btn" onclick="showSection('exercicios')">📝 LISTA DE EXERCÍCIOS</button>
-        </div>
 
-        <div id="aulas-section" class="content-section active">
+
+        <div class="aulas-section">
             <div class="aulas-grid">
             <a href="https://youtu.be/BBz2U0PZpUs" class="aula-card" target="_blank">
                 <div class="aula-thumb-container">
@@ -724,150 +553,9 @@
             </div>
         </div>
 
-        <div id="exercicios-section" class="content-section">
-            <div class="exercicios-grid">
-                <div class="exercicio-card">
-                    <div class="exercicio-header">
-                        <div class="exercicio-icon">📝</div>
-                        <h3 class="exercicio-titulo">LISTA 1</h3>
-                    </div>
-                    <p class="exercicio-desc">CAPÍTULO 2 - MOVIMENTO RETILÍNEO</p>
-                    <ul class="exercicio-topics">
-                        <li>Exercícios: 1, 2, 3, 4, 5, 6, 7, 8</li>
-                        <li>Problemas: 15, 18, 22, 25, 30</li>
-                    </ul>
-                </div>
 
-                <div class="exercicio-card">
-                    <div class="exercicio-header">
-                        <div class="exercicio-icon">📝</div>
-                        <h3 class="exercicio-titulo">LISTA 2</h3>
-                    </div>
-                    <p class="exercicio-desc">CAPÍTULO 3 - VETORES</p>
-                    <ul class="exercicio-topics">
-                        <li>Exercícios: 1, 3, 5, 7, 9, 11, 13</li>
-                        <li>Problemas: 20, 24, 28, 32</li>
-                    </ul>
-                </div>
-
-                <div class="exercicio-card">
-                    <div class="exercicio-header">
-                        <div class="exercicio-icon">📝</div>
-                        <h3 class="exercicio-titulo">LISTA 3</h3>
-                    </div>
-                    <p class="exercicio-desc">CAPÍTULO 4 - MOVIMENTO EM 2D E 3D</p>
-                    <ul class="exercicio-topics">
-                        <li>Exercícios: 2, 4, 6, 8, 10, 12</li>
-                        <li>Problemas: 16, 19, 23, 27, 31</li>
-                    </ul>
-                </div>
-
-                <div class="exercicio-card">
-                    <div class="exercicio-header">
-                        <div class="exercicio-icon">📝</div>
-                        <h3 class="exercicio-titulo">LISTA 4</h3>
-                    </div>
-                    <p class="exercicio-desc">CAPÍTULO 5 - FORÇA E MOVIMENTO I</p>
-                    <ul class="exercicio-topics">
-                        <li>Exercícios: 1, 3, 5, 7, 9, 11, 13, 15</li>
-                        <li>Problemas: 21, 25, 29, 33, 37</li>
-                    </ul>
-                </div>
-
-                <div class="exercicio-card">
-                    <div class="exercicio-header">
-                        <div class="exercicio-icon">📝</div>
-                        <h3 class="exercicio-titulo">LISTA 5</h3>
-                    </div>
-                    <p class="exercicio-desc">CAPÍTULO 6 - FORÇA E MOVIMENTO II</p>
-                    <ul class="exercicio-topics">
-                        <li>Exercícios: 2, 4, 6, 8, 10, 12, 14</li>
-                        <li>Problemas: 18, 22, 26, 30, 34</li>
-                    </ul>
-                </div>
-
-                <div class="exercicio-card">
-                    <div class="exercicio-header">
-                        <div class="exercicio-icon">📝</div>
-                        <h3 class="exercicio-titulo">LISTA 6</h3>
-                    </div>
-                    <p class="exercicio-desc">CAPÍTULO 7 - ENERGIA CINÉTICA E TRABALHO</p>
-                    <ul class="exercicio-topics">
-                        <li>Exercícios: 1, 3, 5, 7, 9, 11</li>
-                        <li>Problemas: 17, 21, 25, 29, 33</li>
-                    </ul>
-                </div>
-
-                <div class="exercicio-card">
-                    <div class="exercicio-header">
-                        <div class="exercicio-icon">📝</div>
-                        <h3 class="exercicio-titulo">LISTA 7</h3>
-                    </div>
-                    <p class="exercicio-desc">CAPÍTULO 8 - ENERGIA POTENCIAL</p>
-                    <ul class="exercicio-topics">
-                        <li>Exercícios: 2, 4, 6, 8, 10, 12, 14</li>
-                        <li>Problemas: 19, 23, 27, 31, 35</li>
-                    </ul>
-                </div>
-
-                <div class="exercicio-card">
-                    <div class="exercicio-header">
-                        <div class="exercicio-icon">📝</div>
-                        <h3 class="exercicio-titulo">LISTA 8</h3>
-                    </div>
-                    <p class="exercicio-desc">CAPÍTULO 9 - CENTRO DE MASSA</p>
-                    <ul class="exercicio-topics">
-                        <li>Exercícios: 1, 3, 5, 7, 9</li>
-                        <li>Problemas: 15, 18, 22, 26, 30</li>
-                    </ul>
-                </div>
-
-                <div class="exercicio-card">
-                    <div class="exercicio-header">
-                        <div class="exercicio-icon">📝</div>
-                        <h3 class="exercicio-titulo">LISTA 9</h3>
-                    </div>
-                    <p class="exercicio-desc">CAPÍTULO 10 - ROTAÇÃO DE EIXO FIXO</p>
-                    <ul class="exercicio-topics">
-                        <li>Exercícios: 2, 4, 6, 8, 10, 12</li>
-                        <li>Problemas: 16, 20, 24, 28, 32</li>
-                    </ul>
-                </div>
-
-                <div class="exercicio-card">
-                    <div class="exercicio-header">
-                        <div class="exercicio-icon">📝</div>
-                        <h3 class="exercicio-titulo">LISTA 10</h3>
-                    </div>
-                    <p class="exercicio-desc">REVISÃO GERAL - TODOS OS CAPÍTULOS</p>
-                    <ul class="exercicio-topics">
-                        <li>Exercícios selecionados de todos os capítulos</li>
-                        <li>Problemas integradores e de vestibular</li>
-                    </ul>
-                </div>
-            </div>
-        </div>
     </div>
 
-    <script>
-        function showSection(section) {
-            // Remove active class from all buttons
-            const buttons = document.querySelectorAll('.section-btn');
-            buttons.forEach(btn => btn.classList.remove('active'));
-            
-            // Hide all sections
-            const sections = document.querySelectorAll('.content-section');
-            sections.forEach(sec => sec.classList.remove('active'));
-            
-            // Show selected section and activate button
-            if (section === 'aulas') {
-                document.getElementById('aulas-section').classList.add('active');
-                buttons[0].classList.add('active');
-            } else if (section === 'exercicios') {
-                document.getElementById('exercicios-section').classList.add('active');
-                buttons[1].classList.add('active');
-            }
-        }
-    </script>
+
 </body>
 </html> 

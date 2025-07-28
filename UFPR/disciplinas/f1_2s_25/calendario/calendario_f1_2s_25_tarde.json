@@ -1,0 +1,42 @@
+{
+  "quinta": [
+    { "data": "07/ago", "assunto": "Sistema Internacional", "CH": 2 },
+    { "data": "14/ago", "assunto": "Gráficos", "CH": 2 },
+    { "data": "21/ago", "assunto": "Aceleração Constante", "CH": 2 },
+    { "data": "28/ago", "assunto": "Aceleração Constante", "CH": 2 },
+    { "data": "04/set", "assunto": "Exercícios", "CH": 2 },
+    { "data": "11/set", "assunto": "Vetores", "CH": 2 },
+    { "data": "18/set", "assunto": "Movimento em 2D e 3D", "CH": 2 },
+    { "data": "25/set", "assunto": "FORÇA", "CH": 2 },
+    { "data": "02/out", "assunto": "Atrito e Exercícios", "CH": 2 },
+    { "data": "09/out", "assunto": "Exercícios", "CH": 2 },
+    { "data": "16/out", "assunto": "Energia", "CH": 2 },
+    { "data": "23/out", "assunto": "SIEPE", "CH": 0 },
+    { "data": "30/out", "assunto": "Energia", "CH": 2 },
+    { "data": "06/nov", "assunto": "Centro de massa e momento linear", "CH": 2 },
+    { "data": "13/nov", "assunto": "Impulso e Colisões", "CH": 2 },
+    { "data": "20/nov", "assunto": "Feriado", "CH": 0 },
+    { "data": "27/nov", "assunto": "Exercícios", "CH": 2 }
+  ],
+  "sexta": [
+    { "data": "08/ago", "assunto": "Movimento em 1D", "CH": 2, "obs": null },
+    { "data": "15/ago", "assunto": "Gráficos", "CH": 2, "obs": "Gravação" },
+    { "data": "22/ago", "assunto": "Aceleração Constante", "CH": 2, "obs": null },
+    { "data": "29/ago", "assunto": "Aceleração Constante", "CH": 2, "obs": "Gravação" },
+    { "data": "05/set", "assunto": "Prova 1", "CH": 2, "obs": null },
+    { "data": "12/set", "assunto": "Movimento em 2D e 3D", "CH": 2, "obs": null },
+    { "data": "19/set", "assunto": "Dinâmica da Partícula", "CH": 2, "obs": "Gravação" },
+    { "data": "26/set", "assunto": "FORÇA", "CH": 2, "obs": null },
+    { "data": "03/out", "assunto": "Atrito e Exercícios", "CH": 2, "obs": "Gravação" },
+    { "data": "10/out", "assunto": "Prova 2", "CH": 2, "obs": null },
+    { "data": "17/out", "assunto": "Energia", "CH": 2, "obs": null },
+    { "data": "24/out", "assunto": "SIEPE", "CH": 0, "obs": null },
+    { "data": "31/out", "assunto": "Centro de massa e momento linear", "CH": 2, "obs": "Gravação" },
+    { "data": "07/nov", "assunto": "Impulso e Colisões", "CH": 2, "obs": null },
+    { "data": "14/nov", "assunto": "Impulso e Colisões", "CH": 2, "obs": "Gravação" },
+    { "data": "21/nov", "assunto": "RECESSO", "CH": 0, "obs": null },
+    { "data": "28/nov", "assunto": "Prova 3", "CH": 2, "obs": null }
+  ],
+  "exame": { "data": "18/dez", "assunto": "Exames" },
+  "total_CH": 60
+}

@@ -294,34 +294,8 @@
             51%, 100% { opacity: 0.3; }
         }
 
-        .coming-soon {
-            opacity: 0.7;
-            cursor: not-allowed;
-            pointer-events: none;
-            border-color: var(--pixel-gray);
-        }
-
-        .coming-soon::after {
-            content: "EM BREVE";
-            position: absolute;
-            top: 8px;
-            right: 8px;
-            background: var(--pixel-red);
-            color: var(--pixel-white);
-            padding: 0.2rem 0.5rem;
-            font-size: 0.5rem;
-            border: 1px solid var(--pixel-yellow);
-            animation: pulse 2s infinite;
-        }
-
-        @keyframes pulse {
-            0% { transform: scale(1); }
-            50% { transform: scale(1.05); }
-            100% { transform: scale(1); }
-        }
-
         /* Game-like button effect for the active card */
-        .card:not(.coming-soon):active {
+        .card:active {
             transform: translate(1px, 1px);
             box-shadow: 2px 2px 0 var(--pixel-gray);
         }
@@ -425,17 +399,35 @@
                 <div class="card-content">
                     <h3 class="card-title">MATERIAL DE APOIO</h3>
                     <p class="card-description">
-                        Acesse aulas em vídeo e listas de exercícios.
+                        Acesse aulas em vídeo e materiais didáticos.
                     </p>
                     <ul class="card-features">
                         <li>AULAS EM VÍDEO (15 AULAS)</li>
-                        <li>LISTA DE EXERCÍCIOS</li>
-
+                        <li>MATERIAIS DIDÁTICOS</li>
+                        <li>RECURSOS COMPLEMENTARES</li>
                     </ul>
                 </div>
             </a>
 
-            <div class="card coming-soon">
+            <a href="f1_2s_25/listas_f1_2s_25.html" class="card">
+                <div class="card-icon" style="background: linear-gradient(45deg, var(--pixel-purple), var(--pixel-pink));">
+                    📝
+                </div>
+                <div class="card-content">
+                    <h3 class="card-title">LISTAS DE EXERCÍCIOS</h3>
+                    <p class="card-description">
+                        Acesse todas as listas de exercícios organizadas por prova.
+                    </p>
+                    <ul class="card-features">
+                        <li>10 LISTAS EM PDF</li>
+                        <li>ORGANIZADAS POR PROVA</li>
+                        <li>DOWNLOAD DIRETO</li>
+                        <li>CONTEÚDO COMPLETO</li>
+                    </ul>
+                </div>
+            </a>
+
+            <div class="card" style="position: relative;">
                 <div class="card-icon calendario">
                     📅
                 </div>
@@ -451,6 +443,26 @@
                         <li>PRAZOS DE ENTREGA</li>
                         <li>EVENTOS IMPORTANTES</li>
                     </ul>
+                    <div style="margin-top: 1rem; display: flex; gap: 0.5rem; flex-wrap: wrap;">
+                        <a href="f1_2s_25/calendario_f1_2s_25_manha.html" 
+                           style="background: var(--pixel-blue); color: var(--pixel-white); 
+                                  padding: 0.5rem 0.8rem; font-size: 0.5rem; 
+                                  text-decoration: none; border: 1px solid var(--pixel-yellow);
+                                  transition: all 0.2s;"
+                           onmouseover="this.style.background='var(--pixel-yellow)'; this.style.color='var(--pixel-gray)'"
+                           onmouseout="this.style.background='var(--pixel-blue)'; this.style.color='var(--pixel-white)'">
+                            🌅 MANHÃ
+                        </a>
+                        <a href="f1_2s_25/calendario_f1_2s_25_tarde.html" 
+                           style="background: var(--pixel-orange); color: var(--pixel-white); 
+                                  padding: 0.5rem 0.8rem; font-size: 0.5rem; 
+                                  text-decoration: none; border: 1px solid var(--pixel-yellow);
+                                  transition: all 0.2s;"
+                           onmouseover="this.style.background='var(--pixel-yellow)'; this.style.color='var(--pixel-gray)'"
+                           onmouseout="this.style.background='var(--pixel-orange)'; this.style.color='var(--pixel-white)'">
+                            🌆 TARDE
+                        </a>
+                    </div>
                 </div>
             </div>
         </div>
