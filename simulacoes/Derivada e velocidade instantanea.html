@@ -1,0 +1,475 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+    <meta charset="UTF-8">
+    <title>DOUG.FÍSICA</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <style>
+        /* Estilos CSS */
+        body {
+            font-family: Arial, sans-serif;
+            margin: 0;
+            padding: 0;
+        }
+
+        .container {
+            padding: 20px;
+        }
+
+        h1 {
+            text-align: center;
+        }
+
+        .function-selector, .controls, .info-panel, .velocity-display {
+            margin: 20px 0;
+            text-align: center;
+        }
+
+        .graph-container {
+            position: relative;
+            width: 100%;
+            max-width: 800px;
+            margin: 0 auto;
+        }
+
+        #graphCanvas {
+            border: 1px solid #ccc;
+            touch-action: manipulation;
+            display: block;
+            width: 100%;
+        }
+
+        button {
+            margin: 5px;
+        }
+
+        .info-panel p {
+            margin: 5px;
+        }
+
+        .yellow {
+            color: #ffc107; /* Amarelo */
+        }
+
+        .green {
+            color: #28a745; /* Verde */
+        }
+    </style>
+</head>
+<body>
+
+    <div class="container">
+        <h1>DOUG.FÍSICA - Velocidade Média e Instantânea</h1>
+
+        <!-- Seleção da função cúbica -->
+        <div class="function-selector">
+            <label for="functionSelect">Escolha a função:</label>
+            <select id="functionSelect">
+                <option value="x=t^3">x = t³</option>
+                <option value="x=2t^3+3t^2">x = 2t³ + 3t²</option>
+                <option value="x=-t^3+5t">x = -t³ + 5t</option>
+            </select>
+        </div>
+
+        <!-- Exibição da velocidade média e instantânea -->
+        <div class="velocity-display">
+            <p>v = <span class="yellow">Δx</span>/<span class="green">Δt</span> = <span id="velocityDisplay"></span> m/s</p>
+            <p>v(<span class="green">t</span>) = <span class="yellow">dx</span>/<span class="green">dt</span> = <span id="derivativeFunction"></span> = <span id="instantVelocity"></span> m/s</p>
+        </div>
+
+        <!-- Gráfico -->
+        <div class="graph-container">
+            <canvas id="graphCanvas" width="800" height="400"></canvas>
+        </div>
+
+        <!-- Controles de interatividade -->
+        <div class="controls">
+            <label for="deltaTSlider"><span class="green">Δt</span>:</label>
+            <input type="range" id="deltaTSlider" min="0" max="50" step="1" value="25">
+            <button id="deltaTMinus">-</button>
+            <button id="deltaTPlus">+</button>
+        </div>
+
+        <!-- Painel de informações -->
+        <div class="info-panel">
+            <p>Ponto Selecionado: <span class="green">t</span> = <span id="selectedT"></span> s, <span class="yellow">x</span> = <span id="selectedX"></span> m</p>
+            <p><span class="green">Δt</span>: <span id="deltaTValue"></span> s</p>
+            <p><span class="yellow">Δx</span>: <span id="deltaXValue"></span> m</p>
+            <p>Velocidade Média: <span id="velocityValue"></span> m/s</p>
+        </div>
+    </div>
+
+    <script>
+        // Código JavaScript
+
+        // Elementos do DOM
+        const functionSelect = document.getElementById('functionSelect');
+        const graphCanvas = document.getElementById('graphCanvas');
+        const deltaTSlider = document.getElementById('deltaTSlider');
+        const deltaTMinus = document.getElementById('deltaTMinus');
+        const deltaTPlus = document.getElementById('deltaTPlus');
+        const selectedTDisplay = document.getElementById('selectedT');
+        const selectedXDisplay = document.getElementById('selectedX');
+        const deltaTValueDisplay = document.getElementById('deltaTValue');
+        const deltaXValueDisplay = document.getElementById('deltaXValue');
+        const velocityValueDisplay = document.getElementById('velocityValue');
+        const velocityDisplay = document.getElementById('velocityDisplay');
+        const derivativeFunctionDisplay = document.getElementById('derivativeFunction');
+        const instantVelocityDisplay = document.getElementById('instantVelocity');
+
+        // Variáveis Globais
+        let selectedFunction = functionSelect.value;
+        let deltaTIndex = parseInt(deltaTSlider.value);
+        let deltaTValues = [0.0001];
+        for (let i = 0.1; i <= 5.0; i += 0.1) {
+            deltaTValues.push(parseFloat(i.toFixed(1)));
+        }
+        let deltaT = deltaTValues[deltaTIndex];
+        let selectedT = 5; // Valor inicial no meio do intervalo [0,10]
+
+        // Configuração do Canvas
+        const canvas = graphCanvas;
+        const ctx = canvas.getContext('2d');
+
+        // Margens para evitar que os eixos fiquem muito próximos das bordas
+        const margin = 50;
+        const plotWidth = canvas.width - 2 * margin;
+        const plotHeight = canvas.height - 2 * margin;
+
+        // Range de tempo e posição
+        const tMin = 0;
+        const tMax = 10;
+        let yMin = 0;
+        let yMax = 100; // Valores iniciais, serão atualizados
+
+        // Eventos
+        functionSelect.addEventListener('change', function() {
+            selectedFunction = this.value;
+            updateYRange();
+            updateInfoPanel();
+            drawGraph();
+        });
+        deltaTSlider.addEventListener('input', function() {
+            deltaTIndex = parseInt(this.value);
+            deltaT = deltaTValues[deltaTIndex];
+            updateInfoPanel();
+            drawGraph();
+        });
+        deltaTMinus.addEventListener('click', function() {
+            deltaTIndex = Math.max(0, deltaTIndex - 1);
+            deltaTSlider.value = deltaTIndex;
+            deltaT = deltaTValues[deltaTIndex];
+            updateInfoPanel();
+            drawGraph();
+        });
+        deltaTPlus.addEventListener('click', function() {
+            deltaTIndex = Math.min(deltaTValues.length - 1, deltaTIndex + 1);
+            deltaTSlider.value = deltaTIndex;
+            deltaT = deltaTValues[deltaTIndex];
+            updateInfoPanel();
+            drawGraph();
+        });
+        graphCanvas.addEventListener('click', function(event) {
+            const rect = canvas.getBoundingClientRect();
+            const x = event.clientX - rect.left - margin;
+            selectedT = mapXToTime(x);
+            updateInfoPanel();
+            drawGraph();
+        });
+
+        // Funções Principais
+        function drawGraph() {
+            ctx.clearRect(0, 0, canvas.width, canvas.height);
+            drawGrid();
+            drawAxes();
+            plotFunction();
+            drawSelectedPoint();
+            drawDeltaTriangle();
+        }
+
+        function drawGrid() {
+            ctx.strokeStyle = '#e9e9e9';
+            ctx.lineWidth = 1;
+
+            const gridSizeX = plotWidth / 10; // Dividir o eixo X em 10 partes
+            const gridSizeY = plotHeight / 10; // Dividir o eixo Y em 10 partes
+
+            // Linhas verticais
+            for (let i = 0; i <= 10; i++) {
+                const x = margin + i * gridSizeX;
+                ctx.beginPath();
+                ctx.moveTo(x, margin);
+                ctx.lineTo(x, canvas.height - margin);
+                ctx.stroke();
+            }
+
+            // Linhas horizontais
+            for (let i = 0; i <= 10; i++) {
+                const y = margin + i * gridSizeY;
+                ctx.beginPath();
+                ctx.moveTo(margin, y);
+                ctx.lineTo(canvas.width - margin, y);
+                ctx.stroke();
+            }
+        }
+
+        function drawAxes() {
+            ctx.strokeStyle = '#000';
+            ctx.lineWidth = 2;
+            ctx.beginPath();
+            // Eixo X em y=0
+            const yZero = mapYToCanvas(0);
+            ctx.moveTo(margin, yZero);
+            ctx.lineTo(canvas.width - margin, yZero);
+            // Eixo Y em t=0
+            const xZero = mapTimeToX(0);
+            ctx.moveTo(xZero, margin);
+            ctx.lineTo(xZero, canvas.height - margin);
+            ctx.stroke();
+
+            // Rótulos e marcas no eixo X
+            ctx.fillStyle = '#000';
+            ctx.font = '12px Arial';
+            const tStep = 1; // Incremento de 1 segundo
+            for (let t = tMin; t <= tMax; t += tStep) {
+                const x = mapTimeToX(t);
+                const y = yZero;
+                ctx.beginPath();
+                ctx.moveTo(x, y - 5);
+                ctx.lineTo(x, y + 5);
+                ctx.stroke();
+                ctx.fillText(t.toFixed(0), x - 5, y + 20);
+            }
+
+            // Rótulos e marcas no eixo Y (múltiplos de 10)
+	    ctx.fillStyle = '#000';
+	    ctx.font = '12px Arial';
+	    const yStep = Math.ceil((yMax - yMin) / 10 / 10) * 10; // Calcular o intervalo (step) ajustado para múltiplos de 10
+	    for (let yValue = yMin; yValue <= yMax; yValue += yStep) {
+    		const x = xZero;
+    		const y = mapYToCanvas(yValue);
+    		ctx.beginPath();
+    		ctx.moveTo(x - 5, y);
+    		ctx.lineTo(x + 5, y);
+    		ctx.stroke();
+    		ctx.fillText(yValue.toFixed(0), x - 40, y + 5);
+            }
+
+            // Rótulos dos eixos
+            ctx.fillStyle = '#000';
+            ctx.font = '14px Arial';
+            ctx.fillText('Tempo (s)', canvas.width - margin - 60, yZero - 10);
+            ctx.fillText('Posição (m)', xZero + 10, margin + 20);
+        }
+
+        function plotFunction() {
+            ctx.strokeStyle = '#007bff';
+            ctx.lineWidth = 2;
+            ctx.beginPath();
+            let firstPoint = true;
+            for (let t = tMin; t <= tMax; t += 0.05) {
+                const x = mapTimeToX(t);
+                const yValue = evaluateFunction(t);
+                const canvasY = mapYToCanvas(yValue);
+                if (firstPoint) {
+                    ctx.moveTo(x, canvasY);
+                    firstPoint = false;
+                } else {
+                    ctx.lineTo(x, canvasY);
+                }
+            }
+            ctx.stroke();
+        }
+
+        function drawSelectedPoint() {
+            const x = mapTimeToX(selectedT);
+            const yValue = evaluateFunction(selectedT);
+            const y = mapYToCanvas(yValue);
+            ctx.fillStyle = '#dc3545';
+            ctx.beginPath();
+            ctx.arc(x, y, 6, 0, 2 * Math.PI);
+            ctx.fill();
+
+            // Coordenadas do ponto
+            ctx.fillStyle = '#dc3545';
+            ctx.font = '12px Arial';
+            ctx.fillText(`(${selectedT.toFixed(1)}, ${yValue.toFixed(1)})`, x + 10, y - 10);
+        }
+
+        function drawDeltaTriangle() {
+            // Calcula t1 e t2 de forma que selectedT seja o ponto médio do intervalo
+            const deltaHalf = deltaT / 2;
+            const t1 = selectedT - deltaHalf;
+            const t2 = selectedT + deltaHalf;
+
+            // Garantir que t1 e t2 estejam dentro do intervalo permitido
+            if (t1 < tMin || t2 > tMax) return;
+
+            const x1 = mapTimeToX(t1);
+            const x2 = mapTimeToX(t2);
+
+            const y1Value = evaluateFunction(t1);
+            const y2Value = evaluateFunction(t2);
+
+            const y1 = mapYToCanvas(y1Value);
+            const y2 = mapYToCanvas(y2Value);
+
+            // Desenha a linha secante (hipotenusa)
+            ctx.strokeStyle = '#17a2b8';
+            ctx.lineWidth = 2;
+            ctx.beginPath();
+            ctx.moveTo(x1, y1);
+            ctx.lineTo(x2, y2);
+            ctx.stroke();
+
+            // Desenha o triângulo
+            // Cateto horizontal (Δt)
+            ctx.strokeStyle = '#28a745'; // Verde
+            ctx.lineWidth = 2;
+            ctx.beginPath();
+            ctx.moveTo(x1, y1);
+            ctx.lineTo(x2, y1);
+            ctx.stroke();
+
+            // Cateto vertical (Δx)
+            ctx.strokeStyle = '#ffc107'; // Amarelo
+            ctx.lineWidth = 2;
+            ctx.beginPath();
+            ctx.moveTo(x2, y1);
+            ctx.lineTo(x2, y2);
+            ctx.stroke();
+
+            // Escrever Δt abaixo do cateto horizontal
+            ctx.fillStyle = '#28a745'; // Verde
+            ctx.font = '12px Arial';
+            ctx.fillText(`Δt = ${deltaT.toFixed(1)} s`, (x1 + x2) / 2 - 20, y1 + 20);
+
+            // Escrever Δx ao lado do cateto vertical
+            ctx.fillStyle = '#ffc107'; // Amarelo
+            ctx.font = '12px Arial';
+            const deltaXValue = y2Value - y1Value;
+            ctx.fillText(`Δx = ${deltaXValue.toFixed(1)} m`, x2 + 10, (y1 + y2) / 2);
+
+            // Linhas pontilhadas
+            ctx.setLineDash([5, 5]);
+            ctx.strokeStyle = '#6c757d';
+            ctx.lineWidth = 1;
+
+            // Ponto selecionado (t, x(t))
+            const x0 = mapTimeToX(selectedT);
+            const y0 = mapYToCanvas(evaluateFunction(selectedT));
+
+            // Linha vertical do ponto selecionado até o eixo X
+            ctx.beginPath();
+            ctx.moveTo(x0, y0);
+            ctx.lineTo(x0, mapYToCanvas(0));
+            ctx.stroke();
+
+            // Linha horizontal do ponto selecionado até o eixo Y
+            ctx.beginPath();
+            ctx.moveTo(x0, y0);
+            ctx.lineTo(mapTimeToX(0), y0);
+            ctx.stroke();
+
+            ctx.setLineDash([]);
+        }
+
+        function evaluateFunction(t) {
+            switch (selectedFunction) {
+                case 'x=t^3':
+                    return t * t * t;
+                case 'x=2t^3+3t^2':
+                    return 2 * t * t * t + 3 * t * t;
+                case 'x=-t^3+5t':
+                    return -t * t * t + 5 * t;
+                default:
+                    return t * t * t;
+            }
+        }
+
+        function evaluateDerivative(t) {
+            switch (selectedFunction) {
+                case 'x=t^3':
+                    derivativeFunctionDisplay.innerHTML = '<span class="yellow">3</span><span class="green">t</span><sup><span style="color:black;">2</span></sup>';
+                    return 3 * t * t;
+                case 'x=2t^3+3t^2':
+                    derivativeFunctionDisplay.innerHTML = '<span class="yellow">6<span class="green">t</span><sup><span style="color:black;">2</span></sup> + 6<span class="green">t</span></span>';
+                    return 6 * t * t + 6 * t;
+                case 'x=-t^3+5t':
+                    derivativeFunctionDisplay.innerHTML = '<span class="yellow">-3<span class="green">t</span><sup><span style="color:black;">2</span></sup> + 5</span>';
+                    return -3 * t * t + 5;
+                default:
+                    derivativeFunctionDisplay.innerHTML = '<span class="yellow">3<span class="green">t</span><sup>2</sup></span>';
+                    return 3 * t * t;
+            }
+        }
+
+        function updateInfoPanel() {
+            const deltaHalf = deltaT / 2;
+            const t1 = selectedT - deltaHalf;
+            const t2 = selectedT + deltaHalf;
+
+            if (t1 < tMin || t2 > tMax) {
+                deltaXValueDisplay.textContent = 'N/A';
+                velocityValueDisplay.textContent = 'N/A';
+                velocityDisplay.textContent = 'N/A';
+                return;
+            }
+
+            const xValue = evaluateFunction(selectedT);
+            const x1 = evaluateFunction(t1);
+            const x2 = evaluateFunction(t2);
+            const deltaX = x2 - x1;
+            const velocity = deltaX / deltaT;
+            const instantVelocity = evaluateDerivative(selectedT);
+
+            selectedTDisplay.textContent = selectedT.toFixed(1);
+            selectedXDisplay.textContent = xValue.toFixed(1);
+            deltaTValueDisplay.textContent = deltaT.toFixed(1);
+            deltaXValueDisplay.textContent = deltaX.toFixed(1);
+            velocityValueDisplay.textContent = velocity.toFixed(1);
+            velocityDisplay.textContent = velocity.toFixed(1);
+            instantVelocityDisplay.textContent = instantVelocity.toFixed(1);
+        }
+
+        function mapTimeToX(t) {
+            return margin + ((t - tMin) / (tMax - tMin)) * plotWidth;
+        }
+
+        function mapXToTime(x) {
+            return ((x - margin) / plotWidth) * (tMax - tMin) + tMin;
+        }
+
+        function mapYToCanvas(y) {
+            return margin + ((yMax - y) / (yMax - yMin)) * plotHeight;
+        }
+
+	function updateYRange() {
+    	    yMin = Infinity;
+    	    yMax = -Infinity;
+    	    for (let t = tMin; t <= tMax; t += 0.1) {
+        	const y = evaluateFunction(t);
+        	if (y < yMin) yMin = y;
+        	if (y > yMax) yMax = y;
+    	}
+    	// Ajustar para múltiplos de 10
+    	    yMin = Math.floor(yMin / 10) * 10;
+    	    yMax = Math.ceil(yMax / 10) * 10;
+
+    // Garantir no máximo 10 divisões no eixo Y
+    	    const range = yMax - yMin;
+    	    if (range > 0) {
+        	const maxDivisions = 10;
+        	const step = Math.ceil(range / maxDivisions / 10) * 10;
+        	yMax = yMin + step * Math.ceil(range / step);
+    	    }
+	}
+
+
+        // Inicialização
+        updateYRange();
+        updateInfoPanel();
+        drawGraph();
+    </script>
+</body>
+</html>
