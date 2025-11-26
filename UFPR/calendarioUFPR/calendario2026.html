@@ -1,0 +1,622 @@
+<!DOCTYPE html>
+<html lang="pt-br">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Calendário UFPR 2026</title>
+  <!-- Google Analytics -->
+  <script async src="https://www.googletagmanager.com/gtag/js?id=G-83359NB2SY"></script>
+  <script>
+    window.dataLayer = window.dataLayer || [];
+    function gtag(){dataLayer.push(arguments);}
+    gtag('js', new Date());
+    gtag('config', 'G-83359NB2SY');
+  </script>
+  <style>
+    /* Estilos base */
+    .ufprcal-user-active {
+      background: #2196f3 !important;
+      color: #fff !important;
+      border: none !important;
+      box-shadow: 0 2px 4px rgba(33, 150, 243, 0.3) !important;
+    }
+
+    /* Estilos comuns para todos os botões */
+    #ufprcal button {
+      transition: all 0.2s ease-in-out;
+      box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+      border: 1.5px solid transparent;
+      font-weight: 500;
+      letter-spacing: 0.3px;
+    }
+
+    #ufprcal button:hover {
+      transform: translateY(-1px);
+      box-shadow: 0 4px 8px rgba(0, 0, 0, 0.15);
+    }
+
+    #ufprcal button:active {
+      transform: translateY(1px);
+      box-shadow: 0 1px 2px rgba(0, 0, 0, 0.1);
+    }
+
+    /* Estilos específicos para botões de usuário */
+    #ufprcal-btn-aluno, 
+    #ufprcal-btn-prof {
+      background: #fff;
+      color: #2196f3;
+      border: 1.5px solid #2196f3;
+      padding: clamp(8px, 2vw, 12px) clamp(16px, 3vw, 24px);
+      margin: 4px 2px;
+      font-size: clamp(0.9rem, 2.5vw, 1.1rem);
+      border-radius: 8px;
+      cursor: pointer;
+      flex: 1 1 auto;
+      min-width: 120px;
+      max-width: 200px;
+    }
+
+    #ufprcal-btn-aluno:hover, 
+    #ufprcal-btn-prof:hover {
+      background: #e3f2fd;
+    }
+
+    /* Estilos para botões de semestre */
+    #sem1, 
+    #sem2 {
+      flex: 1 1 auto;
+      min-width: 140px;
+      max-width: 200px;
+      padding: clamp(8px, 2vw, 12px) clamp(12px, 2vw, 20px);
+      font-size: clamp(0.9rem, 2.5vw, 1.1rem);
+      border-radius: 8px;
+      cursor: pointer;
+      font-weight: 600;
+    }
+
+    #sem1 {
+      background: #2196f3;
+      color: #fff;
+      border: none;
+    }
+
+    #sem2 {
+      background: #fff;
+      color: #2196f3;
+      border: 1.5px solid #2196f3;
+    }
+
+    #sem1:hover {
+      background: #1976d2;
+    }
+
+    #sem2:hover {
+      background: #e3f2fd;
+    }
+
+    /* Estilos para botões de filtro */
+    .ufprcal-filter {
+      padding: clamp(6px, 1.5vw, 10px) clamp(10px, 2vw, 16px);
+      border-radius: 8px;
+      cursor: pointer;
+      font-size: clamp(0.85rem, 2.2vw, 1rem);
+      flex: 1 1 auto;
+      min-width: 80px;
+      max-width: 120px;
+      font-weight: 500;
+      background: #fff;
+      color: #02539a;
+      border: 1.5px solid #2196f3;
+    }
+
+    .ufprcal-filter:hover {
+      background: #e3f2fd;
+    }
+
+    .ufprcal-filter-active {
+      background: #2196f3 !important;
+      color: #fff !important;
+      border: none !important;
+      box-shadow: 0 2px 4px rgba(33, 150, 243, 0.3) !important;
+    }
+
+    .ufprcal-filter-active:hover {
+      background: #1976d2 !important;
+    }
+
+    /* Estilo para o campo de busca */
+    #ufprcal-search {
+      width: 90%;
+      max-width: 400px;
+      font-size: clamp(0.9rem, 2.5vw, 1.1rem);
+      padding: clamp(8px, 2vw, 12px) 16px;
+      margin: 4px auto 12px auto;
+      border-radius: 8px;
+      border: 1.5px solid #2196f3;
+      outline: none;
+      transition: all 0.2s ease-in-out;
+      box-shadow: 0 2px 4px rgba(0, 0, 0, 0.05);
+    }
+
+    #ufprcal-search:focus {
+      box-shadow: 0 4px 8px rgba(33, 150, 243, 0.15);
+      border-color: #1976d2;
+    }
+
+    /* Media queries para responsividade */
+    @media (max-width: 600px) {
+      #ufprcal {
+        padding: 0 5px;
+      }
+      
+      #ufprcal-main {
+        padding: 3px 1vw 12px 1vw;
+      }
+
+      #ufprcal-main > div {
+        flex-direction: column !important;
+        gap: 8px !important;
+        padding: 10px !important;
+      }
+
+      #ufprcal-main > div > div:first-child {
+        min-width: auto !important;
+        text-align: left !important;
+      }
+
+      .ufprcal-filter {
+        min-width: 70px !important;
+        max-width: 100px !important;
+        font-size: 0.8rem !important;
+        padding: 6px 8px !important;
+      }
+    }
+
+    @media (max-width: 360px) {
+      .ufprcal-filter {
+        min-width: 60px !important;
+        max-width: 90px !important;
+        font-size: 0.75rem !important;
+        padding: 4px 6px !important;
+      }
+
+      #ufprcal-btn-aluno, 
+      #ufprcal-btn-prof {
+        min-width: 100px !important;
+        font-size: 0.85rem !important;
+      }
+
+      #sem1, 
+      #sem2 {
+        min-width: 120px !important;
+        font-size: 0.85rem !important;
+      }
+    }
+  </style>
+</head>
+<body>
+<div id="ufprcal" style="max-width:800px;margin:0 auto;font-family:sans-serif;background:#f6f9fc;padding:0 10px;">
+  <div style="text-align:center;padding:12px 4px 6px 4px;color:#02539a;">
+    <h1 style="margin: 2px 0 10px 0; font-size: clamp(1.4rem, 4vw, 1.8rem); font-weight: 700; color: #02539a;">
+      Calendário UFPR 2026
+    </h1>
+    <!-- Botões de Aluno/Professor -->
+    <div style="display:flex;justify-content:center;gap:8px;margin-bottom:12px;flex-wrap:wrap;">
+      <button id="ufprcal-btn-aluno" class="ufprcal-user ufprcal-user-active" onclick="ufprcalSetUser('aluno')">Aluno</button>
+      <button id="ufprcal-btn-prof" class="ufprcal-user" onclick="ufprcalSetUser('professor')">Professor</button>
+    </div>
+
+    <!-- Botões de semestre -->
+    <div style="display:flex;justify-content:center;gap:8px;margin-bottom:12px;flex-wrap:wrap;">
+      <button id="sem1" class="ufprcal-sem ufprcal-sem-active" data-sem="1" onclick="ufprcalSetSemester(1)">1º SEMESTRE</button>
+      <button id="sem2" class="ufprcal-sem" data-sem="2" onclick="ufprcalSetSemester(2)">2º SEMESTRE</button>
+    </div>
+
+    <input id="ufprcal-search" type="text" placeholder="Buscar evento..." />
+
+    <!-- Filtros de tipo -->
+    <div style="display:flex;flex-wrap:wrap;justify-content:center;gap:6px;margin:4px 0 16px 0;">
+      <button id="filt-all" class="ufprcal-filter ufprcal-filter-active" data-type="all" onclick="ufprcalSetFilter('all')">Todos</button>
+      <button id="filt-iniciofim" class="ufprcal-filter" data-type="iniciofim" onclick="ufprcalSetFilter('iniciofim')">Início/Fim</button>
+      <button id="filt-exames" class="ufprcal-filter" data-type="exames" onclick="ufprcalSetFilter('exames')">Exames</button>
+      <button id="filt-feriado" class="ufprcal-filter" data-type="feriado" onclick="ufprcalSetFilter('feriado')">Feriados</button>
+      <button id="filt-matricula" class="ufprcal-filter" data-type="matricula" onclick="ufprcalSetFilter('matricula')">Matrícula</button>
+      <button id="filt-nota" class="ufprcal-filter" data-type="nota" onclick="ufprcalSetFilter('nota')">Notas</button>
+      <button id="filt-trancamento" class="ufprcal-filter" data-type="trancamento" onclick="ufprcalSetFilter('trancamento')">Trancamento</button>
+      <button id="filt-evento" class="ufprcal-filter" data-type="evento" onclick="ufprcalSetFilter('evento')">Eventos</button>
+      <button id="filt-prazo" class="ufprcal-filter" data-type="prazo" onclick="ufprcalSetFilter('prazo')">Prazos</button>
+    </div>
+  </div>
+  <div id="ufprcal-main" style="padding:3px 2vw 18px 2vw;"></div>
+  <script>
+function getDiaSemana(dataStr) {
+  const dias = ['domingo', 'segunda', 'terça', 'quarta', 'quinta', 'sexta', 'sábado'];
+  const [ano, mes, dia] = dataStr.split('-').map(Number);
+  const dt = new Date(ano, mes - 1, dia);
+  const diaSemana = dias[dt.getDay()];
+  const emoji = (dt.getDay() === 0 || dt.getDay() === 6) ? ' 😢' : '';
+  return diaSemana + emoji;
+}
+    // ---- Configuração rápida para Google Sites (com onclick) ----
+    const ufprcalEvents=[
+  // Janeiro 2026
+  {date:'2026-01-08', title:'Destrancamento automático de curso', desc:'Discentes que completaram o prazo de trancamento.', type:'trancamento', semester:1, target:'aluno'},
+  {date:'2026-01-09', title:'Destrancamento antecipado de curso (1º semestre)', desc:'Solicitação no SIGA até 27/02.', type:'trancamento', semester:1, target:'aluno'},
+  {date:'2026-01-14', title:'Avaliação de Cursos e Disciplinas 2025/2', desc:'Período de 14/01 a 12/03.', type:'evento', semester:1, target:'ambos'},
+  {date:'2026-01-22', title:'Feriado em Palotina', desc:'Padroeiro do Município.', type:'feriado', semester:1, target:'ambos'},
+  {date:'2026-01-26', title:'Processamento da oferta de turmas (1º semestre)', desc:'De 26 a 28/01.', type:'matricula', semester:1, target:'professor'},
+  {date:'2026-01-29', title:'Solicitação de matrícula no SIGA (1º semestre)', desc:'De 29/01 a 02/02 para disciplinas anuais e semestrais.', type:'matricula', semester:1, target:'aluno'},
+
+  // Fevereiro 2026
+  {date:'2026-02-03', title:'Trancamento de curso sem matrícula (1º semestre)', desc:'Alunos solicitam no SIGA de 03/02 a 06/03.', type:'trancamento', semester:1, target:'aluno'},
+  {date:'2026-02-03', title:'Registro de trancamento pela Coordenação', desc:'Coordenações registram de 03/02 a 20/03.', type:'trancamento', semester:1, target:'professor'},
+  {date:'2026-02-03', title:'Processamento de matrículas dos veteranos', desc:'03 e 04/02 pela AGTIC.', type:'matricula', semester:1, target:'ambos'},
+  {date:'2026-02-05', title:'Alteração de vagas nas turmas', desc:'Coordenações ajustam em 05 e 06/02.', type:'matricula', semester:1, target:'professor'},
+  {date:'2026-02-05', title:'Ajuste on-line de matrícula', desc:'Alunos solicitam em 05 e 06/02.', type:'matricula', semester:1, target:'aluno'},
+  {date:'2026-02-09', title:'Processamento dos ajustes on-line', desc:'', type:'matricula', semester:1, target:'professor'},
+  {date:'2026-02-10', title:'Dispensa de pré/co-requisito (solicitação)', desc:'Alunos solicitam de 10 a 20/02.', type:'prazo', semester:1, target:'aluno'},
+  {date:'2026-02-10', title:'Dispensa de pré/co-requisito (deliberação)', desc:'Colegiados deliberam de 10 a 27/02.', type:'prazo', semester:1, target:'professor'},
+  {date:'2026-02-10', title:'Ajustes de matrícula nas Coordenações', desc:'Solicitação de 10/02 a 04/03 (calendário de cada curso).', type:'matricula', semester:1, target:'aluno'},
+  {date:'2026-02-10', title:'Registro dos ajustes de matrícula no SIGA', desc:'Coordenações registram de 10/02 a 06/03.', type:'matricula', semester:1, target:'professor'},
+  {date:'2026-02-12', title:'Carga dos calouros no SIGA', desc:'12 e 13/02.', type:'matricula', semester:1, target:'professor'},
+  {date:'2026-02-16', title:'Ponto facultativo: Carnaval', desc:'16 e 17/02.', type:'feriado', semester:1, target:'ambos'},
+  {date:'2026-02-18', title:'Quarta-feira de Cinzas', desc:'', type:'feriado', semester:1, target:'ambos'},
+  {date:'2026-02-23', title:'Início do período letivo 2026/1', desc:'Disciplinas anuais e semestrais.', type:'iniciofim', semester:1, target:'ambos'},
+  {date:'2026-02-23', title:'Início do Programa de Monitoria (1º semestre)', desc:'', type:'evento', semester:1, target:'ambos'},
+  {date:'2026-02-23', title:'Confirmação de matrícula dos ingressantes', desc:'De 23 a 25/02.', type:'matricula', semester:1, target:'aluno'},
+  {date:'2026-02-23', title:'Lançamento da confirmação de matrícula no SIGA', desc:'Coordenações: 23 a 26/02.', type:'matricula', semester:1, target:'professor'},
+  {date:'2026-02-23', title:'Recepção dos ingressantes', desc:'De 23 a 27/02.', type:'evento', semester:1, target:'ambos'},
+  {date:'2026-02-23', title:'Semana de planejamento acadêmico (Setor Litoral)', desc:'De 23 a 27/02.', type:'evento', semester:1, target:'professor'},
+  {date:'2026-02-23', title:'Solicitação de exames de adiantamento', desc:'De 23/02 a 04/03 nas Coordenações.', type:'prazo', semester:1, target:'aluno'},
+  {date:'2026-02-23', title:'Solicitação de equivalência pelos ingressantes', desc:'De 23/02 a 13/03 (vaga confirmada até 25/02).', type:'prazo', semester:1, target:'aluno'},
+  {date:'2026-02-23', title:'Registro de equivalências no SIGA', desc:'Coordenações registram de 23/02 a 15/05.', type:'nota', semester:1, target:'professor'},
+  {date:'2026-02-27', title:'Prazo final para destrancamento de curso (1º semestre)', desc:'', type:'trancamento', semester:1, target:'aluno'},
+  {date:'2026-02-27', title:'Prazo final para deliberação de dispensa de pré/co-requisito', desc:'', type:'prazo', semester:1, target:'professor'},
+
+  // Março 2026
+  {date:'2026-03-02', title:'Início do período letivo 2026/1 (Setor Litoral)', desc:'Disciplinas semestrais.', type:'iniciofim', semester:1, target:'ambos'},
+  {date:'2026-03-02', title:'Confirmação de matrícula (Setor Litoral)', desc:'De 02 a 04/03.', type:'matricula', semester:1, target:'aluno'},
+  {date:'2026-03-02', title:'Coordenações lançam confirmações (Setor Litoral)', desc:'De 02 a 05/03.', type:'matricula', semester:1, target:'professor'},
+  {date:'2026-03-02', title:'Recepção de ingressantes (Setor Litoral)', desc:'De 02 a 06/03.', type:'evento', semester:1, target:'ambos'},
+  {date:'2026-03-04', title:'Prazo final para ajuste de matrícula nas Coordenações', desc:'', type:'matricula', semester:1, target:'aluno'},
+  {date:'2026-03-04', title:'Prazo final para solicitar exames de adiantamento', desc:'', type:'prazo', semester:1, target:'aluno'},
+  {date:'2026-03-05', title:'Deliberação de exames de adiantamento', desc:'Colegiados de 05/03 a 02/04.', type:'prazo', semester:1, target:'professor'},
+  {date:'2026-03-06', title:'Prazo final de trancamento sem matrícula (1º semestre)', desc:'', type:'trancamento', semester:1, target:'aluno'},
+  {date:'2026-03-06', title:'Prazo final para Coordenações cadastrarem correções de matrícula', desc:'', type:'matricula', semester:1, target:'professor'},
+  {date:'2026-03-09', title:'Cancelamento de matrícula em disciplinas semestrais', desc:'De 09/03 a 24/04.', type:'trancamento', semester:1, target:'aluno'},
+  {date:'2026-03-09', title:'Trancamento de curso com matrícula (disciplinas semestrais)', desc:'De 09/03 a 24/04.', type:'trancamento', semester:1, target:'aluno'},
+  {date:'2026-03-09', title:'Cancelamento de matrícula em disciplinas anuais', desc:'De 09/03 a 07/08.', type:'trancamento', semester:1, target:'aluno'},
+  {date:'2026-03-09', title:'Trancamento de curso com matrícula (disciplinas anuais)', desc:'De 09/03 a 07/08.', type:'trancamento', semester:1, target:'aluno'},
+  {date:'2026-03-09', title:'Solicitação de matrícula em disciplinas isoladas/eletivas', desc:'09 e 10/03.', type:'matricula', semester:1, target:'aluno'},
+  {date:'2026-03-09', title:'Análise de pedidos de disciplinas isoladas/eletivas', desc:'Departamentos/Coordenações/COPAP: 09 a 11/03.', type:'evento', semester:1, target:'professor'},
+  {date:'2026-03-12', title:'Fim da avaliação de Cursos e Disciplinas 2025/2', desc:'Prazo para resposta da CPA.', type:'evento', semester:1, target:'aluno'},
+  {date:'2026-03-13', title:'Prazo final para ingressantes solicitarem equivalência', desc:'', type:'prazo', semester:1, target:'aluno'},
+  {date:'2026-03-19', title:'Feriado em Pontal do Paraná', desc:'Padroeiro do Município.', type:'feriado', semester:1, target:'ambos'},
+  {date:'2026-03-20', title:'Envio à COPAP de concluintes 2025/2', desc:'Coordenações encaminham processos de colação de grau.', type:'prazo', semester:1, target:'professor'},
+  {date:'2026-03-20', title:'Permanência em curso (concluintes 2025/2)', desc:'Prazo para coordenações encaminharem à COPAP.', type:'prazo', semester:1, target:'professor'},
+  {date:'2026-03-20', title:'Registro de trancamento sem matrícula pela Coordenação', desc:'Prazo final 20/03.', type:'trancamento', semester:1, target:'professor'},
+  {date:'2026-03-27', title:'Correções no histórico escolar (2025/2) - prazo final', desc:'', type:'prazo', semester:1, target:'professor'},
+  {date:'2026-03-27', title:'Ajuste/adicionamento curricular (início 2º semestre) - prazo final', desc:'Colegiados enviam à PROGRAP.', type:'prazo', semester:1, target:'professor'},
+
+  // Abril 2026
+  {date:'2026-04-02', title:'Deliberação sobre exames de adiantamento (prazo final)', desc:'', type:'prazo', semester:1, target:'professor'},
+  {date:'2026-04-03', title:'Feriado: Paixão de Cristo', desc:'', type:'feriado', semester:1, target:'ambos'},
+  {date:'2026-04-06', title:'Aplicação dos exames de adiantamento', desc:'Departamentos de 06 a 24/04.', type:'exames', semester:1, target:'ambos'},
+  {date:'2026-04-06', title:'Entrega de certificados de atividades formativas', desc:'Alunos: 06/04 a 22/05.', type:'prazo', semester:1, target:'aluno'},
+  {date:'2026-04-06', title:'Análise de certificados de atividades formativas', desc:'Comissões: 06/04 a 19/06.', type:'evento', semester:1, target:'professor'},
+  {date:'2026-04-06', title:'Registro dos resultados dos exames de adiantamento', desc:'Departamentos: 06/04 a 08/05.', type:'nota', semester:1, target:'professor'},
+  {date:'2026-04-21', title:'Feriado: Tiradentes', desc:'', type:'feriado', semester:1, target:'ambos'},
+  {date:'2026-04-24', title:'Prazo final para cancelamento de matrícula (disciplinas semestrais)', desc:'', type:'trancamento', semester:1, target:'aluno'},
+  {date:'2026-04-24', title:'Prazo final para trancamento de curso com matrícula (1º semestre)', desc:'', type:'trancamento', semester:1, target:'aluno'},
+  {date:'2026-04-27', title:'Lançamento de atividades formativas', desc:'Para integralizados no 1º semestre: 27/04 a 07/07.', type:'nota', semester:1, target:'professor'},
+
+  // Maio 2026
+  {date:'2026-05-01', title:'Feriado: Dia do Trabalho', desc:'', type:'feriado', semester:1, target:'ambos'},
+  {date:'2026-05-04', title:'Oferta de turmas do 2º semestre pelas Coordenações', desc:'De 04/05 a 19/06.', type:'matricula', semester:1, target:'professor'},
+  {date:'2026-05-04', title:'Cadastro de docentes e ajustes pelos Departamentos', desc:'De 04/05 a 26/06.', type:'matricula', semester:1, target:'professor'},
+  {date:'2026-05-04', title:'Solicitação de exame de aproveitamento de conhecimento', desc:'Alunos: 04 a 15/05.', type:'prazo', semester:1, target:'aluno'},
+  {date:'2026-05-08', title:'Inativação de turmas sem matrícula', desc:'Prazo final.', type:'matricula', semester:1, target:'professor'},
+  {date:'2026-05-08', title:'Resultados dos exames de adiantamento lançados no SIGA', desc:'Prazo final.', type:'nota', semester:1, target:'professor'},
+  {date:'2026-05-08', title:'Matrícula em Mobilidade Acadêmica (ERI)', desc:'Prazo final para saídas no 1º semestre de 2026.', type:'matricula', semester:1, target:'professor'},
+  {date:'2026-05-08', title:'Registro de trancamento sem matrícula pelas Coordenações', desc:'Prazo final para disciplinas semestrais do 1º semestre.', type:'trancamento', semester:1, target:'professor'},
+  {date:'2026-05-11', title:'Cancelamento de registro acadêmico (sem matrícula)', desc:'Efetivação de 11 a 13/05.', type:'trancamento', semester:1, target:'aluno'},
+  {date:'2026-05-15', title:'Equivalências lançadas para ingressantes 2026/1', desc:'Prazo final.', type:'nota', semester:1, target:'professor'},
+  {date:'2026-05-15', title:'Solicitação de exame de aproveitamento em disciplinas semestrais', desc:'Prazo final.', type:'prazo', semester:1, target:'aluno'},
+  {date:'2026-05-18', title:'Exames de aproveitamento de conhecimento', desc:'Realização de 18/05 a 19/06.', type:'exames', semester:1, target:'ambos'},
+  {date:'2026-05-18', title:'Lançamento de notas de exame de aproveitamento', desc:'Departamentos: 18/05 a 07/07.', type:'nota', semester:1, target:'professor'},
+  {date:'2026-05-22', title:'Entrega de certificados de atividades formativas (prazo final)', desc:'', type:'prazo', semester:1, target:'aluno'},
+  {date:'2026-05-29', title:'Reformulação curricular (previsão 2027) - prazo final', desc:'', type:'prazo', semester:1, target:'professor'},
+  {date:'2026-05-29', title:'Planejamento acadêmico (Setor Litoral)', desc:'', type:'evento', semester:1, target:'professor'},
+
+  // Junho 2026
+  {date:'2026-06-01', title:'Correções de matrícula (excepcional) - pedido à COPAP', desc:'Prazo final para cursos semestrais do 1º semestre.', type:'matricula', semester:1, target:'professor'},
+  {date:'2026-06-04', title:'Feriado: Corpus Christi', desc:'', type:'feriado', semester:1, target:'ambos'},
+  {date:'2026-06-10', title:'Festival das Interações Culturais e Humanísticas (FICH)', desc:'Setor Litoral.', type:'evento', semester:1, target:'ambos'},
+  {date:'2026-06-12', title:'Feriado em Matinhos', desc:'Aniversário do Município.', type:'feriado', semester:1, target:'ambos'},
+  {date:'2026-06-15', title:'Lançamento de notas e frequências (1º semestre)', desc:'De 15/06 a 07/07.', type:'nota', semester:1, target:'professor'},
+  {date:'2026-06-19', title:'Fim da oferta de disciplinas (2º semestre) pelas Coordenações', desc:'Prazo final para tramitar aos Departamentos.', type:'matricula', semester:1, target:'professor'},
+  {date:'2026-06-19', title:'Conclusão da análise de certificados de atividades formativas', desc:'Prazo final das comissões.', type:'evento', semester:1, target:'professor'},
+  {date:'2026-06-22', title:'Período especial 2026/1 - ajuste de matrículas', desc:'De 22/06 a 17/07.', type:'matricula', semester:1, target:'aluno'},
+  {date:'2026-06-24', title:'Feriado em Jandaia do Sul', desc:'Padroeiro do Município.', type:'feriado', semester:1, target:'ambos'},
+  {date:'2026-06-26', title:'Departamentos finalizam ajustes de turmas do 2º semestre', desc:'Prazo final para cadastramento e tramitação.', type:'matricula', semester:1, target:'professor'},
+  {date:'2026-06-26', title:'Período especial 2026/1 - envio de processos à COPAP', desc:'Prazo final.', type:'prazo', semester:1, target:'professor'},
+  {date:'2026-06-27', title:'Último dia letivo do 1º semestre', desc:'Cursos semestrais de 15 e 18 semanas.', type:'iniciofim', semester:1, target:'ambos'},
+  {date:'2026-06-27', title:'Encerramento do Programa de Monitoria (1º semestre)', desc:'', type:'evento', semester:1, target:'ambos'},
+  {date:'2026-06-29', title:'Período especial 2026/1 - cancelamento de matrícula', desc:'De 29/06 a 24/07.', type:'trancamento', semester:1, target:'aluno'},
+  {date:'2026-06-29', title:'Período especial 2026/1 - aulas', desc:'De 29/06 a 31/07.', type:'iniciofim', semester:1, target:'ambos'},
+  {date:'2026-06-29', title:'Exames finais 1º semestre', desc:'De 29/06 a 04/07.', type:'exames', semester:1, target:'ambos'},
+  {date:'2026-06-29', title:'Feriado em Matinhos', desc:'Padroeiro do Município.', type:'feriado', semester:1, target:'ambos'},
+
+  // Julho 2026
+  {date:'2026-07-06', title:'Avaliação de Disciplinas 2026/1', desc:'Alunos respondem de 06/07 a 13/08.', type:'evento', semester:1, target:'aluno'},
+  {date:'2026-07-06', title:'Destrancamento automático de curso', desc:'Para quem completou o prazo de trancamento.', type:'trancamento', semester:2, target:'aluno'},
+  {date:'2026-07-06', title:'Solicitação de destrancamento para 2026/2', desc:'De 06/07 a 07/08 no SIGA.', type:'trancamento', semester:2, target:'aluno'},
+  {date:'2026-07-07', title:'Prazo final para lançamento de notas e frequências (1º semestre)', desc:'Consolidação das turmas semestrais.', type:'nota', semester:1, target:'professor'},
+  {date:'2026-07-07', title:'Resultados de exame de aproveitamento (1º semestre) no SIGA', desc:'Prazo final.', type:'nota', semester:1, target:'professor'},
+  {date:'2026-07-07', title:'Lançamento de atividades formativas (1º semestre) - prazo final', desc:'', type:'nota', semester:1, target:'professor'},
+  {date:'2026-07-07', title:'Disponibilização de turmas para matrícula (2º semestre)', desc:'Prazo final das Coordenações.', type:'matricula', semester:2, target:'professor'},
+  {date:'2026-07-08', title:'Processamento da oferta de turmas (2º semestre)', desc:'De 08 a 10/07.', type:'matricula', semester:2, target:'professor'},
+  {date:'2026-07-13', title:'Solicitação de matrícula (2º semestre)', desc:'De 13 a 15/07.', type:'matricula', semester:2, target:'aluno'},
+  {date:'2026-07-13', title:'ENAPET 2026', desc:'13 a 17/07 em Curitiba.', type:'evento', semester:2, target:'ambos'},
+  {date:'2026-07-16', title:'Trancamento de curso sem matrícula (2º semestre)', desc:'De 16/07 a 14/08.', type:'trancamento', semester:2, target:'aluno'},
+  {date:'2026-07-16', title:'Processamento de matrículas dos veteranos', desc:'16 e 17/07 pela AGTIC.', type:'matricula', semester:2, target:'ambos'},
+  {date:'2026-07-20', title:'Alteração de vagas nas turmas', desc:'20 e 21/07.', type:'matricula', semester:2, target:'professor'},
+  {date:'2026-07-20', title:'Ajuste on-line de matrícula', desc:'20 e 21/07.', type:'matricula', semester:2, target:'aluno'},
+  {date:'2026-07-20', title:'Festival de Inverno da UFPR', desc:'Atividades formativas de 20 a 24/07.', type:'evento', semester:2, target:'ambos'},
+  {date:'2026-07-20', title:'Dispensa de pré/co-requisito (solicitação 2º semestre)', desc:'De 20 a 31/07.', type:'prazo', semester:2, target:'aluno'},
+  {date:'2026-07-20', title:'Dispensa de pré/co-requisito (deliberação 2º semestre)', desc:'Colegiados de 20/07 a 07/08.', type:'prazo', semester:2, target:'professor'},
+  {date:'2026-07-22', title:'Processamento dos ajustes on-line', desc:'', type:'matricula', semester:2, target:'professor'},
+  {date:'2026-07-23', title:'Ajuste de matrícula nas Coordenações', desc:'De 23/07 a 12/08.', type:'matricula', semester:2, target:'aluno'},
+  {date:'2026-07-23', title:'Registro de ajustes no SIGA', desc:'Coordenações: 23/07 a 14/08.', type:'matricula', semester:2, target:'professor'},
+  {date:'2026-07-25', title:'Feriado em Palotina', desc:'Aniversário do Município.', type:'feriado', semester:2, target:'ambos'},
+  {date:'2026-07-27', title:'Período especial 2026/1 - lançamento de notas', desc:'De 27/07 a 07/08.', type:'nota', semester:1, target:'professor'},
+
+  // Agosto 2026
+  {date:'2026-08-03', title:'Início do período letivo 2026/2', desc:'Cursos semestrais de 15 e 18 semanas.', type:'iniciofim', semester:2, target:'ambos'},
+  {date:'2026-08-03', title:'Início do Programa de Monitoria (2º semestre)', desc:'', type:'evento', semester:2, target:'ambos'},
+  {date:'2026-08-03', title:'Confirmação de matrícula de ingressantes (2º semestre)', desc:'De 03 a 05/08.', type:'matricula', semester:2, target:'aluno'},
+  {date:'2026-08-03', title:'Coordenações lançam confirmações (2º semestre)', desc:'De 03 a 06/08.', type:'matricula', semester:2, target:'professor'},
+  {date:'2026-08-03', title:'Recepção de ingressantes 2026/2', desc:'De 03 a 07/08.', type:'evento', semester:2, target:'ambos'},
+  {date:'2026-08-03', title:'Solicitação de exames de adiantamento (2º semestre)', desc:'De 03 a 14/08.', type:'prazo', semester:2, target:'aluno'},
+  {date:'2026-08-03', title:'Solicitação de equivalência pelos ingressantes 2026/2', desc:'De 03/08 a 19/08 (vaga confirmada até 05/08).', type:'prazo', semester:2, target:'aluno'},
+  {date:'2026-08-03', title:'Registro de equivalências 2026/2 no SIGA', desc:'Coordenações: 03/08 a 23/10.', type:'nota', semester:2, target:'professor'},
+  {date:'2026-08-07', title:'Prazo final para destrancamento de curso (2º semestre)', desc:'', type:'trancamento', semester:2, target:'aluno'},
+  {date:'2026-08-07', title:'Prazo final para cancelamento de matrícula em disciplina anual', desc:'', type:'trancamento', semester:2, target:'aluno'},
+  {date:'2026-08-07', title:'Prazo final para trancamento de curso com matrícula (disciplinas anuais)', desc:'', type:'trancamento', semester:2, target:'aluno'},
+  {date:'2026-08-07', title:'Deliberação sobre dispensa de pré/co (prazo final)', desc:'', type:'prazo', semester:2, target:'professor'},
+  {date:'2026-08-12', title:'Prazo final para ajuste de matrícula nas Coordenações', desc:'', type:'matricula', semester:2, target:'aluno'},
+  {date:'2026-08-13', title:'Avaliação de Disciplinas 2026/1 - prazo final', desc:'', type:'evento', semester:1, target:'aluno'},
+  {date:'2026-08-14', title:'Prazo final para solicitar exames de adiantamento (2º semestre)', desc:'', type:'prazo', semester:2, target:'aluno'},
+  {date:'2026-08-14', title:'Trancamento de curso sem matrícula (2º semestre) - prazo final', desc:'', type:'trancamento', semester:2, target:'aluno'},
+  {date:'2026-08-14', title:'Correções de matrícula no SIGA (prazo final)', desc:'Coordenações cadastram.', type:'matricula', semester:2, target:'professor'},
+  {date:'2026-08-17', title:'Deliberação de exames de adiantamento (2º semestre)', desc:'Colegiados: 17/08 a 04/09.', type:'prazo', semester:2, target:'professor'},
+  {date:'2026-08-17', title:'Cancelamento de matrícula em disciplinas semestrais', desc:'De 17/08 a 02/09.', type:'trancamento', semester:2, target:'aluno'},
+  {date:'2026-08-17', title:'Trancamento de curso com matrícula (2º semestre)', desc:'De 17/08 a 02/09.', type:'trancamento', semester:2, target:'aluno'},
+  {date:'2026-08-17', title:'Matrícula em disciplinas isoladas/eletivas (solicitação)', desc:'17 e 18/08.', type:'matricula', semester:2, target:'aluno'},
+  {date:'2026-08-17', title:'Análise de disciplinas isoladas/eletivas', desc:'Departamentos/Coordenações/COPAP: 17 a 19/08.', type:'evento', semester:2, target:'professor'},
+  {date:'2026-08-19', title:'Equivalência para ingressantes 2026/2 - prazo final de solicitação', desc:'', type:'prazo', semester:2, target:'aluno'},
+  {date:'2026-08-24', title:'Entrega de certificados de atividades formativas (2º semestre)', desc:'De 24/08 a 23/10.', type:'prazo', semester:2, target:'aluno'},
+  {date:'2026-08-24', title:'Análise de certificados (2º semestre)', desc:'Comissões: 24/08 a 19/11.', type:'evento', semester:2, target:'professor'},
+  {date:'2026-08-28', title:'Ajuste/adicionamento curricular para 2027/1 - prazo final', desc:'', type:'prazo', semester:2, target:'professor'},
+  {date:'2026-08-28', title:'Registro de trancamento sem matrícula (2º semestre) pelas Coordenações', desc:'Prazo final.', type:'trancamento', semester:2, target:'professor'},
+
+  // Setembro 2026
+  {date:'2026-09-01', title:'Lançamento de atividades formativas (2º semestre)', desc:'De 01/09 a 31/12.', type:'nota', semester:2, target:'professor'},
+  {date:'2026-09-04', title:'Deliberação de exames de adiantamento (prazo final)', desc:'', type:'prazo', semester:2, target:'professor'},
+  {date:'2026-09-07', title:'Feriado: Independência', desc:'', type:'feriado', semester:2, target:'ambos'},
+  {date:'2026-09-08', title:'Feriado em Curitiba', desc:'Padroeira do Município.', type:'feriado', semester:2, target:'ambos'},
+  {date:'2026-09-09', title:'Envio aos Departamentos das solicitações de exames de adiantamento', desc:'Prazo final.', type:'prazo', semester:2, target:'professor'},
+  {date:'2026-09-09', title:'Aplicação de exames de adiantamento', desc:'Departamentos: 09 a 25/09.', type:'exames', semester:2, target:'ambos'},
+  {date:'2026-09-09', title:'Resultados de adiantamento no SIGA', desc:'Departamentos: 09/09 a 09/10.', type:'nota', semester:2, target:'professor'},
+  {date:'2026-09-18', title:'Correções no histórico escolar (1º semestre 2026) - prazo final', desc:'', type:'prazo', semester:2, target:'professor'},
+  {date:'2026-09-18', title:'Envio à COPAP de concluintes 2026/1', desc:'', type:'prazo', semester:2, target:'professor'},
+  {date:'2026-09-18', title:'Permanência em curso (concluintes 2026/1) - prazo para envio', desc:'', type:'prazo', semester:2, target:'professor'},
+
+  // Outubro 2026
+  {date:'2026-10-02', title:'Trancamento de curso com matrícula (2º semestre) - prazo final', desc:'', type:'trancamento', semester:2, target:'aluno'},
+  {date:'2026-10-02', title:'Cancelamento de matrícula em disciplinas semestrais - prazo final', desc:'', type:'trancamento', semester:2, target:'aluno'},
+  {date:'2026-10-06', title:'Mobilidade Acadêmica (ERI) - cadastramento', desc:'Prazo final para saída no 2º semestre de 2026.', type:'matricula', semester:2, target:'professor'},
+  {date:'2026-10-07', title:'Cancelamento de registro acadêmico (sem matrícula)', desc:'Efetivação de 07 a 09/10.', type:'trancamento', semester:2, target:'aluno'},
+  {date:'2026-10-09', title:'Inativação de turmas sem matrícula', desc:'Prazo final.', type:'matricula', semester:2, target:'professor'},
+  {date:'2026-10-09', title:'Resultados de exames de adiantamento (2º semestre)', desc:'Prazo final para registro no SIGA.', type:'nota', semester:2, target:'professor'},
+  {date:'2026-10-12', title:'Feriado: N. Sra. Aparecida', desc:'', type:'feriado', semester:2, target:'ambos'},
+  {date:'2026-10-13', title:'Solicitação de exame de aproveitamento (disciplinas semestrais)', desc:'De 13 a 23/10.', type:'prazo', semester:2, target:'aluno'},
+  {date:'2026-10-19', title:'Festival UFPR da Ciência, Cultura e Inovação / SIEPE', desc:'De 19 a 23/10.', type:'evento', semester:2, target:'ambos'},
+  {date:'2026-10-19', title:'Oferta de turmas para 2027/1 (Coordenações)', desc:'De 19/10 a 23/12.', type:'matricula', semester:2, target:'professor'},
+  {date:'2026-10-19', title:'Departamentos ajustam turmas 2027/1', desc:'De 19 a 30/12.', type:'matricula', semester:2, target:'professor'},
+  {date:'2026-10-23', title:'Trancamento de curso sem matrícula (2º semestre) - prazo final', desc:'', type:'trancamento', semester:2, target:'professor'},
+  {date:'2026-10-23', title:'Registro de equivalências para ingressantes 2026/2 - prazo final', desc:'', type:'nota', semester:2, target:'professor'},
+  {date:'2026-10-23', title:'Solicitação de exame de aproveitamento (prazo final)', desc:'', type:'prazo', semester:2, target:'aluno'},
+  {date:'2026-10-23', title:'Entrega de certificados de atividades formativas (2º semestre) - prazo final', desc:'', type:'prazo', semester:2, target:'aluno'},
+  {date:'2026-10-26', title:'Exames de aproveitamento de conhecimento (15 semanas)', desc:'De 26/10 a 13/11.', type:'exames', semester:2, target:'ambos'},
+  {date:'2026-10-28', title:'Feriado: Dia do Servidor Público', desc:'', type:'feriado', semester:2, target:'ambos'},
+  {date:'2026-10-30', title:'Planejamento acadêmico (Setor Litoral)', desc:'', type:'evento', semester:2, target:'professor'},
+  {date:'2026-10-30', title:'Implantação de currículo para novos cursos (início 2028)', desc:'Prazo final para Colegiados encaminharem à PROGRAP.', type:'prazo', semester:2, target:'professor'},
+
+  // Novembro 2026
+  {date:'2026-11-02', title:'Feriado: Finados', desc:'', type:'feriado', semester:2, target:'ambos'},
+  {date:'2026-11-03', title:'Resultados de exames de aproveitamento no SIGA', desc:'Departamentos: 03/11 a 31/12.', type:'nota', semester:2, target:'professor'},
+  {date:'2026-11-15', title:'Feriado: Proclamação da República', desc:'', type:'feriado', semester:2, target:'ambos'},
+  {date:'2026-11-18', title:'Festival FICH (Setor Litoral)', desc:'', type:'evento', semester:2, target:'ambos'},
+  {date:'2026-11-19', title:'Análise de certificados de atividades formativas - prazo final', desc:'', type:'evento', semester:2, target:'professor'},
+  {date:'2026-11-20', title:'Feriado: Consciência Negra', desc:'', type:'feriado', semester:2, target:'ambos'},
+  {date:'2026-11-23', title:'Lançamento de notas/frequências (2º semestre)', desc:'De 23/11 a 19/12.', type:'nota', semester:2, target:'professor'},
+  {date:'2026-11-30', title:'Período especial 2026/2 - ajuste de matrículas', desc:'De 30/11/26 a 15/01/27.', type:'matricula', semester:2, target:'aluno'},
+
+  // Dezembro 2026
+  {date:'2026-12-01', title:'Correções de matrícula (excepcional) - pedido à COPAP', desc:'Para disciplinas 2026 (anuais) e 2026/2.', type:'matricula', semester:2, target:'professor'},
+  {date:'2026-12-04', title:'Período especial 2026/2 - envio de processos à COPAP', desc:'Prazo final.', type:'prazo', semester:2, target:'professor'},
+  {date:'2026-12-05', title:'Último dia letivo do 2º semestre', desc:'Disciplinas anuais e semestrais de 15 e 18 semanas.', type:'iniciofim', semester:2, target:'ambos'},
+  {date:'2026-12-05', title:'Encerramento do Programa de Monitoria (ano e 2º semestre)', desc:'', type:'evento', semester:2, target:'ambos'},
+  {date:'2026-12-07', title:'Exames finais 2026/2', desc:'De 07 a 11/12.', type:'exames', semester:2, target:'ambos'},
+  {date:'2026-12-07', title:'Período especial 2026/2 - cancelamento de matrícula', desc:'De 07/12/26 a 22/01/27.', type:'trancamento', semester:2, target:'aluno'},
+  {date:'2026-12-07', title:'Período especial 2026/2 - aulas', desc:'De 07/12/26 a 12/02/27.', type:'iniciofim', semester:2, target:'ambos'},
+  {date:'2026-12-14', title:'Feriado em Toledo', desc:'Aniversário do Município.', type:'feriado', semester:2, target:'ambos'},
+  {date:'2026-12-14', title:'Feriado em Jandaia do Sul', desc:'Aniversário do Município.', type:'feriado', semester:2, target:'ambos'},
+  {date:'2026-12-19', title:'Prazo final para lançamento de notas (2º semestre)', desc:'Consolidação das turmas semestrais.', type:'nota', semester:2, target:'professor'},
+  {date:'2026-12-20', title:'Feriado em Pontal do Paraná', desc:'Aniversário do Município.', type:'feriado', semester:2, target:'ambos'},
+  {date:'2026-12-23', title:'Oferta de disciplinas 2027/1 - prazo final das Coordenações', desc:'', type:'matricula', semester:2, target:'professor'},
+  {date:'2026-12-25', title:'Feriado: Natal', desc:'', type:'feriado', semester:2, target:'ambos'},
+  {date:'2026-12-30', title:'Departamentos ajustam turmas 2027/1 - prazo final', desc:'', type:'matricula', semester:2, target:'professor'},
+  {date:'2026-12-30', title:'Segunda avaliação final (disciplinas anuais) - protocolo', desc:'Prazo para alunos solicitarem segunda avaliação final.', type:'exames', semester:2, target:'aluno'},
+  {date:'2026-12-31', title:'Resultados de exame de aproveitamento (2º semestre) - prazo final', desc:'', type:'nota', semester:2, target:'professor'},
+  {date:'2026-12-31', title:'Atividades formativas 2026/2 lançadas no histórico - prazo final', desc:'', type:'nota', semester:2, target:'professor'},
+
+  // Janeiro 2027
+  {date:'2027-01-06', title:'Destrancamento de curso para 2027/1', desc:'Solicitação no SIGA de 06/01 a 19/02.', type:'trancamento', semester:2, target:'aluno'},
+  {date:'2027-01-06', title:'Destrancamento automático de curso', desc:'', type:'trancamento', semester:2, target:'aluno'},
+  {date:'2027-01-08', title:'Segunda avaliação final (disciplinas anuais 2026) - prazo final', desc:'', type:'exames', semester:2, target:'aluno'},
+  {date:'2027-01-12', title:'Lançamento de notas da segunda avaliação final', desc:'Prazo final.', type:'nota', semester:2, target:'professor'},
+  {date:'2027-01-12', title:'Disponibilização de turmas para matrícula 2027/1', desc:'Prazo final das Coordenações.', type:'matricula', semester:2, target:'professor'},
+  {date:'2027-01-13', title:'Processamento da oferta de turmas 2027/1', desc:'De 13 a 15/01.', type:'matricula', semester:2, target:'professor'},
+  {date:'2027-01-18', title:'Solicitação de matrícula 2027/1', desc:'De 18 a 22/01.', type:'matricula', semester:2, target:'aluno'},
+  {date:'2027-01-25', title:'Processamento de matrículas dos veteranos 2027/1', desc:'25 e 26/01.', type:'matricula', semester:2, target:'ambos'},
+  {date:'2027-01-27', title:'Alteração de vagas nas turmas 2027/1', desc:'27 e 28/01.', type:'matricula', semester:2, target:'professor'},
+  {date:'2027-01-27', title:'Ajuste on-line de matrícula 2027/1', desc:'27 e 28/01.', type:'matricula', semester:2, target:'aluno'},
+  {date:'2027-01-29', title:'Processamento dos ajustes on-line 2027/1', desc:'', type:'matricula', semester:2, target:'professor'},
+
+  // Fevereiro 2027
+  {date:'2027-02-01', title:'Ajustes de matrícula nas Coordenações 2027/1', desc:'De 01 a 24/02.', type:'matricula', semester:2, target:'aluno'},
+  {date:'2027-02-01', title:'Coordenações cadastram ajustes no SIGA 2027/1', desc:'De 01 a 26/02.', type:'matricula', semester:2, target:'professor'},
+  {date:'2027-02-01', title:'Período especial 2026/2 - lançamento de notas', desc:'De 01/02 a 19/02/27.', type:'nota', semester:2, target:'professor'},
+  {date:'2027-02-08', title:'Carnaval 2027', desc:'08 a 10/02.', type:'feriado', semester:2, target:'ambos'},
+  {date:'2027-02-15', title:'Provável início do período letivo 2027/1', desc:'Inclui estágio curricular.', type:'iniciofim', semester:2, target:'ambos'}
+    ];
+
+
+    const ufprcalICONS={
+      feriado:'🎉',
+      exames:'💀',
+      prazo:'⏰',
+      matricula:'📝',
+      nota:'📊',
+      evento:'📅',
+      trancamento:'🚪',
+      iniciofim:'🏁'
+    };
+    let ufprcalSemester=1,ufprcalType='all',ufprcalSearch='';
+    let ufprcalUser='aluno'; // aluno é o padrão inicial
+
+    window.ufprcalSetUser = function(user) {
+      ufprcalUser = user;
+      document.getElementById('ufprcal-btn-aluno').classList.remove('ufprcal-user-active');
+      document.getElementById('ufprcal-btn-prof').classList.remove('ufprcal-user-active');
+      document.getElementById('ufprcal-btn-aluno').style.background = '#fff';
+      document.getElementById('ufprcal-btn-aluno').style.color = '#2196f3';
+      document.getElementById('ufprcal-btn-aluno').style.border = '1.5px solid #2196f3';
+      document.getElementById('ufprcal-btn-prof').style.background = '#fff';
+      document.getElementById('ufprcal-btn-prof').style.color = '#2196f3';
+      document.getElementById('ufprcal-btn-prof').style.border = '1.5px solid #2196f3';
+      let btn = document.getElementById(user === 'aluno' ? 'ufprcal-btn-aluno' : 'ufprcal-btn-prof');
+      btn.classList.add('ufprcal-user-active');
+      btn.style.background = '#2196f3';
+      btn.style.color = '#fff';
+      btn.style.border = 'none';
+      ufprcalRender();
+    };
+
+    function ufprcalRender(){
+      let evs=ufprcalEvents.filter(e=>e.semester===ufprcalSemester);
+
+      // FILTRO POR USUÁRIO
+      if(ufprcalUser === 'aluno'){
+        evs = evs.filter(e => e.target === 'aluno' || e.target === 'ambos');
+      }
+
+      // filtro por tipo
+      if(ufprcalType!=='all')evs=evs.filter(e=>e.type===ufprcalType);
+
+      // filtro busca
+      if(ufprcalSearch.length>0){
+        const st=ufprcalSearch.toLowerCase();
+        evs=evs.filter(e=>(e.title+e.desc).toLowerCase().includes(st)||ufprcalFmt(e.date).includes(st));
+      }
+evs.sort((a, b) => a.date.localeCompare(b.date));
+const today = (new Date()).toISOString().slice(0,10);
+const futuros = evs.filter(e => e.date >= today);
+const passados = evs.filter(e => e.date < today);
+const ordenados = [...futuros, ...passados];
+
+let html = '';
+if (!ordenados.length) {
+  html = '<div style="color:#999;padding:26px 0;text-align:center;">Nenhum evento.</div>';
+} else ordenados.forEach(e => {
+  let faded=e.date<today?'opacity:.52;filter:grayscale(0.45);background:#ececec;':'';
+  let border={
+    feriado:'#ff9800',
+    prazo:'#f44336',
+    matricula:'#4caf50',
+    nota:'#8e24aa',
+    evento:'#2196f3',
+    trancamento:'#90a4ae',
+    iniciofim:'#ff4a92'
+  }[e.type]||'#2196f3';
+
+  // Adicionar dia da semana para feriados
+  let descExtra = '';
+  if (e.type === 'feriado') {
+    const diaSemana = getDiaSemana(e.date);
+    descExtra = `<span style="font-weight:500;color:#026;">(${diaSemana})</span>`;
+  }
+
+  html += `
+    <div style="display:flex;gap:clamp(8px, 2vw, 12px);background:#fff;border-left:6px solid ${border};
+    border-radius:11px;margin:8px 0;padding:clamp(10px, 2vw, 14px);align-items:flex-start;${faded}">
+      <div style="font-weight:700;font-size:clamp(1rem, 2.5vw, 1.2rem);min-width:55px;color:#02539a;text-align:center;">
+        ${ufprcalFmt(e.date)}
+      </div>
+      <div style="flex:1;">
+        <div style="font-weight:600;font-size:clamp(0.95rem, 2.5vw, 1.1rem);margin-bottom:2px;">
+          <span style="font-size:clamp(1.1rem, 3vw, 1.3rem);">${ufprcalICONS[e.type]||''}</span> ${e.title}
+        </div>
+        <div style="font-size:clamp(0.85rem, 2.2vw, 0.95rem);color:#37474f;line-height:1.4;">
+          ${e.desc||''} ${descExtra}
+        </div>
+      </div>
+    </div>`;
+});
+document.getElementById('ufprcal-main').innerHTML=html;
+    }
+
+    function ufprcalFmt(s){let d=s.split('-');return d[2]+'/'+d[1];}
+
+    window.ufprcalSetSemester=function(sem){
+      ufprcalSemester=sem;
+      document.getElementById('sem1').classList.remove('ufprcal-sem-active');
+      document.getElementById('sem2').classList.remove('ufprcal-sem-active');
+      document.getElementById('sem1').style.background='#fff';
+      document.getElementById('sem1').style.color='#2196f3';
+      document.getElementById('sem1').style.border='1.5px solid #2196f3';
+      document.getElementById('sem2').style.background='#fff';
+      document.getElementById('sem2').style.color='#2196f3';
+      document.getElementById('sem2').style.border='1.5px solid #2196f3';
+      let btn=document.getElementById(sem===1?'sem1':'sem2');
+      btn.classList.add('ufprcal-sem-active');
+      btn.style.background='#2196f3';
+      btn.style.color='#fff';
+      btn.style.border='none';
+      ufprcalRender();
+    };
+
+    window.ufprcalSetFilter=function(type){
+      ufprcalType=type;
+      ['all','iniciofim', 'exames', 'feriado','matricula','nota','trancamento','evento','prazo'].forEach(t=>{
+        let btn=document.getElementById('filt-'+t);
+        btn.classList.remove('ufprcal-filter-active');
+        btn.style.background='#e3f1fc';
+        btn.style.color='#02539a';
+      });
+      let abtn=document.getElementById('filt-'+type);
+      abtn.classList.add('ufprcal-filter-active');
+      abtn.style.background='#2196f3';
+      abtn.style.color='#fff';
+      ufprcalRender();
+    };
+
+    document.getElementById('ufprcal-search').addEventListener('input',function(){
+      ufprcalSearch=this.value.trim();ufprcalRender();
+    });
+
+    ufprcalRender();
+  </script>
+</div>
