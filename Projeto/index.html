@@ -1,0 +1,941 @@
+<!doctype html>
+<html lang="pt-BR">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Planta baixa interativa</title>
+  <style>
+    :root {
+      --panel: #0f172a;
+      --surface: #ffffff;
+      --stroke: #d9e2ec;
+      --accent: #0f6bd6;
+      --grid-gap: 4px;
+    }
+
+    * {
+      box-sizing: border-box;
+    }
+
+    body {
+      margin: 0;
+      min-height: 100vh;
+      font-family: "Fira Sans", "Segoe UI", "Helvetica Neue", sans-serif;
+      background: linear-gradient(145deg, #f7fbff 0%, #e6f3ff 55%, #fefcf7 100%);
+      color: #0b1021;
+      display: flex;
+      justify-content: center;
+      align-items: stretch;
+      padding: 32px;
+    }
+
+    .shell {
+      display: grid;
+      grid-template-columns: 320px 1fr;
+      gap: 20px;
+      width: min(1200px, 100%);
+      background: rgba(255, 255, 255, 0.78);
+      border-radius: 18px;
+      box-shadow: 0 15px 40px rgba(15, 26, 48, 0.1);
+      overflow: hidden;
+      backdrop-filter: blur(6px);
+    }
+
+    .panel {
+      background: var(--panel);
+      color: #dbe9ff;
+      padding: 26px;
+      display: flex;
+      flex-direction: column;
+      gap: 18px;
+    }
+
+    h1 {
+      margin: 0;
+      font-size: 1.35rem;
+      letter-spacing: -0.02em;
+    }
+
+    p {
+      margin: 0;
+      line-height: 1.5;
+    }
+
+    form {
+      display: grid;
+      gap: 12px;
+    }
+
+    label {
+      font-weight: 600;
+      font-size: 0.95rem;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      gap: 10px;
+    }
+
+    .field {
+      display: grid;
+      gap: 6px;
+    }
+
+    input[type="number"] {
+      width: 100%;
+      padding: 10px 12px;
+      border-radius: 10px;
+      border: 1px solid #cbd5e1;
+      background: #f8fafc;
+      color: #0f172a;
+      font-size: 1rem;
+      font-weight: 700;
+    }
+
+    input[type="number"]::-webkit-inner-spin-button,
+    input[type="number"]::-webkit-outer-spin-button {
+      -webkit-appearance: none;
+      margin: 0;
+    }
+
+    .actions {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(150px, 1fr));
+      gap: 10px;
+      margin-top: 4px;
+    }
+
+    button {
+      cursor: pointer;
+      border: none;
+      border-radius: 0;
+      font-weight: 700;
+      letter-spacing: 0.01em;
+      transition: transform 120ms ease, box-shadow 160ms ease, background-color 160ms ease;
+    }
+
+    button:active {
+      transform: translateY(1px);
+    }
+
+    .primary {
+      background: linear-gradient(120deg, #0f6bd6, #0da1d6);
+      color: white;
+      padding: 12px 14px;
+      box-shadow: 0 10px 22px rgba(15, 107, 214, 0.35);
+    }
+
+    .ghost {
+      background: rgba(255, 255, 255, 0.08);
+      color: #dbe9ff;
+      padding: 12px 14px;
+      border: 1px solid rgba(255, 255, 255, 0.12);
+    }
+
+    .palette {
+      display: grid;
+      grid-template-columns: repeat(6, minmax(0, 1fr));
+      gap: 8px;
+      margin-top: 6px;
+    }
+
+    .swatch {
+      height: 38px;
+      border-radius: 10px;
+      border: 2px solid transparent;
+      outline: none;
+      padding: 0;
+    }
+
+    .swatch.is-selected {
+      border-color: #fefefe;
+      box-shadow: 0 0 0 3px rgba(255, 255, 255, 0.25);
+    }
+
+    .notes {
+      font-size: 0.9rem;
+      color: #9ab6dc;
+      display: grid;
+      gap: 6px;
+    }
+
+    .two-cols {
+      display: grid;
+      grid-template-columns: 1fr 1.4fr;
+      gap: 10px;
+    }
+
+    .chip {
+      display: inline-flex;
+      align-items: center;
+      gap: 8px;
+      padding: 8px 10px;
+      background: rgba(255, 255, 255, 0.08);
+      border-radius: 0;
+      border: 1px solid rgba(255, 255, 255, 0.12);
+      color: #dbe9ff;
+      font-weight: 600;
+      font-size: 0.95rem;
+    }
+
+    .chip select {
+      background: transparent;
+      border: none;
+      color: #f7fbff;
+      font-weight: 700;
+      font-size: 0.95rem;
+      padding: 6px 4px;
+    }
+
+    .chip select option {
+      color: #0f172a;
+    }
+
+    .chip-dot {
+      width: 14px;
+      height: 14px;
+      border-radius: 50%;
+      border: 2px solid rgba(255, 255, 255, 0.9);
+      box-shadow: 0 0 0 3px rgba(255, 255, 255, 0.2);
+    }
+
+    .canvas {
+      padding: 26px;
+      display: grid;
+      gap: 12px;
+      background: var(--surface);
+    }
+
+    .canvas-head {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      gap: 12px;
+      flex-wrap: wrap;
+    }
+
+    .status {
+      color: #0f172a;
+      font-weight: 600;
+    }
+
+    .totals {
+      color: #475569;
+      font-weight: 700;
+      font-size: 0.95rem;
+    }
+
+    .board-wrapper {
+      border: 1px solid var(--stroke);
+      background: #f7fbff;
+      border-radius: 14px;
+      padding: 16px;
+      min-height: 420px;
+      display: grid;
+      align-items: start;
+      overflow: auto;
+      box-shadow: inset 0 1px 0 rgba(15, 23, 42, 0.03);
+    }
+
+    .board {
+      display: grid;
+      gap: 0;
+      --cell-size: 22px;
+      position: relative;
+    }
+
+    .cells-layer {
+      display: grid;
+    }
+
+    .pieces-layer {
+      position: absolute;
+      inset: 0;
+      pointer-events: none;
+    }
+
+    .north-indicator {
+      position: absolute;
+      top: 10px;
+      left: 10px;
+      display: inline-flex;
+      align-items: center;
+      gap: 8px;
+      background: rgba(15, 23, 42, 0.06);
+      border: 1px solid #cbd5e1;
+      border-radius: 0;
+      padding: 8px 10px;
+      color: #0f172a;
+      font-weight: 700;
+      font-size: 0.9rem;
+      backdrop-filter: blur(4px);
+      z-index: 2;
+    }
+
+    .north-arrow {
+      width: 24px;
+      height: 24px;
+      border-radius: 0;
+      background: conic-gradient(from 0deg, #0f6bd6 0deg 180deg, #0f172a 180deg 360deg);
+      clip-path: polygon(50% 0%, 100% 60%, 65% 60%, 65% 100%, 35% 100%, 35% 60%, 0% 60%);
+      transform: rotate(-30deg);
+      box-shadow: 0 2px 8px rgba(15, 23, 42, 0.15);
+    }
+
+    .cell {
+      width: var(--cell-size);
+      height: var(--cell-size);
+      background: white;
+      border: 1px solid #cbd5e1;
+      border-radius: 0;
+      box-shadow: 0 1px 2px rgba(15, 23, 42, 0.07);
+      transition: transform 80ms ease, box-shadow 150ms ease, background-color 120ms ease;
+      padding: 0;
+    }
+
+    .cell:hover {
+      transform: translateY(-1px);
+      box-shadow: 0 4px 8px rgba(15, 23, 42, 0.12);
+    }
+
+    .cell.is-empty {
+      background: repeating-linear-gradient(45deg, rgba(15, 23, 42, 0.03) 0, rgba(15, 23, 42, 0.03) 6px, rgba(255, 255, 255, 0.6) 6px, rgba(255, 255, 255, 0.6) 12px);
+    }
+
+    .piece {
+      position: absolute;
+      border-radius: 0;
+      color: #0f172a;
+      font-weight: 700;
+      font-size: 0.95rem;
+      padding: 8px;
+      box-shadow: 0 10px 16px rgba(15, 23, 42, 0.16);
+      border: 2px solid rgba(15, 23, 42, 0.14);
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      text-align: center;
+      pointer-events: auto;
+      user-select: none;
+      touch-action: none;
+      transition: box-shadow 160ms ease, transform 120ms ease;
+    }
+
+    .piece:active {
+      transform: scale(0.99);
+      box-shadow: 0 6px 12px rgba(15, 23, 42, 0.25);
+    }
+
+    .piece-label {
+      background: transparent;
+      padding: 0;
+      border-radius: 0;
+      border: none;
+      box-shadow: none;
+      color: #0f172a;
+      font-size: 1.2rem;
+    }
+
+    .piece-remove {
+      position: absolute;
+      top: 6px;
+      right: 6px;
+      width: 26px;
+      height: 26px;
+      border-radius: 0;
+      border: 1px solid rgba(15, 23, 42, 0.18);
+      background: rgba(255, 255, 255, 0.15);
+      color: #0f172a;
+      font-weight: 800;
+      cursor: pointer;
+      display: grid;
+      place-items: center;
+      font-size: 0.8rem;
+      box-shadow: 0 6px 10px rgba(15, 23, 42, 0.2);
+      pointer-events: auto;
+    }
+
+    @media (max-width: 960px) {
+      body {
+        padding: 16px;
+      }
+
+      .shell {
+        grid-template-columns: 1fr;
+      }
+
+      .panel {
+        border-radius: 16px 16px 0 0;
+      }
+    }
+  </style>
+</head>
+<body>
+  <div class="shell">
+    <aside class="panel">
+      <div>
+        <h1>Dimensione o terreno</h1>
+        <p>Digite as medidas em metros. Cada quadradinho representa 1 m² e pode receber uma cor.</p>
+      </div>
+
+      <form id="dimensions-form">
+        <div class="field">
+          <label for="width">
+            Largura (m)
+            <input id="width" name="width" type="number" min="0.1" step="0.1" max="120" value="27.6" required>
+          </label>
+        </div>
+        <div class="field">
+          <label for="height">
+            Comprimento (m)
+            <input id="height" name="height" type="number" min="0.1" step="0.1" max="120" value="72.5" required>
+          </label>
+        </div>
+
+        <div class="field">
+          <span>Escolha a cor ativa</span>
+          <div class="palette" id="palette"></div>
+        </div>
+
+        <div class="field">
+          <span>Peças prontas (arraste para o grid)</span>
+          <div class="chip" id="piece-chip">
+            <span class="chip-dot" id="piece-dot"></span>
+            <select id="piece-type" style="flex:1;"></select>
+          </div>
+        </div>
+
+        <div class="two-cols">
+          <label for="piece-width" style="display:grid; gap:6px;">
+            <span>Largura da peça (m)</span>
+            <input id="piece-width" name="piece-width" type="number" min="0.5" step="0.1" max="120" value="3" required>
+          </label>
+          <label for="piece-height" style="display:grid; gap:6px;">
+            <span>Comprimento da peça (m)</span>
+            <input id="piece-height" name="piece-height" type="number" min="0.5" step="0.1" max="120" value="3" required>
+          </label>
+        </div>
+
+        <div class="actions">
+          <button type="button" class="ghost" id="add-piece">Adicionar peça</button>
+          <button type="button" class="ghost" id="clear-pieces">Limpar peças</button>
+        </div>
+
+        <div class="actions">
+          <button type="submit" class="primary">Gerar retângulo</button>
+          <button type="button" class="ghost" id="clear-grid">Limpar cores</button>
+          <button type="button" class="ghost" id="save-grid">Salvar desenho</button>
+          <button type="button" class="ghost" id="load-grid">Carregar desenho</button>
+          <input type="file" id="load-file" accept="application/json" style="display:none">
+        </div>
+      </form>
+
+      <div class="notes">
+        <div>• Dica: mantenha cada ambiente com uma cor para enxergar a planta com facilidade.</div>
+        <div>• Limite: até 120 x 120 metros (valores não inteiros geram tiras proporcionais).</div>
+      </div>
+    </aside>
+
+    <section class="canvas">
+      <div class="canvas-head">
+        <div class="status" id="status">Retângulo pronto para gerar.</div>
+        <div style="color:#475569; font-size:0.95rem;">Clique em um quadradinho para colorir ou clique novamente para apagar.</div>
+        <div class="totals" id="totals">Construção: 0 m² (pintado 0 m² + peças 0 m²)</div>
+      </div>
+      <div class="board-wrapper">
+        <div class="board" id="board" aria-label="Quadriculado do terreno">
+          <div class="north-indicator" aria-hidden="true">
+            <span class="north-arrow"></span>
+            <span>Norte (30°)</span>
+          </div>
+        </div>
+      </div>
+    </section>
+  </div>
+
+  <script>
+    const paletteColors = [
+      { name: "Terreno", hex: "#0f6bd6" },
+      { name: "Verde", hex: "#0f9b7f" },
+      { name: "Luz", hex: "#f59e0b" },
+      { name: "Quente", hex: "#ef4444" },
+      { name: "Neutro", hex: "#6b7280" },
+      { name: "Marfim", hex: "#e8d9c5" }
+    ];
+
+    const piecePresets = [
+      { name: "Quarto", color: "#7c3aed", width: 3, height: 3 },
+      { name: "Banheiro", color: "#0ea5e9", width: 3, height: 3 },
+      { name: "Sala", color: "#f59e0b", width: 5, height: 4 },
+      { name: "Cozinha", color: "#ef4444", width: 4, height: 3 },
+      { name: "Garagem", color: "#0f9b7f", width: 3, height: 6 },
+      { name: "Escritório", color: "#1d4ed8", width: 3, height: 3 },
+      { name: "Suíte", color: "#8b5cf6", width: 4, height: 4 },
+      { name: "Lavanderia", color: "#22c55e", width: 3, height: 2 },
+      { name: "Closet", color: "#ec4899", width: 2, height: 2 }
+    ];
+
+    const form = document.getElementById("dimensions-form");
+    const widthInput = document.getElementById("width");
+    const heightInput = document.getElementById("height");
+    const board = document.getElementById("board");
+    const statusText = document.getElementById("status");
+    const totalsText = document.getElementById("totals");
+    const clearButton = document.getElementById("clear-grid");
+    const saveButton = document.getElementById("save-grid");
+    const loadButton = document.getElementById("load-grid");
+    const loadInput = document.getElementById("load-file");
+    const palette = document.getElementById("palette");
+    const pieceType = document.getElementById("piece-type");
+    const pieceDot = document.getElementById("piece-dot");
+    const pieceWidthInput = document.getElementById("piece-width");
+    const pieceHeightInput = document.getElementById("piece-height");
+    const addPieceButton = document.getElementById("add-piece");
+    const clearPiecesButton = document.getElementById("clear-pieces");
+
+    let activeColor = paletteColors[0].hex;
+    let pieces = [];
+    let cellsLayer = null;
+    let piecesLayer = null;
+    let currentCellSize = 22;
+    let rowSegments = [];
+    let colSegments = [];
+    let rowOffset = 0;
+    let colOffset = 0;
+    let rowFractionPx = 0;
+    let colFractionPx = 0;
+    let usableCols = 0;
+    let usableRows = 0;
+    const pieceClickMemory = {};
+
+    function renderPalette() {
+      palette.innerHTML = "";
+      paletteColors.forEach((item, idx) => {
+        const swatch = document.createElement("button");
+        swatch.className = "swatch";
+        swatch.type = "button";
+        swatch.style.background = item.hex;
+        swatch.title = item.name;
+        swatch.dataset.color = item.hex;
+        swatch.addEventListener("click", () => setActiveColor(item.hex, swatch));
+        if (idx === 0) {
+          swatch.classList.add("is-selected");
+        }
+        palette.appendChild(swatch);
+      });
+    }
+
+    function renderPieceOptions() {
+      pieceType.innerHTML = "";
+      piecePresets.forEach((item, idx) => {
+        const opt = document.createElement("option");
+        opt.value = item.name;
+        opt.textContent = item.name;
+        opt.dataset.color = item.color;
+        opt.dataset.width = item.width;
+        opt.dataset.height = item.height;
+        pieceType.appendChild(opt);
+        if (idx === 0) {
+          pieceDot.style.background = item.color;
+          pieceWidthInput.value = item.width;
+          pieceHeightInput.value = item.height;
+        }
+      });
+    }
+
+    function updatePiecePresetDefaults() {
+      const selected = pieceType.selectedOptions[0];
+      if (!selected) return;
+      const color = selected.dataset.color;
+      pieceDot.style.background = color;
+      pieceWidthInput.value = selected.dataset.width;
+      pieceHeightInput.value = selected.dataset.height;
+    }
+
+    // orientação solar removida a pedido do usuário
+
+    function setActiveColor(color, targetButton) {
+      activeColor = color;
+      document.querySelectorAll(".swatch").forEach(btn => btn.classList.toggle("is-selected", btn === targetButton));
+    }
+
+    function updateStatus(width, height) {
+      const fmt = (value) => Number(value).toLocaleString("pt-BR", { minimumFractionDigits: 0, maximumFractionDigits: 2 });
+      const area = (width * height).toLocaleString("pt-BR", { minimumFractionDigits: 2, maximumFractionDigits: 2 });
+      statusText.textContent = `${fmt(width)} m x ${fmt(height)} m | ${area} m²`;
+    }
+
+    function calculatePaintedArea() {
+      if (!cellsLayer) return 0;
+      let total = 0;
+      cellsLayer.querySelectorAll(".cell").forEach(cell => {
+        if (cell.dataset.color) {
+          total += Number(cell.dataset.area || 0);
+        }
+      });
+      return total;
+    }
+
+    function updateTotals() {
+      const painted = calculatePaintedArea();
+      const piecesArea = pieces.reduce((sum, p) => sum + (p.width * p.height), 0);
+      const total = painted + piecesArea;
+      const fmt = (v) => v.toLocaleString("pt-BR", { minimumFractionDigits: 0, maximumFractionDigits: 2 });
+      totalsText.textContent = `Construção: ${fmt(total)} m² (pintado ${fmt(painted)} m² + peças ${fmt(piecesArea)} m²)`;
+    }
+
+    function calculateCellSize(width, height) {
+      const maxCells = Math.max(Math.ceil(width), Math.ceil(height));
+      const base = 29; // redução de ~40% do tamanho original
+      const shrink = Math.max(14, Math.min(base, Math.floor(432 / (maxCells || 1))));
+      return shrink;
+    }
+
+    function buildTrackString(full, fraction, fractionFirst = false) {
+      const parts = [];
+      if (fractionFirst && fraction > 0) parts.push(`calc(var(--cell-size) * ${fraction.toFixed(3)})`);
+      if (full > 0) parts.push(`repeat(${full}, var(--cell-size))`);
+      if (!fractionFirst && fraction > 0) parts.push(`calc(var(--cell-size) * ${fraction.toFixed(3)})`);
+      return parts.join(" ");
+    }
+
+    function fraction(value) {
+      return Number((value % 1).toFixed(3));
+    }
+
+    function buildBoard(width, height) {
+      const maxDimension = 120;
+      if (width <= 0 || height <= 0 || width > maxDimension || height > maxDimension) {
+        alert("Use dimensões entre 0.1 e 120 metros.");
+        return;
+      }
+
+      board.innerHTML = "";
+      const size = calculateCellSize(width, height);
+      currentCellSize = size;
+      board.style.setProperty("--cell-size", `${size}px`);
+      cellsLayer = document.createElement("div");
+      cellsLayer.className = "cells-layer";
+      piecesLayer = document.createElement("div");
+      piecesLayer.className = "pieces-layer";
+      board.appendChild(cellsLayer);
+      board.appendChild(piecesLayer);
+
+      const fullCols = Math.floor(width);
+      const fullRows = Math.floor(height);
+      usableCols = fullCols;
+      usableRows = fullRows;
+      const colFraction = fraction(width);
+      const rowFraction = fraction(height);
+      const hasPartialCol = colFraction > 0;
+      const hasPartialRow = rowFraction > 0;
+      // Frações: linha fracionada em cima, coluna fracionada à direita
+      cellsLayer.style.gridTemplateColumns = buildTrackString(fullCols, colFraction, false);
+      cellsLayer.style.gridTemplateRows = buildTrackString(fullRows, rowFraction, true);
+      colSegments = hydrateSegments(buildSegments(fullCols, colFraction, false));
+      rowSegments = hydrateSegments(buildSegments(fullRows, rowFraction, true));
+      // Offset em metros (número de quadrados) para início da malha inteira
+      colOffset = 0;
+      rowOffset = hasPartialRow ? 1 : 0;
+      colFractionPx = 0;
+      rowFractionPx = hasPartialRow ? rowSegments[0].px : 0;
+
+      const frag = document.createDocumentFragment();
+      const rowsToDraw = fullRows + (hasPartialRow ? 1 : 0);
+      const colsToDraw = fullCols + (hasPartialCol ? 1 : 0);
+
+      for (let r = 0; r < rowsToDraw; r++) {
+        const isFractionRow = hasPartialRow && r === 0;
+        const rowScale = isFractionRow ? rowFraction : 1;
+        for (let c = 0; c < colsToDraw; c++) {
+          const isFractionCol = hasPartialCol && c === colsToDraw - 1;
+          const colScale = isFractionCol ? colFraction : 1;
+          const cell = document.createElement("button");
+          cell.className = "cell is-empty";
+          const area = rowSegments[r].m * colSegments[c].m;
+          cell.dataset.area = area.toFixed(3);
+          if (colScale !== 1 || rowScale !== 1) {
+            cell.style.width = `calc(var(--cell-size) * ${colScale})`;
+            cell.style.height = `calc(var(--cell-size) * ${rowScale})`;
+          }
+          cell.title = `Coluna ${c + 1}, Linha ${r + 1}`;
+          cell.addEventListener("click", () => toggleCellColor(cell));
+          frag.appendChild(cell);
+        }
+      }
+      cellsLayer.appendChild(frag);
+      updateStatus(width, height);
+      clampPiecesToGrid();
+      renderPieces();
+      updateTotals();
+    }
+
+    function toggleCellColor(cell) {
+      const current = cell.dataset.color || "";
+      if (current === activeColor) {
+        cell.dataset.color = "";
+        cell.style.background = "";
+        cell.classList.add("is-empty");
+      } else {
+        cell.dataset.color = activeColor;
+        cell.style.background = activeColor;
+        cell.classList.remove("is-empty");
+      }
+      updateTotals();
+    }
+
+    function clearColors() {
+      if (!cellsLayer) return;
+      cellsLayer.querySelectorAll(".cell").forEach(cell => {
+        cell.dataset.color = "";
+        cell.style.background = "";
+        cell.classList.add("is-empty");
+      });
+      updateTotals();
+    }
+
+    function exportDesign() {
+      const payload = {
+        width: Number(widthInput.value),
+        height: Number(heightInput.value),
+        colors: cellsLayer ? Array.from(cellsLayer.querySelectorAll(".cell")).map(cell => cell.dataset.color || "") : [],
+        pieces
+      };
+      const blob = new Blob([JSON.stringify(payload)], { type: "application/json" });
+      const url = URL.createObjectURL(blob);
+      const anchor = document.createElement("a");
+      anchor.href = url;
+      anchor.download = `planta-${Date.now()}.json`;
+      anchor.click();
+      URL.revokeObjectURL(url);
+    }
+
+    function applyColors(colors) {
+      if (!cellsLayer) return;
+      const cells = cellsLayer.querySelectorAll(".cell");
+      cells.forEach((cell, idx) => {
+        const color = colors[idx];
+        if (color) {
+          cell.dataset.color = color;
+          cell.style.background = color;
+          cell.classList.remove("is-empty");
+        } else {
+          cell.dataset.color = "";
+          cell.style.background = "";
+          cell.classList.add("is-empty");
+        }
+      });
+      updateTotals();
+    }
+
+    function buildSegments(full, fraction, fractionFirst) {
+      const segments = [];
+      if (fractionFirst && fraction > 0) segments.push(fraction);
+      for (let i = 0; i < full; i++) segments.push(1);
+      if (!fractionFirst && fraction > 0) segments.push(fraction);
+      return segments;
+    }
+
+    function hydrateSegments(segments) {
+      return segments.map(size => ({
+        m: size,
+        px: size * currentCellSize
+      }));
+    }
+
+    function snapMeters(value) {
+      return Math.round(value); // alinha ao tamanho do quadradinho (1 m)
+    }
+
+    function snapToGrid(value, offset = 0) {
+      return Math.max(offset, offset + Math.round(value - offset));
+    }
+
+    function clampPiecesToGrid() {
+      const maxW = colOffset + usableCols;
+      const maxH = rowOffset + usableRows;
+      pieces = pieces.map(piece => ({
+        ...piece,
+        width: Math.min(piece.width, maxW),
+        height: Math.min(piece.height, maxH),
+        x: Math.max(colOffset, Math.min(piece.x, Math.max(colOffset, maxW - piece.width))),
+        y: Math.max(rowOffset, Math.min(piece.y, Math.max(rowOffset, maxH - piece.height)))
+      }));
+    }
+
+    function renderPieces() {
+      if (!piecesLayer) return;
+      piecesLayer.innerHTML = "";
+      pieces.forEach(piece => {
+        const el = document.createElement("div");
+        el.className = "piece";
+        el.dataset.id = piece.id;
+        el.style.width = `${piece.width * currentCellSize}px`;
+        el.style.height = `${piece.height * currentCellSize}px`;
+        el.style.left = `${colFractionPx + piece.x * currentCellSize}px`;
+        el.style.top = `${rowFractionPx + piece.y * currentCellSize}px`;
+        el.style.background = piece.color;
+        const letter = (piece.name || "?").trim().charAt(0).toUpperCase() || "?";
+        el.innerHTML = `<span class="piece-label">${letter}</span>`;
+        el.addEventListener("pointerdown", startDragPiece);
+        el.addEventListener("dblclick", handlePieceDoubleClick);
+        piecesLayer.appendChild(el);
+      });
+      updateTotals();
+    }
+
+    function handlePieceDoubleClick(event) {
+      event.preventDefault();
+      const id = event.currentTarget.dataset.id;
+      removePiece(id);
+    }
+
+    function addPiece() {
+      const selected = pieceType.selectedOptions[0];
+      if (!selected) return;
+      const color = selected.dataset.color;
+      const width = Number(pieceWidthInput.value);
+      const height = Number(pieceHeightInput.value);
+      if (width <= 0 || height <= 0) {
+        alert("Use dimensões positivas para a peça.");
+        return;
+      }
+      const newPiece = {
+        id: crypto.randomUUID ? crypto.randomUUID() : String(Date.now() + Math.random()),
+        name: selected.value,
+        color,
+        width: snapMeters(width),
+        height: snapMeters(height),
+        x: colOffset,
+        y: rowOffset
+      };
+      pieces.push(newPiece);
+      clampPiecesToGrid();
+      renderPieces();
+    }
+
+    function clearPieces() {
+      pieces = [];
+      renderPieces();
+      updateTotals();
+    }
+
+    let dragState = null;
+
+    function startDragPiece(event) {
+      const target = event.currentTarget;
+      const id = target.dataset.id;
+      const now = Date.now();
+      const last = pieceClickMemory[id] || 0;
+      if (now - last < 320) {
+        removePiece(id);
+        pieceClickMemory[id] = 0;
+        return;
+      }
+      pieceClickMemory[id] = now;
+      const piece = pieces.find(p => p.id === id);
+      if (!piece || !piecesLayer) return;
+      const layerRect = piecesLayer.getBoundingClientRect();
+      const pieceRect = target.getBoundingClientRect();
+      dragState = {
+        id,
+        offsetX: event.clientX - pieceRect.left,
+        offsetY: event.clientY - pieceRect.top,
+        layerRect
+      };
+      target.setPointerCapture(event.pointerId);
+      target.addEventListener("pointermove", handleDragPiece);
+      target.addEventListener("pointerup", endDragPiece);
+      target.addEventListener("pointercancel", endDragPiece);
+    }
+
+    function handleDragPiece(event) {
+      if (!dragState || !piecesLayer) return;
+      const piece = pieces.find(p => p.id === dragState.id);
+      if (!piece) return;
+      const rawX = event.clientX - dragState.layerRect.left - dragState.offsetX;
+      const rawY = event.clientY - dragState.layerRect.top - dragState.offsetY;
+      const adjustedX = Math.max(0, rawX - colFractionPx);
+      const adjustedY = Math.max(0, rawY - rowFractionPx);
+      const newXMeters = colOffset + snapMeters(adjustedX / currentCellSize);
+      const newYMeters = rowOffset + snapMeters(adjustedY / currentCellSize);
+      const maxW = colOffset + usableCols;
+      const maxH = rowOffset + usableRows;
+      piece.x = Math.max(colOffset, Math.min(newXMeters, Math.max(colOffset, maxW - piece.width)));
+      piece.y = Math.max(rowOffset, Math.min(newYMeters, Math.max(rowOffset, maxH - piece.height)));
+      event.currentTarget.style.left = `${colFractionPx + piece.x * currentCellSize}px`;
+      event.currentTarget.style.top = `${rowFractionPx + piece.y * currentCellSize}px`;
+    }
+
+    function endDragPiece(event) {
+      if (!dragState) return;
+      event.currentTarget.releasePointerCapture(event.pointerId);
+      event.currentTarget.removeEventListener("pointermove", handleDragPiece);
+      event.currentTarget.removeEventListener("pointerup", endDragPiece);
+      event.currentTarget.removeEventListener("pointercancel", endDragPiece);
+      dragState = null;
+      renderPieces();
+      updateTotals();
+    }
+
+    function removePiece(id) {
+      pieces = pieces.filter(p => p.id !== id);
+      renderPieces();
+      updateTotals();
+    }
+
+    function importDesign(file) {
+      const reader = new FileReader();
+      reader.onload = () => {
+        try {
+          const data = JSON.parse(reader.result);
+          if (!data || typeof data.width !== "number" || typeof data.height !== "number" || !Array.isArray(data.colors)) {
+            throw new Error("invalid");
+          }
+          widthInput.value = data.width;
+          heightInput.value = data.height;
+          buildBoard(Number(data.width), Number(data.height));
+          applyColors(data.colors);
+          pieces = Array.isArray(data.pieces) ? data.pieces.map(p => ({
+            id: p.id || String(Math.random()),
+            name: p.name || "Peça",
+            color: p.color || "#e2e8f0",
+            width: Number(p.width) || 1,
+            height: Number(p.height) || 1,
+            x: Number(p.x) || 0,
+            y: Number(p.y) || 0
+          })) : [];
+          clampPiecesToGrid();
+          renderPieces();
+        } catch (err) {
+          alert("Arquivo inválido. Use um JSON exportado pelo app.");
+        } finally {
+          loadInput.value = "";
+        }
+      };
+      reader.readAsText(file);
+    }
+
+    form.addEventListener("submit", event => {
+      event.preventDefault();
+      const width = Number(widthInput.value);
+      const height = Number(heightInput.value);
+      buildBoard(width, height);
+    });
+
+    clearButton.addEventListener("click", clearColors);
+    saveButton.addEventListener("click", exportDesign);
+    loadButton.addEventListener("click", () => loadInput.click());
+    loadInput.addEventListener("change", event => {
+      const [file] = event.target.files || [];
+      if (file) importDesign(file);
+    });
+    pieceType.addEventListener("change", updatePiecePresetDefaults);
+    addPieceButton.addEventListener("click", addPiece);
+    clearPiecesButton.addEventListener("click", clearPieces);
+    renderPalette();
+    renderPieceOptions();
+    buildBoard(Number(widthInput.value), Number(heightInput.value));
+    updateTotals();
+  </script>
+</body>
+</html>
