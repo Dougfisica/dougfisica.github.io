@@ -48,11 +48,7 @@
   <div id="app"></div>
 
   <div class="absolute top-4 left-4 right-4 md:right-auto md:w-96 text-gray-100 glass rounded-xl p-4 space-y-3 control-panel">
-    <div class="flex justify-between items-center">
-      <div>
-        <div class="text-lg font-semibold">Carta Solar</div>
-        <div class="text-xs text-blue-200">Simulação de insolação em tempo real</div>
-      </div>
+    <div class="flex justify-end items-center">
       <button id="locateBtn" class="px-3 py-2 text-sm rounded-md bg-blue-500 hover:bg-blue-600 transition">Usar minha localização</button>
     </div>
     <div class="space-y-2">
@@ -63,25 +59,6 @@
         </label>
         <label class="text-xs text-gray-300">Longitude
           <input id="lonInput" type="number" step="0.0001" class="w-full mt-1 px-2 py-1 rounded bg-slate-800 border border-slate-700 focus:outline-none" value="-51.65039699652715">
-        </label>
-      </div>
-    </div>
-
-    <div class="space-y-2">
-      <div class="flex justify-between text-sm font-semibold text-blue-200">
-        <span>Rotação do Lote</span>
-        <span id="rotationLabel" class="text-gray-300 font-normal">0°</span>
-      </div>
-      <input id="rotationSlider" type="range" min="-360" max="360" value="0" class="w-full range-input">
-      <div class="grid grid-cols-3 gap-2 text-xs text-gray-300">
-        <label>Largura
-          <input id="widthSlider" type="range" min="5" max="30" value="12" class="w-full range-input">
-        </label>
-        <label>Profundidade
-          <input id="depthSlider" type="range" min="5" max="30" value="12" class="w-full range-input">
-        </label>
-        <label>Altura
-          <input id="heightSlider" type="range" min="2" max="15" value="6" class="w-full range-input">
         </label>
       </div>
     </div>
@@ -101,6 +78,25 @@
         <span id="timeLabel" class="text-gray-300 font-normal"></span>
       </div>
       <input id="timeSlider" type="range" min="0" max="1440" value="720" class="w-full range-input">
+    </div>
+
+    <div class="space-y-2">
+      <div class="flex justify-between text-sm font-semibold text-blue-200">
+        <span>Rotação do Lote</span>
+        <span id="rotationLabel" class="text-gray-300 font-normal">0°</span>
+      </div>
+      <input id="rotationSlider" type="range" min="-360" max="360" value="0" class="w-full range-input">
+      <div class="grid grid-cols-3 gap-2 text-xs text-gray-300">
+        <label>Largura
+          <input id="widthSlider" type="range" min="5" max="30" value="12" class="w-full range-input">
+        </label>
+        <label>Profundidade
+          <input id="depthSlider" type="range" min="5" max="30" value="12" class="w-full range-input">
+        </label>
+        <label>Altura
+          <input id="heightSlider" type="range" min="2" max="15" value="6" class="w-full range-input">
+        </label>
+      </div>
     </div>
   </div>
 
@@ -125,7 +121,7 @@
           this.pointer = new THREE.Vector2();
           this.previous = new THREE.Vector2();
           this.activePointers = new Map();
-          this.pinchStartDistance = null;
+          this.pinchPrevDistance = null;
           domElement.addEventListener('pointerdown', this.onPointerDown.bind(this));
           window.addEventListener('pointerup', this.onPointerUp.bind(this));
           window.addEventListener('pointermove', this.onPointerMove.bind(this));
@@ -133,26 +129,42 @@
           domElement.addEventListener('contextmenu', (e) => e.preventDefault());
         }
         onPointerDown(event) {
+          this.activePointers.set(event.pointerId || 0, { x: event.clientX, y: event.clientY });
+          if (this.activePointers.size === 2) {
+            const pts = Array.from(this.activePointers.values());
+            const dx = pts[0].x - pts[1].x;
+            const dy = pts[0].y - pts[1].y;
+            this.pinchPrevDistance = Math.hypot(dx, dy);
+            this.state = 'pinch';
+            return;
+          }
           this.state = event.button === 2 ? 'pan' : 'rotate';
           this.pointer.set(event.clientX, event.clientY);
           this.previous.copy(this.pointer);
         }
-        onPointerUp() { this.state = 'none'; }
+        onPointerUp(event) {
+          if (event.pointerId !== undefined) {
+            this.activePointers.delete(event.pointerId);
+          }
+          if (this.activePointers.size < 2) {
+            this.pinchPrevDistance = null;
+            if (this.state === 'pinch') this.state = 'none';
+          }
+          if (this.activePointers.size === 0) this.state = 'none';
+        }
         onPointerMove(event) {
-          if (event.pointerId) this.activePointers.set(event.pointerId, { x: event.clientX, y: event.clientY });
+          if (event.pointerId !== undefined) this.activePointers.set(event.pointerId, { x: event.clientX, y: event.clientY });
           if (this.activePointers.size === 2) {
             const pts = Array.from(this.activePointers.values());
             const dx = pts[0].x - pts[1].x;
             const dy = pts[0].y - pts[1].y;
             const dist = Math.hypot(dx, dy);
-            if (this.pinchStartDistance === null) {
-              this.pinchStartDistance = dist;
-            } else {
-              const scale = dist / this.pinchStartDistance;
+            if (this.pinchPrevDistance !== null && this.pinchPrevDistance > 0) {
+              const scale = dist / this.pinchPrevDistance;
               this.spherical.radius = THREE.MathUtils.clamp(this.spherical.radius / scale, this.minDistance, this.maxDistance);
-              this.pinchStartDistance = dist;
               this.updateCamera();
             }
+            this.pinchPrevDistance = dist;
             return;
           }
           if (this.state === 'none') return;
