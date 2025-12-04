@@ -1,0 +1,981 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Estudo de Insolação e Carta Solar</title>
+  <link href="https://cdn.jsdelivr.net/npm/tailwindcss@2.2.19/dist/tailwind.min.css" rel="stylesheet">
+  <script src="https://cdn.jsdelivr.net/npm/three@0.158.0/build/three.min.js"></script>
+  <script src="https://cdn.jsdelivr.net/npm/three@0.158.0/examples/js/controls/OrbitControls.js"></script>
+  <script src="https://cdn.jsdelivr.net/npm/suncalc@1.9.0/suncalc.js"></script>
+  <style>
+    body, html { margin: 0; padding: 0; overflow: hidden; background: #0f172a; }
+    canvas { display: block; touch-action: none; }
+    .glass {
+      backdrop-filter: blur(10px);
+      background: rgba(15, 23, 42, 0.6);
+      border: 1px solid rgba(255, 255, 255, 0.08);
+      box-shadow: 0 20px 40px rgba(0,0,0,0.35);
+    }
+    input[type=range] { cursor: pointer; height: 1rem; }
+    input[type=range]::-webkit-slider-thumb { background: #3b82f6; }
+    input[type=range]::-moz-range-thumb { background: #3b82f6; }
+    #app canvas { position: fixed; top: 0; left: 0; z-index: 0; }
+    @media (max-width: 768px) {
+      .control-panel {
+        left: 0.75rem !important;
+        right: 0.75rem !important;
+        top: auto !important;
+        bottom: 0.75rem !important;
+        width: auto !important;
+        max-height: 40vh;
+        overflow-y: auto;
+        padding: 0.75rem;
+        touch-action: pan-y;
+        overscroll-behavior: contain;
+      }
+      .control-panel input, .control-panel button {
+        font-size: 0.9rem;
+      }
+      .control-panel .space-y-3 > * + * { margin-top: 0.5rem; }
+      .control-panel .space-y-2 > * + * { margin-top: 0.35rem; }
+      .control-panel .grid { gap: 0.35rem; }
+      .control-panel .text-lg { font-size: 1.05rem; }
+      .control-panel .text-sm { font-size: 0.9rem; }
+      .control-panel .text-xs { font-size: 0.82rem; }
+    }
+  </style>
+</head>
+<body>
+  <div id="app"></div>
+
+  <div class="absolute top-4 left-4 right-4 md:right-auto md:w-96 text-gray-100 glass rounded-xl p-4 space-y-3 control-panel">
+    <div class="space-y-2">
+      <div class="flex justify-between text-sm font-semibold text-blue-200">
+        <span>Dia do Ano</span>
+        <span id="dateLabel" class="text-gray-300 font-normal"></span>
+      </div>
+      <input id="daySlider" type="range" min="1" max="365" value="172" class="w-full range-input">
+      <div class="flex justify-between text-xs text-gray-300" id="sunTimes"></div>
+    </div>
+
+    <div class="space-y-2">
+      <div class="flex justify-between text-sm font-semibold text-blue-200">
+        <span>Hora do Dia</span>
+        <span id="timeLabel" class="text-gray-300 font-normal"></span>
+      </div>
+      <input id="timeSlider" type="range" min="0" max="1440" value="720" class="w-full range-input">
+    </div>
+
+    <div class="space-y-3 border-t border-slate-800 pt-3">
+      <button id="modeToggle" class="w-full px-3 py-2 text-sm rounded-md bg-blue-600 hover:bg-blue-500 transition text-center font-semibold">Modo construção</button>
+      <div class="grid grid-cols-3 gap-2 text-xs text-gray-300">
+        <label>Largura (m)
+          <input id="blockWidth" type="number" min="0.5" max="27.6" step="0.1" value="3" class="w-full mt-1 px-2 py-1 rounded bg-slate-200 text-black border border-slate-700 focus:outline-none">
+        </label>
+        <label>Profundidade (m)
+          <input id="blockDepth" type="number" min="0.5" max="72.5" step="0.1" value="3" class="w-full mt-1 px-2 py-1 rounded bg-slate-200 text-black border border-slate-700 focus:outline-none">
+        </label>
+        <label>Altura (m)
+          <input id="blockHeight" type="number" min="0.5" max="50" step="0.1" value="6" class="w-full mt-1 px-2 py-1 rounded bg-slate-200 text-black border border-slate-700 focus:outline-none">
+        </label>
+      </div>
+      <div class="text-xs text-gray-400">Passe o mouse para posicionar. Clique para adicionar blocos. Clique em um bloco existente para movê-lo.</div>
+      <div class="flex gap-2">
+        <button id="undoBlock" class="flex-1 px-3 py-2 text-xs rounded-md bg-slate-700 hover:bg-slate-600 transition">Desfazer último bloco</button>
+      </div>
+      <div class="flex gap-2">
+        <button id="saveState" class="flex-1 px-3 py-2 text-xs rounded-md bg-blue-600 hover:bg-blue-500 transition">Salvar estado</button>
+      </div>
+      <div class="text-xs text-gray-400 flex items-center gap-2">
+        <span id="selectionLabel">Nenhum bloco selecionado</span>
+      </div>
+    </div>
+
+    <div class="space-y-2 border-t border-slate-800 pt-3">
+      <div class="flex justify-between text-sm font-semibold text-blue-200">
+        <span>Rotação do Lote</span>
+        <span id="rotationLabel" class="text-gray-300 font-normal">0°</span>
+      </div>
+      <input id="rotationSlider" type="range" min="-360" max="360" value="0" class="w-full range-input">
+    </div>
+
+    <div class="space-y-2 border-t border-slate-800 pt-3">
+      <div class="flex justify-between items-center">
+        <span class="text-sm font-semibold text-blue-200">Geolocalização</span>
+        <button id="locateBtn" class="px-3 py-2 text-sm rounded-md bg-blue-500 hover:bg-blue-600 transition">Usar minha localização</button>
+      </div>
+      <div class="grid grid-cols-2 gap-2">
+        <label class="text-xs text-gray-300">Latitude
+          <input id="latInput" type="number" step="0.0001" class="w-full mt-1 px-2 py-1 rounded bg-slate-800 border border-slate-700 focus:outline-none" value="-23.624563560567147">
+        </label>
+        <label class="text-xs text-gray-300">Longitude
+          <input id="lonInput" type="number" step="0.0001" class="w-full mt-1 px-2 py-1 rounded bg-slate-800 border border-slate-700 focus:outline-none" value="-51.65039699652715">
+        </label>
+      </div>
+    </div>
+  </div>
+
+  <script>
+    // Fallback OrbitControls simplificado caso o CDN falhe.
+    (function () {
+      if (!window.THREE || (THREE.OrbitControls && typeof THREE.OrbitControls === 'function')) return;
+      class SimpleOrbitControls {
+        constructor(camera, domElement) {
+          this.camera = camera;
+          this.domElement = domElement;
+          this.target = new THREE.Vector3();
+          this.enabled = true;
+          this.enableDamping = true;
+          this.dampingFactor = 0.1;
+          this.rotateSpeed = 0.0045;
+          this.zoomSpeed = 0.2;
+          this.panSpeed = 0.0025;
+          this.minDistance = 5;
+          this.maxDistance = 500;
+          this.spherical = new THREE.Spherical().setFromVector3(camera.position.clone().sub(this.target));
+          this.state = 'none';
+          this.pointer = new THREE.Vector2();
+          this.previous = new THREE.Vector2();
+          this.activePointers = new Map();
+          this.pinchPrevDistance = null;
+          domElement.addEventListener('pointerdown', this.onPointerDown.bind(this));
+          window.addEventListener('pointerup', this.onPointerUp.bind(this));
+          window.addEventListener('pointercancel', this.onPointerUp.bind(this));
+          window.addEventListener('pointermove', this.onPointerMove.bind(this));
+          domElement.addEventListener('wheel', this.onWheel.bind(this), { passive: false });
+          domElement.addEventListener('contextmenu', (e) => e.preventDefault());
+        }
+        onPointerDown(event) {
+          if (!this.enabled) return;
+          this.activePointers.set(event.pointerId || 0, { x: event.clientX, y: event.clientY });
+          if (this.activePointers.size === 2) {
+            const pts = Array.from(this.activePointers.values());
+            const dx = pts[0].x - pts[1].x;
+            const dy = pts[0].y - pts[1].y;
+            this.pinchPrevDistance = Math.hypot(dx, dy);
+            this.state = 'pinch';
+            return;
+          }
+          this.state = event.button === 2 ? 'pan' : 'rotate';
+          this.pointer.set(event.clientX, event.clientY);
+          this.previous.copy(this.pointer);
+        }
+        onPointerUp(event) {
+          if (event.pointerId !== undefined) {
+            this.activePointers.delete(event.pointerId);
+          }
+          if (this.activePointers.size < 2) {
+            this.pinchPrevDistance = null;
+            if (this.state === 'pinch') this.state = 'none';
+          }
+          if (this.activePointers.size === 0) this.state = 'none';
+        }
+        onPointerMove(event) {
+          if (event.pointerId !== undefined) this.activePointers.set(event.pointerId, { x: event.clientX, y: event.clientY });
+          if (this.activePointers.size === 2) {
+            const pts = Array.from(this.activePointers.values());
+            const dx = pts[0].x - pts[1].x;
+            const dy = pts[0].y - pts[1].y;
+            const dist = Math.hypot(dx, dy);
+            if (this.pinchPrevDistance !== null && this.pinchPrevDistance > 0) {
+              const scale = dist / this.pinchPrevDistance;
+              this.spherical.radius = THREE.MathUtils.clamp(this.spherical.radius / scale, this.minDistance, this.maxDistance);
+              this.updateCamera();
+            }
+            this.pinchPrevDistance = dist;
+            return;
+          }
+          this.pinchPrevDistance = null;
+          if (this.state === 'none') return;
+          if (!this.enabled) return;
+          this.pointer.set(event.clientX, event.clientY);
+          const dx = this.pointer.x - this.previous.x;
+          const dy = this.pointer.y - this.previous.y;
+          if (this.state === 'rotate') {
+            this.spherical.theta -= dx * this.rotateSpeed;
+            this.spherical.phi -= dy * this.rotateSpeed;
+            const eps = 1e-3;
+            this.spherical.phi = Math.max(eps, Math.min(Math.PI - eps, this.spherical.phi));
+          } else if (this.state === 'pan') {
+            const offset = new THREE.Vector3().subVectors(this.camera.position, this.target);
+            const targetDistance = offset.length() * Math.tan((this.camera.fov * Math.PI) / 360);
+            const panX = (-dx * this.panSpeed * targetDistance) / (this.domElement.clientHeight || 1);
+            const panY = (dy * this.panSpeed * targetDistance) / (this.domElement.clientHeight || 1);
+            const pan = new THREE.Vector3();
+            pan.copy(this.camera.up).setLength(panY);
+            pan.add(new THREE.Vector3().copy(this.camera.up).cross(this.camera.getWorldDirection(new THREE.Vector3())).setLength(panX));
+            this.camera.position.add(pan);
+            this.target.add(pan);
+            this.spherical.setFromVector3(this.camera.position.clone().sub(this.target));
+          }
+          this.previous.copy(this.pointer);
+          this.updateCamera();
+        }
+        onWheel(event) {
+          if (!this.enabled) return;
+          event.preventDefault();
+          const delta = event.deltaY > 0 ? 1 + this.zoomSpeed : 1 - this.zoomSpeed;
+          this.spherical.radius = THREE.MathUtils.clamp(this.spherical.radius * delta, this.minDistance, this.maxDistance);
+          this.updateCamera();
+        }
+        updateCamera() {
+          const offset = new THREE.Vector3().setFromSpherical(this.spherical);
+          this.camera.position.copy(this.target).add(offset);
+          this.camera.lookAt(this.target);
+        }
+        update() { return true; }
+      }
+      THREE.OrbitControls = SimpleOrbitControls;
+      console.warn('OrbitControls CDN indisponível; usando versão simplificada embutida.');
+    })();
+  </script>
+  <script>
+    // Fallback SunCalc implementation (only getPosition/getTimes) in case CDN falha.
+    if (!window.SunCalc) {
+      const rad = Math.PI / 180;
+      const dayMs = 1000 * 60 * 60 * 24;
+      const J1970 = 2440588;
+      const J2000 = 2451545;
+      const e = rad * 23.4397;
+      const J0 = 0.0009;
+
+      const toJulian = (date) => date.valueOf() / dayMs - 0.5 + J1970;
+      const fromJulian = (j) => new Date((j + 0.5 - J1970) * dayMs);
+      const toDays = (date) => toJulian(date) - J2000;
+      const rightAscension = (l, b) => Math.atan2(Math.sin(l) * Math.cos(e) - Math.tan(b) * Math.sin(e), Math.cos(l));
+      const declination = (l, b) => Math.asin(Math.sin(b) * Math.cos(e) + Math.cos(b) * Math.sin(e) * Math.sin(l));
+      const azimuth = (H, phi, dec) => Math.atan2(Math.sin(H), Math.cos(H) * Math.sin(phi) - Math.tan(dec) * Math.cos(phi));
+      const altitude = (H, phi, dec) => Math.asin(Math.sin(phi) * Math.sin(dec) + Math.cos(phi) * Math.cos(dec) * Math.cos(H));
+      const siderealTime = (d, lw) => rad * (280.16 + 360.9856235 * d) - lw;
+      const solarMeanAnomaly = (d) => rad * (357.5291 + 0.98560028 * d);
+      const eclipticLongitude = (M) => {
+        const C = rad * (1.9148 * Math.sin(M) + 0.0200 * Math.sin(2 * M) + 0.0003 * Math.sin(3 * M));
+        const P = rad * 102.9372;
+        return M + C + P + Math.PI;
+      };
+      const sunCoords = (d) => {
+        const M = solarMeanAnomaly(d);
+        const L = eclipticLongitude(M);
+        return { dec: declination(L, 0), ra: rightAscension(L, 0), M, L };
+      };
+      const julianCycle = (d, lw) => Math.round(d - J0 - lw / (2 * Math.PI));
+      const approxTransit = (Ht, lw, n) => J0 + (Ht + lw) / (2 * Math.PI) + n;
+      const solarTransitJ = (ds, M, L) => J2000 + ds + 0.0053 * Math.sin(M) - 0.0069 * Math.sin(2 * L);
+      const hourAngle = (h, phi, dec) => Math.acos((Math.sin(h) - Math.sin(phi) * Math.sin(dec)) / (Math.cos(phi) * Math.cos(dec)));
+      const getSetJ = (h, lw, phi, dec, n, M, L) => {
+        const w = hourAngle(h, phi, dec);
+        const a = approxTransit(w, lw, n);
+        return solarTransitJ(a, M, L);
+      };
+
+      const times = [
+        [-0.833, 'sunrise', 'sunset'],
+        [-0.3, 'sunriseEnd', 'sunsetStart'],
+        [-6, 'dawn', 'dusk'],
+        [-12, 'nauticalDawn', 'nauticalDusk'],
+        [-18, 'nightEnd', 'night'],
+        [6, 'goldenHourEnd', 'goldenHour']
+      ];
+
+      window.SunCalc = {
+        getPosition(date, lat, lng) {
+          const lw = rad * -lng;
+          const phi = rad * lat;
+          const d = toDays(date);
+          const c = sunCoords(d);
+          const H = siderealTime(d, lw) - c.ra;
+          return { azimuth: azimuth(H, phi, c.dec), altitude: altitude(H, phi, c.dec) };
+        },
+        getTimes(date, lat, lng) {
+          const lw = rad * -lng;
+          const phi = rad * lat;
+          const d = toDays(date);
+          const n = julianCycle(d, lw);
+          const ds = approxTransit(0, lw, n);
+          const c = sunCoords(ds);
+          const Jnoon = solarTransitJ(ds, c.M, c.L);
+          const result = { solarNoon: fromJulian(Jnoon), nadir: fromJulian(Jnoon - 0.5) };
+
+          for (let i = 0; i < times.length; i++) {
+            const h = times[i][0] * rad;
+            const Jset = getSetJ(h, lw, phi, c.dec, n, c.M, c.L);
+            const Jrise = Jnoon - (Jset - Jnoon);
+            result[times[i][1]] = fromJulian(Jrise);
+            result[times[i][2]] = fromJulian(Jset);
+          }
+          return result;
+        }
+      };
+      console.warn('SunCalc CDN indisponível, usando fallback interno.');
+    }
+  </script>
+  <script>
+    (() => {
+      const errorOverlay = document.createElement('div');
+      errorOverlay.style.position = 'absolute';
+      errorOverlay.style.top = '0';
+      errorOverlay.style.left = '0';
+      errorOverlay.style.right = '0';
+      errorOverlay.style.padding = '8px 12px';
+      errorOverlay.style.background = 'rgba(220,38,38,0.9)';
+      errorOverlay.style.color = '#fff';
+      errorOverlay.style.fontSize = '14px';
+      errorOverlay.style.display = 'none';
+      errorOverlay.style.zIndex = '50';
+      errorOverlay.textContent = 'Erro ao inicializar WebGL.';
+      document.body.appendChild(errorOverlay);
+
+      function showError(msg) {
+        errorOverlay.textContent = msg;
+        errorOverlay.style.display = 'block';
+      }
+
+      try {
+        if (!window.THREE) throw new Error('Biblioteca Three.js não carregou.');
+        if (!THREE.OrbitControls) throw new Error('OrbitControls não carregou.');
+
+        let renderer;
+        try {
+          renderer = new THREE.WebGLRenderer({ antialias: true });
+        } catch (e) {
+          showError('WebGL não pôde ser iniciado: ' + e.message);
+          return;
+        }
+        renderer.setPixelRatio(Math.min(window.devicePixelRatio || 1, 2));
+        renderer.setSize(window.innerWidth, window.innerHeight);
+        renderer.shadowMap.enabled = true;
+        renderer.shadowMap.type = THREE.PCFSoftShadowMap;
+        renderer.setClearColor(0x0b1223, 1);
+        document.getElementById('app').appendChild(renderer.domElement);
+
+        const scene = new THREE.Scene();
+        const camera = new THREE.PerspectiveCamera(55, window.innerWidth / window.innerHeight, 0.1, 1000);
+        camera.position.set(0, 90, 0); // vista aérea inicial sobre o centro do lote
+        camera.lookAt(0, 0, 0);
+
+        const controls = new THREE.OrbitControls(camera, renderer.domElement);
+        controls.target.set(0, 2, 0);
+        controls.enableDamping = true;
+
+        // Ground and building group so we can rotate the lot.
+        const lotGroup = new THREE.Group();
+        scene.add(lotGroup);
+
+        const lotWidth = 27.6;
+        const lotLength = 72.5;
+
+        function createGroundMaterial(width, length) {
+          const canvas = document.createElement('canvas');
+          canvas.width = canvas.height = 512;
+          const ctx = canvas.getContext('2d');
+          ctx.fillStyle = '#1e293b';
+          ctx.fillRect(0, 0, canvas.width, canvas.height);
+          ctx.strokeStyle = 'rgba(255,255,255,0.08)';
+          ctx.lineWidth = 2;
+          const step = canvas.width / 4;
+          for (let i = 1; i < 4; i++) {
+            const pos = step * i;
+            ctx.beginPath();
+            ctx.moveTo(pos, 0);
+            ctx.lineTo(pos, canvas.height);
+            ctx.stroke();
+            ctx.beginPath();
+            ctx.moveTo(0, pos);
+            ctx.lineTo(canvas.width, pos);
+            ctx.stroke();
+          }
+          const texture = new THREE.CanvasTexture(canvas);
+          texture.wrapS = texture.wrapT = THREE.RepeatWrapping;
+          texture.repeat.set(width / 4, length / 4);
+          texture.anisotropy = 4;
+          return new THREE.MeshStandardMaterial({
+            map: texture,
+            color: 0x3f7b3f,
+            roughness: 0.95,
+            metalness: 0.05
+          });
+        }
+
+        const groundGeo = new THREE.PlaneGeometry(lotWidth, lotLength);
+        const groundMat = createGroundMaterial(lotWidth, lotLength);
+        const ground = new THREE.Mesh(groundGeo, groundMat);
+        ground.rotation.x = -Math.PI / 2;
+        ground.receiveShadow = true;
+        lotGroup.add(ground);
+
+      // Label "FRENTE" na borda frontal (eixo +Z é norte; a frente será voltada para +Z antes da rotação do lote)
+      const faceCanvas = document.createElement('canvas');
+      faceCanvas.width = 512;
+      faceCanvas.height = 256;
+      const faceCtx = faceCanvas.getContext('2d');
+      faceCtx.fillStyle = 'rgba(15,23,42,0.75)';
+      faceCtx.fillRect(0, 0, faceCanvas.width, faceCanvas.height);
+      faceCtx.font = 'bold 120px sans-serif';
+      faceCtx.fillStyle = '#38bdf8';
+      faceCtx.textAlign = 'center';
+      faceCtx.textBaseline = 'middle';
+      faceCtx.fillText('FRENTE', faceCanvas.width / 2, faceCanvas.height / 2);
+      const faceTex = new THREE.CanvasTexture(faceCanvas);
+      const faceMat = new THREE.MeshBasicMaterial({ map: faceTex, transparent: true, depthWrite: false });
+      const facePlane = new THREE.Mesh(new THREE.PlaneGeometry(20, 8), faceMat);
+      facePlane.rotation.x = -Math.PI / 2;
+      facePlane.position.set(0, 0.02, lotLength / 2 - 2);
+      lotGroup.add(facePlane);
+
+        // North marker remains world-aligned; use arrow helper.
+        const northDir = new THREE.Vector3(0, 0, -1);
+        const northArrow = new THREE.ArrowHelper(northDir, new THREE.Vector3(0, 0.05, 0), 16, 0x00bcd4, 3, 1.5);
+        scene.add(northArrow);
+
+        function createCompassTexture() {
+          const size = 512;
+          const c = document.createElement('canvas');
+          c.width = c.height = size;
+          const ctx = c.getContext('2d');
+          ctx.clearRect(0, 0, size, size);
+          ctx.translate(size / 2, size / 2);
+
+          // Outer ring
+          ctx.strokeStyle = 'rgba(255,255,255,0.8)';
+          ctx.lineWidth = 10;
+          ctx.beginPath();
+          ctx.arc(0, 0, size * 0.45, 0, Math.PI * 2);
+          ctx.stroke();
+
+          // Cardinal letters
+          ctx.font = 'bold 120px sans-serif';
+          ctx.textAlign = 'center';
+          ctx.textBaseline = 'middle';
+          ctx.fillStyle = '#ffffff';
+          ctx.strokeStyle = '#0f172a';
+          ctx.lineWidth = 10;
+          const labels = [
+            { txt: 'N', x: 0, y: -size * 0.35, color: '#38bdf8' },
+            { txt: 'S', x: 0, y: size * 0.35, color: '#ffffff' },
+            { txt: 'L', x: size * 0.35, y: 0, color: '#ffffff' }, // Leste
+            { txt: 'O', x: -size * 0.35, y: 0, color: '#ffffff' } // Oeste
+          ];
+          labels.forEach(l => {
+            ctx.fillStyle = l.color;
+            ctx.strokeText(l.txt, l.x, l.y);
+            ctx.fillText(l.txt, l.x, l.y);
+          });
+
+          // North triangle
+          ctx.fillStyle = '#38bdf8';
+          ctx.beginPath();
+          ctx.moveTo(0, -size * 0.48);
+          ctx.lineTo(-size * 0.06, -size * 0.3);
+          ctx.lineTo(size * 0.06, -size * 0.3);
+          ctx.closePath();
+          ctx.fill();
+
+          return new THREE.CanvasTexture(c);
+        }
+
+        const compassTex = createCompassTexture();
+        const compassMat = new THREE.MeshBasicMaterial({ map: compassTex, transparent: true, depthWrite: false });
+        const compass = new THREE.Mesh(new THREE.PlaneGeometry(12, 12), compassMat);
+        compass.rotation.x = -Math.PI / 2;
+        compass.position.set(-lotWidth / 2 + 6, 0.01, -lotLength / 2 + 6);
+        scene.add(compass);
+
+        const ambient = new THREE.HemisphereLight(0x87ceeb, 0x202020, 0.55);
+        scene.add(ambient);
+
+        const sunLight = new THREE.DirectionalLight(0xffffff, 1.0);
+        sunLight.position.set(10, 20, 10);
+        sunLight.castShadow = true;
+        sunLight.shadow.mapSize.set(2048, 2048);
+        sunLight.shadow.camera.near = 1;
+        sunLight.shadow.camera.far = 120;
+        sunLight.shadow.camera.left = -40;
+        sunLight.shadow.camera.right = 40;
+        sunLight.shadow.camera.top = 40;
+        sunLight.shadow.camera.bottom = -40;
+        scene.add(sunLight);
+        scene.add(sunLight.target);
+
+        // Solar path visual elements.
+        const pathMaterial = new THREE.LineBasicMaterial({ color: 0xffd166, transparent: true, opacity: 0.6 });
+        let pathLine = null;
+        const sunSphere = new THREE.Mesh(
+          new THREE.SphereGeometry(0.6, 32, 32),
+          new THREE.MeshBasicMaterial({ color: 0xffe066, emissive: 0xffdd66, emissiveIntensity: 1.2 })
+        );
+        scene.add(sunSphere);
+
+      const lotRotationSlider = document.getElementById('rotationSlider');
+      const rotationLabel = document.getElementById('rotationLabel');
+        const daySlider = document.getElementById('daySlider');
+        const timeSlider = document.getElementById('timeSlider');
+        const timeLabel = document.getElementById('timeLabel');
+        const dateLabel = document.getElementById('dateLabel');
+        const sunTimesLabel = document.getElementById('sunTimes');
+        const latInput = document.getElementById('latInput');
+        const lonInput = document.getElementById('lonInput');
+        const locateBtn = document.getElementById('locateBtn');
+        const blockWidthInput = document.getElementById('blockWidth');
+        const blockDepthInput = document.getElementById('blockDepth');
+        const blockHeightInput = document.getElementById('blockHeight');
+        const modeToggleBtn = document.getElementById('modeToggle');
+        const undoBlockBtn = document.getElementById('undoBlock');
+        const saveStateBtn = document.getElementById('saveState');
+        const selectionLabel = document.getElementById('selectionLabel');
+
+        const stateKey = 'solar-building-state-v1';
+        const blocks = [];
+        const blockMaterial = new THREE.MeshStandardMaterial({ color: 0xf5f5f5, roughness: 0.6, metalness: 0.1 });
+        const ghostMaterial = new THREE.MeshStandardMaterial({ color: 0x22c55e, transparent: true, opacity: 0.35, depthWrite: false });
+        let ghostMesh = null;
+        let buildMode = false;
+        let selectedBlock = null;
+
+        function clamp(v, min, max) { return Math.min(max, Math.max(min, v)); }
+
+        function dayOfYearToDate(day) {
+          const year = new Date().getFullYear();
+          // Usa meia-noite local, não UTC, para alinhar com fuso (ex.: Brasília)
+          return new Date(year, 0, day);
+        }
+
+        function formatTime(date) {
+          if (!date || isNaN(date.getTime())) return '--:--';
+          const h = date.getHours().toString().padStart(2, '0');
+          const m = date.getMinutes().toString().padStart(2, '0');
+          return `${h}:${m}`;
+        }
+
+        // SunCalc azimuth é medido a partir do sul e aumenta no sentido horário.
+        // Convertendo para nosso sistema: +X leste, +Z sul, -Z norte.
+        // SunCalc azimuth é medido a partir do sul e aumenta no sentido horário.
+        // Convertendo para nosso sistema: +X leste, +Z sul, -Z norte.
+        function azAltToVector(azimuth, altitude) {
+          const alt = Math.max(altitude, 0); // não deixar abaixo do plano
+          const x = -Math.sin(azimuth) * Math.cos(alt); // leste é +X
+          const y = Math.sin(alt);
+          const z = Math.cos(azimuth) * Math.cos(alt);
+          return new THREE.Vector3(x, y, z).normalize();
+        }
+
+        function updateDateLabel(date) {
+          const formatter = new Intl.DateTimeFormat('pt-BR', { day: '2-digit', month: 'short' });
+          dateLabel.textContent = formatter.format(date);
+        }
+
+        function updateSunTimes(date, lat, lon) {
+          const times = SunCalc.getTimes(date, lat, lon);
+          sunTimesLabel.textContent = `Nascer: ${formatTime(times.sunrise)} | Pôr: ${formatTime(times.sunset)}`;
+        }
+
+        function getBlockDimensions() {
+          const w = clamp(Number(blockWidthInput.value) || 0, 0.5, lotWidth);
+          const d = clamp(Number(blockDepthInput.value) || 0, 0.5, lotLength);
+          const h = clamp(Number(blockHeightInput.value) || 0, 0.5, 80);
+          blockWidthInput.value = w.toFixed(2);
+          blockDepthInput.value = d.toFixed(2);
+          blockHeightInput.value = h.toFixed(2);
+          return { w, d, h };
+        }
+
+        function ensureGhostMesh() {
+          const dims = getBlockDimensions();
+          if (!ghostMesh) {
+            ghostMesh = new THREE.Mesh(new THREE.BoxGeometry(dims.w, dims.h, dims.d), ghostMaterial.clone());
+            ghostMesh.castShadow = false;
+            ghostMesh.receiveShadow = true;
+            ghostMesh.visible = false;
+            lotGroup.add(ghostMesh);
+          } else {
+            ghostMesh.geometry.dispose();
+            ghostMesh.geometry = new THREE.BoxGeometry(dims.w, dims.h, dims.d);
+          }
+        }
+
+        const raycaster = new THREE.Raycaster();
+        const pointer = new THREE.Vector2();
+
+        function candidateBoxFor(center, dims) {
+          return new THREE.Box3(
+            new THREE.Vector3(center.x - dims.w / 2, 0, center.z - dims.d / 2),
+            new THREE.Vector3(center.x + dims.w / 2, dims.h, center.z + dims.d / 2)
+          );
+        }
+
+        function isInsideLot(box) {
+          return (
+            box.min.x >= -lotWidth / 2 &&
+            box.max.x <= lotWidth / 2 &&
+            box.min.z >= -lotLength / 2 &&
+            box.max.z <= lotLength / 2 &&
+            box.min.y >= -0.001
+          );
+        }
+
+        function intersectsExisting(box, ignoreMesh = null) {
+          return blocks.some(b => b.mesh !== ignoreMesh && box.intersectsBox(b.box));
+        }
+
+        function setGhostValidity(isValid) {
+          if (!ghostMesh) return;
+          ghostMesh.material.color.setHex(isValid ? 0x22c55e : 0xef4444);
+          ghostMesh.material.opacity = isValid ? 0.35 : 0.45;
+          ghostMesh.userData.isValid = isValid;
+        }
+
+        function updateGhostFromPointer(event) {
+          if (!buildMode || !ground) return;
+          ensureGhostMesh();
+          const rect = renderer.domElement.getBoundingClientRect();
+          pointer.x = ((event.clientX - rect.left) / rect.width) * 2 - 1;
+          pointer.y = -((event.clientY - rect.top) / rect.height) * 2 + 1;
+          raycaster.setFromCamera(pointer, camera);
+          const intersects = raycaster.intersectObject(ground);
+          if (!intersects.length) {
+            ghostMesh.visible = false;
+            return;
+          }
+          const hitPointWorld = intersects[0].point.clone();
+          const localPoint = lotGroup.worldToLocal(hitPointWorld);
+          const dims = selectedBlock ? selectedBlock.dims : getBlockDimensions();
+          const center = new THREE.Vector3(localPoint.x, dims.h / 2, localPoint.z);
+          const candidateBox = candidateBoxFor(center, dims);
+          const ignoreMesh = selectedBlock ? selectedBlock.mesh : null;
+          const valid = isInsideLot(candidateBox) && !intersectsExisting(candidateBox, ignoreMesh);
+          setGhostValidity(valid);
+          ghostMesh.position.copy(center);
+          ghostMesh.visible = true;
+          ghostMesh.userData.box = candidateBox;
+          ghostMesh.userData.dims = dims;
+        }
+
+        function placeBlock() {
+          if (!buildMode || !ghostMesh || !ghostMesh.userData.isValid) return;
+          const dims = ghostMesh.userData.dims || getBlockDimensions();
+          const box = ghostMesh.userData.box || candidateBoxFor(ghostMesh.position, dims);
+          const block = new THREE.Mesh(new THREE.BoxGeometry(dims.w, dims.h, dims.d), blockMaterial.clone());
+          block.castShadow = true;
+          block.receiveShadow = true;
+          block.position.copy(ghostMesh.position);
+          lotGroup.add(block);
+          blocks.push({ mesh: block, box: box.clone(), dims });
+        }
+
+        function applyMoveToSelected() {
+          if (!selectedBlock || !ghostMesh || !ghostMesh.userData.isValid) return;
+          const dims = selectedBlock.dims;
+          const box = ghostMesh.userData.box || candidateBoxFor(ghostMesh.position, dims);
+          selectedBlock.mesh.position.copy(ghostMesh.position);
+          selectedBlock.box.copy(box);
+          setSelection(null);
+        }
+
+        function undoLastBlock() {
+          const last = blocks.pop();
+          if (!last) return;
+          lotGroup.remove(last.mesh);
+          last.mesh.geometry.dispose();
+          if (Array.isArray(last.mesh.material)) {
+            last.mesh.material.forEach(m => m.dispose && m.dispose());
+          } else if (last.mesh.material.dispose) {
+            last.mesh.material.dispose();
+          }
+        }
+
+        function clearBlocks() {
+          while (blocks.length) undoLastBlock();
+        }
+
+        function rebuildBlocks(stateBlocks = []) {
+          clearBlocks();
+          stateBlocks.forEach(data => {
+            if (!data || !data.dims || !data.pos) return;
+            const { w, d, h } = data.dims;
+            const block = new THREE.Mesh(new THREE.BoxGeometry(w, h, d), blockMaterial.clone());
+            block.castShadow = true;
+            block.receiveShadow = true;
+            block.position.set(data.pos.x, data.pos.y, data.pos.z);
+            lotGroup.add(block);
+            const box = candidateBoxFor(block.position, { w, d, h });
+            blocks.push({ mesh: block, box: box.clone(), dims: { w, d, h } });
+          });
+          setSelection(null);
+        }
+
+        function saveState() {
+          const state = {
+            lat: Number(latInput.value),
+            lon: Number(lonInput.value),
+            day: Number(daySlider.value),
+            minutes: Number(timeSlider.value),
+            rotation: Number(lotRotationSlider.value),
+            blocks: blocks.map(b => ({
+              dims: b.dims,
+              pos: { x: b.mesh.position.x, y: b.mesh.position.y, z: b.mesh.position.z }
+            }))
+          };
+          try {
+            localStorage.setItem(stateKey, JSON.stringify(state));
+            selectionLabel.textContent = 'Estado salvo';
+            setTimeout(() => { if (!selectedBlock) selectionLabel.textContent = 'Nenhum bloco selecionado'; }, 1500);
+          } catch (e) {
+            console.warn('Falha ao salvar estado', e);
+          }
+        }
+
+        function loadState() {
+          const raw = localStorage.getItem(stateKey);
+          if (!raw) return;
+          try {
+            const data = JSON.parse(raw);
+            if (typeof data.lat === 'number') latInput.value = data.lat;
+            if (typeof data.lon === 'number') lonInput.value = data.lon;
+            if (typeof data.day === 'number') daySlider.value = data.day;
+            if (typeof data.minutes === 'number') timeSlider.value = data.minutes;
+            if (typeof data.rotation === 'number') {
+              lotRotationSlider.value = data.rotation;
+              updateLotRotation();
+            }
+            rebuildBlocks(data.blocks || []);
+            refreshSafe();
+          } catch (e) {
+            console.warn('Falha ao carregar estado', e);
+          }
+        }
+
+        function setSelection(blockRef) {
+          if (selectedBlock && selectedBlock.mesh.material && selectedBlock.mesh.material.emissive) {
+            selectedBlock.mesh.material.emissive.setHex(0x000000);
+          }
+          selectedBlock = blockRef;
+          if (selectedBlock && selectedBlock.mesh.material && selectedBlock.mesh.material.emissive) {
+            selectedBlock.mesh.material.emissive.setHex(0x38bdf8);
+          }
+          selectionLabel.textContent = selectedBlock ? 'Bloco selecionado: clique no terreno para mover' : 'Nenhum bloco selecionado';
+          if (!selectedBlock && ghostMesh) ghostMesh.visible = false;
+        }
+
+        function toggleBuildMode(active) {
+          buildMode = active;
+          controls.enabled = !active;
+          modeToggleBtn.textContent = active ? 'Modo câmera' : 'Modo construção';
+          modeToggleBtn.classList.toggle('bg-blue-600', !active);
+          modeToggleBtn.classList.toggle('bg-slate-700', active);
+          modeToggleBtn.classList.toggle('hover:bg-blue-500', !active);
+          modeToggleBtn.classList.toggle('hover:bg-slate-600', active);
+          if (ghostMesh) {
+            ghostMesh.visible = false;
+          }
+          if (!active) {
+            setSelection(null);
+          }
+        }
+
+        function computeSolarPath(date, lat, lon) {
+          const points = [];
+          // Sample every 30 minutes to draw a smooth arc.
+          for (let minutes = 0; minutes <= 1440; minutes += 30) {
+            const sampleDate = new Date(date.getTime());
+            sampleDate.setHours(0, minutes, 0, 0); // horário local
+            const pos = SunCalc.getPosition(sampleDate, lat, lon);
+            if (pos.altitude > -0.15) { // considera só próximo/acima do horizonte
+              const dir = azAltToVector(pos.azimuth, Math.max(pos.altitude, 0));
+              points.push(dir.clone().multiplyScalar(50));
+            }
+          }
+          return points;
+        }
+
+        function updateSolarPath(date, lat, lon) {
+          if (pathLine) {
+            scene.remove(pathLine);
+            pathLine.geometry.dispose();
+          }
+          const points = computeSolarPath(date, lat, lon);
+          if (points.length < 2) return;
+          const geometry = new THREE.BufferGeometry().setFromPoints(points);
+          pathLine = new THREE.Line(geometry, pathMaterial);
+          scene.add(pathLine);
+        }
+
+        function updateSunPosition(date, lat, lon, minutes) {
+          const current = new Date(date.getTime());
+          current.setHours(0, minutes, 0, 0); // horário local
+          const pos = SunCalc.getPosition(current, lat, lon);
+          const clampedAlt = Math.max(pos.altitude, 0);
+          const dir = azAltToVector(pos.azimuth, clampedAlt);
+          const distance = 80;
+          sunLight.position.copy(dir.clone().multiplyScalar(distance));
+          sunLight.target.position.set(0, 0, 0);
+          sunSphere.position.copy(dir.clone().multiplyScalar(50));
+          const daylight = clamp((pos.altitude + 0.3) / 1.0, 0, 1);
+          const skyColor = new THREE.Color().setHSL(0.6, 0.6, 0.5 * daylight + 0.05);
+          const duskColor = new THREE.Color(0xffcc88);
+          renderer.setClearColor(duskColor.clone().lerp(skyColor, daylight).getHex());
+          ambient.intensity = 0.2 + daylight * 0.5;
+          sunLight.intensity = 0.5 + daylight * 0.9;
+        }
+
+      function updateLotRotation() {
+        const rot = Number(lotRotationSlider.value) * (Math.PI / 180);
+        lotGroup.rotation.y = rot;
+        const rotDeg = Number(lotRotationSlider.value);
+        rotationLabel.textContent = `${rotDeg.toFixed(2)}°`;
+      }
+
+        function updateTimeLabel(minutes) {
+          const h = Math.floor(minutes / 60).toString().padStart(2, '0');
+          const m = Math.floor(minutes % 60).toString().padStart(2, '0');
+          timeLabel.textContent = `${h}:${m}`;
+        }
+
+      function resizeRendererForLayout() {
+        const panelEl = document.querySelector('.control-panel');
+        const isMobile = window.matchMedia('(max-width: 768px)').matches;
+        if (!panelEl || !renderer) return;
+        let availableHeight = window.innerHeight;
+        if (isMobile) {
+          const rect = panelEl.getBoundingClientRect();
+          availableHeight = Math.max(200, rect.top - 8);
+        }
+        renderer.setSize(window.innerWidth, availableHeight);
+        renderer.domElement.style.width = `${window.innerWidth}px`;
+        renderer.domElement.style.height = `${availableHeight}px`;
+        camera.aspect = window.innerWidth / availableHeight;
+        camera.updateProjectionMatrix();
+      }
+
+      function refresh() {
+        const lat = Number(latInput.value);
+        const lon = Number(lonInput.value);
+        const day = Number(daySlider.value);
+        const minutes = Number(timeSlider.value);
+        const date = dayOfYearToDate(day);
+
+          updateDateLabel(date);
+          updateTimeLabel(minutes);
+          updateSunTimes(date, lat, lon);
+          updateSolarPath(date, lat, lon);
+          updateSunPosition(date, lat, lon, minutes);
+          resizeRendererForLayout();
+        }
+        function refreshSafe() {
+          try {
+            refresh();
+            errorOverlay.style.display = 'none';
+          } catch (e) {
+            console.error(e);
+            showError('Erro na simulação: ' + e.message);
+          }
+        }
+
+        locateBtn.addEventListener('click', () => {
+          if (!navigator.geolocation) {
+            alert('Geolocalização não suportada neste navegador.');
+            return;
+          }
+          locateBtn.disabled = true;
+          locateBtn.textContent = 'Localizando...';
+          navigator.geolocation.getCurrentPosition(
+            (pos) => {
+              latInput.value = pos.coords.latitude.toFixed(4);
+              lonInput.value = pos.coords.longitude.toFixed(4);
+              locateBtn.textContent = 'Usar minha localização';
+              locateBtn.disabled = false;
+              refreshSafe();
+            },
+            (err) => {
+              console.warn(err);
+              alert('Não foi possível obter localização.');
+              locateBtn.textContent = 'Usar minha localização';
+              locateBtn.disabled = false;
+            }
+          );
+        });
+
+        // Event listeners
+        [latInput, lonInput, daySlider, timeSlider].forEach(el => el.addEventListener('input', refreshSafe));
+        lotRotationSlider.addEventListener('input', () => { updateLotRotation(); });
+
+        [blockWidthInput, blockDepthInput, blockHeightInput].forEach(el => el.addEventListener('input', () => {
+          ensureGhostMesh();
+          setGhostValidity(false);
+        }));
+
+        modeToggleBtn.addEventListener('click', (e) => {
+          e.preventDefault();
+          toggleBuildMode(!buildMode);
+        });
+
+        undoBlockBtn.addEventListener('click', (e) => {
+          e.preventDefault();
+          undoLastBlock();
+        });
+
+        saveStateBtn.addEventListener('click', (e) => {
+          e.preventDefault();
+          saveState();
+        });
+
+        renderer.domElement.addEventListener('pointermove', (e) => updateGhostFromPointer(e));
+        renderer.domElement.addEventListener('click', (e) => {
+          if (!buildMode) return;
+          const rect = renderer.domElement.getBoundingClientRect();
+          pointer.x = ((e.clientX - rect.left) / rect.width) * 2 - 1;
+          pointer.y = -((e.clientY - rect.top) / rect.height) * 2 + 1;
+          raycaster.setFromCamera(pointer, camera);
+
+          const selectableMeshes = selectedBlock
+            ? blocks.filter(b => b.mesh !== selectedBlock.mesh).map(b => b.mesh)
+            : blocks.map(b => b.mesh);
+          const intersectsBlocks = raycaster.intersectObjects(selectableMeshes);
+          if (!selectedBlock && intersectsBlocks.length) {
+            const hitMesh = intersectsBlocks[0].object;
+            const ref = blocks.find(b => b.mesh === hitMesh);
+            if (ref) {
+              setSelection(ref);
+              ensureGhostMesh();
+              ghostMesh.geometry.dispose();
+              ghostMesh.geometry = new THREE.BoxGeometry(ref.dims.w, ref.dims.h, ref.dims.d);
+              ghostMesh.visible = false;
+            }
+            return;
+          }
+
+          if (selectedBlock) {
+            updateGhostFromPointer(e);
+            applyMoveToSelected();
+            return;
+          }
+
+          updateGhostFromPointer(e);
+          placeBlock();
+        });
+
+        window.addEventListener('resize', () => {
+          resizeRendererForLayout();
+        });
+
+      lotRotationSlider.value = -28.35;
+      updateLotRotation();
+      toggleBuildMode(false);
+      ensureGhostMesh();
+      loadState();
+      refreshSafe();
+      resizeRendererForLayout();
+
+        function animate() {
+          requestAnimationFrame(animate);
+          controls.update();
+          renderer.render(scene, camera);
+        }
+        animate();
+      } catch (e) {
+        console.error(e);
+        showError('Falha ao iniciar: ' + e.message);
+      }
+    })();
+  </script>
+</body>
+</html>
