@@ -369,7 +369,7 @@
           const canvas = document.createElement('canvas');
           canvas.width = canvas.height = 512;
           const ctx = canvas.getContext('2d');
-          ctx.fillStyle = '#1e293b';
+          ctx.fillStyle = '#9ae6b4';
           ctx.fillRect(0, 0, canvas.width, canvas.height);
           ctx.strokeStyle = 'rgba(255,255,255,0.08)';
           ctx.lineWidth = 2;
@@ -391,8 +391,8 @@
           texture.anisotropy = 4;
           return new THREE.MeshStandardMaterial({
             map: texture,
-            color: 0x3f7b3f,
-            roughness: 0.95,
+            color: 0x8fd19e,
+            roughness: 0.9,
             metalness: 0.05
           });
         }
