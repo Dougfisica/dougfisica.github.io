@@ -124,6 +124,8 @@
           this.state = 'none';
           this.pointer = new THREE.Vector2();
           this.previous = new THREE.Vector2();
+          this.activePointers = new Map();
+          this.pinchStartDistance = null;
           domElement.addEventListener('pointerdown', this.onPointerDown.bind(this));
           window.addEventListener('pointerup', this.onPointerUp.bind(this));
           window.addEventListener('pointermove', this.onPointerMove.bind(this));
@@ -137,6 +139,22 @@
         }
         onPointerUp() { this.state = 'none'; }
         onPointerMove(event) {
+          if (event.pointerId) this.activePointers.set(event.pointerId, { x: event.clientX, y: event.clientY });
+          if (this.activePointers.size === 2) {
+            const pts = Array.from(this.activePointers.values());
+            const dx = pts[0].x - pts[1].x;
+            const dy = pts[0].y - pts[1].y;
+            const dist = Math.hypot(dx, dy);
+            if (this.pinchStartDistance === null) {
+              this.pinchStartDistance = dist;
+            } else {
+              const scale = dist / this.pinchStartDistance;
+              this.spherical.radius = THREE.MathUtils.clamp(this.spherical.radius / scale, this.minDistance, this.maxDistance);
+              this.pinchStartDistance = dist;
+              this.updateCamera();
+            }
+            return;
+          }
           if (this.state === 'none') return;
           this.pointer.set(event.clientX, event.clientY);
           const dx = this.pointer.x - this.previous.x;
