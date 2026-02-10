@@ -14,6 +14,7 @@
     <link href="https://fonts.googleapis.com/css2?family=Kalam:wght@400;700&display=swap" rel="stylesheet">
     <link href="https://fonts.googleapis.com/css2?family=Dancing+Script:wght@400;500;600;700&display=swap" rel="stylesheet">
     <link href="https://fonts.googleapis.com/css2?family=Comfortaa:wght@300;400;500;700&display=swap" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Fira+Code:wght@400;600;700&family=Inter:wght@400;600;700&display=swap" rel="stylesheet">
     <!-- Google Analytics -->
     <script async src="https://www.googletagmanager.com/gtag/js?id=G-83359NB2SY"></script>
     <script>
@@ -346,6 +347,62 @@
             font-style: normal;
         }
 
+        /* Laboratory style for Física Experimental 2 */
+        .fisexp1-card {
+            background:
+                repeating-linear-gradient(0deg, transparent 0 23px, rgba(189,195,199,.24) 23px 24px),
+                repeating-linear-gradient(90deg, transparent 0 23px, rgba(189,195,199,.2) 23px 24px),
+                linear-gradient(135deg, rgba(248,249,250,.88), rgba(222,226,230,.84)),
+                rgba(255,255,255,.6);
+            border: 1px solid #BDC3C7;
+            border-radius: 0;
+            box-shadow:
+                0 8px 16px rgba(52,58,64,.09),
+                inset 0 0 0 1px rgba(255,255,255,.35);
+            font-family: 'Inter', sans-serif;
+            color: #343A40;
+            position: relative;
+            overflow: hidden;
+            backdrop-filter: blur(7px);
+        }
+
+        .fisexp1-card:hover {
+            transform: translateY(-4px);
+            box-shadow:
+                0 12px 24px rgba(52,58,64,.14),
+                inset 0 0 0 1px rgba(255,255,255,.4);
+        }
+
+        .fisexp1-card .card-title {
+            background: linear-gradient(135deg, #f5e8e8, #ecdede);
+            color: #0047AB;
+            font-size: 1rem;
+            font-weight: 600;
+            letter-spacing: 0.5px;
+            text-transform: uppercase;
+            font-family: 'Fira Code', monospace;
+            border-bottom: 1px solid #BDC3C7;
+            border-radius: 0;
+        }
+
+        .fisexp1-card .card-info {
+            color: #4f5a64;
+            font-size: 0.93rem;
+            margin-bottom: 0.8rem;
+            font-weight: 600;
+        }
+
+        .fisexp1-card .card-info strong {
+            color: #343A40;
+            font-weight: 700;
+        }
+
+        .fisexp1-card .card-description {
+            color: #5a646f;
+            font-size: 0.86rem;
+            line-height: 1.6;
+        }
+
         .voltar-link {
             display: inline-block;
             margin: 1rem;
@@ -436,6 +493,21 @@
                     </div>
                     <div class="card-description">
                         Disciplina de Física 2 da UFPR Jandaia do Sul
+                    </div>
+                </div>
+            </a>
+
+            <a href="disciplinas/fe1_1s_26.html" class="disciplina-card fisexp1-card">
+                <div class="card-title">Física Experimental 2</div>
+                <div class="card-content">
+                    <div class="card-info">
+                        <strong>Período:</strong> 1º Semestre 2026
+                    </div>
+                    <div class="card-info">
+                        <strong>Turma:</strong> Tarde
+                    </div>
+                    <div class="card-description">
+                        Disciplina de Física Experimental 2 da UFPR Jandaia do Sul
                     </div>
                 </div>
             </a>

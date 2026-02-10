@@ -1,0 +1,226 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Cronograma - Física Experimental 2 (1s 2026)</title>
+  <meta name="description" content="Cronograma de Física Experimental 2 - Turma da Tarde - 1º Semestre 2026">
+  <style>
+    @import url('https://fonts.googleapis.com/css2?family=Fira+Code:wght@400;600;700&family=Inter:wght@400;600;700&display=swap');
+
+    :root {
+      --base: #F8F9FA;
+      --metal: #DEE2E6;
+      --ink: #343A40;
+      --cobalt: #0047AB;
+      --neon: #00FF41;
+      --safety: #FF5722;
+      --glass: rgba(255, 255, 255, 0.58);
+      --line: #BDC3C7;
+    }
+
+    * { box-sizing: border-box; margin: 0; padding: 0; }
+
+    body {
+      font-family: 'Inter', sans-serif;
+      color: var(--ink);
+      min-height: 100vh;
+      background:
+        repeating-linear-gradient(0deg, transparent 0 27px, rgba(189,195,199,.25) 27px 28px),
+        repeating-linear-gradient(90deg, transparent 0 27px, rgba(189,195,199,.2) 27px 28px),
+        linear-gradient(135deg, var(--base), var(--metal));
+      padding: 16px;
+    }
+
+    .hud {
+      position: fixed;
+      font-family: 'Fira Code', monospace;
+      font-size: 12px;
+      color: #5f6b77;
+      background: rgba(248, 249, 250, 0.72);
+      border: 1px dashed #c6ccd2;
+      border-radius: 6px;
+      padding: 6px 9px;
+      z-index: 20;
+      backdrop-filter: blur(4px);
+    }
+
+    .hud.top-right { top: 10px; right: 10px; }
+    .hud.bottom-left { bottom: 10px; left: 10px; }
+
+    .shell { max-width: 1060px; margin: 0 auto; }
+
+    .toolbar {
+      display: flex;
+      flex-wrap: wrap;
+      align-items: center;
+      justify-content: space-between;
+      gap: 10px;
+      padding: 10px;
+      background: rgba(255, 255, 255, 0.65);
+      border: 1px solid var(--line);
+      border-radius: 10px;
+      box-shadow: 0 8px 18px rgba(52, 58, 64, 0.08);
+      margin-bottom: 12px;
+      backdrop-filter: blur(7px);
+    }
+
+    .toolgroup { display: flex; flex-wrap: wrap; gap: 8px; }
+
+    .toolbtn {
+      font-family: 'Fira Code', monospace;
+      text-decoration: none;
+      color: var(--cobalt);
+      border: 1px solid #b6c0c9;
+      background: #eef2f5;
+      padding: 8px 11px;
+      border-radius: 4px;
+      font-size: 12px;
+    }
+
+    .header {
+      background: var(--glass);
+      border: 1px solid var(--line);
+      border-radius: 12px;
+      padding: 16px;
+      margin-bottom: 12px;
+      backdrop-filter: blur(8px);
+      box-shadow: 0 10px 22px rgba(52,58,64,0.1);
+    }
+
+    h1 {
+      font-family: 'Fira Code', monospace;
+      color: var(--cobalt);
+      font-size: 1.2rem;
+      margin-bottom: 4px;
+    }
+
+    .sub { color: #4d5760; }
+
+    .list { display: grid; gap: 10px; }
+
+    .item {
+      background: var(--glass);
+      border: 1px solid var(--line);
+      border-radius: 10px;
+      padding: 11px 12px;
+      backdrop-filter: blur(8px);
+      box-shadow: 0 8px 16px rgba(52, 58, 64, 0.09);
+      display: grid;
+      gap: 4px;
+      position: relative;
+    }
+
+    .item.prova { border-left: 5px solid var(--safety); }
+    .item.sem-aula { border-left: 5px solid var(--neon); }
+
+    .date {
+      font-family: 'Fira Code', monospace;
+      color: var(--cobalt);
+      font-size: 0.85rem;
+      font-weight: 700;
+    }
+
+    .topic { color: #2f3942; font-weight: 600; padding-right: 120px; }
+
+    .tag {
+      position: absolute;
+      top: 9px;
+      right: 10px;
+      font-family: 'Fira Code', monospace;
+      font-size: 0.72rem;
+      border-radius: 4px;
+      padding: 3px 7px;
+      border: 1px solid #adb5bd;
+      background: #eef2f5;
+      color: #2f3942;
+    }
+
+    .tag.prova {
+      background: var(--safety);
+      color: #fff;
+      border-color: #c53f13;
+    }
+
+    .tag.sem-aula {
+      background: var(--neon);
+      color: #111;
+      border-color: #0e9b31;
+    }
+
+    @media (max-width: 700px) {
+      .topic { padding-right: 0; }
+      .tag { position: static; width: fit-content; margin-top: 4px; }
+      .hud { font-size: 10px; }
+    }
+  </style>
+</head>
+<body>
+  <div class="hud top-right">LOG_TIME: <span id="hud-time">--:--:--</span></div>
+  <div class="hud bottom-left">COORD: LAB-SECTOR-FE2 :: MODE=SCHEDULE</div>
+
+  <div class="shell">
+    <nav class="toolbar" aria-label="Barra de Ferramentas">
+      <div class="toolgroup">
+        <a href="../fe1_1s_26.html" class="toolbtn">[ VOLTAR ]</a>
+        <a href="../fe1_1s_26.html" class="toolbtn">PAINEL</a>
+        <a href="notas_fe1_1s_26.html" class="toolbtn">NOTAS</a>
+        <a href="material_extra_fe1_1s_26.html" class="toolbtn">MATERIAL</a>
+      </div>
+    </nav>
+
+    <header class="header">
+      <h1>Cronograma - Física Experimental 2 (Tarde)</h1>
+      <div class="sub">Sexta-feira | 1º semestre 2026</div>
+    </header>
+
+    <main class="list" id="cronograma-list"></main>
+  </div>
+
+  <script>
+    const aulas = [
+      { data: '27/fev/2026', assunto: 'Recepção', tipo: 'sem-aula' },
+      { data: '06/mar/2026', assunto: 'Exp. 1 - Equilíbrio estático (turma A)' },
+      { data: '13/mar/2026', assunto: 'Exp. 1 - Equilíbrio estático (turma B)' },
+      { data: '20/mar/2026', assunto: 'Exp. 2 - Empuxo (turma A)' },
+      { data: '27/mar/2026', assunto: 'Exp. 2 - Empuxo (turma B)' },
+      { data: '03/abr/2026', assunto: 'Feriado', tipo: 'sem-aula' },
+      { data: '10/abr/2026', assunto: 'Exp. 3 - Oscilações: sistema massa-mola vertical (turma A)' },
+      { data: '17/abr/2026', assunto: 'Exp. 3 - Oscilações: sistema massa-mola vertical (turma B)' },
+      { data: '24/abr/2026', assunto: 'Prova 1', tipo: 'prova' },
+      { data: '01/mai/2026', assunto: 'Feriado', tipo: 'sem-aula' },
+      { data: '08/mai/2026', assunto: 'Exp. 4 - Ondas estacionárias em corda (turma A)' },
+      { data: '15/mai/2026', assunto: 'Exp. 4 - Ondas estacionárias em corda (turma B)' },
+      { data: '22/mai/2026', assunto: 'Exp. 5 - Lei do gás ideal e 1ª lei da Termodinâmica (turma A)' },
+      { data: '29/mai/2026', assunto: 'Exp. 5 - Lei do gás ideal e 1ª lei da Termodinâmica (turma B)' },
+      { data: '05/jun/2026', assunto: 'Feriado', tipo: 'sem-aula' },
+      { data: '12/jun/2026', assunto: 'Exp. 6 - Máquina térmica (turma A)' },
+      { data: '19/jun/2026', assunto: 'Exp. 6 - Máquina térmica (turma B)' },
+      { data: '26/jun/2026', assunto: 'Prova 2', tipo: 'prova' },
+      { data: '03/jul/2026', assunto: 'Exame', tipo: 'prova' }
+    ];
+
+    const labels = { prova: 'PROVA', 'sem-aula': 'SEM AULA' };
+    const root = document.getElementById('cronograma-list');
+
+    root.innerHTML = aulas.map((a) => `
+      <article class="item ${a.tipo || ''}">
+        ${a.tipo ? `<span class="tag ${a.tipo}">${labels[a.tipo]}</span>` : ''}
+        <div class="date">${a.data}</div>
+        <div class="topic">${a.assunto}</div>
+      </article>
+    `).join('');
+
+    const hudTime = document.getElementById('hud-time');
+    function updateHudTime() {
+      hudTime.textContent = new Date().toLocaleString('pt-BR', {
+        hour12: false,
+        year: 'numeric', month: '2-digit', day: '2-digit',
+        hour: '2-digit', minute: '2-digit', second: '2-digit'
+      });
+    }
+    updateHudTime();
+    setInterval(updateHudTime, 1000);
+  </script>
+</body>
+</html>

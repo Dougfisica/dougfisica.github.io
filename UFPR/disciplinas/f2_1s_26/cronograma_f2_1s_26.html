@@ -212,7 +212,7 @@
       border-radius: 16px;
       background: #132133;
       border: 1px solid rgba(111,139,255,.34);
-      padding: 1.05rem 0.75rem 0.7rem;
+      padding: 1.2rem 0.75rem 0.7rem;
       position: relative;
       height: 90px;
     }
@@ -232,15 +232,25 @@
       background: linear-gradient(135deg, rgba(255, 188, 114, 0.16), #fff);
     }
 
-    .tag {
+    .tags {
       position: absolute;
       right: 10px;
       top: 8px;
+      display: flex;
+      flex-direction: column;
+      align-items: flex-end;
+      gap: 4px;
+      max-width: 60%;
+    }
+
+    .tag {
       border-radius: 999px;
       color: #fff;
-      font-size: 0.55rem;
+      font-size: 0.48rem;
       font-weight: 700;
-      padding: 0.16rem 0.45rem;
+      padding: 0.12rem 0.4rem;
+      line-height: 1.1;
+      white-space: nowrap;
     }
 
     .tag.prova { background: #f97373; }
@@ -393,28 +403,33 @@
       ]
     };
 
-    function aulaClass(item) {
+    function getAulaFlags(item) {
       const assunto = item.assunto.toLowerCase();
-      if (assunto.includes('prova')) return 'prova';
-      if (item.ch === 0 || assunto.includes('feriado') || assunto.includes('recesso')) return 'feriado';
-      if (item.obs && item.obs.toLowerCase().includes('grava')) return 'gravacao';
-      return '';
+      const flags = [];
+      if (assunto.includes('prova')) flags.push('prova');
+      if (item.ch === 0 || assunto.includes('feriado') || assunto.includes('recesso')) flags.push('feriado');
+      if (item.obs && item.obs.toLowerCase().includes('grava')) flags.push('gravacao');
+      return flags;
     }
 
-    function tagHtml(type) {
-      if (type === 'prova') return '<span class="tag prova">PROVA</span>';
-      if (type === 'gravacao') return '<span class="tag gravacao">GRAVAÇÃO</span>';
-      if (type === 'feriado') return '<span class="tag feriado">SEM AULA</span>';
-      return '';
+    function tagHtml(flags) {
+      const map = {
+        prova: 'PROVA',
+        gravacao: 'GRAVAÇÃO',
+        feriado: 'SEM AULA'
+      };
+      if (!flags.length) return '';
+      return `<div class="tags">${flags.map(flag => `<span class="tag ${flag}">${map[flag]}</span>`).join('')}</div>`;
     }
 
     function renderAulas(targetId, items) {
       const container = document.getElementById(targetId);
       container.innerHTML = items.map(item => {
-        const tipo = aulaClass(item);
+        const flags = getAulaFlags(item);
+        const classes = flags.join(' ');
         return `
-          <div class="aula-item ${tipo}">
-            ${tagHtml(tipo)}
+          <div class="aula-item ${classes}">
+            ${tagHtml(flags)}
             <div class="aula-data">${item.data}</div>
             <div class="aula-assunto">${item.assunto}</div>
           </div>
