@@ -214,20 +214,20 @@
             line-height: 1.5;
         }
 
-        /* Watercolor style for Física 2 */
+        /* Futuristic style for Física 2 */
         .fisica2-card {
-            background: 
-                radial-gradient(circle at 30% 20%, rgba(168, 216, 234, 0.3) 0%, transparent 60%),
-                radial-gradient(circle at 70% 80%, rgba(186, 225, 204, 0.25) 0%, transparent 50%),
-                radial-gradient(circle at 20% 70%, rgba(255, 179, 186, 0.2) 0%, transparent 45%),
-                rgba(255, 255, 255, 0.95);
-            border: none;
-            border-radius: 30px;
+            background:
+                radial-gradient(circle at 85% 20%, rgba(255, 79, 216, 0.16) 0%, transparent 45%),
+                radial-gradient(circle at 15% 85%, rgba(0, 212, 255, 0.2) 0%, transparent 48%),
+                #0c1622;
+            border: 1px solid rgba(0, 212, 255, 0.4);
+            border-radius: 18px;
             box-shadow: 
-                0 15px 40px rgba(0,0,0,0.12),
-                inset 0 1px 0 rgba(255,255,255,0.8);
-            font-family: 'Comfortaa', cursive;
-            color: #4a5568;
+                0 0 0 1px rgba(0, 212, 255, 0.25),
+                0 16px 34px rgba(0,0,0,0.45),
+                inset 0 0 18px rgba(0, 212, 255, 0.08);
+            font-family: 'Orbitron', 'Comfortaa', cursive;
+            color: #d6f6ff;
             position: relative;
             overflow: hidden;
             backdrop-filter: blur(10px);
@@ -241,15 +241,15 @@
             right: -3px;
             bottom: -3px;
             background: linear-gradient(135deg, 
-                rgba(168, 216, 234, 0.6), 
-                rgba(255, 179, 186, 0.6), 
-                rgba(186, 225, 204, 0.6), 
-                rgba(219, 196, 240, 0.6)
+                rgba(0, 212, 255, 0.7), 
+                rgba(111, 139, 255, 0.7), 
+                rgba(255, 79, 216, 0.65), 
+                rgba(0, 255, 178, 0.65)
             );
             background-size: 400% 400%;
-            border-radius: 33px;
+            border-radius: 20px;
             z-index: -1;
-            opacity: 0.6;
+            opacity: 0.45;
             filter: blur(3px);
             animation: watercolorCardBorder 12s ease-in-out infinite;
         }
@@ -284,34 +284,36 @@
         .fisica2-card:hover {
             transform: translateY(-8px) scale(1.02);
             box-shadow: 
-                0 20px 50px rgba(0,0,0,0.15),
-                inset 0 1px 0 rgba(255,255,255,0.9);
+                0 0 0 1px rgba(0, 255, 178, 0.55),
+                0 20px 50px rgba(0,0,0,0.55),
+                inset 0 0 22px rgba(0, 255, 178, 0.1);
         }
 
         .fisica2-card .card-title {
             background: linear-gradient(135deg, 
-                rgba(168, 216, 234, 0.9), 
-                rgba(219, 196, 240, 0.9)
+                rgba(0, 212, 255, 0.95), 
+                rgba(111, 139, 255, 0.95)
             );
-            color: white;
-            font-size: 1.4rem;
+            color: #031019;
+            font-size: 1.2rem;
             font-weight: 600;
-            text-shadow: 2px 2px 4px rgba(0,0,0,0.2);
-            letter-spacing: 0.5px;
+            text-shadow: none;
+            letter-spacing: 1px;
             position: relative;
             z-index: 2;
             backdrop-filter: blur(10px);
-            font-family: 'Dancing Script', cursive;
+            text-transform: uppercase;
+            font-family: 'Orbitron', sans-serif;
         }
 
         .fisica2-card .card-title::after {
-            content: "🎨";
+            content: "◉";
             position: absolute;
             top: 50%;
             right: 15px;
             transform: translateY(-50%);
-            font-size: 0.8em;
-            filter: grayscale(0.2);
+            font-size: 0.7em;
+            color: #00ffb2;
             animation: paintbrushCardFloat 4s ease-in-out infinite;
         }
 
@@ -326,20 +328,20 @@
         }
 
         .fisica2-card .card-info {
-            color: #4a5568;
-            font-size: 1rem;
+            color: #a8d8ff;
+            font-size: 0.95rem;
             margin-bottom: 0.8rem;
             font-weight: 500;
         }
 
         .fisica2-card .card-info strong {
-            color: #2d3748;
+            color: #e9fdff;
             font-weight: 700;
         }
 
         .fisica2-card .card-description {
-            color: #6b7280;
-            font-size: 0.95rem;
+            color: #9bb8d5;
+            font-size: 0.88rem;
             line-height: 1.6;
             font-style: normal;
         }
@@ -423,29 +425,14 @@
         <h1>Disciplinas Graduação</h1>
         
         <div class="disciplinas-grid">
-            <a href="disciplinas/f1_2s_25.html" class="disciplina-card fisica1-card">
-                <div class="card-title">◆ FÍSICA 1 ◆</div>
-                <div class="card-content">
-                    <div class="card-info">
-                        <strong>PERÍODO:</strong> 2º SEMESTRE 2025
-                    </div>
-                    <div class="card-info">
-                        <strong>TURMA:</strong> MANHÃ E TARDE
-                    </div>
-                    <div class="card-description">
-                        DISCIPLINA DE FÍSICA 1 DA UFPR JANDAIA DO SUL
-                    </div>
-                </div>
-            </a>
-
-            <a href="disciplinas/f2_1s_25.html" class="disciplina-card fisica2-card">
+            <a href="disciplinas/f2_1s_26.html" class="disciplina-card fisica2-card">
                 <div class="card-title">Física 2</div>
                 <div class="card-content">
                     <div class="card-info">
-                        <strong>Período:</strong> 1º Semestre 2025
+                        <strong>Período:</strong> 1º Semestre 2026
                     </div>
                     <div class="card-info">
-                        <strong>Turma:</strong> Manhã e Tarde
+                        <strong>Turma:</strong> Manhã
                     </div>
                     <div class="card-description">
                         Disciplina de Física 2 da UFPR Jandaia do Sul

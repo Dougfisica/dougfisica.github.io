@@ -1,0 +1,24 @@
+Quinta	Assunto	CH			Sexta 	Assunto	CH	
+26-fev	Recepção	0			27-Feb	Recepção	0	
+5-mar	Cinemática de Rotações - Aula 1	2			6-Mar	Cinemática de Rotações 2	2	
+12-mar	Dinâmica de Rotações -  Aula 2	2			13-Mar	Torque	2	Vídeo
+19-mar	Torque	2			20-Mar	Momento Angular	2	
+26-mar	Momento Angular	2			27-Mar	Momento Angular	2	Vídeo
+2-abr	Prova 1	2			3-Apr	Feriado	0	
+9-abr	Fluidos 1	2			10-Apr	Fluidos 1	2	
+16-abr	Fluidos 2	2			17-Apr	Fluidos 2	2	
+23-abr	Oscilações 1	2			24-Apr	Oscilações 2	2	Vídeo
+30-abr	Ondas 	2			1-May	Feriado	0	
+7-mai	Ondas 	2			8-May	Ondas	2	
+14-mai	Revisão	2			15-May	Prova 2	2	Vídeo
+21-mai	Temperatura 1	2			22-May	Temperatura 1	2	
+28-mai	Temperatura 2	2			29-May	Temperatura 2 / Mecanismos de transf de calor	2	
+4-jun	Feriado	0			5-Jun	Recesso	0	Vídeo
+11-jun	Temperatura 2 / Mecanismos de transf de calor	2			12-Jun	Diagrama PV e 1 lei + intro gases	2	
+18-jun	Entropia e 2 Lei	2			19-Jun	Entropia e 2 Lei	2	
+25-jun	Revisão	2			26-Jun	Prova 3	2	Vídeo
+								
+								
+3-jul	Exames							
+TOTAL	60							
+

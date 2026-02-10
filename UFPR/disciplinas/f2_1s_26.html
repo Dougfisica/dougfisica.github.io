@@ -1,0 +1,244 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Física 2 - 1º Semestre 2026 - UFPR</title>
+  <meta name="description" content="Disciplina de Física 2 - 1º Semestre 2026 - UFPR Jandaia do Sul">
+  <meta name="keywords" content="UFPR, Física 2, disciplina, graduação">
+  <meta name="author" content="Doug Física">
+  <link rel="icon" type="image/png" href="/favicon.png">
+  <script async src="https://www.googletagmanager.com/gtag/js?id=G-83359NB2SY"></script>
+  <script>
+    window.dataLayer = window.dataLayer || [];
+    function gtag(){dataLayer.push(arguments);}
+    gtag('js', new Date());
+    gtag('config', 'G-83359NB2SY');
+  </script>
+  <style>
+    @import url('https://fonts.googleapis.com/css2?family=Orbitron:wght@500;700;800&display=swap');
+    @import url('https://fonts.googleapis.com/css2?family=Exo+2:wght@400;600;700&display=swap');
+
+    :root {
+      --bg: #050910;
+      --panel: #0c1622;
+      --ink: #d6f6ff;
+      --blue: #00d4ff;
+      --mint: #00ffb2;
+      --rose: #ff4fd8;
+      --lav: #6f8bff;
+      --shadow: rgba(0, 0, 0, 0.42);
+      --font-title: 'Orbitron', sans-serif;
+      --font-body: 'Exo 2', sans-serif;
+    }
+
+    * { box-sizing: border-box; margin: 0; padding: 0; }
+
+    body {
+      font-family: var(--font-body);
+      color: var(--ink);
+      background: var(--bg);
+      min-height: 100vh;
+      padding: 20px;
+      line-height: 1.6;
+      background-image:
+        radial-gradient(circle at 18% 20%, rgba(0, 212, 255, 0.18), transparent 30%),
+        radial-gradient(circle at 85% 10%, rgba(255, 79, 216, 0.14), transparent 28%),
+        radial-gradient(circle at 70% 85%, rgba(0, 255, 178, 0.13), transparent 30%);
+    }
+
+    .container {
+      max-width: 980px;
+      margin: 0 auto;
+      position: relative;
+      z-index: 1;
+    }
+
+    .header {
+      background: var(--panel);
+      border-radius: 20px;
+      padding: 2rem 1.5rem;
+      box-shadow:
+        0 0 0 1px rgba(0, 212, 255, 0.35),
+        0 16px 30px var(--shadow),
+        inset 0 0 22px rgba(0, 212, 255, 0.08);
+      text-align: center;
+      margin-bottom: 1.5rem;
+      background:
+        linear-gradient(120deg, rgba(0, 212, 255, 0.1), rgba(111, 139, 255, 0.08)),
+        radial-gradient(circle at 20% 20%, rgba(0, 212, 255, 0.2), transparent 45%),
+        radial-gradient(circle at 80% 80%, rgba(0, 255, 178, 0.16), transparent 45%),
+        var(--panel);
+    }
+
+    .voltar {
+      display: inline-block;
+      margin-bottom: 1rem;
+      text-decoration: none;
+      color: var(--blue);
+      font-weight: 700;
+      letter-spacing: 0.4px;
+    }
+
+    h1 {
+      font-family: var(--font-title);
+      font-size: 2.4rem;
+      margin-bottom: 0.3rem;
+      color: #9ef4ff;
+      text-transform: uppercase;
+      letter-spacing: 1.5px;
+      text-shadow: 0 0 12px rgba(0, 212, 255, 0.45);
+    }
+
+    .subtitle { font-weight: 600; color: #9eb8d4; }
+
+    .badges {
+      display: flex;
+      justify-content: center;
+      gap: 0.7rem;
+      flex-wrap: wrap;
+      margin-top: 1rem;
+    }
+
+    .badge {
+      padding: 0.45rem 0.8rem;
+      border-radius: 999px;
+      font-size: 0.82rem;
+      font-weight: 700;
+      color: #04131d;
+      background: linear-gradient(135deg, #00d4ff, #00ffb2);
+      box-shadow: 0 0 16px rgba(0, 212, 255, 0.45);
+    }
+
+    .grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(260px, 1fr));
+      gap: 1rem;
+    }
+
+    .card {
+      background: var(--panel);
+      border-radius: 18px;
+      padding: 1.2rem;
+      box-shadow:
+        0 0 0 1px rgba(111, 139, 255, 0.36),
+        0 10px 22px var(--shadow),
+        inset 0 0 16px rgba(111, 139, 255, 0.07);
+      background:
+        radial-gradient(circle at 80% 20%, rgba(255, 79, 216, 0.16), transparent 40%),
+        radial-gradient(circle at 20% 90%, rgba(0, 212, 255, 0.18), transparent 45%),
+        var(--panel);
+    }
+
+    .card:hover {
+      transform: translateY(-4px);
+      transition: 0.25s ease;
+      box-shadow:
+        0 0 0 1px rgba(0, 255, 178, 0.5),
+        0 16px 28px rgba(0, 0, 0, 0.5),
+        inset 0 0 18px rgba(0, 255, 178, 0.08);
+    }
+
+    .card h2 {
+      font-size: 1.1rem;
+      margin-bottom: 0.6rem;
+      color: #92f0ff;
+      text-transform: uppercase;
+      letter-spacing: 0.6px;
+    }
+
+    .card p {
+      font-size: 0.9rem;
+      margin-bottom: 0.8rem;
+      color: #9eb8d4;
+    }
+
+    .card a {
+      display: inline-block;
+      text-decoration: none;
+      border-radius: 999px;
+      background: linear-gradient(135deg, #00d4ff, #6f8bff);
+      color: #031019;
+      font-weight: 700;
+      padding: 0.55rem 0.9rem;
+      margin-top: 0.3rem;
+      box-shadow: 0 0 14px rgba(0, 212, 255, 0.35);
+    }
+
+    .listas {
+      list-style: none;
+      display: grid;
+      gap: 0.45rem;
+      margin-top: 0.5rem;
+    }
+
+    .listas a {
+      width: 100%;
+      text-align: center;
+      padding: 0.5rem 0.7rem;
+      background: linear-gradient(135deg, #00ffb2, #00d4ff);
+    }
+
+    .footer-note {
+      margin-top: 1rem;
+      text-align: center;
+      font-size: 0.82rem;
+      color: #83a5c8;
+    }
+
+    @media (max-width: 700px) {
+      body { padding: 12px; }
+      h1 { font-size: 1.95rem; }
+      .header { padding: 1.4rem 1rem; }
+    }
+  </style>
+</head>
+<body>
+  <div class="container">
+    <div class="header">
+      <a href="../disciplinas.html" class="voltar">◀ Voltar</a>
+      <h1>Física 2</h1>
+      <div class="subtitle">1º Semestre 2026 - UFPR Jandaia do Sul</div>
+      <div class="badges">
+        <span class="badge">Turma Manhã</span>
+        <span class="badge">Prof. Douglas</span>
+        <span class="badge">Turma 2026</span>
+      </div>
+    </div>
+
+    <div class="grid">
+      <section class="card">
+        <h2>Consulta de Notas</h2>
+        <p>Consulte notas e frequência pelo GRR, no mesmo formato usado em 2025.</p>
+        <a href="f2_1s_26/notas_f2_1s_26.html">Acessar notas</a>
+      </section>
+
+      <section class="card">
+        <h2>Material de Apoio</h2>
+        <p>Aulas em vídeo no YouTube organizadas por conteúdo da disciplina.</p>
+        <a href="f2_1s_26/material_f2_1s_26.html">Abrir aulas</a>
+      </section>
+
+      <section class="card">
+        <h2>Cronograma</h2>
+        <p>Calendário completo com aulas, avaliações, feriados e exames.</p>
+        <a href="f2_1s_26/cronograma_f2_1s_26.html">Abrir cronograma</a>
+      </section>
+
+      <section class="card">
+        <h2>Listas de Exercícios</h2>
+        <p>Listas de Física 2 disponíveis para download em PDF.</p>
+        <ul class="listas">
+          <li><a href="f2_1s_26/arquivos/Lista 1 - Física 2_2026.pdf" download>Lista 1</a></li>
+          <li><a href="f2_1s_26/arquivos/Lista 2 - Física 2_2026.pdf" download>Lista 2</a></li>
+          <li><a href="f2_1s_26/arquivos/Lista 3 - Física 2_2026.pdf" download>Lista 3</a></li>
+          <li><a href="f2_1s_26/arquivos/Lista 4 - Física 2_2026.pdf" download>Lista 4</a></li>
+          <li><a href="f2_1s_26/arquivos/Lista 5 - Física 2_2026.pdf" download>Lista 5</a></li>
+        </ul>
+      </section>
+    </div>
+
+    <div class="footer-note">Arquivos atualizados para a turma de 2026.</div>
+  </div>
+</body>
+</html>

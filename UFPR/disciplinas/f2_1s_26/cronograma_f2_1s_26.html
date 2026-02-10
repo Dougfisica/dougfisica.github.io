@@ -1,0 +1,429 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Cronograma - Física 2 Manhã - 1º Semestre 2026 - UFPR</title>
+  <meta name="description" content="Cronograma de aulas Física 2 - Turma da Manhã - 1º Semestre 2026 - UFPR Jandaia do Sul">
+  <meta name="keywords" content="UFPR, Física 2, cronograma, calendário, manhã">
+  <meta name="author" content="Doug Física">
+  <link rel="icon" type="image/png" href="/favicon.png">
+  <script async src="https://www.googletagmanager.com/gtag/js?id=G-83359NB2SY"></script>
+  <script>
+    window.dataLayer = window.dataLayer || [];
+    function gtag(){dataLayer.push(arguments);}
+    gtag('js', new Date());
+    gtag('config', 'G-83359NB2SY');
+  </script>
+  <style>
+    @import url('https://fonts.googleapis.com/css2?family=Orbitron:wght@500;700;800&display=swap');
+    @import url('https://fonts.googleapis.com/css2?family=Exo+2:wght@400;600;700&display=swap');
+
+    :root {
+      --bg: #050910;
+      --panel: #0c1622;
+      --card: #111e2d;
+      --ink: #d6f6ff;
+      --soft: #9eb8d4;
+      --blue: #00d4ff;
+      --mint: #00ffb2;
+      --rose: #ff4fd8;
+      --lav: #6f8bff;
+      --peach: #1b2938;
+      --shadow-soft: rgba(0, 0, 0, 0.4);
+      --shadow-med: rgba(0, 0, 0, 0.6);
+      --font-title: 'Orbitron', sans-serif;
+      --font-body: 'Exo 2', sans-serif;
+    }
+
+    * {
+      box-sizing: border-box;
+      margin: 0;
+      padding: 0;
+    }
+
+    body {
+      font-family: var(--font-body);
+      background: var(--bg);
+      color: var(--ink);
+      min-height: 100vh;
+      padding: 20px;
+      position: relative;
+      overflow-x: hidden;
+      line-height: 1.5;
+    }
+
+    body::before {
+      content: "";
+      position: fixed;
+      inset: 0;
+      z-index: 0;
+      opacity: 0.16;
+      pointer-events: none;
+      background:
+        radial-gradient(ellipse at 20% 25%, rgba(0,212,255,.22) 0%, transparent 45%),
+        radial-gradient(ellipse at 80% 18%, rgba(255,79,216,.16) 0%, transparent 42%),
+        radial-gradient(ellipse at 35% 82%, rgba(0,255,178,.16) 0%, transparent 42%),
+        radial-gradient(ellipse at 72% 72%, rgba(111,139,255,.18) 0%, transparent 38%);
+      filter: blur(52px);
+      animation: cloudShift 16s ease-in-out infinite;
+    }
+
+    @keyframes cloudShift {
+      0%, 100% { transform: scale(1) rotate(0deg); }
+      50% { transform: scale(1.05) rotate(6deg); }
+    }
+
+    .container {
+      max-width: 1200px;
+      margin: 0 auto;
+      position: relative;
+      z-index: 1;
+      animation: fadeIn 0.7s ease-out;
+    }
+
+    .header {
+      background:
+        radial-gradient(circle at 20% 20%, rgba(168, 216, 234, 0.32), transparent 45%),
+        radial-gradient(circle at 80% 85%, rgba(186, 225, 204, 0.28), transparent 45%),
+        var(--panel);
+      border-radius: 20px;
+      padding: 1.8rem 1.4rem;
+      margin-bottom: 1.4rem;
+      text-align: center;
+      box-shadow:
+        0 0 0 1px rgba(0,212,255,.35),
+        0 14px 28px var(--shadow-soft),
+        inset 0 0 20px rgba(0,212,255,.08);
+      position: relative;
+    }
+
+    .header::before {
+      content: "CRONOGRAMA";
+      position: absolute;
+      top: -11px;
+      left: 50%;
+      transform: translateX(-50%);
+      background: linear-gradient(135deg, #00d4ff, #6f8bff);
+      color: #021119;
+      border-radius: 999px;
+      padding: 0.2rem 0.7rem;
+      font-size: 0.62rem;
+      font-weight: 700;
+      letter-spacing: 0.6px;
+    }
+
+    .voltar-link {
+      display: inline-block;
+      margin-bottom: 1rem;
+      color: #00d4ff;
+      text-decoration: none;
+      font-weight: 700;
+      font-size: 0.85rem;
+    }
+
+    .voltar-link:hover {
+      color: #00ffb2;
+    }
+
+    h1 {
+      font-family: var(--font-title);
+      font-size: 2.25rem;
+      margin-bottom: 0.3rem;
+      color: #9ef4ff;
+      text-transform: uppercase;
+      letter-spacing: 1.2px;
+      text-shadow: 0 0 12px rgba(0,212,255,.45);
+    }
+
+    .subtitle {
+      color: var(--soft);
+      font-weight: 600;
+      font-size: 0.88rem;
+      margin-bottom: 0.8rem;
+    }
+
+    .info-badges {
+      display: flex;
+      justify-content: center;
+      gap: 0.55rem;
+      flex-wrap: wrap;
+    }
+
+    .badge {
+      padding: 0.38rem 0.7rem;
+      border-radius: 999px;
+      font-size: 0.72rem;
+      font-weight: 700;
+      color: #031019;
+      background: linear-gradient(135deg, #00d4ff, #6f8bff);
+      box-shadow: 0 0 14px rgba(0,212,255,.35);
+    }
+
+    .badge:nth-child(2) {
+      background: linear-gradient(135deg, #00ffb2, #00d4ff);
+      box-shadow: 0 0 14px rgba(0,255,178,.3);
+    }
+
+    .badge:nth-child(3) {
+      background: linear-gradient(135deg, #6f8bff, #ff4fd8);
+      box-shadow: 0 0 14px rgba(111,139,255,.35);
+    }
+
+    .calendar-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(320px, 1fr));
+      gap: 1rem;
+      margin-top: 1rem;
+    }
+
+    .day-card {
+      background: var(--card);
+      border-radius: 16px;
+      box-shadow: 0 12px 24px var(--shadow-soft);
+      overflow: hidden;
+      border: 1px solid rgba(0,212,255,.28);
+    }
+
+    .day-header {
+      padding: 0.95rem;
+      text-align: center;
+      font-size: 0.95rem;
+      font-weight: 700;
+      color: #021119;
+      letter-spacing: 0.2px;
+    }
+
+    .day-card.quinta .day-header {
+      background: linear-gradient(135deg, #00d4ff, #00ffb2);
+    }
+
+    .day-card.sexta .day-header {
+      background: linear-gradient(135deg, #6f8bff, #ff4fd8);
+    }
+
+    .day-content {
+      padding: 0.95rem;
+      display: grid;
+      gap: 0.7rem;
+    }
+
+    .aula-item {
+      border-radius: 16px;
+      background: #132133;
+      border: 1px solid rgba(111,139,255,.34);
+      padding: 1.05rem 0.75rem 0.7rem;
+      position: relative;
+      height: 90px;
+    }
+
+    .aula-item.prova {
+      border-color: rgba(255, 117, 117, 0.6);
+      background: linear-gradient(135deg, rgba(255, 117, 117, 0.12), #fff);
+    }
+
+    .aula-item.gravacao {
+      border-color: rgba(173, 131, 227, 0.6);
+      background: linear-gradient(135deg, rgba(173, 131, 227, 0.12), #fff);
+    }
+
+    .aula-item.feriado {
+      border-color: rgba(255, 188, 114, 0.68);
+      background: linear-gradient(135deg, rgba(255, 188, 114, 0.16), #fff);
+    }
+
+    .tag {
+      position: absolute;
+      right: 10px;
+      top: 8px;
+      border-radius: 999px;
+      color: #fff;
+      font-size: 0.55rem;
+      font-weight: 700;
+      padding: 0.16rem 0.45rem;
+    }
+
+    .tag.prova { background: #f97373; }
+    .tag.gravacao { background: #9f7aea; }
+    .tag.feriado { background: #f6ad55; }
+
+    .aula-data {
+      font-size: 0.72rem;
+      font-weight: 700;
+      color: #8ed8ff;
+      margin-bottom: 0.22rem;
+    }
+
+    .aula-assunto {
+      font-size: 0.8rem;
+      color: #d6f6ff;
+      font-weight: 600;
+      display: -webkit-box;
+      -webkit-line-clamp: 3;
+      -webkit-box-orient: vertical;
+      overflow: hidden;
+    }
+
+    .exame-section {
+      margin-top: 1rem;
+      background: var(--card);
+      border-radius: 22px;
+      box-shadow: 0 10px 24px var(--shadow-soft);
+      border: 1px solid rgba(125, 140, 167, 0.2);
+      overflow: hidden;
+    }
+
+    .exame-header {
+      background: linear-gradient(135deg, #ff4fd8, #6f8bff);
+      color: #021119;
+      text-align: center;
+      padding: 0.9rem;
+      font-size: 0.95rem;
+      font-weight: 700;
+    }
+
+    .exame-content {
+      padding: 1rem;
+      text-align: center;
+    }
+
+    .exame-data {
+      font-size: 1.08rem;
+      font-weight: 700;
+      color: #9ef4ff;
+      margin-bottom: 0.25rem;
+    }
+
+    .exame-desc {
+      color: #9eb8d4;
+      font-size: 0.85rem;
+      font-weight: 600;
+    }
+
+    @media (max-width: 768px) {
+      body { padding: 12px; }
+      h1 { font-size: 1.85rem; }
+      .calendar-grid { grid-template-columns: 1fr 1fr; gap: 0.55rem; }
+      .day-content { padding: 0.8rem; }
+      .aula-item { padding: 1rem 0.65rem 0.6rem; }
+      .aula-assunto { font-size: 0.74rem; }
+    }
+
+    @keyframes fadeIn {
+      from { opacity: 0; transform: translateY(12px); }
+      to { opacity: 1; transform: translateY(0); }
+    }
+  </style>
+</head>
+<body>
+  <div class="container">
+    <div class="header">
+      <a href="../f2_1s_26.html" class="voltar-link">◀ VOLTAR</a>
+      <h1>CRONOGRAMA - MANHÃ</h1>
+      <div class="subtitle">FÍSICA 2 - 1º SEMESTRE 2026 - UFPR JANDAIA DO SUL</div>
+      <div class="info-badges">
+        <span class="badge">TURMA MANHÃ</span>
+        <span class="badge">QUINTA & SEXTA</span>
+        <span class="badge">1º SEMESTRE 2026</span>
+      </div>
+    </div>
+
+    <div class="calendar-grid">
+      <div class="day-card quinta">
+        <div class="day-header">📅 QUINTA-FEIRA</div>
+        <div class="day-content" id="quinta-list"></div>
+      </div>
+
+      <div class="day-card sexta">
+        <div class="day-header">📅 SEXTA-FEIRA</div>
+        <div class="day-content" id="sexta-list"></div>
+      </div>
+    </div>
+
+    <div class="exame-section">
+      <div class="exame-header">EXAMES</div>
+      <div class="exame-content">
+        <div class="exame-data">03/jul</div>
+        <div class="exame-desc">Data reservada para exames</div>
+      </div>
+    </div>
+  </div>
+
+  <script>
+    const cronograma = {
+      quinta: [
+        { data: '26/fev', assunto: 'Recepção', ch: 0 },
+        { data: '05/mar', assunto: 'Cinemática de rotações - Aula 1', ch: 2 },
+        { data: '12/mar', assunto: 'Dinâmica de rotações - Aula 2', ch: 2 },
+        { data: '19/mar', assunto: 'Torque', ch: 2 },
+        { data: '26/mar', assunto: 'Momento angular', ch: 2 },
+        { data: '02/abr', assunto: 'Prova 1', ch: 2 },
+        { data: '09/abr', assunto: 'Fluidos 1', ch: 2 },
+        { data: '16/abr', assunto: 'Fluidos 2', ch: 2 },
+        { data: '23/abr', assunto: 'Oscilações 1', ch: 2 },
+        { data: '30/abr', assunto: 'Ondas', ch: 2 },
+        { data: '07/mai', assunto: 'Ondas', ch: 2 },
+        { data: '14/mai', assunto: 'Revisão', ch: 2 },
+        { data: '21/mai', assunto: 'Temperatura 1', ch: 2 },
+        { data: '28/mai', assunto: 'Temperatura 2', ch: 2 },
+        { data: '04/jun', assunto: 'Feriado', ch: 0 },
+        { data: '11/jun', assunto: 'Temperatura 2 / Mecanismos de transf. de calor', ch: 2 },
+        { data: '18/jun', assunto: 'Entropia e 2ª lei', ch: 2 },
+        { data: '25/jun', assunto: 'Revisão', ch: 2 }
+      ],
+      sexta: [
+        { data: '27/fev', assunto: 'Recepção', ch: 0 },
+        { data: '06/mar', assunto: 'Cinemática de rotações 2', ch: 2 },
+        { data: '13/mar', assunto: 'Torque', ch: 2, obs: 'Gravação' },
+        { data: '20/mar', assunto: 'Momento angular', ch: 2 },
+        { data: '27/mar', assunto: 'Momento angular', ch: 2, obs: 'Gravação' },
+        { data: '03/abr', assunto: 'Feriado', ch: 0 },
+        { data: '10/abr', assunto: 'Fluidos 1', ch: 2 },
+        { data: '17/abr', assunto: 'Fluidos 2', ch: 2 },
+        { data: '24/abr', assunto: 'Oscilações 2', ch: 2, obs: 'Gravação' },
+        { data: '01/mai', assunto: 'Feriado', ch: 0 },
+        { data: '08/mai', assunto: 'Ondas', ch: 2 },
+        { data: '15/mai', assunto: 'Prova 2', ch: 2, obs: 'Gravação' },
+        { data: '22/mai', assunto: 'Temperatura 1', ch: 2 },
+        { data: '29/mai', assunto: 'Temperatura 2 / Mecanismos de transf. de calor', ch: 2 },
+        { data: '05/jun', assunto: 'Recesso', ch: 0, obs: 'Gravação' },
+        { data: '12/jun', assunto: 'Diagrama PV e 1ª lei + intro gases', ch: 2 },
+        { data: '19/jun', assunto: 'Entropia e 2ª lei', ch: 2 },
+        { data: '26/jun', assunto: 'Prova 3', ch: 2, obs: 'Gravação' }
+      ]
+    };
+
+    function aulaClass(item) {
+      const assunto = item.assunto.toLowerCase();
+      if (assunto.includes('prova')) return 'prova';
+      if (item.ch === 0 || assunto.includes('feriado') || assunto.includes('recesso')) return 'feriado';
+      if (item.obs && item.obs.toLowerCase().includes('grava')) return 'gravacao';
+      return '';
+    }
+
+    function tagHtml(type) {
+      if (type === 'prova') return '<span class="tag prova">PROVA</span>';
+      if (type === 'gravacao') return '<span class="tag gravacao">GRAVAÇÃO</span>';
+      if (type === 'feriado') return '<span class="tag feriado">SEM AULA</span>';
+      return '';
+    }
+
+    function renderAulas(targetId, items) {
+      const container = document.getElementById(targetId);
+      container.innerHTML = items.map(item => {
+        const tipo = aulaClass(item);
+        return `
+          <div class="aula-item ${tipo}">
+            ${tagHtml(tipo)}
+            <div class="aula-data">${item.data}</div>
+            <div class="aula-assunto">${item.assunto}</div>
+          </div>
+        `;
+      }).join('');
+    }
+
+    renderAulas('quinta-list', cronograma.quinta);
+    renderAulas('sexta-list', cronograma.sexta);
+  </script>
+</body>
+</html>
