@@ -403,6 +403,59 @@
             line-height: 1.6;
         }
 
+        /* Laboratory + licenciatura style for Física Experimental 1 - LCE */
+        .fisexp1lce-card {
+            background:
+                radial-gradient(circle at 12% 14%, rgba(31, 106, 165, 0.16), transparent 30%),
+                radial-gradient(circle at 90% 16%, rgba(154, 223, 127, 0.22), transparent 28%),
+                repeating-linear-gradient(0deg, transparent 0 30px, rgba(64,50,50,.08) 30px 31px),
+                linear-gradient(140deg, #f7f2e7, #ece4d2 56%, #d7e0d5);
+            border: 1px solid #b8b9ad;
+            border-radius: 14px;
+            box-shadow:
+                0 10px 22px rgba(34,49,58,.13),
+                inset 0 0 0 1px rgba(255,255,255,.4);
+            font-family: 'Nunito', sans-serif;
+            color: #22313a;
+            overflow: hidden;
+        }
+
+        .fisexp1lce-card:hover {
+            transform: translateY(-6px) rotate(-0.3deg);
+            box-shadow:
+                0 16px 30px rgba(34,49,58,.19),
+                inset 0 0 0 1px rgba(255,255,255,.5);
+        }
+
+        .fisexp1lce-card .card-title {
+            background: linear-gradient(120deg, #1f6aa5, #2a9d8f);
+            color: #f7f2e7;
+            font-size: 1rem;
+            font-weight: 700;
+            text-transform: uppercase;
+            letter-spacing: 0.4px;
+            font-family: 'Source Serif 4', serif;
+            border-bottom: 1px solid rgba(16,34,27,.25);
+        }
+
+        .fisexp1lce-card .card-info {
+            color: #30434d;
+            font-size: 0.93rem;
+            margin-bottom: 0.8rem;
+            font-weight: 600;
+        }
+
+        .fisexp1lce-card .card-info strong {
+            color: #1a2f38;
+            font-weight: 700;
+        }
+
+        .fisexp1lce-card .card-description {
+            color: #3f4f59;
+            font-size: 0.87rem;
+            line-height: 1.65;
+        }
+
         .voltar-link {
             display: inline-block;
             margin: 1rem;
@@ -508,6 +561,21 @@
                     </div>
                     <div class="card-description">
                         Disciplina de Física Experimental 2 da UFPR Jandaia do Sul
+                    </div>
+                </div>
+            </a>
+
+            <a href="disciplinas/fe1_lce_1s_26.html" class="disciplina-card fisexp1lce-card">
+                <div class="card-title">Física Experimental 1 - LCE</div>
+                <div class="card-content">
+                    <div class="card-info">
+                        <strong>Período:</strong> 1º Semestre 2026
+                    </div>
+                    <div class="card-info">
+                        <strong>Turma:</strong> LCE
+                    </div>
+                    <div class="card-description">
+                        Disciplina de Física Experimental 1 - LCE da UFPR Jandaia do Sul
                     </div>
                 </div>
             </a>

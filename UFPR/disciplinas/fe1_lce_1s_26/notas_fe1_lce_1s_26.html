@@ -1,0 +1,471 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Consulta de Notas - Física Experimental 1 - LCE</title>
+  <meta name="description" content="Consulta de notas de Física Experimental 1 - LCE - 1º semestre de 2026">
+  <script async src="https://www.googletagmanager.com/gtag/js?id=G-83359NB2SY"></script>
+  <script>
+    window.dataLayer = window.dataLayer || [];
+    function gtag(){dataLayer.push(arguments);} 
+    gtag('js', new Date());
+    gtag('config', 'G-83359NB2SY');
+  </script>
+  <style>
+    @import url('https://fonts.googleapis.com/css2?family=JetBrains+Mono:wght@400;600;700&family=Nunito:wght@400;600;700&family=Source+Serif+4:wght@500;700&display=swap');
+    :root {
+      --base: #f7f2e7;
+      --metal: #d7e0d5;
+      --ink: #22313a;
+      --cobalt: #1f6aa5;
+      --neon: #9adf7f;
+      --safety: #c65437;
+      --glass: rgba(247, 242, 231, 0.74);
+      --line: #b8b9ad;
+      --board: #10221b;
+      --paper-ink: #403233;
+    }
+
+    * { box-sizing: border-box; margin: 0; padding: 0; }
+    body {
+      font-family: 'Nunito', sans-serif;
+      color: var(--ink);
+      min-height: 100vh;
+      background:
+        radial-gradient(circle at 10% 8%, rgba(31, 106, 165, 0.15), transparent 32%),
+        radial-gradient(circle at 92% 14%, rgba(154, 223, 127, 0.18), transparent 26%),
+        repeating-linear-gradient(0deg, transparent 0 30px, rgba(64,50,50,.08) 30px 31px),
+        linear-gradient(140deg, var(--base), #ece4d2 56%, var(--metal));
+      padding: 16px;
+    }
+
+    .hud {
+      position: fixed;
+      font-family: 'JetBrains Mono', monospace;
+      font-size: 12px;
+      color: #5f6b77;
+      background: rgba(248, 249, 250, 0.72);
+      border: 1px dashed #c6ccd2;
+      border-radius: 6px;
+      padding: 6px 9px;
+      z-index: 20;
+      backdrop-filter: blur(4px);
+    }
+
+    .hud.top-right { top: 10px; right: 10px; }
+    .hud.bottom-left { bottom: 10px; left: 10px; }
+
+    .shell { max-width: 1060px; margin: 0 auto; }
+
+    .toolbar {
+      display: flex;
+      flex-wrap: wrap;
+      align-items: center;
+      justify-content: space-between;
+      gap: 10px;
+      padding: 10px;
+      background: rgba(255, 255, 255, 0.65);
+      border: 1px solid var(--line);
+      border-radius: 10px;
+      box-shadow: 0 8px 18px rgba(52, 58, 64, 0.08);
+      margin-bottom: 12px;
+      backdrop-filter: blur(7px);
+    }
+
+    .toolgroup { display: flex; flex-wrap: wrap; gap: 8px; }
+    .toolbtn {
+      font-family: 'JetBrains Mono', monospace;
+      text-decoration: none;
+      color: #103b2b;
+      border: 1px solid #8ca896;
+      background: linear-gradient(135deg, #e8f2eb, #dbe7de);
+      padding: 8px 12px;
+      border-radius: 999px;
+      font-size: 12px;
+      box-shadow: inset 0 -1px 0 rgba(16,34,27,.12);
+    }
+
+    .panel {
+      background: var(--glass);
+      border: 1px solid var(--line);
+      border-radius: 12px;
+      padding: 16px;
+      margin-bottom: 12px;
+      backdrop-filter: blur(8px);
+      box-shadow: 0 10px 22px rgba(52,58,64,0.1);
+    }
+
+    h1 {
+      font-family: 'Source Serif 4', serif;
+      color: var(--cobalt);
+      font-size: 1.2rem;
+      margin-bottom: 10px;
+    }
+
+    .input-row {
+      display: flex;
+      flex-wrap: wrap;
+      align-items: end;
+      gap: 8px;
+    }
+
+    label {
+      display: block;
+      font-family: 'JetBrains Mono', monospace;
+      font-size: 0.85rem;
+      color: #46515c;
+      margin-bottom: 5px;
+    }
+
+    input {
+      width: 180px;
+      max-width: 100%;
+      padding: 10px;
+      border: 1px solid #b8c1c9;
+      border-radius: 4px;
+      font-family: 'JetBrains Mono', monospace;
+      font-size: 0.95rem;
+      background: #fff;
+    }
+
+    .btn {
+      border: 1px solid #4f8f68;
+      background: linear-gradient(135deg, #9adf7f, #7dcf9b);
+      color: #112a1f;
+      font-family: 'JetBrains Mono', monospace;
+      font-size: 0.82rem;
+      padding: 10px 13px;
+      border-radius: 8px;
+      cursor: pointer;
+      box-shadow: inset 0 -2px 0 rgba(0,0,0,.12);
+    }
+
+    .erro {
+      display: none;
+      margin-top: 10px;
+      background: #ffe9e2;
+      color: #8b1d00;
+      border: 1px solid #f2b39e;
+      border-radius: 6px;
+      padding: 9px 10px;
+      font-size: 0.9rem;
+    }
+
+    #resultado { display: none; }
+
+    .subtitle {
+      margin: 2px 0 10px;
+      color: #4d5760;
+      font-size: 0.92rem;
+    }
+
+    .section {
+      background: var(--glass);
+      border: 1px solid var(--line);
+      border-radius: 12px;
+      padding: 12px;
+      margin-bottom: 12px;
+      backdrop-filter: blur(8px);
+      box-shadow: 0 8px 16px rgba(52,58,64,0.09);
+    }
+
+    .section h3 {
+      font-family: 'Source Serif 4', serif;
+      color: var(--cobalt);
+      font-size: 0.95rem;
+      margin-bottom: 8px;
+    }
+
+    table {
+      width: 100%;
+      border-collapse: collapse;
+      overflow: hidden;
+      border-radius: 8px;
+    }
+
+    th, td {
+      border: 1px solid #c7ced5;
+      padding: 7px 8px;
+      text-align: left;
+      font-size: 0.9rem;
+    }
+
+    th {
+      background: #e9edf1;
+      font-family: 'JetBrains Mono', monospace;
+      color: #34404b;
+      font-size: 0.8rem;
+    }
+
+    tr:nth-child(even) td { background: #f4f6f8; }
+
+    .final-box {
+      text-align: center;
+      font-family: 'JetBrains Mono', monospace;
+    }
+
+    .valor {
+      margin-top: 8px;
+      font-size: 1.5rem;
+      font-weight: 700;
+      color: var(--cobalt);
+    }
+
+    .presenca {
+      text-align: center;
+      border-left: 5px solid var(--neon);
+    }
+
+    .presenca.irregular { border-left-color: var(--safety); }
+
+    .status {
+      margin-top: 6px;
+      color: #a42800;
+      font-family: 'JetBrains Mono', monospace;
+      font-size: 0.8rem;
+    }
+
+    @media (max-width: 700px) {
+      .hud { font-size: 10px; }
+      input { width: 100%; }
+      .input-row { align-items: stretch; }
+      .btn { width: 100%; }
+    }
+  </style>
+</head>
+<body>
+  <div class="hud top-right">LOG_TIME: <span id="hud-time">--:--:--</span></div>
+  <div class="hud bottom-left">COORD: LAB-SECTOR-LCE :: MODE=GRADES</div>
+
+  <div class="shell">
+    <nav class="toolbar" aria-label="Barra de Ferramentas">
+      <div class="toolgroup">
+        <a href="../fe1_lce_1s_26.html" class="toolbtn">[ VOLTAR ]</a>
+        <a href="../fe1_lce_1s_26.html" class="toolbtn">PAINEL</a>
+        <a href="cronograma_fe1_lce_1s_26.html" class="toolbtn">CRONOGRAMA</a>
+        <a href="material_extra_fe1_lce_1s_26.html" class="toolbtn">MATERIAL</a>
+      </div>
+    </nav>
+
+    <section class="panel">
+      <h1>Consulta de Notas - Física Experimental 1 - LCE</h1>
+      <p class="subtitle">Digite o GRR para carregar o relatório acadêmico da disciplina.</p>
+
+      <div class="input-row">
+        <div>
+          <label for="grrInput">GRR (8 dígitos)</label>
+          <input type="text" id="grrInput" placeholder="Ex: 20201234" maxlength="8" pattern="[0-9]*" inputmode="numeric">
+        </div>
+        <button class="btn" onclick="buscarNotas()">CONSULTAR</button>
+      </div>
+
+      <div id="erro" class="erro"></div>
+    </section>
+
+    <div id="resultado"></div>
+  </div>
+
+<script>
+const urlsAPI = [
+  "https://script.google.com/macros/s/AKfycbwTeP8M58xlEzJYB0QE8kt7EQhNEB5AkCA2IyMF7emYJ1TywDtlMEtuW8uH318osd9P/exec"
+];
+
+let avaliacoes = [];
+let alunos = [];
+
+Promise.all(urlsAPI.map(url => fetch(url).then(res => res.json())))
+  .then(dadosArray => {
+    dadosArray.forEach(dados => {
+      dados.avaliacoes.forEach(av => {
+        if (!avaliacoes.includes(av)) avaliacoes.push(av);
+      });
+
+      dados.alunos.forEach(novoAluno => {
+        const alunoExistente = alunos.find(a => a.grr === novoAluno.grr);
+        if (alunoExistente) {
+          novoAluno.notas.forEach((nota, i) => {
+            if (nota !== '-' && nota !== '') alunoExistente.notas[i] = nota;
+          });
+          if (novoAluno.presenca !== undefined) alunoExistente.presenca = novoAluno.presenca;
+        } else {
+          alunos.push(novoAluno);
+        }
+      });
+    });
+  })
+  .catch(() => {
+    mostrarErro('Erro ao carregar dados. Tente novamente mais tarde.');
+  });
+
+const grrInput = document.getElementById('grrInput');
+grrInput.addEventListener('input', function () {
+  this.value = this.value.replace(/[^0-9]/g, '');
+});
+grrInput.addEventListener('keypress', function (e) {
+  if (e.key === 'Enter') buscarNotas();
+});
+
+function mostrarErro(msg) {
+  const erro = document.getElementById('erro');
+  erro.textContent = msg;
+  erro.style.display = 'block';
+  document.getElementById('resultado').style.display = 'none';
+}
+
+function formatarNota(nota) {
+  if (nota === null || nota === undefined || nota === '-' || nota === '') return '-';
+  return Number(nota).toFixed(1);
+}
+
+function calcularMedia(notas, indices) {
+  const notasValidas = indices
+    .map(i => parseFloat(notas[i]))
+    .filter(n => !isNaN(n));
+  if (notasValidas.length === 0) return '-';
+  return (notasValidas.reduce((a, b) => a + b, 0) / notasValidas.length).toFixed(1);
+}
+
+function getClasseNotaFinal(nota, isExame = false) {
+  if (nota === '-') return '';
+  const valor = parseFloat(nota);
+  if (isNaN(valor)) return '';
+  if (isExame) return valor < 5 ? 'reprovado' : 'aprovado';
+  if (valor < 4) return 'reprovado';
+  if (valor < 7) return 'recuperacao';
+  return 'aprovado';
+}
+
+function calcularStatusPresenca(presenca) {
+  return presenca < 75 ? 'Reprovado por falta' : '';
+}
+
+function buscarNotas() {
+  const grrNumero = grrInput.value.trim();
+  const resultado = document.getElementById('resultado');
+  const erro = document.getElementById('erro');
+
+  resultado.style.display = 'none';
+  erro.style.display = 'none';
+
+  if (grrNumero.length !== 8) {
+    mostrarErro('Digite os 8 números do GRR.');
+    return;
+  }
+
+  const aluno = alunos.find(a => a.grr === ('GRR' + grrNumero));
+  if (!aluno) {
+    mostrarErro('GRR não encontrado. Verifique o número e tente novamente.');
+    return;
+  }
+
+  try {
+    let html = `<section class="section"><h3>Registro do GRR ${grrNumero}</h3></section>`;
+
+    const indicesR = avaliacoes
+      .map((av, i) => av.startsWith('R') ? i : -1)
+      .filter(i => i !== -1);
+
+    const indiceMediaR = avaliacoes.indexOf('Média R');
+    const mediaR = indiceMediaR !== -1
+      ? formatarNota(aluno.notas[indiceMediaR])
+      : calcularMedia(aluno.notas, indicesR);
+
+    html += `
+      <section class="section">
+        <h3>Relatórios</h3>
+        <table>
+          <tr><th>Avaliação</th><th>Nota</th></tr>
+          ${indicesR.map(i => `<tr><td>${avaliacoes[i]}</td><td>${formatarNota(aluno.notas[i])}</td></tr>`).join('')}
+          <tr><td><strong>Média R</strong></td><td><strong>${mediaR}</strong></td></tr>
+        </table>
+      </section>
+    `;
+
+    const indicesP = avaliacoes
+      .map((av, i) => av.startsWith('P') ? i : -1)
+      .filter(i => i !== -1);
+
+    const indiceMediaP = avaliacoes.indexOf('Média P');
+    const mediaP = indiceMediaP !== -1
+      ? formatarNota(aluno.notas[indiceMediaP])
+      : calcularMedia(aluno.notas, indicesP);
+
+    html += `
+      <section class="section">
+        <h3>Provas</h3>
+        <table>
+          <tr><th>Avaliação</th><th>Nota</th></tr>
+          ${indicesP.map(i => `<tr><td>${avaliacoes[i]}</td><td>${formatarNota(aluno.notas[i])}</td></tr>`).join('')}
+          <tr><td><strong>Média P</strong></td><td><strong>${mediaP}</strong></td></tr>
+        </table>
+      </section>
+    `;
+
+    const fazExame = aluno.exame === 's' || aluno.exame === 'S';
+    const notaFinalOriginal = formatarNota(aluno.notas[aluno.notas.length - 1]);
+
+    if (fazExame) {
+      const notaExame = formatarNota(aluno.notaExame);
+      let notaFinalComExame = '-';
+
+      if (notaFinalOriginal !== '-' && notaExame !== '-') {
+        notaFinalComExame = ((parseFloat(notaFinalOriginal) + parseFloat(notaExame)) / 2).toFixed(1);
+      }
+
+      html += `
+        <section class="section final-box">
+          <h3>Nota Final (Semestre)</h3>
+          <div class="valor">${notaFinalOriginal}</div>
+        </section>
+        <section class="section final-box">
+          <h3>Nota do Exame</h3>
+          <div class="valor">${notaExame}</div>
+        </section>
+        <section class="section final-box">
+          <h3>Nota Final (com Exame)</h3>
+          <div class="valor">${notaFinalComExame}</div>
+        </section>
+      `;
+    } else {
+      const classe = getClasseNotaFinal(notaFinalOriginal);
+      const cor = classe === 'aprovado' ? '#1d7a3e' : (classe === 'recuperacao' ? '#9a5b00' : '#8b1d00');
+      html += `
+        <section class="section final-box">
+          <h3>Nota Final</h3>
+          <div class="valor" style="color:${cor}">${notaFinalOriginal}</div>
+        </section>
+      `;
+    }
+
+    if (aluno.presenca !== undefined) {
+      const irregular = aluno.presenca < 75;
+      html += `
+        <section class="section presenca ${irregular ? 'irregular' : ''}">
+          <h3>Frequência</h3>
+          <div class="valor">${aluno.presenca.toFixed(1)}%</div>
+          ${irregular ? `<div class="status">${calcularStatusPresenca(aluno.presenca)}</div>` : ''}
+        </section>
+      `;
+    }
+
+    resultado.innerHTML = html;
+    resultado.style.display = 'block';
+  } catch (e) {
+    mostrarErro('Ocorreu um erro ao processar as notas.');
+  }
+}
+
+const hudTime = document.getElementById('hud-time');
+function updateHudTime() {
+  hudTime.textContent = new Date().toLocaleString('pt-BR', {
+    hour12: false,
+    year: 'numeric', month: '2-digit', day: '2-digit',
+    hour: '2-digit', minute: '2-digit', second: '2-digit'
+  });
+}
+updateHudTime();
+setInterval(updateHudTime, 1000);
+</script>
+</body>
+</html>
