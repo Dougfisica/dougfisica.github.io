@@ -1,0 +1,1162 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Demonstração: Momento de Inércia</title>
+  <style>
+    :root {
+      --bg: #e9edf3;
+      --panel: #f4f7fb;
+      --card: #f8faff;
+      --text: #243041;
+      --muted: #607089;
+      --accent: #2584ff;
+      --green: #23c96b;
+      --yellow: #f6c945;
+      --red: #ff5e57;
+      --soft-shadow: 8px 8px 18px rgba(162, 177, 198, 0.34);
+      --soft-highlight: -7px -7px 15px rgba(255, 255, 255, 0.82);
+      --radius: 18px;
+    }
+
+    * {
+      box-sizing: border-box;
+      margin: 0;
+      padding: 0;
+    }
+
+    body {
+      min-height: 100vh;
+      font-family: "Segoe UI", "Nunito Sans", "Trebuchet MS", sans-serif;
+      color: var(--text);
+      background:
+        radial-gradient(circle at 15% 12%, rgba(255, 255, 255, 0.85), transparent 34%),
+        radial-gradient(circle at 85% 88%, rgba(255, 255, 255, 0.75), transparent 36%),
+        linear-gradient(135deg, #dde3ec 0%, #edf1f7 48%, #dde4ee 100%);
+      overflow: hidden;
+    }
+
+    .app {
+      width: 100%;
+      height: 100vh;
+      display: grid;
+      grid-template-columns: 60% 40%;
+      gap: 18px;
+      padding: 18px;
+    }
+
+    .left-pane,
+    .right-pane {
+      border-radius: 24px;
+      background: var(--panel);
+      box-shadow: var(--soft-shadow), var(--soft-highlight);
+    }
+
+    .left-pane {
+      position: relative;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      overflow: hidden;
+    }
+
+    canvas {
+      width: 100%;
+      height: 100%;
+      display: block;
+      touch-action: none;
+      cursor: grab;
+    }
+
+    canvas.dragging {
+      cursor: grabbing;
+    }
+
+    .right-pane {
+      padding: 18px;
+      display: grid;
+      grid-template-rows: auto auto 1fr auto;
+      gap: 14px;
+      overflow: auto;
+    }
+
+    .title {
+      font-size: clamp(1.1rem, 1.8vw, 1.4rem);
+      font-weight: 700;
+      letter-spacing: 0.02em;
+    }
+
+    .subtitle {
+      margin-top: 4px;
+      color: var(--muted);
+      font-size: 0.9rem;
+    }
+
+    .cards {
+      display: grid;
+      grid-template-columns: 1fr;
+      gap: 10px;
+    }
+
+    .card {
+      background: var(--card);
+      border-radius: var(--radius);
+      padding: 14px;
+      box-shadow: inset 2px 2px 6px rgba(195, 207, 225, 0.35), inset -2px -2px 6px rgba(255, 255, 255, 0.95);
+      border: 1px solid rgba(147, 165, 191, 0.2);
+      transition: transform 180ms ease, box-shadow 200ms ease, border-color 200ms ease;
+    }
+
+    .card.highlight {
+      transform: scale(1.01);
+      border-color: rgba(37, 132, 255, 0.35);
+      box-shadow: inset 1px 1px 5px rgba(186, 203, 229, 0.35), inset -2px -2px 8px rgba(255, 255, 255, 0.97), 0 0 0 2px rgba(37, 132, 255, 0.08);
+    }
+
+    .card-label {
+      font-size: 0.82rem;
+      color: var(--muted);
+      letter-spacing: 0.02em;
+      margin-bottom: 6px;
+    }
+
+    .card-value {
+      font-size: clamp(1.2rem, 2.4vw, 1.9rem);
+      font-weight: 800;
+      color: var(--text);
+    }
+
+    .formula {
+      margin-top: 6px;
+      font-size: 0.8rem;
+      color: #5f6f88;
+    }
+
+    .mass-guide {
+      background: var(--card);
+      border-radius: var(--radius);
+      padding: 14px;
+      border: 1px solid rgba(147, 165, 191, 0.2);
+      box-shadow: inset 2px 2px 6px rgba(195, 207, 225, 0.35), inset -2px -2px 6px rgba(255, 255, 255, 0.95);
+    }
+
+    .guide-title {
+      font-weight: 700;
+      margin-bottom: 12px;
+      font-size: 0.95rem;
+    }
+
+    .guide-row {
+      display: flex;
+      gap: 14px;
+      align-items: center;
+      flex-wrap: wrap;
+    }
+
+    .mass-item {
+      display: inline-flex;
+      align-items: center;
+      gap: 7px;
+      padding: 7px 10px;
+      border-radius: 12px;
+      border: 1px solid rgba(130, 151, 181, 0.26);
+      background: linear-gradient(145deg, #f9fbff, #e8eef8);
+      box-shadow: 4px 4px 10px rgba(177, 191, 211, 0.35), -3px -3px 8px rgba(255, 255, 255, 0.7);
+    }
+
+    .add-mass-controls {
+      margin-top: 10px;
+      display: flex;
+      gap: 8px;
+      flex-wrap: wrap;
+    }
+
+    .add-mass-controls.hidden {
+      display: none;
+    }
+
+    .add-mass-btn {
+      border: none;
+      border-radius: 10px;
+      padding: 8px 10px;
+      font-size: 0.76rem;
+      font-weight: 700;
+      color: #1c2d46;
+      background: linear-gradient(145deg, #f9fbff, #e8eef8);
+      border: 1px solid rgba(130, 151, 181, 0.26);
+      box-shadow: 4px 4px 10px rgba(177, 191, 211, 0.28), -3px -3px 8px rgba(255, 255, 255, 0.68);
+      cursor: pointer;
+    }
+
+    .mass-circle {
+      border-radius: 50%;
+      box-shadow: inset -2px -2px 5px rgba(255, 255, 255, 0.4), inset 2px 2px 7px rgba(0, 0, 0, 0.2);
+    }
+
+    .chip-label {
+      font-size: 0.76rem;
+      color: #44556f;
+      font-weight: 700;
+      text-align: center;
+    }
+
+    .controls {
+      display: flex;
+      gap: 10px;
+    }
+
+    button {
+      appearance: none;
+      border: none;
+      border-radius: 12px;
+      padding: 11px 14px;
+      font-size: 0.9rem;
+      font-weight: 700;
+      color: #fff;
+      background: linear-gradient(135deg, #2c8eff, #186ad6);
+      cursor: pointer;
+      box-shadow: 0 10px 20px rgba(35, 108, 207, 0.25);
+      transition: transform 150ms ease, filter 150ms ease;
+    }
+
+    button:hover {
+      filter: brightness(1.04);
+    }
+
+    button:active {
+      transform: translateY(1px);
+    }
+
+    .hint {
+      margin-top: 4px;
+      color: var(--muted);
+      font-size: 0.78rem;
+      line-height: 1.35;
+    }
+
+    .axis-control {
+      background: var(--card);
+      border-radius: var(--radius);
+      padding: 12px 14px;
+      border: 1px solid rgba(147, 165, 191, 0.2);
+      box-shadow: inset 2px 2px 6px rgba(195, 207, 225, 0.35), inset -2px -2px 6px rgba(255, 255, 255, 0.95);
+    }
+
+    .axis-control.hidden {
+      display: none;
+    }
+
+    .axis-row {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      margin-bottom: 8px;
+      font-size: 0.84rem;
+      color: #41526c;
+      font-weight: 700;
+    }
+
+    .axis-control input[type="range"] {
+      width: 100%;
+      accent-color: #2584ff;
+    }
+
+    .axis-group.hidden {
+      display: none;
+    }
+
+    .axis-group + .axis-group {
+      margin-top: 10px;
+      padding-top: 10px;
+      border-top: 1px solid rgba(130, 151, 181, 0.24);
+    }
+
+    .is-hidden {
+      display: none;
+    }
+
+    @media (max-width: 980px) {
+      body {
+        overflow: auto;
+      }
+
+      .app {
+        height: auto;
+        min-height: 100vh;
+        grid-template-columns: 1fr;
+      }
+
+      .left-pane {
+        min-height: 52vh;
+      }
+    }
+  </style>
+</head>
+<body>
+  <main class="app">
+    <section class="left-pane" aria-label="Área de simulação">
+      <canvas id="simCanvas"></canvas>
+    </section>
+
+    <aside class="right-pane">
+      <header>
+        <h1 class="title">Momento de Inércia em Objetos Rotativos</h1>
+        <p class="subtitle" id="modeSubtitle">Observe como a posição radial dos pesos altera I e Ec.</p>
+      </header>
+
+      <section class="cards" aria-label="Dashboard de dados">
+        <article class="card">
+          <div class="card-label">Velocidade Angular (ω)</div>
+          <div class="card-value" id="omegaValue">2.00 rad/s</div>
+          <div class="formula">Constante definida no programa</div>
+        </article>
+
+        <article class="card" id="inertiaCard">
+          <div class="card-label">Momento de Inércia Total (I)</div>
+          <div class="card-value" id="inertiaValue">0.00 kg·m²</div>
+          <div class="formula" id="inertiaFormula">I = I<sub>disco</sub> + Σ m · r²</div>
+        </article>
+
+        <article class="card" id="energyCard">
+          <div class="card-label">Energia Cinética Rotacional (E<sub>c</sub>)</div>
+          <div class="card-value" id="energyValue">0.00 J</div>
+          <div class="formula">E<sub>c</sub> = 1/2 · I · ω²</div>
+        </article>
+      </section>
+
+      <section class="mass-guide" aria-label="Guia de massas">
+        <h2 class="guide-title" id="guideTitle">Massas Iniciais no Disco</h2>
+        <div class="guide-row" id="guideRow">
+          <div class="mass-item">
+            <span class="mass-circle" style="width:24px;height:24px;background:#23c96b;"></span>
+            <span class="chip-label">Mass 1</span>
+          </div>
+          <div class="mass-item">
+            <span class="mass-circle" style="width:34px;height:34px;background:#f6c945;"></span>
+            <span class="chip-label">Mass 2</span>
+          </div>
+          <div class="mass-item">
+            <span class="mass-circle" style="width:44px;height:44px;background:#ff5e57;"></span>
+            <span class="chip-label">Mass 3</span>
+          </div>
+        </div>
+        <div class="add-mass-controls" id="addMassControls">
+          <button class="add-mass-btn" type="button" data-add-mass="mass1">Adicionar Mass 1</button>
+          <button class="add-mass-btn" type="button" data-add-mass="mass2">Adicionar Mass 2</button>
+          <button class="add-mass-btn" type="button" data-add-mass="mass3">Adicionar Mass 3</button>
+        </div>
+        <p class="hint" id="interactionHint">Arraste cada massa no sentido radial (para dentro/fora) com o disco em Play ou em pausa.</p>
+      </section>
+
+      <section class="axis-control hidden" id="axisControl" aria-label="Controle de eixo">
+        <div class="axis-group" id="barAxisGroup">
+          <div class="axis-row">
+            <span>Posição do eixo na barra</span>
+            <span id="axisValue">50%</span>
+          </div>
+          <input id="axisSlider" type="range" min="5" max="95" step="1" value="50" />
+        </div>
+        <div class="axis-group hidden" id="plateAxisGroup">
+          <div class="axis-row">
+            <span>Eixo X na placa</span>
+            <span id="axisPlateXValue">50%</span>
+          </div>
+          <input id="axisPlateXSlider" type="range" min="5" max="95" step="1" value="50" />
+          <div class="axis-row" style="margin-top:8px;">
+            <span>Eixo Y na placa</span>
+            <span id="axisPlateYValue">50%</span>
+          </div>
+          <input id="axisPlateYSlider" type="range" min="5" max="95" step="1" value="50" />
+        </div>
+      </section>
+
+      <section class="controls">
+        <button id="switchObjectBtn" type="button">Trocar Objeto</button>
+        <button id="playPauseBtn" type="button">Play</button>
+        <button id="clearBtn" type="button">Resetar Massas</button>
+      </section>
+    </aside>
+  </main>
+
+  <script>
+    (() => {
+      const canvas = document.getElementById("simCanvas");
+      const ctx = canvas.getContext("2d");
+
+      const switchObjectBtn = document.getElementById("switchObjectBtn");
+      const playPauseBtn = document.getElementById("playPauseBtn");
+      const clearBtn = document.getElementById("clearBtn");
+      const axisControl = document.getElementById("axisControl");
+      const axisSlider = document.getElementById("axisSlider");
+      const axisValue = document.getElementById("axisValue");
+      const barAxisGroup = document.getElementById("barAxisGroup");
+      const plateAxisGroup = document.getElementById("plateAxisGroup");
+      const axisPlateXSlider = document.getElementById("axisPlateXSlider");
+      const axisPlateYSlider = document.getElementById("axisPlateYSlider");
+      const axisPlateXValue = document.getElementById("axisPlateXValue");
+      const axisPlateYValue = document.getElementById("axisPlateYValue");
+      const addMassControls = document.getElementById("addMassControls");
+      const guideRow = document.getElementById("guideRow");
+      const modeSubtitle = document.getElementById("modeSubtitle");
+      const guideTitle = document.getElementById("guideTitle");
+      const interactionHint = document.getElementById("interactionHint");
+      const inertiaFormula = document.getElementById("inertiaFormula");
+      const omegaValueEl = document.getElementById("omegaValue");
+      const inertiaValueEl = document.getElementById("inertiaValue");
+      const energyValueEl = document.getElementById("energyValue");
+      const inertiaCard = document.getElementById("inertiaCard");
+      const energyCard = document.getElementById("energyCard");
+
+      const config = {
+        omega: 2.0,
+        diskInertiaBase: 0.0,
+        barMassBase: 8.0,
+        barLengthNorm: 1.8,
+        plateMassBase: 9.5,
+        plateWidthNorm: 1.7,
+        plateHeightNorm: 1.1,
+        maxParticles: 180,
+      };
+
+      const initialMasses = [
+        { id: "mass1", label: "Mass 1", mass: 1, color: "#23c96b", pxRadius: 12 },
+        { id: "mass2", label: "Mass 2", mass: 2, color: "#f6c945", pxRadius: 17 },
+        { id: "mass3", label: "Mass 3", mass: 3, color: "#ff5e57", pxRadius: 22 },
+      ];
+
+      let state = {
+        center: { x: 0, y: 0 },
+        diskRadius: 0,
+        barLengthPx: 0,
+        barThicknessPx: 0,
+        plateWidthPx: 0,
+        plateHeightPx: 0,
+        angle: 0,
+        lastTime: 0,
+        masses: [],
+        nextMassSerial: 1,
+        dragging: null,
+        isPlaying: false,
+        mode: "disk",
+        axisPosNorm: Number(axisSlider.value) / 100,
+        axisPlateXNorm: Number(axisPlateXSlider.value) / 100,
+        axisPlateYNorm: Number(axisPlateYSlider.value) / 100,
+        inertiaDisplay: config.diskInertiaBase,
+        energyDisplay: 0.5 * config.diskInertiaBase * config.omega * config.omega,
+        inertiaTarget: config.diskInertiaBase,
+        energyTarget: 0.5 * config.diskInertiaBase * config.omega * config.omega,
+        particles: [],
+      };
+
+      omegaValueEl.textContent = `${config.omega.toFixed(2)} rad/s`;
+
+      function createMassInstance(template, extra = {}) {
+        const massId = `${template.id}-${state.nextMassSerial}`;
+        state.nextMassSerial += 1;
+        return {
+          id: massId,
+          label: template.label,
+          mass: template.mass,
+          color: template.color,
+          pxRadius: template.pxRadius,
+          ...extra,
+        };
+      }
+
+      function updateModeUI() {
+        const isDisk = state.mode === "disk";
+        const isBar = state.mode === "bar";
+        const isPlate = state.mode === "plate";
+        guideTitle.textContent = isDisk ? "Massas Iniciais no Disco" : isBar ? "Barra Rotativa" : "Placa Rotativa";
+        interactionHint.textContent = isDisk
+          ? "Arraste cada massa no sentido radial (para dentro/fora) e use os botões para adicionar mais."
+          : isBar
+            ? "Na barra, ajuste apenas a posição do eixo para observar a variação de I."
+            : "Na placa, ajuste o eixo em X e Y para mover o pivô no plano.";
+        modeSubtitle.textContent = isDisk
+          ? "Observe como a posição radial dos pesos altera I e Ec."
+          : isBar
+            ? "Na barra, o eixo deslocado altera o raio efetivo e o momento de inércia."
+            : "Na placa bidimensional, o eixo pode ser colocado em qualquer ponto para comparar I.";
+        inertiaFormula.innerHTML = isDisk
+          ? "I = I<sub>disco</sub> + Σ m · r²"
+          : isBar
+            ? "I = I<sub>barra</sub>"
+            : "I = I<sub>placa</sub>";
+        axisControl.classList.toggle("hidden", isDisk);
+        barAxisGroup.classList.toggle("hidden", !isBar);
+        plateAxisGroup.classList.toggle("hidden", !isPlate);
+        addMassControls.classList.toggle("hidden", !isDisk);
+        guideRow.classList.toggle("is-hidden", !isDisk);
+        clearBtn.textContent = isDisk ? "Resetar Massas" : "Resetar Eixo";
+        switchObjectBtn.textContent = isDisk ? "Ir para Barra" : isBar ? "Ir para Placa" : "Ir para Disco";
+      }
+
+      function resetMassesToDefault() {
+        if (state.mode === "disk") {
+          state.masses = [
+            createMassInstance(initialMasses[0], { normalizedR: 0.35, phiLocal: -0.5 }),
+            createMassInstance(initialMasses[1], { normalizedR: 0.58, phiLocal: 1.3 }),
+            createMassInstance(initialMasses[2], { normalizedR: 0.78, phiLocal: -2.2 }),
+          ];
+          return;
+        }
+        state.masses = [];
+      }
+
+      function resizeCanvas() {
+        const rect = canvas.getBoundingClientRect();
+        const dpr = window.devicePixelRatio || 1;
+        canvas.width = Math.floor(rect.width * dpr);
+        canvas.height = Math.floor(rect.height * dpr);
+        ctx.setTransform(dpr, 0, 0, dpr, 0, 0);
+
+        state.center.x = rect.width / 2;
+        state.center.y = rect.height / 2;
+        state.diskRadius = Math.min(rect.width, rect.height) * 0.37;
+        state.barLengthPx = Math.min(rect.width, rect.height) * 0.72;
+        state.barThicknessPx = Math.max(20, state.barLengthPx * 0.055);
+        state.plateWidthPx = Math.min(rect.width, rect.height) * 0.78;
+        state.plateHeightPx = state.plateWidthPx * 0.62;
+      }
+
+      function toCanvasPoint(e) {
+        const rect = canvas.getBoundingClientRect();
+        return {
+          x: e.clientX - rect.left,
+          y: e.clientY - rect.top,
+        };
+      }
+
+      function getBarGeometry() {
+        const axisOffset = (state.axisPosNorm - 0.5) * state.barLengthPx * 0.9;
+        return {
+          axisOffset,
+          xMin: -state.barLengthPx / 2 - axisOffset,
+          xMax: state.barLengthPx / 2 - axisOffset,
+        };
+      }
+
+      function getMassPosition(m) {
+        const { x: cx, y: cy } = state.center;
+        if (state.mode === "disk") {
+          const currentAngle = state.angle + m.phiLocal;
+          const rr = m.normalizedR * state.diskRadius;
+          return {
+            x: cx + Math.cos(currentAngle) * rr,
+            y: cy + Math.sin(currentAngle) * rr,
+          };
+        }
+
+        if (state.mode !== "bar") {
+          return { x: cx, y: cy };
+        }
+
+        const barGeom = getBarGeometry();
+        const s = (m.barPosNorm - 0.5) * state.barLengthPx;
+        const xLocal = s - barGeom.axisOffset;
+        return {
+          x: cx + Math.cos(state.angle) * xLocal,
+          y: cy + Math.sin(state.angle) * xLocal,
+        };
+      }
+
+      function onPointerDown(e) {
+        const point = toCanvasPoint(e);
+        let selected = null;
+        let minDist = Infinity;
+
+        state.masses.forEach((m) => {
+          const pos = getMassPosition(m);
+          const x = pos.x;
+          const y = pos.y;
+          const d = Math.hypot(point.x - x, point.y - y);
+          if (d <= m.pxRadius + 8 && d < minDist) {
+            minDist = d;
+            selected = m;
+          }
+        });
+
+        if (!selected) {
+          return;
+        }
+
+        state.dragging = {
+          massId: selected.id,
+          pointerId: e.pointerId,
+        };
+        canvas.classList.add("dragging");
+        canvas.setPointerCapture(e.pointerId);
+      }
+
+      function onPointerMove(e) {
+        if (!state.dragging || e.pointerId !== state.dragging.pointerId) {
+          return;
+        }
+        const m = state.masses.find((item) => item.id === state.dragging.massId);
+        if (!m) {
+          return;
+        }
+
+        const point = toCanvasPoint(e);
+        if (state.mode === "disk") {
+          const currentAngle = state.angle + m.phiLocal;
+          const ux = Math.cos(currentAngle);
+          const uy = Math.sin(currentAngle);
+          const vx = point.x - state.center.x;
+          const vy = point.y - state.center.y;
+          const projectedRadiusPx = Math.max(0.05 * state.diskRadius, Math.min(state.diskRadius * 0.96, vx * ux + vy * uy));
+          m.normalizedR = projectedRadiusPx / state.diskRadius;
+        } else if (state.mode === "bar") {
+          const ux = Math.cos(state.angle);
+          const uy = Math.sin(state.angle);
+          const vx = point.x - state.center.x;
+          const vy = point.y - state.center.y;
+          const barGeom = getBarGeometry();
+          const margin = 12;
+          const xLocal = vx * ux + vy * uy;
+          const clampedX = Math.max(barGeom.xMin + margin, Math.min(barGeom.xMax - margin, xLocal));
+          const s = clampedX + barGeom.axisOffset;
+          m.barPosNorm = Math.max(0.03, Math.min(0.97, s / state.barLengthPx + 0.5));
+        }
+        updatePhysicsValues(false);
+      }
+
+      function endDrag(pointerId) {
+        try {
+          canvas.releasePointerCapture(pointerId);
+        } catch (err) {
+          // Pointer may already have been released.
+        }
+        if (state.dragging) {
+          const m = state.masses.find((item) => item.id === state.dragging.massId);
+          if (m) {
+            const pos = getMassPosition(m);
+            spawnParticles(pos.x, pos.y, m.color);
+          }
+        }
+        updatePhysicsValues(true);
+        state.dragging = null;
+        canvas.classList.remove("dragging");
+      }
+
+      function onPointerUp(e) {
+        if (!state.dragging || e.pointerId !== state.dragging.pointerId) {
+          return;
+        }
+        endDrag(e.pointerId);
+      }
+
+      function onPointerCancel(e) {
+        if (!state.dragging || e.pointerId !== state.dragging.pointerId) {
+          return;
+        }
+        endDrag(e.pointerId);
+      }
+
+      function spawnParticles(x, y, color) {
+        for (let i = 0; i < 10 && state.particles.length < config.maxParticles; i += 1) {
+          const a = Math.random() * Math.PI * 2;
+          const speed = 20 + Math.random() * 50;
+          state.particles.push({
+            x,
+            y,
+            vx: Math.cos(a) * speed,
+            vy: Math.sin(a) * speed,
+            ttl: 0.35 + Math.random() * 0.45,
+            age: 0,
+            color,
+            size: 1.8 + Math.random() * 2.8,
+          });
+        }
+      }
+
+      function drawDisk() {
+        const { x: cx, y: cy } = state.center;
+        const r = state.diskRadius;
+
+        const gradient = ctx.createRadialGradient(cx - r * 0.3, cy - r * 0.28, r * 0.1, cx, cy, r * 1.05);
+        gradient.addColorStop(0, "#eef2f7");
+        gradient.addColorStop(0.55, "#d8e0ea");
+        gradient.addColorStop(1, "#bbc7d7");
+
+        ctx.beginPath();
+        ctx.arc(cx, cy, r, 0, Math.PI * 2);
+        ctx.fillStyle = gradient;
+        ctx.fill();
+
+        // Subtle texture.
+        for (let i = 0; i < 24; i += 1) {
+          const stripeR = r * (0.2 + (i / 23) * 0.8);
+          ctx.beginPath();
+          ctx.arc(cx, cy, stripeR, 0, Math.PI * 2);
+          ctx.strokeStyle = i % 2 ? "rgba(255,255,255,0.06)" : "rgba(68,87,116,0.04)";
+          ctx.lineWidth = 0.8;
+          ctx.stroke();
+        }
+
+        // Concentric guide grid.
+        for (let i = 1; i <= 5; i += 1) {
+          ctx.beginPath();
+          ctx.arc(cx, cy, (r * i) / 5, 0, Math.PI * 2);
+          ctx.strokeStyle = "rgba(59,77,104,0.14)";
+          ctx.lineWidth = 0.9;
+          ctx.stroke();
+        }
+
+        // Radial spokes.
+        for (let i = 0; i < 12; i += 1) {
+          const a = state.angle + (i * Math.PI) / 6;
+          ctx.beginPath();
+          ctx.moveTo(cx, cy);
+          ctx.lineTo(cx + Math.cos(a) * r, cy + Math.sin(a) * r);
+          ctx.strokeStyle = "rgba(70, 91, 120, 0.14)";
+          ctx.lineWidth = i % 3 === 0 ? 1.7 : 0.8;
+          ctx.stroke();
+        }
+
+        // Main reference radius line.
+        ctx.beginPath();
+        ctx.moveTo(cx, cy);
+        ctx.lineTo(cx + Math.cos(state.angle) * r, cy + Math.sin(state.angle) * r);
+        ctx.strokeStyle = "rgba(20, 40, 66, 0.62)";
+        ctx.lineWidth = 3.2;
+        ctx.stroke();
+
+        ctx.beginPath();
+        ctx.arc(cx, cy, r, 0, Math.PI * 2);
+        ctx.lineWidth = 2;
+        ctx.strokeStyle = "rgba(72, 92, 121, 0.58)";
+        ctx.stroke();
+
+        ctx.beginPath();
+        ctx.arc(cx, cy, r * 0.08, 0, Math.PI * 2);
+        ctx.fillStyle = "#7588a4";
+        ctx.fill();
+      }
+
+      function drawBar() {
+        const { x: cx, y: cy } = state.center;
+        const barGeom = getBarGeometry();
+        const thickness = state.barThicknessPx;
+        const width = barGeom.xMax - barGeom.xMin;
+        const t = performance.now() * 0.001;
+        const pulse = 0.6 + 0.4 * Math.sin(t * 3.2);
+
+        ctx.save();
+        ctx.translate(cx, cy);
+        ctx.rotate(state.angle);
+
+        // Motion trail around the bar.
+        ctx.beginPath();
+        ctx.moveTo(barGeom.xMin - 26, 0);
+        ctx.lineTo(barGeom.xMax + 26, 0);
+        ctx.strokeStyle = `rgba(70, 91, 120, ${0.18 + 0.12 * pulse})`;
+        ctx.lineWidth = 7;
+        ctx.lineCap = "round";
+        ctx.stroke();
+
+        ctx.beginPath();
+        ctx.moveTo(barGeom.xMin - 10, 0);
+        ctx.lineTo(barGeom.xMax + 10, 0);
+        ctx.strokeStyle = "rgba(70, 91, 120, 0.28)";
+        ctx.lineWidth = 2;
+        ctx.lineCap = "round";
+        ctx.stroke();
+
+        // Fixed color map by geometric center: blue at center, red at ends.
+        const inertiaGradient = ctx.createLinearGradient(barGeom.xMin, 0, barGeom.xMax, 0);
+        inertiaGradient.addColorStop(0, "#e54854");
+        inertiaGradient.addColorStop(0.28, "#b44fe2");
+        inertiaGradient.addColorStop(0.5, "#2d7dff");
+        inertiaGradient.addColorStop(0.72, "#b44fe2");
+        inertiaGradient.addColorStop(1, "#e54854");
+        ctx.fillStyle = inertiaGradient;
+        ctx.fillRect(barGeom.xMin, -thickness / 2, width, thickness);
+
+        ctx.lineWidth = 2;
+        ctx.strokeStyle = "rgba(36, 56, 83, 0.62)";
+        ctx.strokeRect(barGeom.xMin, -thickness / 2, width, thickness);
+
+        // Specular animated highlight sweeping along the bar.
+        const sweep = ((t * 0.42) % 1) * width + barGeom.xMin;
+        const sweepGrad = ctx.createLinearGradient(sweep - 55, 0, sweep + 55, 0);
+        sweepGrad.addColorStop(0, "rgba(255,255,255,0)");
+        sweepGrad.addColorStop(0.5, "rgba(255,255,255,0.28)");
+        sweepGrad.addColorStop(1, "rgba(255,255,255,0)");
+        ctx.fillStyle = sweepGrad;
+        ctx.fillRect(barGeom.xMin, -thickness / 2, width, thickness);
+
+        for (let i = 0; i <= 10; i += 1) {
+          const x = barGeom.xMin + (i / 10) * width;
+          ctx.beginPath();
+          ctx.moveTo(x, -thickness / 2);
+          ctx.lineTo(x, thickness / 2);
+          const isMajor = i % 5 === 0;
+          const shift = ((t * 1.2 + i * 0.11) % 1);
+          const alpha = isMajor ? 0.5 + 0.08 * Math.sin(shift * Math.PI * 2) : 0.24 + 0.06 * Math.sin(shift * Math.PI * 2);
+          ctx.strokeStyle = `rgba(31, 48, 73, ${alpha.toFixed(3)})`;
+          ctx.lineWidth = i % 5 === 0 ? 2.1 : 1.2;
+          ctx.stroke();
+        }
+
+        // Dynamic end caps.
+        const capR = thickness * 0.58;
+        [barGeom.xMin, barGeom.xMax].forEach((xCap, idx) => {
+          const capPulse = 0.75 + 0.25 * Math.sin(t * 4 + idx * Math.PI);
+          ctx.beginPath();
+          ctx.arc(xCap, 0, capR, 0, Math.PI * 2);
+          ctx.fillStyle = `rgba(165, 184, 209, ${0.6 + 0.25 * capPulse})`;
+          ctx.fill();
+          ctx.beginPath();
+          ctx.arc(xCap, 0, capR * (1.34 + 0.12 * capPulse), 0, Math.PI * 2);
+          ctx.lineWidth = 1.4;
+          ctx.strokeStyle = `rgba(87, 111, 143, ${0.22 + 0.15 * capPulse})`;
+          ctx.stroke();
+        });
+
+        // Axis marker with pulsating halo.
+        ctx.beginPath();
+        ctx.arc(0, 0, thickness * (0.95 + 0.22 * pulse), 0, Math.PI * 2);
+        ctx.fillStyle = `rgba(37,132,255,${0.08 + 0.06 * pulse})`;
+        ctx.fill();
+        ctx.beginPath();
+        ctx.arc(0, 0, thickness * 0.35, 0, Math.PI * 2);
+        ctx.fillStyle = "#6f82a0";
+        ctx.fill();
+        ctx.beginPath();
+        ctx.arc(0, 0, thickness * 0.62, 0, Math.PI * 2);
+        ctx.lineWidth = 2;
+        ctx.strokeStyle = "rgba(28, 49, 75, 0.5)";
+        ctx.stroke();
+
+        ctx.restore();
+      }
+
+      function drawPlate() {
+        const { x: cx, y: cy } = state.center;
+        const w = state.plateWidthPx;
+        const h = state.plateHeightPx;
+        const t = performance.now() * 0.001;
+        const pulse = 0.58 + 0.42 * Math.sin(t * 3.1);
+
+        const axisOffsetX = (state.axisPlateXNorm - 0.5) * w * 0.9;
+        const axisOffsetY = (state.axisPlateYNorm - 0.5) * h * 0.9;
+
+        ctx.save();
+        ctx.translate(cx, cy);
+        ctx.rotate(state.angle);
+
+        // Outer motion halo.
+        ctx.beginPath();
+        ctx.rect(-w / 2 - 10 - axisOffsetX, -h / 2 - 10 - axisOffsetY, w + 20, h + 20);
+        ctx.strokeStyle = `rgba(78, 103, 136, ${0.18 + 0.12 * pulse})`;
+        ctx.lineWidth = 3;
+        ctx.stroke();
+
+        // Fixed 2D map by geometric center: blue center, red borders/corners.
+        const x1 = -w / 2 - axisOffsetX;
+        const y1 = -h / 2 - axisOffsetY;
+        const centerX = x1 + w / 2;
+        const centerY = y1 + h / 2;
+        const rMax = Math.hypot(w / 2, h / 2);
+        const gradient = ctx.createRadialGradient(centerX, centerY, 0, centerX, centerY, rMax);
+        gradient.addColorStop(0, "#2d7dff");
+        gradient.addColorStop(0.45, "#745dff");
+        gradient.addColorStop(1, "#e54854");
+        ctx.fillStyle = gradient;
+        ctx.fillRect(-w / 2 - axisOffsetX, -h / 2 - axisOffsetY, w, h);
+
+        ctx.lineWidth = 2.2;
+        ctx.strokeStyle = "rgba(31, 48, 73, 0.62)";
+        ctx.strokeRect(-w / 2 - axisOffsetX, -h / 2 - axisOffsetY, w, h);
+
+        // Grid texture.
+        const cols = 9;
+        const rows = 6;
+        for (let i = 1; i < cols; i += 1) {
+          const x = -w / 2 - axisOffsetX + (i / cols) * w;
+          ctx.beginPath();
+          ctx.moveTo(x, -h / 2 - axisOffsetY);
+          ctx.lineTo(x, h / 2 - axisOffsetY);
+          ctx.strokeStyle = i % 3 === 0 ? "rgba(31, 48, 73, 0.32)" : "rgba(31, 48, 73, 0.18)";
+          ctx.lineWidth = i % 3 === 0 ? 1.6 : 1;
+          ctx.stroke();
+        }
+        for (let j = 1; j < rows; j += 1) {
+          const y = -h / 2 - axisOffsetY + (j / rows) * h;
+          ctx.beginPath();
+          ctx.moveTo(-w / 2 - axisOffsetX, y);
+          ctx.lineTo(w / 2 - axisOffsetX, y);
+          ctx.strokeStyle = j % 2 === 0 ? "rgba(31, 48, 73, 0.28)" : "rgba(31, 48, 73, 0.16)";
+          ctx.lineWidth = j % 2 === 0 ? 1.4 : 0.9;
+          ctx.stroke();
+        }
+
+        // Moving shine.
+        const sweep = ((t * 0.35) % 1) * (w + h);
+        const shine = ctx.createLinearGradient(-w / 2 + sweep - h, -h / 2, -w / 2 + sweep, h / 2);
+        shine.addColorStop(0, "rgba(255,255,255,0)");
+        shine.addColorStop(0.5, "rgba(255,255,255,0.22)");
+        shine.addColorStop(1, "rgba(255,255,255,0)");
+        ctx.fillStyle = shine;
+        ctx.fillRect(-w / 2 - axisOffsetX, -h / 2 - axisOffsetY, w, h);
+
+        // Axis marker in user-selected position.
+        ctx.beginPath();
+        ctx.arc(0, 0, 14 + 4 * pulse, 0, Math.PI * 2);
+        ctx.fillStyle = `rgba(37,132,255,${0.12 + 0.08 * pulse})`;
+        ctx.fill();
+        ctx.beginPath();
+        ctx.arc(0, 0, 6.5, 0, Math.PI * 2);
+        ctx.fillStyle = "#5f789d";
+        ctx.fill();
+        ctx.beginPath();
+        ctx.arc(0, 0, 11, 0, Math.PI * 2);
+        ctx.strokeStyle = "rgba(29, 54, 88, 0.52)";
+        ctx.lineWidth = 2;
+        ctx.stroke();
+
+        ctx.restore();
+      }
+
+      function drawMasses() {
+        const { x: cx, y: cy } = state.center;
+
+        state.masses.forEach((m) => {
+          const pos = getMassPosition(m);
+          const x = pos.x;
+          const y = pos.y;
+
+          const isSelected = state.dragging && state.dragging.massId === m.id;
+
+          ctx.beginPath();
+          ctx.arc(x, y, m.pxRadius, 0, Math.PI * 2);
+          ctx.fillStyle = m.color;
+          ctx.fill();
+
+          ctx.lineWidth = isSelected ? 3.5 : 2;
+          ctx.strokeStyle = isSelected ? "rgba(37,132,255,0.9)" : "rgba(255,255,255,0.7)";
+          ctx.stroke();
+
+          ctx.beginPath();
+          ctx.moveTo(cx, cy);
+          ctx.lineTo(x, y);
+          ctx.strokeStyle = "rgba(40, 56, 81, 0.22)";
+          ctx.lineWidth = 1;
+          ctx.stroke();
+        });
+      }
+
+      function drawParticles(dt) {
+        for (let i = state.particles.length - 1; i >= 0; i -= 1) {
+          const p = state.particles[i];
+          p.age += dt;
+          if (p.age >= p.ttl) {
+            state.particles.splice(i, 1);
+            continue;
+          }
+
+          p.x += p.vx * dt;
+          p.y += p.vy * dt;
+          p.vx *= 0.96;
+          p.vy *= 0.96;
+
+          const t = 1 - p.age / p.ttl;
+          ctx.save();
+          ctx.globalAlpha = t * 0.65;
+          ctx.beginPath();
+          ctx.arc(p.x, p.y, p.size * t, 0, Math.PI * 2);
+          ctx.fillStyle = p.color;
+          ctx.fill();
+          ctx.restore();
+        }
+      }
+
+      function getBaseInertia() {
+        if (state.mode === "disk") {
+          return config.diskInertiaBase;
+        }
+        if (state.mode === "bar") {
+          const L = config.barLengthNorm;
+          const d = (state.axisPosNorm - 0.5) * L * 0.9;
+          const iCenter = (config.barMassBase * L * L) / 12;
+          return iCenter + config.barMassBase * d * d;
+        }
+        const a = config.plateWidthNorm;
+        const b = config.plateHeightNorm;
+        const dx = (state.axisPlateXNorm - 0.5) * a * 0.9;
+        const dy = (state.axisPlateYNorm - 0.5) * b * 0.9;
+        const iCenter = (config.plateMassBase * (a * a + b * b)) / 12;
+        return iCenter + config.plateMassBase * (dx * dx + dy * dy);
+      }
+
+      function getMassRadius(m) {
+        return state.mode === "disk" ? m.normalizedR : 0;
+      }
+
+      function getTotalInertia() {
+        const extras = state.masses.reduce((acc, m) => {
+          const r = getMassRadius(m);
+          return acc + m.mass * r * r;
+        }, 0);
+        return getBaseInertia() + extras;
+      }
+
+      function updatePhysicsValues(withPulse = false) {
+        state.inertiaTarget = getTotalInertia();
+        state.energyTarget = 0.5 * state.inertiaTarget * config.omega * config.omega;
+
+        if (withPulse) {
+          inertiaCard.classList.remove("highlight");
+          energyCard.classList.remove("highlight");
+          requestAnimationFrame(() => {
+            inertiaCard.classList.add("highlight");
+            energyCard.classList.add("highlight");
+            setTimeout(() => {
+              inertiaCard.classList.remove("highlight");
+              energyCard.classList.remove("highlight");
+            }, 360);
+          });
+        }
+      }
+
+      function animateCounters(dt) {
+        const lerpFactor = Math.min(1, dt * 7.8);
+        state.inertiaDisplay += (state.inertiaTarget - state.inertiaDisplay) * lerpFactor;
+        state.energyDisplay += (state.energyTarget - state.energyDisplay) * lerpFactor;
+
+        inertiaValueEl.textContent = `${state.inertiaDisplay.toFixed(2)} kg·m²`;
+        energyValueEl.textContent = `${state.energyDisplay.toFixed(2)} J`;
+      }
+
+      function clearDisk() {
+        state.dragging = null;
+        canvas.classList.remove("dragging");
+        if (state.mode === "disk") {
+          resetMassesToDefault();
+        } else if (state.mode === "bar") {
+          axisSlider.value = "50";
+          updateAxisFromInput();
+        } else {
+          axisPlateXSlider.value = "50";
+          axisPlateYSlider.value = "50";
+          updatePlateAxisFromInput();
+        }
+        spawnParticles(state.center.x, state.center.y, "#2584ff");
+        updatePhysicsValues(true);
+      }
+
+      function addMassToDisk(baseId) {
+        if (state.mode !== "disk") {
+          return;
+        }
+        const template = initialMasses.find((item) => item.id === baseId);
+        if (!template) {
+          return;
+        }
+        const mass = createMassInstance(template, {
+          normalizedR: 0.65 + Math.random() * 0.25,
+          phiLocal: Math.random() * Math.PI * 2 - Math.PI,
+        });
+        state.masses.push(mass);
+        const pos = getMassPosition(mass);
+        spawnParticles(pos.x, pos.y, mass.color);
+        updatePhysicsValues(true);
+      }
+
+      function toggleObject() {
+        state.dragging = null;
+        canvas.classList.remove("dragging");
+        if (state.mode === "disk") {
+          state.mode = "bar";
+        } else if (state.mode === "bar") {
+          state.mode = "plate";
+        } else {
+          state.mode = "disk";
+        }
+        resetMassesToDefault();
+        updateModeUI();
+        spawnParticles(state.center.x, state.center.y, "#2584ff");
+        updatePhysicsValues(true);
+      }
+
+      function togglePlayPause() {
+        state.isPlaying = !state.isPlaying;
+        playPauseBtn.textContent = state.isPlaying ? "Pausar" : "Play";
+      }
+
+      function updateAxisFromInput() {
+        state.axisPosNorm = Number(axisSlider.value) / 100;
+        axisValue.textContent = `${axisSlider.value}%`;
+        if (state.mode === "bar") {
+          updatePhysicsValues(false);
+        }
+      }
+
+      function updatePlateAxisFromInput() {
+        state.axisPlateXNorm = Number(axisPlateXSlider.value) / 100;
+        state.axisPlateYNorm = Number(axisPlateYSlider.value) / 100;
+        axisPlateXValue.textContent = `${axisPlateXSlider.value}%`;
+        axisPlateYValue.textContent = `${axisPlateYSlider.value}%`;
+        if (state.mode === "plate") {
+          updatePhysicsValues(false);
+        }
+      }
+
+      function tick(ts) {
+        if (!state.lastTime) {
+          state.lastTime = ts;
+        }
+        const dt = Math.min(0.05, (ts - state.lastTime) / 1000);
+        state.lastTime = ts;
+
+        if (state.isPlaying) {
+          state.angle += config.omega * dt;
+        }
+
+        const width = canvas.clientWidth;
+        const height = canvas.clientHeight;
+        ctx.clearRect(0, 0, width, height);
+
+        if (state.mode === "disk") {
+          drawDisk();
+        } else if (state.mode === "bar") {
+          drawBar();
+        } else {
+          drawPlate();
+        }
+        drawMasses();
+        drawParticles(dt);
+        animateCounters(dt);
+
+        requestAnimationFrame(tick);
+      }
+
+      window.addEventListener("resize", resizeCanvas);
+      canvas.addEventListener("pointerdown", onPointerDown);
+      canvas.addEventListener("pointermove", onPointerMove);
+      canvas.addEventListener("pointerup", onPointerUp);
+      canvas.addEventListener("pointercancel", onPointerCancel);
+      switchObjectBtn.addEventListener("click", toggleObject);
+      playPauseBtn.addEventListener("click", togglePlayPause);
+      clearBtn.addEventListener("click", clearDisk);
+      axisSlider.addEventListener("input", updateAxisFromInput);
+      axisPlateXSlider.addEventListener("input", updatePlateAxisFromInput);
+      axisPlateYSlider.addEventListener("input", updatePlateAxisFromInput);
+      addMassControls.querySelectorAll("[data-add-mass]").forEach((btn) => {
+        btn.addEventListener("click", () => addMassToDisk(btn.dataset.addMass));
+      });
+
+      updateAxisFromInput();
+      updatePlateAxisFromInput();
+      updateModeUI();
+      resetMassesToDefault();
+      resizeCanvas();
+      updatePhysicsValues(false);
+      requestAnimationFrame(tick);
+    })();
+  </script>
+</body>
+</html>
