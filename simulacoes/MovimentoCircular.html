@@ -1,0 +1,497 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+  <meta charset="UTF-8">
+  <title>Simulador de Movimento Circular Uniformemente Variado</title>
+  <style>
+    @import url('https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@400;500;600;700&display=swap');
+
+    :root {
+      --theta-color: #38bdf8;
+      --omega-color: #fb7185;
+      --alpha-color: #22c55e;
+      --panel-bg: rgba(255, 255, 255, 0.72);
+      --panel-border: rgba(148, 163, 184, 0.35);
+      --text-main: #0f172a;
+      --text-soft: #334155;
+    }
+
+    body {
+      font-family: 'Space Grotesk', 'Segoe UI', sans-serif;
+      background: radial-gradient(circle at 12% 18%, rgba(56, 189, 248, 0.38) 0%, transparent 44%),
+                  radial-gradient(circle at 88% 14%, rgba(236, 72, 153, 0.3) 0%, transparent 38%),
+                  radial-gradient(circle at 50% 100%, rgba(59, 130, 246, 0.22) 0%, transparent 42%),
+                  linear-gradient(145deg, #eef6ff 0%, #e9f5ff 45%, #f8fafc 100%);
+      color: var(--text-main);
+      margin: 0;
+      padding: 20px;
+      min-height: 100vh;
+    }
+    .container {
+      max-width: 920px;
+      margin: 0 auto;
+      background: var(--panel-bg);
+      border: 1px solid var(--panel-border);
+      backdrop-filter: blur(10px);
+      padding: 24px;
+      border-radius: 20px;
+      box-shadow: 0 20px 40px rgba(2, 6, 23, 0.45);
+    }
+    h1 {
+      text-align: center;
+      margin-top: 4px;
+      margin-bottom: 18px;
+      letter-spacing: 0.4px;
+    }
+    #controls {
+      display: flex;
+      flex-direction: column;
+      gap: 12px;
+    }
+    label {
+      display: block;
+      border: 1px solid rgba(148, 163, 184, 0.26);
+      border-radius: 12px;
+      padding: 12px 14px;
+      background: rgba(255, 255, 255, 0.72);
+      box-shadow: inset 0 0 0 1px rgba(255, 255, 255, 0.24);
+    }
+    .control-header {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      gap: 12px;
+      white-space: nowrap;
+      margin-bottom: 8px;
+    }
+    .control-label {
+      overflow: hidden;
+      text-overflow: ellipsis;
+      white-space: nowrap;
+    }
+    input[type="range"] {
+      width: 100%;
+      height: 6px;
+      border-radius: 999px;
+      background: rgba(148, 163, 184, 0.35);
+      outline: none;
+      appearance: none;
+      -webkit-appearance: none;
+    }
+    input[type="range"]::-webkit-slider-thumb {
+      appearance: none;
+      -webkit-appearance: none;
+      width: 18px;
+      height: 18px;
+      border-radius: 50%;
+      background: #f8fafc;
+      border: 2px solid #0f172a;
+      box-shadow: 0 0 0 4px rgba(248, 250, 252, 0.18);
+      cursor: pointer;
+    }
+    input[type="range"]::-moz-range-thumb {
+      width: 18px;
+      height: 18px;
+      border-radius: 50%;
+      background: #f8fafc;
+      border: 2px solid #0f172a;
+      box-shadow: 0 0 0 4px rgba(248, 250, 252, 0.18);
+      cursor: pointer;
+    }
+    input[type="range"]::-moz-range-track {
+      height: 6px;
+      border-radius: 999px;
+      background: rgba(148, 163, 184, 0.35);
+    }
+    #startButton, #resetButton {
+      padding: 12px;
+      font-size: 15px;
+      margin-top: 6px;
+      cursor: pointer;
+      border: 0;
+      border-radius: 12px;
+      color: #f8fafc;
+      font-weight: 600;
+      letter-spacing: 0.2px;
+      transition: transform 0.15s ease, box-shadow 0.15s ease;
+    }
+    #startButton {
+      background: linear-gradient(120deg, #06b6d4, #3b82f6);
+      box-shadow: 0 10px 20px rgba(14, 165, 233, 0.25);
+    }
+    #resetButton {
+      background: linear-gradient(120deg, #f43f5e, #fb7185);
+      box-shadow: 0 10px 20px rgba(244, 63, 94, 0.22);
+    }
+    #startButton:hover, #resetButton:hover {
+      transform: translateY(-1px);
+    }
+    #simulation {
+      margin-top: 20px;
+      position: relative;
+      width: 600px;
+      max-width: 100%;
+      margin-left: auto;
+      margin-right: auto;
+      overflow: hidden;
+      border-radius: 14px;
+    }
+    canvas {
+      display: block;
+      border: 1px solid rgba(148, 163, 184, 0.28);
+      border-radius: 14px;
+      box-shadow: 0 14px 26px rgba(2, 6, 23, 0.45);
+    }
+    .sim-overlay {
+      position: absolute;
+      top: 8px;
+      right: 8px;
+      z-index: 5;
+      display: block;
+      text-align: left;
+      padding: 6px 10px;
+      border-radius: 10px;
+      border: 1px solid rgba(148, 163, 184, 0.45);
+      background: rgba(255, 255, 255, 0.78);
+      backdrop-filter: blur(4px);
+      color: #0f172a;
+      box-shadow: 0 8px 16px rgba(15, 23, 42, 0.2);
+      white-space: nowrap;
+    }
+    .sim-overlay p {
+      margin: 2px 0;
+      font-size: 0.82rem;
+    }
+    #currentValues {
+      margin-top: 20px;
+      background: rgba(255, 255, 255, 0.72);
+      border: 1px solid rgba(148, 163, 184, 0.26);
+      border-radius: 12px;
+      padding: 12px 14px;
+    }
+    #currentValues p {
+      margin: 7px 0;
+    }
+    #motionEquation, #symbolicEquation {
+      font-size: 1.04rem;
+      line-height: 1.5;
+    }
+    .var-theta {
+      color: var(--theta-color);
+      font-weight: 600;
+    }
+    .var-omega {
+      color: var(--omega-color);
+      font-weight: 600;
+    }
+    .var-alpha {
+      color: var(--alpha-color);
+      font-weight: 600;
+    }
+    #theta0 {
+      accent-color: var(--theta-color);
+    }
+    #omega0 {
+      accent-color: var(--omega-color);
+    }
+    #alpha {
+      accent-color: var(--alpha-color);
+    }
+    @media (max-width: 700px) {
+      .container {
+        padding: 16px;
+        border-radius: 16px;
+      }
+      .control-header {
+        gap: 8px;
+      }
+      .control-label {
+        font-size: 0.95rem;
+      }
+    }
+  </style>
+</head>
+<body>
+
+<div class="container">
+  <h1>Simulador de Movimento Circular Uniformemente Variado</h1>
+  
+  <div id="controls">
+    <label>
+      <div class="control-header">
+        <span class="control-label">Posição Angular Inicial (<span class="var-theta">θ₀</span>):</span>
+        <span id="theta0Value" class="var-theta">0.00π rad</span>
+      </div>
+      <input type="range" id="theta0" min="-6.2832" max="6.2832" step="0.01" value="0">
+    </label>
+    <label>
+      <div class="control-header">
+        <span class="control-label">Velocidade Angular Inicial (<span class="var-omega">ω₀</span>):</span>
+        <span id="omega0Value" class="var-omega">1 rad/s</span>
+      </div>
+      <input type="range" id="omega0" min="0" max="10" step="0.1" value="1">
+    </label>
+    <label>
+      <div class="control-header">
+        <span class="control-label">Aceleração Angular (<span class="var-alpha">α</span>):</span>
+        <span id="alphaValue" class="var-alpha">0 rad/s²</span>
+      </div>
+      <input type="range" id="alpha" min="-5" max="5" step="0.1" value="0">
+    </label>
+    <button id="startButton">Iniciar</button>
+    <button id="resetButton">Resetar</button>
+  </div>
+  
+  <div id="simulation">
+    <div class="sim-overlay">
+      <p id="currentTime">t = 0.00 s</p>
+      <p id="currentAngle">θ = 0.00 rad</p>
+      <p id="currentAngularVelocity">ω = 1.00 rad/s</p>
+    </div>
+    <!-- O canvas da simulação será inserido aqui -->
+  </div>
+  
+  <div id="currentValues">
+    <p><strong>Equação do Movimento Angular:</strong></p>
+    <p id="symbolicEquation"><span class="var-theta">θ</span> = <span class="var-theta">θ₀</span> + <span class="var-omega">ω₀</span>t + ½(<span class="var-alpha">α</span>)t²</p>
+    <p id="motionEquation"><span class="var-theta">θ</span> = <span class="var-theta">0.00</span> + <span class="var-omega">1.00</span>t</p>
+  </div>
+</div>
+
+<!-- Inclua a biblioteca p5.js -->
+<script src="https://cdn.jsdelivr.net/npm/p5@1.6.0/lib/p5.min.js"></script>
+<script>
+  let theta0 = 0;
+  let omega0 = 1;
+  let alpha = 0;
+  let time = 0;
+  let isRunning = false;
+
+  let angle = 0;
+  let angularVelocity = 0;
+
+  let startTime;
+  let trail = [];
+  let stars = [];
+  let dustParticles = [];
+  const PIXEL_SIZE = 4;
+  const DUST_PALETTE = [
+    [0, 168, 0],     // verde NES
+    [0, 88, 248],    // azul NES
+    [104, 68, 252],  // roxo NES
+    [216, 0, 204],   // magenta NES
+    [228, 92, 16],   // laranja NES
+    [248, 184, 0],   // amarelo NES
+    [172, 124, 0],   // ocre NES
+    [124, 124, 124]  // cinza NES
+  ];
+
+  function formatPiRadians(value) {
+    const multiple = value / PI;
+    return `${multiple.toFixed(2)}π rad`;
+  }
+
+  function normalizeAngle(value) {
+    return ((value % TWO_PI) + TWO_PI) % TWO_PI;
+  }
+
+  function getCarPosition(currentAngle) {
+    const radius = 150;
+    return {
+      x: width / 2 + radius * cos(currentAngle),
+      // No canvas, Y cresce para baixo; inverter o seno preserva anti-horário como positivo.
+      y: height / 2 - radius * sin(currentAngle)
+    };
+  }
+
+  function createStars() {
+    stars = [];
+    for (let i = 0; i < 70; i++) {
+      stars.push({
+        x: random(width),
+        y: random(height),
+        r: random(1, 2.8),
+        a: random(90, 220)
+      });
+    }
+  }
+
+  function emitDust(x, y, currentAngle, currentAngularVelocity) {
+    const direction = currentAngularVelocity >= 0 ? 1 : -1;
+    const tx = -sin(currentAngle) * direction;
+    const ty = -cos(currentAngle) * direction;
+
+    for (let i = 0; i < 3; i++) {
+      dustParticles.push({
+        x: Math.round(x / PIXEL_SIZE) * PIXEL_SIZE,
+        y: Math.round(y / PIXEL_SIZE) * PIXEL_SIZE,
+        vx: -tx * random(0.6, 1.4) + random(-0.35, 0.35),
+        vy: -ty * random(0.6, 1.4) + random(-0.35, 0.35),
+        life: random(18, 30),
+        colorId: floor(random(DUST_PALETTE.length))
+      });
+    }
+  }
+
+  function updateAndDrawDust() {
+    for (let i = dustParticles.length - 1; i >= 0; i--) {
+      const p = dustParticles[i];
+      p.x += p.vx;
+      p.y += p.vy;
+      p.vx *= 0.95;
+      p.vy = p.vy * 0.95 + 0.06;
+      p.life -= 1;
+
+      if (p.life <= 0) {
+        dustParticles.splice(i, 1);
+        continue;
+      }
+
+      const alpha = map(p.life, 0, 30, 0, 220);
+      const px = Math.round(p.x / PIXEL_SIZE) * PIXEL_SIZE;
+      const py = Math.round(p.y / PIXEL_SIZE) * PIXEL_SIZE;
+      const [r, g, b] = DUST_PALETTE[p.colorId];
+
+      rectMode(CENTER);
+      noStroke();
+      fill(r, g, b, alpha);
+      rect(px, py, PIXEL_SIZE, PIXEL_SIZE);
+    }
+  }
+
+  function setup() {
+    let canvas = createCanvas(600, 400);
+    canvas.parent('simulation');
+    createStars();
+    resetSimulation();
+    updateEquation();
+  }
+
+  function draw() {
+    background(7, 12, 24);
+
+    if (isRunning) {
+      time = (millis() - startTime) / 1000;
+      angle = theta0 + omega0 * time + 0.5 * alpha * time * time;
+      angularVelocity = omega0 + alpha * time;
+
+      document.getElementById('currentTime').innerText = `t = ${time.toFixed(2)} s`;
+      document.getElementById('currentAngle').innerText = `θ = ${angle.toFixed(2)} rad`;
+      document.getElementById('currentAngularVelocity').innerText = `ω = ${angularVelocity.toFixed(2)} rad/s`;
+
+      angle = normalizeAngle(angle);
+    }
+
+    // Fundo com estrelas
+    noStroke();
+    for (const star of stars) {
+      fill(224, 242, 254, star.a);
+      circle(star.x, star.y, star.r);
+    }
+
+    // Halos da pista
+    noFill();
+    stroke(56, 189, 248, 50);
+    strokeWeight(22);
+    ellipse(width / 2, height / 2, 308, 308);
+    stroke(125, 211, 252, 180);
+    strokeWeight(3.5);
+    ellipse(width / 2, height / 2, 300, 300);
+
+    const currentPos = getCarPosition(angle);
+
+    if (isRunning && abs(angularVelocity) > 0.03 && frameCount % 2 === 0) {
+      emitDust(currentPos.x, currentPos.y, angle, angularVelocity);
+    }
+    updateAndDrawDust();
+
+    trail.push({ x: currentPos.x, y: currentPos.y });
+    if (trail.length > 55) {
+      trail.shift();
+    }
+
+    // Trilha de movimento
+    noFill();
+    for (let i = 1; i < trail.length; i++) {
+      const alphaTrail = map(i, 1, trail.length - 1, 10, 170);
+      stroke(251, 113, 133, alphaTrail);
+      strokeWeight(map(i, 1, trail.length - 1, 1, 5));
+      line(trail[i - 1].x, trail[i - 1].y, trail[i].x, trail[i].y);
+    }
+
+    // Raio angular
+    stroke(56, 189, 248, 120);
+    strokeWeight(1.8);
+    line(width / 2, height / 2, currentPos.x, currentPos.y);
+
+    // Carro estilizado com glow
+    noStroke();
+    fill(251, 113, 133, 90);
+    circle(currentPos.x, currentPos.y, 42);
+    fill(251, 113, 133, 165);
+    circle(currentPos.x, currentPos.y, 30);
+    fill(255, 241, 242);
+    circle(currentPos.x, currentPos.y, 12);
+
+    // Centro da trajetória
+    fill(56, 189, 248, 200);
+    circle(width / 2, height / 2, 14);
+    fill(186, 230, 253, 220);
+    circle(width / 2, height / 2, 6);
+
+  }
+
+  document.getElementById('theta0').addEventListener('input', (e) => {
+    theta0 = parseFloat(e.target.value);
+    document.getElementById('theta0Value').innerText = formatPiRadians(theta0);
+    updateEquation();
+    resetSimulation();
+  });
+
+  document.getElementById('omega0').addEventListener('input', (e) => {
+    omega0 = parseFloat(e.target.value);
+    document.getElementById('omega0Value').innerText = `${omega0.toFixed(2)} rad/s`;
+    updateEquation();
+    resetSimulation();
+  });
+
+  document.getElementById('alpha').addEventListener('input', (e) => {
+    alpha = parseFloat(e.target.value);
+    document.getElementById('alphaValue').innerText = `${alpha.toFixed(2)} rad/s²`;
+    updateEquation();
+    resetSimulation();
+  });
+
+  document.getElementById('startButton').addEventListener('click', () => {
+    if (!isRunning) {
+      isRunning = true;
+      startTime = millis();
+    }
+  });
+
+  document.getElementById('resetButton').addEventListener('click', resetSimulation);
+
+  function resetSimulation() {
+    isRunning = false;
+    time = 0;
+    angle = theta0;
+    angularVelocity = omega0;
+    trail = [];
+    dustParticles = [];
+
+    document.getElementById('currentTime').innerText = `t = ${time.toFixed(2)} s`;
+    document.getElementById('currentAngle').innerText = `θ = ${angle.toFixed(2)} rad`;
+    document.getElementById('currentAngularVelocity').innerText = `ω = ${angularVelocity.toFixed(2)} rad/s`;
+  }
+
+  function updateEquation() {
+    let equation = `<span class="var-theta">θ</span> = <span class="var-theta">${theta0.toFixed(2)}</span> + <span class="var-omega">${omega0.toFixed(2)}</span>t`;
+    if (alpha !== 0) {
+      equation += ` + ½(<span class="var-alpha">${alpha.toFixed(2)}</span>)t²`;
+    }
+    document.getElementById('motionEquation').innerHTML = equation;
+  }
+</script>
+
+</body>
+</html>

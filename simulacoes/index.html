@@ -1,4 +1,4 @@
-<!DOCTYPE html>
+﻿<!DOCTYPE html>
 <html lang="pt-BR">
 <head>
     <meta charset="UTF-8">
@@ -133,12 +133,16 @@
             background: linear-gradient(45deg, #1abc9c, #16a085);
         }
 
+        .circular-header {
+            background: linear-gradient(45deg, #e84393, #c2185b);
+        }
+
         @media (max-width: 600px) {
             .simulations-grid {
                 grid-template-columns: repeat(2, 1fr);
                 gap: 15px;
             }
-            
+
             .simulation-card {
                 width: 150px;
                 height: 150px;
@@ -200,6 +204,12 @@
                     Derivada e Velocidade Instantânea
                 </div>
             </a>
+
+            <a href="MovimentoCircular.html" class="simulation-card">
+                <div class="card-header circular-header">
+                    Movimento Circular
+                </div>
+            </a>
         </div>
 
         <div style="text-align: center;">
@@ -207,4 +217,4 @@
         </div>
     </div>
 </body>
-</html> 
+</html>
