@@ -1,0 +1,807 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Simulador de Torque</title>
+  <style>
+    :root {
+      --bg-1: #f4efe6;
+      --bg-2: #dce9ec;
+      --panel: rgba(255, 255, 255, 0.78);
+      --panel-border: rgba(39, 63, 79, 0.12);
+      --text: #1c2b35;
+      --muted: #5c7282;
+      --accent: #0e7490;
+      --positive: #12711c;
+      --negative: #b42318;
+      --tool-dark: #344757;
+      --tool-mid: #60798c;
+      --tool-light: #8ea6b8;
+      --bolt: #d2a52c;
+      --bolt-shadow: #8b6620;
+      --marker: #ff6b35;
+      --force: #1d4ed8;
+      --grid: rgba(39, 63, 79, 0.08);
+    }
+
+    * {
+      box-sizing: border-box;
+    }
+
+    body {
+      margin: 0;
+      min-height: 100vh;
+      display: grid;
+      place-items: center;
+      font-family: "Segoe UI", Tahoma, Geneva, Verdana, sans-serif;
+      color: var(--text);
+      background:
+        radial-gradient(circle at top left, rgba(255, 255, 255, 0.85), transparent 30%),
+        linear-gradient(135deg, var(--bg-1), var(--bg-2));
+    }
+
+    .app-shell {
+      width: min(1100px, calc(100vw - 24px));
+      height: min(760px, calc(100vh - 24px));
+      padding: 18px;
+      border-radius: 28px;
+      background: rgba(255, 255, 255, 0.24);
+      box-shadow:
+        0 18px 48px rgba(17, 24, 39, 0.12),
+        inset 0 1px 0 rgba(255, 255, 255, 0.6);
+      backdrop-filter: blur(12px);
+    }
+
+    .app-frame {
+      position: relative;
+      width: 100%;
+      height: 100%;
+      overflow: hidden;
+      border-radius: 24px;
+      border: 1px solid rgba(255, 255, 255, 0.55);
+      background:
+        linear-gradient(180deg, rgba(255, 255, 255, 0.72), rgba(255, 255, 255, 0.52)),
+        linear-gradient(120deg, rgba(14, 116, 144, 0.08), rgba(255, 255, 255, 0) 42%);
+    }
+
+    #simCanvas {
+      width: 100%;
+      height: 100%;
+      display: block;
+      touch-action: none;
+    }
+  </style>
+</head>
+<body>
+  <div class="app-shell">
+    <div class="app-frame">
+      <canvas id="simCanvas" aria-label="Simulador interativo de torque"></canvas>
+    </div>
+  </div>
+
+  <script>
+    const canvas = document.getElementById("simCanvas");
+    const ctx = canvas.getContext("2d");
+
+    const FORCE_MAGNITUDE = 100; // N
+    const FORCE_ARROW_LENGTH = 120; // px para representação visual fixa
+    const HIT_PADDING = 18;
+
+    const state = {
+      mode: 0, // 0 idle, 1/2 active, 3 reset is handled by second click and returns to 0
+      width: 0,
+      height: 0,
+      dpr: Math.max(1, window.devicePixelRatio || 1),
+      pivot: { x: 0, y: 0 },
+      wrench: {
+        startX: 0,
+        endX: 0,
+        y: 0,
+        thickness: 0,
+        headOuter: 0,
+        headInner: 0
+      },
+      selectedPoint: null,
+      pointer: { x: 0, y: 0 },
+      torque: 0,
+      angle: 0,
+      draggingTip: false,
+      activePointerId: null
+    };
+
+    function resizeCanvas() {
+      const rect = canvas.getBoundingClientRect();
+      state.dpr = Math.max(1, window.devicePixelRatio || 1);
+      canvas.width = rect.width * state.dpr;
+      canvas.height = rect.height * state.dpr;
+      ctx.setTransform(state.dpr, 0, 0, state.dpr, 0, 0);
+      state.width = rect.width;
+      state.height = rect.height;
+      updateGeometry();
+      draw();
+    }
+
+    function updateGeometry() {
+      const w = state.width;
+      const h = state.height;
+      const smallScreen = w < 760;
+      const pivotX = smallScreen ? w * 0.22 : w * 0.18;
+      const pivotY = h * 0.58;
+      const usableLength = Math.max(w * 0.42, 230);
+      const headOuter = Math.max(42, Math.min(62, w * 0.045));
+      const headInner = headOuter * 0.56;
+      const thickness = Math.max(18, Math.min(28, w * 0.022));
+
+      state.pivot = { x: pivotX, y: pivotY };
+      state.wrench = {
+        startX: pivotX - headOuter * 0.35,
+        endX: Math.min(w - 70, pivotX + usableLength),
+        y: pivotY,
+        thickness,
+        headOuter,
+        headInner
+      };
+
+      if (state.selectedPoint) {
+        const clampedX = clamp(state.selectedPoint.x, state.pivot.x + 22, state.wrench.endX - 16);
+        state.selectedPoint = { x: clampedX, y: state.wrench.y };
+        updateTorque();
+      }
+    }
+
+    function clamp(value, min, max) {
+      return Math.min(max, Math.max(min, value));
+    }
+
+    function getMousePosition(event) {
+      const rect = canvas.getBoundingClientRect();
+      return {
+        x: event.clientX - rect.left,
+        y: event.clientY - rect.top
+      };
+    }
+
+    function isPointOnHandle(point) {
+      const { startX, endX, y, thickness } = state.wrench;
+      return (
+        point.x >= startX - HIT_PADDING &&
+        point.x <= endX + HIT_PADDING &&
+        Math.abs(point.y - y) <= thickness * 1.8 + HIT_PADDING
+      );
+    }
+
+    // Calcula torque a partir do raio horizontal e do angulo da forca.
+    function updateTorque() {
+      if (!state.selectedPoint) {
+        state.torque = 0;
+        state.angle = 0;
+        return;
+      }
+
+      const dx = state.pointer.x - state.selectedPoint.x;
+      const dy = state.pointer.y - state.selectedPoint.y;
+      const rawAngle = Math.atan2(dy, dx);
+      const angle = Number.isFinite(rawAngle) ? rawAngle : 0;
+      const radiusPixels = state.selectedPoint.x - state.pivot.x;
+      const radiusMeters = radiusPixels / 100;
+
+      state.angle = angle;
+      // No canvas, y cresce para baixo. O sinal e invertido para manter:
+      // anti-horario positivo e horario negativo.
+      state.torque = -radiusMeters * FORCE_MAGNITUDE * Math.sin(angle);
+    }
+
+    function getAngleDegrees() {
+      const normalized = ((-state.angle % (Math.PI * 2)) + Math.PI * 2) % (Math.PI * 2);
+      return normalized * (180 / Math.PI);
+    }
+
+    function getAngleRadiansCcw() {
+      return ((-state.angle % (Math.PI * 2)) + Math.PI * 2) % (Math.PI * 2);
+    }
+
+    function resetInteraction() {
+      state.mode = 0;
+      state.selectedPoint = null;
+      state.torque = 0;
+      state.angle = 0;
+      state.draggingTip = false;
+      state.activePointerId = null;
+      draw();
+    }
+
+    function getArrowTip() {
+      if (!state.selectedPoint) {
+        return null;
+      }
+
+      return {
+        x: state.selectedPoint.x + Math.cos(state.angle) * FORCE_ARROW_LENGTH,
+        y: state.selectedPoint.y + Math.sin(state.angle) * FORCE_ARROW_LENGTH
+      };
+    }
+
+    function isPointOnArrowTip(point) {
+      const tip = getArrowTip();
+      if (!tip) {
+        return false;
+      }
+
+      return Math.hypot(point.x - tip.x, point.y - tip.y) <= 20;
+    }
+
+    function onPointerMove(event) {
+      if (state.activePointerId !== null && event.pointerId !== state.activePointerId) {
+        return;
+      }
+
+      state.pointer = getMousePosition(event);
+      const overHandle = state.mode === 0 && isPointOnHandle(state.pointer);
+      const overTip = state.mode >= 1 && isPointOnArrowTip(state.pointer);
+      canvas.style.cursor = overHandle || overTip || state.draggingTip ? "pointer" : "default";
+
+      if (state.draggingTip && state.selectedPoint) {
+        state.mode = 2;
+        updateTorque();
+        draw();
+      }
+    }
+
+    function onPointerDown(event) {
+      event.preventDefault();
+      const point = getMousePosition(event);
+      state.pointer = point;
+
+      if (state.mode === 0) {
+        if (!isPointOnHandle(point)) {
+          return;
+        }
+
+        state.activePointerId = event.pointerId;
+        canvas.setPointerCapture(event.pointerId);
+        state.selectedPoint = {
+          x: clamp(point.x, state.pivot.x + 22, state.wrench.endX - 16),
+          y: state.wrench.y
+        };
+        state.mode = 1;
+        state.draggingTip = true;
+        updateTorque();
+        draw();
+        return;
+      }
+
+      if (isPointOnArrowTip(point)) {
+        state.activePointerId = event.pointerId;
+        canvas.setPointerCapture(event.pointerId);
+        state.draggingTip = true;
+        return;
+      }
+
+      resetInteraction();
+    }
+
+    function onPointerUp(event) {
+      if (state.activePointerId !== null && event.pointerId !== state.activePointerId) {
+        return;
+      }
+
+      if (state.activePointerId !== null && canvas.hasPointerCapture(event.pointerId)) {
+        canvas.releasePointerCapture(event.pointerId);
+      }
+
+      state.draggingTip = false;
+      state.activePointerId = null;
+      draw();
+    }
+
+    function onPointerCancel(event) {
+      if (state.activePointerId !== null && event.pointerId !== state.activePointerId) {
+        return;
+      }
+
+      resetInteraction();
+    }
+
+    function drawBackground() {
+      ctx.clearRect(0, 0, state.width, state.height);
+
+      ctx.save();
+      ctx.fillStyle = "#f9fbfc";
+      ctx.fillRect(0, 0, state.width, state.height);
+      ctx.restore();
+
+      ctx.save();
+      ctx.strokeStyle = getCssVar("--grid");
+      ctx.lineWidth = 1;
+      const gap = 36;
+      for (let x = 0; x < state.width; x += gap) {
+        ctx.beginPath();
+        ctx.moveTo(x, 0);
+        ctx.lineTo(x, state.height);
+        ctx.stroke();
+      }
+      for (let y = 0; y < state.height; y += gap) {
+        ctx.beginPath();
+        ctx.moveTo(0, y);
+        ctx.lineTo(state.width, y);
+        ctx.stroke();
+      }
+      ctx.restore();
+
+      ctx.save();
+      const glow = ctx.createRadialGradient(
+        state.width * 0.18,
+        state.height * 0.18,
+        10,
+        state.width * 0.18,
+        state.height * 0.18,
+        state.width * 0.55
+      );
+      glow.addColorStop(0, "rgba(14, 116, 144, 0.08)");
+      glow.addColorStop(1, "rgba(14, 116, 144, 0)");
+      ctx.fillStyle = glow;
+      ctx.fillRect(0, 0, state.width, state.height);
+      ctx.restore();
+    }
+
+    function drawDisplay() {
+      const torque = state.torque;
+      const value = Math.abs(torque).toFixed(2);
+      const sense = torque > 0.001 ? "anti-horario" : torque < -0.001 ? "horario" : "nulo";
+      const displayColor = torque > 0.001
+        ? getCssVar("--positive")
+        : torque < -0.001
+          ? getCssVar("--negative")
+          : getCssVar("--text");
+
+      ctx.save();
+      const panelWidth = Math.min(state.width - 32, 520);
+      const panelHeight = 132;
+      const x = Math.max(18, (state.width - panelWidth) * 0.5);
+      const y = 20;
+
+      roundRect(ctx, x, y, panelWidth, panelHeight, 26);
+      ctx.fillStyle = getCssVar("--panel");
+      ctx.fill();
+      ctx.strokeStyle = getCssVar("--panel-border");
+      ctx.lineWidth = 1;
+      ctx.stroke();
+
+      ctx.fillStyle = getCssVar("--muted");
+      ctx.font = "600 16px Segoe UI, sans-serif";
+      ctx.fillText("Simulador de Torque", x + 24, y + 32);
+
+      ctx.fillStyle = displayColor;
+      ctx.font = `800 ${state.width < 700 ? 28 : 40}px Segoe UI, sans-serif`;
+      ctx.fillText(`Torque: ${value} N.m`, x + 24, y + 76);
+
+      ctx.fillStyle = getCssVar("--muted");
+      ctx.font = "600 15px Segoe UI, sans-serif";
+      ctx.fillText(`Sentido: ${sense}  |  F = ${FORCE_MAGNITUDE} N`, x + 24, y + 108);
+      ctx.restore();
+    }
+
+    function drawInstructions() {
+      const lines = state.mode === 0
+        ? [
+            "1. Clique no cabo da chave para definir o ponto de aplicacao.",
+            "2. Sem soltar, arraste a ponta da seta para definir a direcao.",
+            "3. Clique novamente em qualquer lugar para reiniciar."
+          ]
+        : [
+            "Raio r definido pelo primeiro clique.",
+            "Arraste a ponta circular da seta para ajustar o angulo.",
+            "Clique novamente para resetar a simulacao."
+          ];
+
+      ctx.save();
+      const width = Math.min(420, state.width - 32);
+      const height = 104;
+      const x = state.width - width - 18;
+      const y = state.height - height - 18;
+      roundRect(ctx, x, y, width, height, 20);
+      ctx.fillStyle = getCssVar("--panel");
+      ctx.fill();
+      ctx.strokeStyle = getCssVar("--panel-border");
+      ctx.lineWidth = 1;
+      ctx.stroke();
+
+      ctx.fillStyle = getCssVar("--muted");
+      ctx.font = "500 14px Segoe UI, sans-serif";
+      lines.forEach((line, index) => {
+        ctx.fillText(line, x + 18, y + 30 + index * 24);
+      });
+      ctx.restore();
+    }
+
+    function drawBolt() {
+      const { x, y } = state.pivot;
+      const radius = Math.max(28, state.wrench.headOuter * 0.58);
+
+      ctx.save();
+      ctx.translate(x, y);
+
+      ctx.beginPath();
+      for (let i = 0; i < 6; i += 1) {
+        const angle = (Math.PI / 3) * i + Math.PI / 6;
+        const px = Math.cos(angle) * radius;
+        const py = Math.sin(angle) * radius;
+        if (i === 0) {
+          ctx.moveTo(px, py);
+        } else {
+          ctx.lineTo(px, py);
+        }
+      }
+      ctx.closePath();
+      const boltGradient = ctx.createLinearGradient(-radius, -radius, radius, radius);
+      boltGradient.addColorStop(0, getCssVar("--bolt"));
+      boltGradient.addColorStop(1, getCssVar("--bolt-shadow"));
+      ctx.fillStyle = boltGradient;
+      ctx.fill();
+
+      ctx.beginPath();
+      ctx.arc(0, 0, radius * 0.32, 0, Math.PI * 2);
+      ctx.fillStyle = "rgba(255, 255, 255, 0.35)";
+      ctx.fill();
+
+      ctx.strokeStyle = "rgba(28, 43, 53, 0.28)";
+      ctx.lineWidth = 2;
+      ctx.stroke();
+      ctx.restore();
+    }
+
+    function drawWrench() {
+      const { endX, y, thickness, headOuter, headInner } = state.wrench;
+
+      ctx.save();
+      ctx.lineJoin = "round";
+      ctx.lineCap = "round";
+
+      const handleStartX = state.pivot.x + headOuter * 0.72;
+      const handleEndX = endX + thickness * 0.95;
+      const halfHandle = thickness * 0.6;
+      const tailRadius = thickness * 0.92;
+      const ringOuter = headOuter * 1.06;
+      const ringInner = headInner * 0.92;
+      const mouthHalf = headInner * 0.48;
+      const mouthX = state.pivot.x + ringOuter * 0.98;
+      const topY = y - halfHandle * 1.18;
+      const bottomY = y + halfHandle * 1.18;
+
+      const steelGradient = ctx.createLinearGradient(state.pivot.x - ringOuter, y - ringOuter, handleEndX, y + ringOuter);
+      steelGradient.addColorStop(0, "#d7e4ec");
+      steelGradient.addColorStop(0.18, "#8ea6b8");
+      steelGradient.addColorStop(0.45, "#eff7fb");
+      steelGradient.addColorStop(0.68, "#71889a");
+      steelGradient.addColorStop(1, "#334756");
+
+      const shadowGradient = ctx.createLinearGradient(handleStartX, y, handleEndX, y);
+      shadowGradient.addColorStop(0, "rgba(17, 24, 39, 0.05)");
+      shadowGradient.addColorStop(1, "rgba(17, 24, 39, 0.24)");
+
+      // Corpo principal da chave: cabeça em C + cabo integrado.
+      ctx.beginPath();
+      ctx.arc(state.pivot.x, y, ringOuter, -Math.PI * 0.88, Math.PI * 0.88, false);
+      ctx.quadraticCurveTo(state.pivot.x + ringOuter * 0.95, bottomY, handleStartX, bottomY);
+      ctx.lineTo(handleEndX - tailRadius, y + halfHandle);
+      ctx.quadraticCurveTo(handleEndX + tailRadius * 0.55, y + halfHandle * 0.92, handleEndX + tailRadius * 0.32, y);
+      ctx.quadraticCurveTo(handleEndX + tailRadius * 0.55, y - halfHandle * 0.92, handleEndX - tailRadius, y - halfHandle);
+      ctx.lineTo(handleStartX, topY);
+      ctx.quadraticCurveTo(state.pivot.x + ringOuter * 0.95, topY, state.pivot.x + ringOuter * Math.cos(-Math.PI * 0.88), y + ringOuter * Math.sin(-Math.PI * 0.88));
+      ctx.closePath();
+      ctx.fillStyle = steelGradient;
+      ctx.fill();
+      ctx.strokeStyle = "rgba(28, 43, 53, 0.4)";
+      ctx.lineWidth = 2;
+      ctx.stroke();
+
+      ctx.save();
+      ctx.clip();
+      ctx.fillStyle = shadowGradient;
+      ctx.fillRect(handleStartX, y, handleEndX - handleStartX + tailRadius * 0.6, halfHandle * 1.6);
+      ctx.restore();
+
+      // Recorte interno da boca em C envolvendo o parafuso.
+      ctx.save();
+      ctx.globalCompositeOperation = "destination-out";
+      ctx.beginPath();
+      ctx.arc(state.pivot.x, y, ringInner, -Math.PI * 0.8, Math.PI * 0.8, false);
+      ctx.lineTo(mouthX, y + mouthHalf);
+      ctx.lineTo(mouthX, y - mouthHalf);
+      ctx.closePath();
+      ctx.fill();
+      ctx.restore();
+
+      // Contornos da abertura e da parte interna.
+      ctx.beginPath();
+      ctx.arc(state.pivot.x, y, ringOuter, -Math.PI * 0.88, -Math.PI * 0.28, false);
+      ctx.strokeStyle = "rgba(28, 43, 53, 0.4)";
+      ctx.lineWidth = 2;
+      ctx.stroke();
+
+      ctx.beginPath();
+      ctx.arc(state.pivot.x, y, ringOuter, Math.PI * 0.28, Math.PI * 0.88, false);
+      ctx.stroke();
+
+      ctx.beginPath();
+      ctx.arc(state.pivot.x, y, ringInner, -Math.PI * 0.8, Math.PI * 0.8, false);
+      ctx.strokeStyle = "rgba(255, 255, 255, 0.24)";
+      ctx.lineWidth = 3;
+      ctx.stroke();
+
+      ctx.beginPath();
+      ctx.moveTo(mouthX - headOuter * 0.05, y - mouthHalf * 0.96);
+      ctx.lineTo(mouthX - headOuter * 0.05, y + mouthHalf * 0.96);
+      ctx.strokeStyle = "rgba(32, 44, 56, 0.28)";
+      ctx.lineWidth = 2.5;
+      ctx.stroke();
+
+      // Brilhos e detalhes do cabo.
+      ctx.beginPath();
+      ctx.moveTo(handleStartX + 8, y - halfHandle * 0.52);
+      ctx.lineTo(handleEndX - tailRadius * 0.9, y - halfHandle * 0.4);
+      ctx.strokeStyle = "rgba(255, 255, 255, 0.52)";
+      ctx.lineWidth = 3;
+      ctx.stroke();
+
+      ctx.beginPath();
+      ctx.arc(state.pivot.x - ringInner * 0.06, y, ringInner * 0.98, -Math.PI * 0.98, Math.PI * 0.98, false);
+      ctx.strokeStyle = "rgba(255, 255, 255, 0.18)";
+      ctx.lineWidth = 4;
+      ctx.stroke();
+
+      ctx.beginPath();
+      ctx.ellipse(handleEndX - tailRadius * 0.18, y, thickness * 0.34, thickness * 0.2, 0, 0, Math.PI * 2);
+      ctx.strokeStyle = "rgba(255,255,255,0.45)";
+      ctx.lineWidth = 2;
+      ctx.stroke();
+
+      ctx.beginPath();
+      ctx.moveTo(handleStartX + thickness * 1.2, y + halfHandle * 0.16);
+      ctx.lineTo(handleEndX - thickness * 1.55, y + halfHandle * 0.28);
+      ctx.strokeStyle = "rgba(32, 44, 56, 0.18)";
+      ctx.lineWidth = 2;
+      ctx.stroke();
+
+      ctx.restore();
+    }
+
+    function drawMeasurementGuide() {
+      if (!state.selectedPoint) {
+        return;
+      }
+
+      ctx.save();
+      ctx.strokeStyle = "rgba(255, 107, 53, 0.55)";
+      ctx.setLineDash([6, 5]);
+      ctx.lineWidth = 2;
+      ctx.beginPath();
+      ctx.moveTo(state.pivot.x, state.wrench.y + 32);
+      ctx.lineTo(state.selectedPoint.x, state.wrench.y + 32);
+      ctx.stroke();
+      ctx.setLineDash([]);
+
+      const radiusMeters = ((state.selectedPoint.x - state.pivot.x) / 100).toFixed(2);
+      ctx.fillStyle = getCssVar("--marker");
+      ctx.font = "700 14px Segoe UI, sans-serif";
+      ctx.fillText(`r = ${radiusMeters} m`, (state.pivot.x + state.selectedPoint.x) / 2 - 28, state.wrench.y + 52);
+      ctx.restore();
+    }
+
+    function drawMarkerAndForce() {
+      if (!state.selectedPoint) {
+        return;
+      }
+
+      drawMeasurementGuide();
+      drawAngleGuide();
+
+      ctx.save();
+      ctx.beginPath();
+      ctx.arc(state.selectedPoint.x, state.selectedPoint.y, 8, 0, Math.PI * 2);
+      ctx.fillStyle = getCssVar("--marker");
+      ctx.fill();
+      ctx.strokeStyle = "#ffffff";
+      ctx.lineWidth = 3;
+      ctx.stroke();
+      ctx.restore();
+
+      const endX = state.selectedPoint.x + Math.cos(state.angle) * FORCE_ARROW_LENGTH;
+      const endY = state.selectedPoint.y + Math.sin(state.angle) * FORCE_ARROW_LENGTH;
+      drawArrow(state.selectedPoint.x, state.selectedPoint.y, endX, endY, getCssVar("--force"));
+
+      ctx.save();
+      ctx.beginPath();
+      ctx.arc(endX, endY, 9, 0, Math.PI * 2);
+      ctx.fillStyle = "#ffffff";
+      ctx.fill();
+      ctx.strokeStyle = getCssVar("--force");
+      ctx.lineWidth = 3;
+      ctx.stroke();
+
+      ctx.fillStyle = getCssVar("--force");
+      ctx.font = "700 16px Segoe UI, sans-serif";
+      ctx.fillText("F", endX + 14, endY + 5);
+      ctx.restore();
+    }
+
+    function drawAngleGuide() {
+      if (!state.selectedPoint) {
+        return;
+      }
+
+      const arcRadius = 40;
+      const angleRadiansCcw = getAngleRadiansCcw();
+      const angleDegrees = getAngleDegrees();
+      const canvasArcEnd = -angleRadiansCcw;
+      const labelAngle = -angleRadiansCcw * 0.5;
+      const labelRadius = arcRadius + 18;
+      const labelX = state.selectedPoint.x + Math.cos(labelAngle) * labelRadius;
+      const labelY = state.selectedPoint.y + Math.sin(labelAngle) * labelRadius;
+
+      ctx.save();
+      ctx.strokeStyle = "rgba(29, 78, 216, 0.75)";
+      ctx.lineWidth = 2;
+      ctx.setLineDash([5, 5]);
+
+      ctx.beginPath();
+      ctx.moveTo(state.selectedPoint.x, state.selectedPoint.y);
+      ctx.lineTo(state.selectedPoint.x + arcRadius + 12, state.selectedPoint.y);
+      ctx.stroke();
+
+      if (angleRadiansCcw > 0.01) {
+        ctx.beginPath();
+        ctx.arc(state.selectedPoint.x, state.selectedPoint.y, arcRadius, 0, canvasArcEnd, true);
+        ctx.stroke();
+      }
+
+      ctx.setLineDash([]);
+      ctx.fillStyle = getCssVar("--force");
+      ctx.font = "700 14px Segoe UI, sans-serif";
+      ctx.fillText(`θ = ${angleDegrees.toFixed(1)}°`, labelX - 18, labelY - 6);
+      ctx.restore();
+    }
+
+    function drawArrow(x1, y1, x2, y2, color) {
+      const headLength = 14;
+      const angle = Math.atan2(y2 - y1, x2 - x1);
+
+      ctx.save();
+      ctx.strokeStyle = color;
+      ctx.fillStyle = color;
+      ctx.lineWidth = 5;
+      ctx.lineCap = "round";
+
+      ctx.beginPath();
+      ctx.moveTo(x1, y1);
+      ctx.lineTo(x2, y2);
+      ctx.stroke();
+
+      ctx.beginPath();
+      ctx.moveTo(x2, y2);
+      ctx.lineTo(
+        x2 - headLength * Math.cos(angle - Math.PI / 7),
+        y2 - headLength * Math.sin(angle - Math.PI / 7)
+      );
+      ctx.lineTo(
+        x2 - headLength * Math.cos(angle + Math.PI / 7),
+        y2 - headLength * Math.sin(angle + Math.PI / 7)
+      );
+      ctx.closePath();
+      ctx.fill();
+      ctx.restore();
+    }
+
+    function drawArrowHead(x, y, angle, color, size = 14) {
+      const tipX = x + Math.cos(angle) * size * 0.55;
+      const tipY = y + Math.sin(angle) * size * 0.55;
+      const baseCenterX = x - Math.cos(angle) * size * 0.45;
+      const baseCenterY = y - Math.sin(angle) * size * 0.45;
+      const normalX = Math.cos(angle + Math.PI / 2) * size * 0.38;
+      const normalY = Math.sin(angle + Math.PI / 2) * size * 0.38;
+
+      ctx.save();
+      ctx.fillStyle = color;
+      ctx.beginPath();
+      ctx.moveTo(tipX, tipY);
+      ctx.lineTo(
+        baseCenterX + normalX,
+        baseCenterY + normalY
+      );
+      ctx.lineTo(
+        baseCenterX - normalX,
+        baseCenterY - normalY
+      );
+      ctx.closePath();
+      ctx.fill();
+      ctx.restore();
+    }
+
+    function getAngleAlongArc(start, end, counterclockwise, t) {
+      let adjustedEnd = end;
+
+      if (counterclockwise) {
+        while (adjustedEnd >= start) {
+          adjustedEnd -= Math.PI * 2;
+        }
+      } else {
+        while (adjustedEnd <= start) {
+          adjustedEnd += Math.PI * 2;
+        }
+      }
+
+      return start + (adjustedEnd - start) * t;
+    }
+
+    function drawRotationHint() {
+      if (!state.selectedPoint || Math.abs(state.torque) < 0.01) {
+        return;
+      }
+
+      const isClockwise = state.torque < 0;
+      const radius = 64;
+      const start = isClockwise ? -Math.PI * 0.25 : Math.PI * 0.05;
+      const end = isClockwise ? Math.PI * 0.75 : Math.PI * 1.05;
+      const arcCounterclockwise = isClockwise;
+      const color = isClockwise ? getCssVar("--negative") : getCssVar("--positive");
+
+      ctx.save();
+      ctx.strokeStyle = color;
+      ctx.lineWidth = 5;
+      ctx.beginPath();
+      ctx.arc(state.pivot.x, state.pivot.y, radius, start, end, arcCounterclockwise);
+      ctx.stroke();
+
+      const midAngle = getAngleAlongArc(start, end, arcCounterclockwise, 0.5);
+      const tangentAngle = midAngle + (arcCounterclockwise ? -Math.PI / 2 : Math.PI / 2) + Math.PI;
+      const headX = state.pivot.x + Math.cos(midAngle) * radius;
+      const headY = state.pivot.y + Math.sin(midAngle) * radius;
+      drawArrowHead(headX, headY, tangentAngle, color, 18);
+      ctx.restore();
+    }
+
+    function drawSceneLabels() {
+      ctx.save();
+      ctx.fillStyle = getCssVar("--muted");
+      ctx.font = "600 15px Segoe UI, sans-serif";
+      ctx.fillText("Eixo de rotacao", state.pivot.x - 48, state.pivot.y - 68);
+      ctx.fillText("Cabo da chave", state.wrench.endX - 116, state.wrench.y - 26);
+      ctx.restore();
+    }
+
+    function draw() {
+      drawBackground();
+      drawDisplay();
+      drawInstructions();
+      drawWrench();
+      drawBolt();
+      drawSceneLabels();
+      drawMarkerAndForce();
+      drawRotationHint();
+    }
+
+    function roundRect(context, x, y, width, height, radius) {
+      context.beginPath();
+      context.moveTo(x + radius, y);
+      context.arcTo(x + width, y, x + width, y + height, radius);
+      context.arcTo(x + width, y + height, x, y + height, radius);
+      context.arcTo(x, y + height, x, y, radius);
+      context.arcTo(x, y, x + width, y, radius);
+      context.closePath();
+    }
+
+    function getCssVar(name) {
+      return getComputedStyle(document.documentElement).getPropertyValue(name).trim();
+    }
+
+    canvas.addEventListener("pointerdown", onPointerDown);
+    canvas.addEventListener("pointermove", onPointerMove);
+    canvas.addEventListener("pointerup", onPointerUp);
+    canvas.addEventListener("pointercancel", onPointerCancel);
+    window.addEventListener("resize", resizeCanvas);
+
+    resizeCanvas();
+  </script>
+</body>
+</html>
