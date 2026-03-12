@@ -192,13 +192,21 @@
       state.torque = -radiusMeters * FORCE_MAGNITUDE * Math.sin(angle);
     }
 
+    function normalizeAngle(angle) {
+      return ((angle % (Math.PI * 2)) + Math.PI * 2) % (Math.PI * 2);
+    }
+
+    function getCcwSweep(start, end) {
+      return normalizeAngle(start - end);
+    }
+
     function getAngleDegrees() {
-      const normalized = ((-state.angle % (Math.PI * 2)) + Math.PI * 2) % (Math.PI * 2);
-      return normalized * (180 / Math.PI);
+      const swept = getCcwSweep(state.angle, Math.PI);
+      return swept * (180 / Math.PI);
     }
 
     function getAngleRadiansCcw() {
-      return ((-state.angle % (Math.PI * 2)) + Math.PI * 2) % (Math.PI * 2);
+      return getCcwSweep(state.angle, Math.PI);
     }
 
     function resetInteraction() {
@@ -347,7 +355,7 @@
 
     function drawDisplay() {
       const torque = state.torque;
-      const value = Math.abs(torque).toFixed(2);
+      const value = torque.toFixed(2);
       const sense = torque > 0.001 ? "anti-horario" : torque < -0.001 ? "horario" : "nulo";
       const displayColor = torque > 0.001
         ? getCssVar("--positive")
@@ -634,8 +642,9 @@
       const arcRadius = 40;
       const angleRadiansCcw = getAngleRadiansCcw();
       const angleDegrees = getAngleDegrees();
-      const canvasArcEnd = -angleRadiansCcw;
-      const labelAngle = -angleRadiansCcw * 0.5;
+      const arcStart = state.angle;
+      const arcEnd = Math.PI;
+      const labelAngle = getAngleAlongArc(arcStart, arcEnd, true, 0.5);
       const labelRadius = arcRadius + 18;
       const labelX = state.selectedPoint.x + Math.cos(labelAngle) * labelRadius;
       const labelY = state.selectedPoint.y + Math.sin(labelAngle) * labelRadius;
@@ -647,12 +656,12 @@
 
       ctx.beginPath();
       ctx.moveTo(state.selectedPoint.x, state.selectedPoint.y);
-      ctx.lineTo(state.selectedPoint.x + arcRadius + 12, state.selectedPoint.y);
+      ctx.lineTo(state.selectedPoint.x - arcRadius - 12, state.selectedPoint.y);
       ctx.stroke();
 
       if (angleRadiansCcw > 0.01) {
         ctx.beginPath();
-        ctx.arc(state.selectedPoint.x, state.selectedPoint.y, arcRadius, 0, canvasArcEnd, true);
+        ctx.arc(state.selectedPoint.x, state.selectedPoint.y, arcRadius, arcStart, arcEnd, true);
         ctx.stroke();
       }
 
