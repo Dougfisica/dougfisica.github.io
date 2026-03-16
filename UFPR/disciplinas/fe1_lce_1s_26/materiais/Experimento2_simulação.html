@@ -1,0 +1,702 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Mesa de Forças Interativa</title>
+  <style>
+    :root {
+      --bg: #f4f1e8;
+      --panel: rgba(255, 252, 245, 0.92);
+      --table: #f8f5ee;
+      --ink: #1f2937;
+      --muted: #6b7280;
+      --line: #d5c8ae;
+      --accent: #9a3412;
+      --ok: #15803d;
+      --warn: #b91c1c;
+      --f1: #d9485f;
+      --f2: #0f9d7a;
+      --f3: #2563eb;
+    }
+
+    * {
+      box-sizing: border-box;
+    }
+
+    body {
+      margin: 0;
+      min-height: 100vh;
+      font-family: "Segoe UI", "Helvetica Neue", Arial, sans-serif;
+      color: var(--ink);
+      background:
+        radial-gradient(circle at top, rgba(255, 255, 255, 0.85), rgba(255, 255, 255, 0) 38%),
+        linear-gradient(135deg, #efe7d7, var(--bg));
+    }
+
+    .app {
+      width: min(1240px, calc(100vw - 32px));
+      margin: 24px auto;
+      display: grid;
+      grid-template-columns: minmax(320px, 1.4fr) minmax(300px, 0.9fr);
+      gap: 20px;
+      align-items: stretch;
+    }
+
+    .card {
+      background: var(--panel);
+      border: 1px solid rgba(154, 52, 18, 0.12);
+      border-radius: 24px;
+      box-shadow: 0 18px 48px rgba(90, 58, 30, 0.12);
+      backdrop-filter: blur(12px);
+    }
+
+    .simulation-card {
+      padding: 18px;
+      display: flex;
+      flex-direction: column;
+      gap: 14px;
+    }
+
+    .title-wrap {
+      display: flex;
+      justify-content: space-between;
+      align-items: flex-start;
+      gap: 16px;
+    }
+
+    h1 {
+      margin: 0;
+      font-size: clamp(1.4rem, 2.2vw, 2rem);
+      font-weight: 700;
+      letter-spacing: -0.03em;
+    }
+
+    .subtitle {
+      margin: 6px 0 0;
+      color: var(--muted);
+      max-width: 52ch;
+      line-height: 1.45;
+    }
+
+    .status-badge {
+      padding: 10px 14px;
+      border-radius: 999px;
+      font-weight: 700;
+      font-size: 0.92rem;
+      white-space: nowrap;
+      border: 1px solid transparent;
+      transition: 180ms ease;
+    }
+
+    .status-badge.ok {
+      color: var(--ok);
+      background: rgba(21, 128, 61, 0.12);
+      border-color: rgba(21, 128, 61, 0.18);
+    }
+
+    .status-badge.warn {
+      color: var(--warn);
+      background: rgba(185, 28, 28, 0.1);
+      border-color: rgba(185, 28, 28, 0.16);
+    }
+
+    .sim-frame {
+      position: relative;
+      width: 100%;
+      aspect-ratio: 1 / 1;
+      border-radius: 22px;
+      overflow: hidden;
+      background:
+        radial-gradient(circle at center, rgba(255, 255, 255, 0.95) 0%, rgba(236, 227, 208, 0.9) 56%, rgba(217, 201, 171, 0.92) 100%);
+      border: 1px solid rgba(146, 120, 86, 0.18);
+    }
+
+    .sim-status {
+      display: flex;
+      justify-content: center;
+      margin-bottom: 8px;
+    }
+
+    svg {
+      width: 100%;
+      height: 100%;
+      display: block;
+      touch-action: none;
+    }
+
+    .dashboard {
+      padding: 20px;
+      display: flex;
+      flex-direction: column;
+      gap: 16px;
+    }
+
+    .section-title {
+      margin: 0 0 8px;
+      font-size: 1rem;
+      letter-spacing: 0.02em;
+      text-transform: uppercase;
+      color: var(--accent);
+    }
+
+    .panel-note {
+      margin: 0;
+      color: var(--muted);
+      line-height: 1.45;
+    }
+
+    .force-grid {
+      display: grid;
+      gap: 12px;
+    }
+
+    .force-card {
+      background: var(--table);
+      border: 1px solid rgba(146, 120, 86, 0.14);
+      border-radius: 18px;
+      padding: 14px;
+    }
+
+    .force-header {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      margin-bottom: 10px;
+      gap: 10px;
+    }
+
+    .force-label {
+      display: flex;
+      align-items: center;
+      gap: 10px;
+      font-weight: 700;
+    }
+
+    .dot {
+      width: 14px;
+      height: 14px;
+      border-radius: 50%;
+      display: inline-block;
+    }
+
+    .formula {
+      font-size: 0.85rem;
+      color: var(--muted);
+    }
+
+    table {
+      width: 100%;
+      border-collapse: collapse;
+      font-size: 0.95rem;
+    }
+
+    th, td {
+      padding: 7px 0;
+      border-bottom: 1px solid rgba(146, 120, 86, 0.12);
+      text-align: left;
+    }
+
+    th {
+      width: 38%;
+      color: var(--muted);
+      font-weight: 600;
+    }
+
+    tr:last-child th,
+    tr:last-child td {
+      border-bottom: none;
+    }
+
+    .result-card {
+      background: linear-gradient(145deg, rgba(154, 52, 18, 0.95), rgba(120, 53, 15, 0.92));
+      color: #fff8f0;
+      border-radius: 20px;
+      padding: 16px;
+      box-shadow: inset 0 1px 0 rgba(255, 255, 255, 0.1);
+    }
+
+    .result-card h2 {
+      margin: 0 0 10px;
+      font-size: 1.05rem;
+    }
+
+    .result-grid {
+      display: grid;
+      grid-template-columns: repeat(2, minmax(0, 1fr));
+      gap: 12px;
+    }
+
+    .metric {
+      background: rgba(255, 255, 255, 0.08);
+      border-radius: 14px;
+      padding: 12px;
+    }
+
+    .metric span {
+      display: block;
+    }
+
+    .metric-label {
+      font-size: 0.85rem;
+      opacity: 0.78;
+      margin-bottom: 6px;
+    }
+
+    .metric-value {
+      font-size: 1.2rem;
+      font-weight: 700;
+      letter-spacing: -0.02em;
+    }
+
+    .footer-note {
+      font-size: 0.9rem;
+      color: var(--muted);
+      line-height: 1.45;
+    }
+
+    .control-block {
+      margin-top: 10px;
+      padding-top: 10px;
+      border-top: 1px solid rgba(146, 120, 86, 0.12);
+    }
+
+    .control-row {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      gap: 12px;
+      margin-bottom: 8px;
+    }
+
+    .control-row label {
+      font-size: 0.92rem;
+      font-weight: 600;
+    }
+
+    .control-row output {
+      min-width: 52px;
+      text-align: right;
+      font-variant-numeric: tabular-nums;
+      color: var(--accent);
+      font-weight: 700;
+    }
+
+    input[type="range"] {
+      width: 100%;
+      accent-color: #0f9d7a;
+    }
+
+    @media (max-width: 960px) {
+      .app {
+        grid-template-columns: 1fr;
+      }
+
+      .dashboard {
+        padding-top: 0;
+      }
+    }
+  </style>
+</head>
+<body>
+  <main class="app">
+    <section class="card simulation-card">
+      <div class="title-wrap">
+        <div>
+          <h1>Mesa de Forças Interativa</h1>
+          <p class="subtitle">
+            Arraste os três discos coloridos pela borda da mesa e observe a decomposição vetorial das trações aplicadas na argola central.
+          </p>
+        </div>
+      </div>
+
+      <div class="sim-status">
+        <div id="statusBadge" class="status-badge warn">Fora do equilíbrio</div>
+      </div>
+
+      <div class="sim-frame">
+        <svg id="simSvg" viewBox="0 0 800 800" aria-label="Simulação da mesa de forças">
+          <defs>
+            <marker id="arrow-f1" viewBox="0 0 10 10" refX="8" refY="5" markerWidth="7" markerHeight="7" orient="auto-start-reverse">
+              <path d="M 0 0 L 10 5 L 0 10 z" fill="var(--f1)"></path>
+            </marker>
+            <marker id="arrow-f2" viewBox="0 0 10 10" refX="8" refY="5" markerWidth="7" markerHeight="7" orient="auto-start-reverse">
+              <path d="M 0 0 L 10 5 L 0 10 z" fill="var(--f2)"></path>
+            </marker>
+            <marker id="arrow-f3" viewBox="0 0 10 10" refX="8" refY="5" markerWidth="7" markerHeight="7" orient="auto-start-reverse">
+              <path d="M 0 0 L 10 5 L 0 10 z" fill="var(--f3)"></path>
+            </marker>
+            <marker id="arrow-result" viewBox="0 0 10 10" refX="8" refY="5" markerWidth="7" markerHeight="7" orient="auto-start-reverse">
+              <path d="M 0 0 L 10 5 L 0 10 z" fill="#111827"></path>
+            </marker>
+          </defs>
+
+          <circle cx="400" cy="400" r="320" fill="none" stroke="#8f7b5e" stroke-width="3"></circle>
+          <circle cx="400" cy="400" r="302" fill="none" stroke="rgba(143, 123, 94, 0.18)" stroke-width="28"></circle>
+
+          <line x1="80" y1="400" x2="720" y2="400" stroke="#8f7b5e" stroke-width="2" stroke-dasharray="8 10"></line>
+          <line x1="400" y1="80" x2="400" y2="720" stroke="#8f7b5e" stroke-width="2" stroke-dasharray="8 10"></line>
+
+          <text x="726" y="394" fill="#6b7280" font-size="24" font-family="Segoe UI, Arial, sans-serif">+x</text>
+          <text x="408" y="92" fill="#6b7280" font-size="24" font-family="Segoe UI, Arial, sans-serif">+y</text>
+          <text x="56" y="394" fill="#6b7280" font-size="24" font-family="Segoe UI, Arial, sans-serif">-x</text>
+          <text x="408" y="742" fill="#6b7280" font-size="24" font-family="Segoe UI, Arial, sans-serif">-y</text>
+
+          <g id="forceLayer"></g>
+          <g id="stringLayer"></g>
+        </svg>
+      </div>
+    </section>
+
+    <aside class="card dashboard">
+      <div>
+        <h2 class="section-title">Dados em Tempo Real</h2>
+        <p class="panel-note">
+          As componentes são calculadas por
+          <strong>F<sub>x</sub> = F cos(&theta;)</strong> e <strong>F<sub>y</sub> = F sin(&theta;)</strong>.
+          As forças vermelha e azul permanecem com <strong>|F| = 1</strong>, e a verde pode ser ajustada.
+        </p>
+      </div>
+
+      <div id="forceCards" class="force-grid"></div>
+
+      <section class="result-card">
+        <h2>Vetor Resultante</h2>
+        <div class="result-grid">
+          <div class="metric">
+            <span class="metric-label">&Sigma;F<sub>x</sub></span>
+            <span id="sumFx" class="metric-value">0.000</span>
+          </div>
+          <div class="metric">
+            <span class="metric-label">&Sigma;F<sub>y</sub></span>
+            <span id="sumFy" class="metric-value">0.000</span>
+          </div>
+          <div class="metric">
+            <span class="metric-label">|F<sub>R</sub>|</span>
+            <span id="resultMag" class="metric-value">0.000</span>
+          </div>
+          <div class="metric">
+            <span class="metric-label">Tolerância &epsilon;</span>
+            <span id="epsilonValue" class="metric-value">0.050</span>
+          </div>
+        </div>
+      </section>
+
+      <p class="footer-note">
+        O sistema é considerado em equilíbrio quando a magnitude da resultante é menor que a tolerância definida. A posição ideal com forças iguais ocorre quando os vetores ficam separados por cerca de 120°.
+      </p>
+    </aside>
+  </main>
+
+  <script>
+    const svg = document.getElementById("simSvg");
+    const forceLayer = document.getElementById("forceLayer");
+    const stringLayer = document.getElementById("stringLayer");
+    const forceCards = document.getElementById("forceCards");
+    const statusBadge = document.getElementById("statusBadge");
+    const sumFxEl = document.getElementById("sumFx");
+    const sumFyEl = document.getElementById("sumFy");
+    const resultMagEl = document.getElementById("resultMag");
+    const epsilonValueEl = document.getElementById("epsilonValue");
+
+    const CENTER = { x: 400, y: 400 };
+    const TABLE_RADIUS = 320;
+    const VECTOR_SCALE = 250;
+    const DEFAULT_FORCE_MAGNITUDE = 1;
+    const EPSILON = 0.05;
+    const COLORS = ["var(--f1)", "var(--f2)", "var(--f3)"];
+
+    epsilonValueEl.textContent = EPSILON.toFixed(3);
+
+    const forces = [
+      { id: "F1", angle: 20, color: "var(--f1)", magnitude: DEFAULT_FORCE_MAGNITUDE, adjustable: false },
+      { id: "F2", angle: 140, color: "var(--f2)", magnitude: DEFAULT_FORCE_MAGNITUDE, adjustable: true },
+      { id: "F3", angle: 260, color: "var(--f3)", magnitude: DEFAULT_FORCE_MAGNITUDE, adjustable: false }
+    ];
+
+    function getMaxResultant() {
+      return forces.reduce((total, force) => total + force.magnitude, 0);
+    }
+
+    const elements = new Map();
+    let activeForce = null;
+
+    function createSvgElement(tag, attrs) {
+      const el = document.createElementNS("http://www.w3.org/2000/svg", tag);
+      Object.entries(attrs).forEach(([key, value]) => el.setAttribute(key, value));
+      return el;
+    }
+
+    function buildForceUi(force, index) {
+      const string = createSvgElement("line", {
+        stroke: force.color,
+        "stroke-width": 3.5,
+        "stroke-linecap": "round",
+        opacity: 0.75
+      });
+
+      const vector = createSvgElement("line", {
+        stroke: force.color,
+        "stroke-width": 5,
+        "stroke-linecap": "round",
+        "marker-end": `url(#arrow-f${index + 1})`
+      });
+
+      const projX = createSvgElement("line", {
+        stroke: force.color,
+        "stroke-width": 2.5,
+        "stroke-dasharray": "8 8",
+        opacity: 0.65
+      });
+
+      const projY = createSvgElement("line", {
+        stroke: force.color,
+        "stroke-width": 2.5,
+        "stroke-dasharray": "8 8",
+        opacity: 0.65
+      });
+
+      const handle = createSvgElement("circle", {
+        r: 18,
+        fill: force.color,
+        stroke: "rgba(255,255,255,0.92)",
+        "stroke-width": 5,
+        cursor: "grab"
+      });
+      handle.dataset.forceId = force.id;
+
+      const card = document.createElement("article");
+      card.className = "force-card";
+      card.innerHTML = `
+        <div class="force-header">
+          <div class="force-label">
+            <span class="dot" style="background:${COLORS[index]}"></span>
+            <span>${force.id}</span>
+          </div>
+          <span class="formula" data-role="magnitudeLabel">|F| = ${force.magnitude.toFixed(2)}</span>
+        </div>
+        <table>
+          <tr><th>&theta;</th><td data-role="angle"></td></tr>
+          <tr><th>F<sub>x</sub></th><td data-role="fx"></td></tr>
+          <tr><th>F<sub>y</sub></th><td data-role="fy"></td></tr>
+        </table>
+        ${force.adjustable ? `
+        <div class="control-block">
+          <div class="control-row">
+            <label for="magnitude-${force.id}">Magnitude da força verde</label>
+            <output data-role="magnitudeValue">${force.magnitude.toFixed(2)}</output>
+          </div>
+          <input
+            id="magnitude-${force.id}"
+            data-role="magnitudeSlider"
+            type="range"
+            min="0.2"
+            max="2.0"
+            step="0.01"
+            value="${force.magnitude.toFixed(2)}"
+          >
+        </div>
+        ` : ""}
+      `;
+
+      stringLayer.appendChild(string);
+      forceLayer.appendChild(projX);
+      forceLayer.appendChild(projY);
+      forceLayer.appendChild(vector);
+      forceLayer.appendChild(handle);
+
+      forceCards.appendChild(card);
+      elements.set(force.id, {
+        string,
+        projX,
+        projY,
+        vector,
+        handle,
+        magnitudeLabel: card.querySelector('[data-role="magnitudeLabel"]'),
+        magnitudeValue: card.querySelector('[data-role="magnitudeValue"]'),
+        magnitudeSlider: card.querySelector('[data-role="magnitudeSlider"]'),
+        angle: card.querySelector('[data-role="angle"]'),
+        fx: card.querySelector('[data-role="fx"]'),
+        fy: card.querySelector('[data-role="fy"]')
+      });
+
+      if (force.adjustable) {
+        const ui = elements.get(force.id);
+        ui.magnitudeSlider.addEventListener("input", (event) => {
+          force.magnitude = Number(event.target.value);
+          render();
+        });
+      }
+    }
+
+    forces.forEach(buildForceUi);
+
+    function normalizeDegrees(deg) {
+      return (deg % 360 + 360) % 360;
+    }
+
+    function degreesToRadians(deg) {
+      return (deg * Math.PI) / 180;
+    }
+
+    function forcePosition(angleDeg) {
+      const rad = degreesToRadians(angleDeg);
+      return {
+        x: CENTER.x + TABLE_RADIUS * Math.cos(rad),
+        y: CENTER.y - TABLE_RADIUS * Math.sin(rad)
+      };
+    }
+
+    function pointerToAngle(event) {
+      const point = svg.createSVGPoint();
+      point.x = event.clientX;
+      point.y = event.clientY;
+      const transformed = point.matrixTransform(svg.getScreenCTM().inverse());
+      const dx = transformed.x - CENTER.x;
+      const dy = CENTER.y - transformed.y;
+
+      // Converte a posição do ponteiro em ângulo matemático medido a partir do eixo +x.
+      return normalizeDegrees(Math.atan2(dy, dx) * 180 / Math.PI);
+    }
+
+    function setForceAngle(forceId, angle) {
+      const force = forces.find((item) => item.id === forceId);
+      if (!force) return;
+      force.angle = normalizeDegrees(angle);
+      render();
+    }
+
+    function updateForceGraphics(force) {
+      const el = elements.get(force.id);
+      const pos = forcePosition(force.angle);
+      const vectorLength = VECTOR_SCALE * force.magnitude;
+      const vectorX = CENTER.x + vectorLength * Math.cos(degreesToRadians(force.angle));
+      const vectorY = CENTER.y - vectorLength * Math.sin(degreesToRadians(force.angle));
+
+      el.string.setAttribute("x1", CENTER.x);
+      el.string.setAttribute("y1", CENTER.y);
+      el.string.setAttribute("x2", pos.x);
+      el.string.setAttribute("y2", pos.y);
+
+      el.handle.setAttribute("cx", pos.x);
+      el.handle.setAttribute("cy", pos.y);
+
+      el.vector.setAttribute("x1", CENTER.x);
+      el.vector.setAttribute("y1", CENTER.y);
+      el.vector.setAttribute("x2", vectorX);
+      el.vector.setAttribute("y2", vectorY);
+
+      el.projX.setAttribute("x1", CENTER.x);
+      el.projX.setAttribute("y1", CENTER.y);
+      el.projX.setAttribute("x2", vectorX);
+      el.projX.setAttribute("y2", CENTER.y);
+
+      el.projY.setAttribute("x1", vectorX);
+      el.projY.setAttribute("y1", CENTER.y);
+      el.projY.setAttribute("x2", vectorX);
+      el.projY.setAttribute("y2", vectorY);
+    }
+
+    function render() {
+      let sumFx = 0;
+      let sumFy = 0;
+
+      forces.forEach((force) => {
+        updateForceGraphics(force);
+
+        const theta = degreesToRadians(force.angle);
+
+        // Decompõe a força nas direções x e y usando trigonometria básica.
+        const fx = force.magnitude * Math.cos(theta);
+        const fy = force.magnitude * Math.sin(theta);
+        sumFx += fx;
+        sumFy += fy;
+
+        const ui = elements.get(force.id);
+        ui.magnitudeLabel.textContent = `|F| = ${force.magnitude.toFixed(2)}`;
+        if (ui.magnitudeValue) {
+          ui.magnitudeValue.textContent = force.magnitude.toFixed(2);
+        }
+        ui.angle.textContent = `${force.angle.toFixed(1)}°`;
+        ui.fx.textContent = fx.toFixed(3);
+        ui.fy.textContent = fy.toFixed(3);
+      });
+
+      const resultMagnitude = Math.hypot(sumFx, sumFy);
+      sumFxEl.textContent = sumFx.toFixed(3);
+      sumFyEl.textContent = sumFy.toFixed(3);
+      resultMagEl.textContent = resultMagnitude.toFixed(3);
+
+      statusBadge.className = `status-badge ${resultMagnitude < EPSILON ? "ok" : "warn"}`;
+      statusBadge.textContent = resultMagnitude < EPSILON ? "Em equilíbrio" : "Fora do equilíbrio";
+
+      renderResultVector(sumFx, sumFy, resultMagnitude);
+    }
+
+    function renderResultVector(sumFx, sumFy, magnitude) {
+      let resultVector = document.getElementById("resultVector");
+      if (!resultVector) {
+        resultVector = createSvgElement("line", {
+          id: "resultVector",
+          stroke: "#111827",
+          "stroke-width": 4.5,
+          "stroke-dasharray": "10 8",
+          "marker-end": "url(#arrow-result)"
+        });
+        forceLayer.appendChild(resultVector);
+      }
+
+      if (magnitude < 0.001) {
+        resultVector.setAttribute("x1", CENTER.x);
+        resultVector.setAttribute("y1", CENTER.y);
+        resultVector.setAttribute("x2", CENTER.x);
+        resultVector.setAttribute("y2", CENTER.y);
+        return;
+      }
+
+      // O comprimento da seta preta cresce ou diminui com a magnitude da resultante.
+      const scale = 3 * VECTOR_SCALE * Math.min(magnitude / getMaxResultant(), 1);
+      resultVector.setAttribute("x1", CENTER.x);
+      resultVector.setAttribute("y1", CENTER.y);
+      resultVector.setAttribute("x2", CENTER.x + scale * (sumFx / magnitude));
+      resultVector.setAttribute("y2", CENTER.y - scale * (sumFy / magnitude));
+    }
+
+    function onPointerDown(event) {
+      const forceId = event.target.dataset.forceId;
+      if (!forceId) return;
+      activeForce = forceId;
+      event.target.setAttribute("cursor", "grabbing");
+      event.target.setPointerCapture(event.pointerId);
+      setForceAngle(forceId, pointerToAngle(event));
+    }
+
+    function onPointerMove(event) {
+      if (!activeForce) return;
+      setForceAngle(activeForce, pointerToAngle(event));
+    }
+
+    function onPointerUp(event) {
+      if (!activeForce) return;
+      const ui = elements.get(activeForce);
+      if (ui) {
+        ui.handle.setAttribute("cursor", "grab");
+      }
+      if (event.target.hasPointerCapture && event.target.hasPointerCapture(event.pointerId)) {
+        event.target.releasePointerCapture(event.pointerId);
+      }
+      activeForce = null;
+    }
+
+    svg.addEventListener("pointermove", onPointerMove);
+    svg.addEventListener("pointerup", onPointerUp);
+    svg.addEventListener("pointercancel", onPointerUp);
+    svg.addEventListener("pointerleave", onPointerUp);
+    forces.forEach((force) => {
+      elements.get(force.id).handle.addEventListener("pointerdown", onPointerDown);
+    });
+
+    render();
+  </script>
+</body>
+</html>
