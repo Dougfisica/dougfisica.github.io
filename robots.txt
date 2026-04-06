@@ -1,0 +1,4 @@
+User-agent: *
+Allow: /
+
+Sitemap: https://dougfisica.github.io/sitemap.xml
