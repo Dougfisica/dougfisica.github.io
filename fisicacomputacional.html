@@ -184,16 +184,16 @@
 
         .hero {
             min-height: 100vh;
-            display: grid;
-            grid-template-columns: 0.9fr 1.1fr;
-            gap: 40px;
-            align-items: start;
-            padding: 120px 5% 80px;
+            display: flex;
+            justify-content: center;
+            padding: 96px 5% 80px;
             position: relative;
         }
 
         .hero-copy {
-            max-width: 540px;
+            width: min(100%, 980px);
+            position: relative;
+            z-index: 1;
         }
 
         .hero::after {
@@ -221,20 +221,8 @@
             border: 1px solid rgba(0, 240, 255, 0.5);
         }
 
-        .hero h1 {
-            font-size: clamp(2.7rem, 5.2vw, 4.8rem);
-            line-height: 1.02;
-            letter-spacing: -0.05em;
-            margin-bottom: 1rem;
-        }
-
-        .hero-copy {
-            position: relative;
-            z-index: 1;
-        }
-
         .hero p {
-            max-width: 640px;
+            max-width: 760px;
             color: var(--text-muted);
             font-size: 1.1rem;
             margin-bottom: 1.8rem;
@@ -243,19 +231,20 @@
         .hero-actions {
             display: grid;
             gap: 14px;
-            width: min(100%, 540px);
+            width: min(100%, 760px);
             margin-bottom: 2rem;
         }
 
         .switch-btn {
             width: 100%;
             text-align: center;
-            padding: 16px 18px;
+            padding: 11px 16px;
             border-radius: 10px;
             border: 1px solid var(--border-color);
             color: var(--text-main);
+            line-height: 1.2;
             font-family: "Fira Code", monospace;
-            font-size: 1.1rem;
+            font-size: 1rem;
             font-weight: 600;
             letter-spacing: 0.02em;
             cursor: pointer;
@@ -368,6 +357,12 @@
             font-size: 0.92rem;
         }
 
+        .hero-sections {
+            display: grid;
+            gap: 18px;
+            width: min(100%, 1000px);
+        }
+
         .hero-panel {
             background: linear-gradient(180deg, rgba(22, 27, 34, 0.95), rgba(9, 12, 16, 0.95));
             border: 1px solid var(--border-color);
@@ -375,6 +370,10 @@
             overflow: hidden;
             box-shadow: 0 14px 40px rgba(0, 0, 0, 0.35);
             position: relative;
+        }
+
+        .hero-panel.is-collapsed {
+            display: none;
         }
 
         .hero-panel-body {
@@ -652,6 +651,223 @@
             color: var(--text-main);
             font-size: 0.9rem;
             line-height: 1.5;
+        }
+
+        .discipline-section-title {
+            font-size: 2rem;
+            margin-bottom: 10px;
+        }
+
+        .discipline-section-copy {
+            color: var(--text-muted);
+            margin-bottom: 18px;
+        }
+
+        .discipline-catalog-shell {
+            padding: 6px 0 0;
+        }
+
+        .discipline-semester-group + .discipline-semester-group {
+            margin-top: 28px;
+            padding-top: 28px;
+            border-top: 1px solid rgba(255, 255, 255, 0.07);
+        }
+
+        .discipline-semester-header {
+            display: flex;
+            justify-content: space-between;
+            gap: 18px;
+            align-items: end;
+            margin-bottom: 16px;
+        }
+
+        .discipline-semester-title {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 12px;
+            align-items: center;
+        }
+
+        .discipline-semester-index {
+            width: 48px;
+            height: 48px;
+            display: grid;
+            place-items: center;
+            border-radius: 16px;
+            font-family: "Fira Code", monospace;
+            color: var(--bg-main);
+            background: linear-gradient(135deg, #7eff50, #d9ffb0);
+            font-weight: 600;
+        }
+
+        .discipline-semester-title h4 {
+            font-size: 1.5rem;
+        }
+
+        .discipline-semester-meta {
+            color: var(--text-muted);
+            font-size: 0.96rem;
+        }
+
+        .discipline-course-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+            gap: 14px;
+        }
+
+        .discipline-course-card {
+            min-height: 100%;
+            border-radius: 18px;
+            border: 1px solid rgba(255, 255, 255, 0.08);
+            background:
+                radial-gradient(circle at top right, rgba(255, 255, 255, 0.045), transparent 26%),
+                linear-gradient(180deg, rgba(22, 27, 34, 0.96), rgba(10, 14, 19, 0.96));
+            display: grid;
+            overflow: hidden;
+            transition: transform 0.22s ease, border-color 0.22s ease, box-shadow 0.22s ease;
+        }
+
+        .discipline-course-card:hover {
+            transform: translateY(-3px);
+            border-color: rgba(0, 240, 255, 0.24);
+            box-shadow: 0 18px 32px rgba(0, 0, 0, 0.18);
+        }
+
+        .discipline-course-card:focus-visible {
+            outline: 2px solid rgba(0, 240, 255, 0.7);
+            outline-offset: 3px;
+        }
+
+        .discipline-course-toggle {
+            width: 100%;
+            display: grid;
+            gap: 14px;
+            padding: 18px;
+            border: 0;
+            background: transparent;
+            color: var(--text-main);
+            text-align: left;
+            cursor: pointer;
+            font: inherit;
+        }
+
+        .discipline-course-heading {
+            display: flex;
+            justify-content: space-between;
+            gap: 12px;
+            align-items: start;
+        }
+
+        .discipline-course-top {
+            display: flex;
+            justify-content: space-between;
+            gap: 12px;
+            align-items: start;
+        }
+
+        .discipline-course-code {
+            display: inline-flex;
+            padding: 6px 10px;
+            border-radius: 999px;
+            background: rgba(255, 255, 255, 0.04);
+            color: var(--text-main);
+            font-family: "Fira Code", monospace;
+            font-size: 0.78rem;
+        }
+
+        .discipline-course-hours {
+            color: var(--cyan-accent);
+            font-family: "Fira Code", monospace;
+            font-size: 0.86rem;
+            white-space: nowrap;
+        }
+
+        .discipline-course-card h5 {
+            font-size: 1.06rem;
+            line-height: 1.28;
+        }
+
+        .discipline-type-tag {
+            display: inline-flex;
+            justify-self: start;
+            padding: 8px 12px;
+            border-radius: 999px;
+            font-size: 0.8rem;
+            font-family: "Fira Code", monospace;
+            border: 1px solid rgba(255, 255, 255, 0.08);
+        }
+
+        .discipline-course-hint {
+            color: var(--text-muted);
+            font-size: 0.78rem;
+            font-family: "Fira Code", monospace;
+            letter-spacing: 0.03em;
+        }
+
+        .discipline-course-chevron {
+            flex: 0 0 auto;
+            color: var(--cyan-accent);
+            font-size: 1.05rem;
+            transition: transform 0.25s ease;
+        }
+
+        .discipline-course-card.is-open .discipline-course-chevron {
+            transform: rotate(180deg);
+        }
+
+        .discipline-course-details {
+            display: none;
+            padding: 0 18px 18px;
+            border-top: 1px solid rgba(255, 255, 255, 0.08);
+            background: rgba(9, 13, 19, 0.4);
+        }
+
+        .discipline-course-card.is-open .discipline-course-details {
+            display: grid;
+            gap: 14px;
+        }
+
+        .discipline-detail-meta {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 8px;
+            padding-top: 14px;
+        }
+
+        .discipline-detail-pill {
+            padding: 8px 12px;
+            border-radius: 999px;
+            background: rgba(255, 255, 255, 0.04);
+            border: 1px solid rgba(255, 255, 255, 0.08);
+            color: var(--text-muted);
+            font-family: "Fira Code", monospace;
+            font-size: 0.78rem;
+        }
+
+        .discipline-detail-copy {
+            color: var(--text-main);
+            font-size: 0.98rem;
+            line-height: 1.7;
+        }
+
+        .discipline-type-computacao { color: #a8ecff; background: rgba(0, 240, 255, 0.08); }
+        .discipline-type-fisica-basica { color: #ffd4a8; background: rgba(255, 140, 0, 0.09); }
+        .discipline-type-fisica-teorica { color: #e2c8ff; background: rgba(170, 120, 255, 0.1); }
+        .discipline-type-matematica { color: #d3ffd6; background: rgba(126, 255, 80, 0.08); }
+        .discipline-type-humanidades { color: #ffe19d; background: rgba(255, 205, 77, 0.09); }
+        .discipline-type-fisica-experimental-profissional { color: #ffc5d5; background: rgba(255, 95, 135, 0.08); }
+        .discipline-type-trabalho-de-conclusao-de-curso { color: #cce0ff; background: rgba(88, 140, 255, 0.11); }
+        .discipline-type-optativas { color: #f5d1ff; background: rgba(220, 120, 255, 0.09); }
+        .discipline-type-quimica { color: #c6fff0; background: rgba(41, 214, 171, 0.1); }
+        .discipline-type-atividades-formativas { color: #d7e2ff; background: rgba(158, 174, 255, 0.1); }
+
+        .discipline-empty-state {
+            padding: 28px;
+            text-align: center;
+            border-radius: 18px;
+            border: 1px dashed rgba(255, 255, 255, 0.12);
+            color: var(--text-muted);
+            background: rgba(255, 255, 255, 0.02);
         }
 
         .section-shell {
@@ -1138,7 +1354,9 @@
             }
 
             .hero {
-                padding-top: 110px;
+                min-height: auto;
+                padding-top: 92px;
+                padding-bottom: 56px;
             }
 
             .hero-stats {
@@ -1147,6 +1365,27 @@
 
             .hero-actions {
                 max-width: none;
+            }
+
+            .switch-btn {
+                font-size: 0.95rem;
+                padding: 10px 14px;
+            }
+
+            .hero-panel-body {
+                padding: 20px;
+            }
+
+            .panel-copy h3 {
+                font-size: 1.55rem;
+            }
+
+            .discipline-section-title {
+                font-size: 1.55rem;
+            }
+
+            .hero p {
+                font-size: 1rem;
             }
 
             .impact-strip {
@@ -1161,6 +1400,10 @@
             .career-grid {
                 grid-template-columns: 1fr;
             }
+
+            .discipline-course-grid {
+                grid-template-columns: 1fr;
+            }
         }
     </style>
 </head>
@@ -1171,22 +1414,20 @@
 
     <section class="hero" id="inicio">
         <div class="hero-copy">
-            <h1>Física Computacional</h1>
             <p>
-                Desvende o universo através do código. A Física Computacional une programação, matemática e leis da física para simular a realidade, investigar sistemas complexos e transformar curiosidade em modelos que resolvem problemas reais.
+                Conteúdo criado pelo Prof. Dr. Douglas Oliveira Coordenador Física Computacional UFPR
             </p>
             <div class="hero-actions" aria-label="Explorar informações principais">
-                <button class="switch-btn is-active" type="button" data-panel="onde-cursar">Cursos de Graduação</button>
+                <button class="switch-btn is-active" type="button" data-panel="onde-cursar" aria-expanded="true" aria-controls="panel-onde-cursar">Cursos de Graduação</button>
                 <button class="switch-btn" type="button" data-panel="o-que-faz">Mercado de Trabalho</button>
-                <a class="switch-btn catalog-link" href="fisicacomputacional/disciplinas-ufpr.html">Disciplinas UFPR</a>
+                <button class="switch-btn catalog-link" type="button" data-panel="disciplinas-ufpr">Disciplinas UFPR</button>
             </div>
-        </div>
-
-        <div class="hero-panel" aria-label="Resumo computacional do curso">
+            <div class="hero-sections">
+                <div class="hero-panel" id="panel-onde-cursar" data-panel-content="onde-cursar" aria-label="Cursos de graduação">
                 <div class="hero-panel-body">
-                <div class="panel-copy" id="panel-copy">
+                    <div class="panel-copy">
                     <h3>Cursos de Graduação</h3>
-                    <p>Seja pioneiro em uma área em franca expansão. Hoje o Brasil conta com um seleto grupo de 5 instituições públicas com formação dedicada à Física Computacional. Explore abaixo onde essa jornada pode começar.</p>
+                    <p></p>
                     <ul class="panel-list">
                         <li class="course-card featured-course">
                             <button class="course-toggle" type="button">
@@ -1317,201 +1558,337 @@
                     </ul>
                 </div>
             </div>
+                </div>
+                <div class="hero-panel is-collapsed" id="panel-o-que-faz" data-panel-content="o-que-faz" aria-label="Mercado de trabalho">
+                    <div class="hero-panel-body">
+                        <div class="panel-copy">
+                            <h3>Mercado de Trabalho</h3>
+                            <div class="career-grid">
+                                <article class="career-card">
+                                    <div class="career-card-top">
+                                        <div class="career-icon">◌</div>
+                                        <span class="career-chip">Materiais</span>
+                                    </div>
+                                    <h4>Ciência dos Materiais e simulação atômica</h4>
+                                    <p>Projete o futuro, átomo por átomo. Dominando dinâmica molecular e softwares de ponta como LAMMPS e VASP em ambientes de HPC, você pode simular ligas metálicas, investigar defeitos cristalinos e estudar nanomateriais avançados, como grafeno, prevendo propriedades antes mesmo de esses materiais serem produzidos em laboratório.</p>
+                                    <ul>
+                                        <li>Simula estruturas e interações em escala atômica.</li>
+                                        <li>Analisa propriedades mecânicas, térmicas e eletrônicas de ligas e nanomateriais.</li>
+                                        <li>Transforma modelagem em inovação para pesquisa e indústria.</li>
+                                    </ul>
+                                    <div class="career-where">
+                                        <span>Onde trabalha</span>
+                                        <strong>Indústria de novos materiais, pesquisa com grafeno e nanomateriais, setor automotivo, engenharia aeroespacial, centros de pesquisa e setores de P&amp;D de alta tecnologia.</strong>
+                                    </div>
+                                </article>
+                                <article class="career-card">
+                                    <div class="career-card-top">
+                                        <div class="career-icon">▣</div>
+                                        <span class="career-chip">Dados e IA</span>
+                                    </div>
+                                    <h4>Ciência de Dados e Machine Learning</h4>
+                                    <p>A base matemática por trás da Inteligência Artificial. Físicos resolvem problemas complexos por natureza, e isso vira vantagem competitiva quando estatística, programação e raciocínio analítico entram no jogo.</p>
+                                    <ul>
+                                        <li>Extrai padrões ocultos em grandes volumes de dados.</li>
+                                        <li>Treina modelos preditivos e redes neurais com visão quantitativa.</li>
+                                        <li>Converte modelos em decisões estratégicas e produtos reais.</li>
+                                    </ul>
+                                    <div class="career-where">
+                                        <span>Onde trabalha</span>
+                                        <strong>Big Techs, startups, fintechs e times de ciência de dados e analytics em grandes corporações.</strong>
+                                    </div>
+                                </article>
+                                <article class="career-card">
+                                    <div class="career-card-top">
+                                        <div class="career-icon">≈</div>
+                                        <span class="career-chip">Clima e fluidos</span>
+                                    </div>
+                                    <h4>Meteorologia, geofísica e CFD</h4>
+                                    <p>Preveja a dinâmica da natureza e da engenharia. Com métodos numéricos avançados e Fluidodinâmica Computacional, você pode modelar desde escoamento de petróleo até sistemas atmosféricos caóticos e problemas reais de energia e aerodinâmica.</p>
+                                    <ul>
+                                        <li>Modela correntes, dispersão, ondas e escoamentos complexos.</li>
+                                        <li>Usa equações diferenciais e CFD para previsão e projeto.</li>
+                                        <li>Ataca problemas de energia, ambiente e engenharia aplicada.</li>
+                                    </ul>
+                                    <div class="career-where">
+                                        <span>Onde trabalha</span>
+                                        <strong>Empresas de energia, setor de petróleo e gás, institutos de meteorologia, consultorias ambientais e exploração geofísica.</strong>
+                                    </div>
+                                </article>
+                                <article class="career-card">
+                                    <div class="career-card-top">
+                                        <div class="career-icon">∿</div>
+                                        <span class="career-chip">Quant</span>
+                                    </div>
+                                    <h4>Mercado financeiro quantitativo</h4>
+                                    <p>A ciência exata nos mercados de alta pressão. Modelagem estocástica, simulações de Monte Carlo e raciocínio físico se tornam ferramentas decisivas para precificar risco, testar estratégias e operar em ambientes onde cada milissegundo conta.</p>
+                                    <ul>
+                                        <li>Modela séries temporais e movimentos aleatórios com precisão.</li>
+                                        <li>Desenha algoritmos para risco, precificação e backtesting.</li>
+                                        <li>Aplica matemática forte em ambientes de decisão extrema.</li>
+                                    </ul>
+                                    <div class="career-where">
+                                        <span>Onde trabalha</span>
+                                        <strong>Bancos de investimento, fundos quantitativos, gestoras de patrimônio, mesas de operação e empresas de modelagem de risco.</strong>
+                                    </div>
+                                </article>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div class="hero-panel is-collapsed" id="panel-disciplinas-ufpr" data-panel-content="disciplinas-ufpr" aria-label="Disciplinas UFPR">
+                    <div class="hero-panel-body">
+                        <div class="panel-copy">
+                            <h3 class="discipline-section-title">Disciplinas UFPR</h3>
+                            <p class="discipline-section-copy"></p>
+                            <section class="discipline-catalog-shell">
+                                <div id="discipline-catalog-root"></div>
+                            </section>
+                        </div>
+                    </div>
+                </div>
+            </div>
         </div>
     </section>
 
     <script>
-        const panelContent = {
-            "onde-cursar": {
-                title: "Cursos de Graduação",
-                description: "Seja pioneiro em uma área em franca expansão. Hoje o Brasil conta com um seleto grupo de 5 instituições públicas com formação dedicada à Física Computacional. Explore abaixo onde essa jornada pode começar.",
-                items: [
-                    {
-                        university: "UFPR",
-                        course: "Física Computacional",
-                        duration: "7 semestres",
-                        highlight: "3,5 anos de duração",
-                        location: "Jandaia do Sul/PR",
-                        link: "https://jandaiadosul.ufpr.br/fisicacomputacional/",
-                        linkLabel: "Página oficial do curso",
-                        featured: true
-                    },
-                    {
-                        university: "USP",
-                        course: "Bacharelado em Física Computacional",
-                        duration: "4 anos",
-                        location: "São Carlos/SP",
-                        link: "https://www2.ifsc.usp.br/graduacao/fisica-computacional/",
-                        linkLabel: "Portal IFSC"
-                    },
-                    {
-                        university: "UNESP",
-                        course: "Física Computacional dentro do Bacharelado em Física",
-                        duration: "4 a 6 anos",
-                        location: "Bauru/SP",
-                        link: "https://www.fc.unesp.br/",
-                        linkLabel: "FC UNESP"
-                    },
-                    {
-                        university: "UFF",
-                        course: "Bacharelado em Física com ênfase em Física Computacional",
-                        duration: "8 a 12 semestres",
-                        location: "Volta Redonda/RJ",
-                        link: "https://icex.uff.br/graduacao/fisica-computacional/",
-                        linkLabel: "ICEx UFF"
-                    },
-                    {
-                        university: "UFSJ",
-                        course: "Bacharelado em Física com ênfase em Física Computacional",
-                        duration: "4 anos; máximo de 6 anos",
-                        location: "São João del-Rei/MG",
-                        link: "https://ufsj.edu.br/vestibular/bacharelado_fisica.php",
-                        linkLabel: "Página oficial da UFSJ"
-                    }
-                ],
-                tags: []
-            },
-            "o-que-faz": {
-                title: "Mercado de Trabalho",
-                description: "",
-                html: `
-                    <div class="career-grid">
-                        <article class="career-card">
-                            <div class="career-card-top">
-                                <div class="career-icon">◌</div>
-                                <span class="career-chip">Materiais</span>
-                            </div>
-                            <h4>Ciência dos Materiais e simulação atômica</h4>
-                            <p>Projete o futuro, átomo por átomo. Dominando dinâmica molecular e softwares de ponta como LAMMPS e VASP em ambientes de HPC, você pode simular ligas metálicas, investigar defeitos cristalinos e prever propriedades de materiais antes mesmo de eles existirem no mundo físico.</p>
-                            <ul>
-                                <li>Simula estruturas e interações em escala atômica.</li>
-                                <li>Prevê propriedades mecânicas, térmicas e eletrônicas.</li>
-                                <li>Transforma modelagem em inovação para pesquisa e indústria.</li>
-                            </ul>
-                            <div class="career-where">
-                                <span>Onde trabalha</span>
-                                <strong>Indústria de novos materiais, setor automotivo, engenharia aeroespacial, centros de pesquisa e setores de P&D de alta tecnologia.</strong>
-                            </div>
-                        </article>
-                        <article class="career-card">
-                            <div class="career-card-top">
-                                <div class="career-icon">▣</div>
-                                <span class="career-chip">Dados e IA</span>
-                            </div>
-                            <h4>Ciência de Dados e Machine Learning</h4>
-                            <p>A base matemática por trás da Inteligência Artificial. Físicos resolvem problemas complexos por natureza, e isso vira vantagem competitiva quando estatística, programação e raciocínio analítico entram no jogo.</p>
-                            <ul>
-                                <li>Extrai padrões ocultos em grandes volumes de dados.</li>
-                                <li>Treina modelos preditivos e redes neurais com visão quantitativa.</li>
-                                <li>Converte modelos em decisões estratégicas e produtos reais.</li>
-                            </ul>
-                            <div class="career-where">
-                                <span>Onde trabalha</span>
-                                <strong>Big Techs, startups, fintechs e times de ciência de dados e analytics em grandes corporações.</strong>
-                            </div>
-                        </article>
-                        <article class="career-card">
-                            <div class="career-card-top">
-                                <div class="career-icon">≈</div>
-                                <span class="career-chip">Clima e fluidos</span>
-                            </div>
-                            <h4>Meteorologia, geofísica e CFD</h4>
-                            <p>Preveja a dinâmica da natureza e da engenharia. Com métodos numéricos avançados e Fluidodinâmica Computacional, você pode modelar desde escoamento de petróleo até sistemas atmosféricos caóticos e problemas reais de energia e aerodinâmica.</p>
-                            <ul>
-                                <li>Modela correntes, dispersão, ondas e escoamentos complexos.</li>
-                                <li>Usa equações diferenciais e CFD para previsão e projeto.</li>
-                                <li>Ataca problemas de energia, ambiente e engenharia aplicada.</li>
-                            </ul>
-                            <div class="career-where">
-                                <span>Onde trabalha</span>
-                                <strong>Empresas de energia, setor de petróleo e gás, institutos de meteorologia, consultorias ambientais e exploração geofísica.</strong>
-                            </div>
-                        </article>
-                        <article class="career-card">
-                            <div class="career-card-top">
-                                <div class="career-icon">∿</div>
-                                <span class="career-chip">Quant</span>
-                            </div>
-                            <h4>Mercado financeiro quantitativo</h4>
-                            <p>A ciência exata nos mercados de alta pressão. Modelagem estocástica, simulações de Monte Carlo e raciocínio físico se tornam ferramentas decisivas para precificar risco, testar estratégias e operar em ambientes onde cada milissegundo conta.</p>
-                            <ul>
-                                <li>Modela séries temporais e movimentos aleatórios com precisão.</li>
-                                <li>Desenha algoritmos para risco, precificação e backtesting.</li>
-                                <li>Aplica matemática forte em ambientes de decisão extrema.</li>
-                            </ul>
-                            <div class="career-where">
-                                <span>Onde trabalha</span>
-                                <strong>Bancos de investimento, fundos quantitativos, gestoras de patrimônio, mesas de operação e empresas de modelagem de risco.</strong>
-                            </div>
-                        </article>
-                    </div>
-                `,
-                items: [],
-                tags: []
-            }
+        const collapsibleButtons = document.querySelectorAll(".switch-btn[data-panel]");
+        const panels = document.querySelectorAll(".hero-panel[data-panel-content]");
+        const disciplines = [
+            { semestre: "1", codigo: "JAN007A", disciplina: "Física I", carga_horaria: 60, tipo: "Física Básica" },
+            { semestre: "1", codigo: "JAN025A", disciplina: "Física Experimental I", carga_horaria: 30, tipo: "Física Básica" },
+            { semestre: "1", codigo: "BIAES003", disciplina: "Álgebra Linear e Geometria Analítica", carga_horaria: 60, tipo: "Matemática" },
+            { semestre: "1", codigo: "JAN001A", disciplina: "Cálculo I", carga_horaria: 90, tipo: "Matemática" },
+            { semestre: "1", codigo: "BIAES001", disciplina: "Algoritmos e Estruturas de Dados I", carga_horaria: 60, tipo: "Computação" },
+            { semestre: "1", codigo: "FCOM101", disciplina: "Introdução à Prática Profissional", carga_horaria: 30, tipo: "Humanidades" },
+            { semestre: "2", codigo: "JAN0012A", disciplina: "Física II", carga_horaria: 60, tipo: "Física Básica" },
+            { semestre: "2", codigo: "JAN028A", disciplina: "Física Experimental II", carga_horaria: 30, tipo: "Física Básica" },
+            { semestre: "2", codigo: "JAN009A", disciplina: "Estatística I", carga_horaria: 30, tipo: "Matemática" },
+            { semestre: "2", codigo: "JAN006A", disciplina: "Cálculo II", carga_horaria: 60, tipo: "Matemática" },
+            { semestre: "2", codigo: "BIAES005", disciplina: "Algoritmos e Estruturas de Dados II", carga_horaria: 60, tipo: "Computação" },
+            { semestre: "2", codigo: "BIAES019", disciplina: "Divulgação Científica", carga_horaria: 45, tipo: "Humanidades" },
+            { semestre: "2", codigo: "FCOM201", disciplina: "Interações Culturais Ambientais e Humanísticas", carga_horaria: 30, tipo: "Humanidades" },
+            { semestre: "3", codigo: "JAN017A", disciplina: "Física III", carga_horaria: 60, tipo: "Física Básica" },
+            { semestre: "3", codigo: "JAN029A", disciplina: "Física Experimental III", carga_horaria: 30, tipo: "Física Básica" },
+            { semestre: "3", codigo: "JAN026A", disciplina: "Estatística II", carga_horaria: 45, tipo: "Matemática" },
+            { semestre: "3", codigo: "JAN011A", disciplina: "Cálculo III", carga_horaria: 60, tipo: "Matemática" },
+            { semestre: "3", codigo: "BIAES009", disciplina: "Algoritmos e Estruturas de Dados III", carga_horaria: 60, tipo: "Computação" },
+            { semestre: "3", codigo: "JAN033A", disciplina: "Práticas de Empreendedorismo", carga_horaria: 30, tipo: "Humanidades" },
+            { semestre: "3", codigo: "JAN002A", disciplina: "Química Geral Teórica", carga_horaria: 45, tipo: "Química" },
+            { semestre: "4", codigo: "FCOM401", disciplina: "Física IV", carga_horaria: 60, tipo: "Física Básica" },
+            { semestre: "4", codigo: "FCOM411", disciplina: "Física Experimental IV", carga_horaria: 30, tipo: "Física Básica" },
+            { semestre: "4", codigo: "FCOM471", disciplina: "Equações Diferenciais Aplicadas à Física", carga_horaria: 60, tipo: "Física Teórica" },
+            { semestre: "4", codigo: "FCOM472", disciplina: "Inferência Bayesiana", carga_horaria: 60, tipo: "Matemática" },
+            { semestre: "4", codigo: "BIAES014", disciplina: "Banco de Dados", carga_horaria: 60, tipo: "Computação" },
+            { semestre: "4", codigo: "BIAES017", disciplina: "Inteligência Artificial e Computacional", carga_horaria: 60, tipo: "Computação" },
+            { semestre: "5", codigo: "FCOM501", disciplina: "Mecânica Clássica", carga_horaria: 60, tipo: "Física Teórica" },
+            { semestre: "5", codigo: "FCOM502", disciplina: "Eletromagnetismo", carga_horaria: 60, tipo: "Física Teórica" },
+            { semestre: "5", codigo: "FCOM571", disciplina: "Física Matemática", carga_horaria: 60, tipo: "Física Teórica" },
+            { semestre: "5", codigo: "FCOM511", disciplina: "Dinâmica Molecular e Aprendizado de Máquina em Física de Materiais", carga_horaria: 60, tipo: "Física Experimental Profissional" },
+            { semestre: "5", codigo: "BIAES020", disciplina: "Teoria dos Grafos", carga_horaria: 60, tipo: "Computação" },
+            { semestre: "5", codigo: "BIAES024", disciplina: "Aprendizagem de Máquina", carga_horaria: 30, tipo: "Computação" },
+            { semestre: "6", codigo: "FCOM641", disciplina: "Física Moderna", carga_horaria: 60, tipo: "Física Teórica" },
+            { semestre: "6", codigo: "FCOM611", disciplina: "Biofísica Molecular Computacional", carga_horaria: 60, tipo: "Física Experimental Profissional" },
+            { semestre: "6", codigo: "BIAES026", disciplina: "Computação de Alto Desempenho", carga_horaria: 60, tipo: "Computação" },
+            { semestre: "6", codigo: "BIAES028", disciplina: "Engenharia de Dados", carga_horaria: 60, tipo: "Computação" },
+            { semestre: "6", codigo: "BIAES029", disciplina: "Redes Neurais Artificiais", carga_horaria: 60, tipo: "Computação" },
+            { semestre: "6", codigo: "FCOM691", disciplina: "Trabalho de Conclusão de Curso I", carga_horaria: 60, tipo: "Trabalho de Conclusão de Curso" },
+            { semestre: "6", codigo: "", disciplina: "Optativa 1", carga_horaria: 45, tipo: "Optativas" },
+            { semestre: "7", codigo: "FCOM701", disciplina: "Termodinâmica e Física Estatística", carga_horaria: 60, tipo: "Física Teórica" },
+            { semestre: "7", codigo: "FCOM741", disciplina: "Mecânica Quântica", carga_horaria: 60, tipo: "Física Teórica" },
+            { semestre: "7", codigo: "FCOM702", disciplina: "Física do Estado Sólido", carga_horaria: 60, tipo: "Física Teórica" },
+            { semestre: "7", codigo: "FCOM711", disciplina: "Simulação Computacional de Primeiros Princípios", carga_horaria: 60, tipo: "Física Experimental Profissional" },
+            { semestre: "7", codigo: "FCOM791", disciplina: "Trabalho de Conclusão de Curso II", carga_horaria: 60, tipo: "Trabalho de Conclusão de Curso" },
+            { semestre: "7", codigo: "", disciplina: "Optativa 2", carga_horaria: 45, tipo: "Optativas" },
+            { semestre: "", codigo: "", disciplina: "Atividades Formativas", carga_horaria: 45, tipo: "Atividades Formativas" }
+        ];
+        const disciplineSummaries = {
+            "Física I": "Constrói a base da mecânica clássica: movimento, vetores, forças, energia e colisões. É a disciplina que organiza a intuição física em leis quantitativas e problemas resolvíveis.",
+            "Física Experimental I": "Leva a mecânica para o laboratório com foco em medidas, incertezas e validação experimental. O estudante começa a comparar teoria e experimento de forma mais rigorosa.",
+            "Álgebra Linear e Geometria Analítica": "Desenvolve a linguagem matemática de matrizes, vetores, transformações lineares e autovalores, que depois aparece em simulação, física teórica e ciência de dados.",
+            "Cálculo I": "Introduz funções, limites e derivadas como ferramentas para descrever variação e comportamento de sistemas físicos. É a porta de entrada para a modelagem matemática do curso.",
+            "Algoritmos e Estruturas de Dados I": "Apresenta lógica de programação, tipos de dados, controle de fluxo e modularização. A ideia central é ensinar o aluno a transformar problemas em algoritmos claros e executáveis.",
+            "Introdução à Prática Profissional": "Funciona como um mapa inicial do curso e da profissão, conectando física, matemática e computação com temas atuais e trajetórias possíveis de atuação acadêmica e tecnológica.",
+            "Física II": "Avança da mecânica translacional para rotações, fluidos, oscilações, ondas e termodinâmica. Mostra como diferentes fenômenos podem ser descritos por princípios físicos gerais.",
+            "Física Experimental II": "Explora em laboratório temas como equilíbrio, fluidos, ondas e calor. O foco é observar fenômenos clássicos com cuidado experimental e interpretação física consistente.",
+            "Estatística I": "Introduz coleta, organização, resumo e visualização de dados. É a base para tratar informação experimental e começar a pensar quantitativamente sobre incerteza e variabilidade.",
+            "Cálculo II": "Trabalha máximos, mínimos e integração com aplicações práticas. É a etapa em que o cálculo começa a ser usado diretamente para resolver problemas físicos com mais profundidade.",
+            "Algoritmos e Estruturas de Dados II": "Aprofunda a programação com recursão, memória dinâmica, listas, filas, pilhas, busca e ordenação. A disciplina já aproxima o estudante do raciocínio algorítmico mais robusto.",
+            "Divulgação Científica": "Discute como a ciência circula fora da sala de aula e como produzir conteúdo para públicos diferentes. A disciplina reforça comunicação, mediação e responsabilidade pública da ciência.",
+            "Interações Culturais Ambientais e Humanísticas": "Amplia a formação com discussões sobre cultura, diversidade, direitos humanos e sustentabilidade. É um componente pensado para situar a formação científica dentro da sociedade.",
+            "Física III": "Desenvolve eletrostática, circuitos, magnetismo, indução e as ideias que culminam nas equações de Maxwell. É o núcleo do eletromagnetismo clássico no curso.",
+            "Física Experimental III": "Traduz conceitos de eletricidade e magnetismo em montagens e medições concretas. O estudante vê como circuitos, indução e campos se manifestam em situações reais de laboratório.",
+            "Estatística II": "Sai da estatística descritiva e entra em probabilidade, distribuições, inferência, regressão e ANOVA. É a disciplina que prepara o terreno para análise quantitativa mais séria e para machine learning.",
+            "Cálculo III": "Estende o cálculo para várias variáveis, com gradiente, integrais múltiplas e otimização com restrições. É essencial para modelar sistemas físicos mais realistas e multidimensionais.",
+            "Algoritmos e Estruturas de Dados III": "Introduz análise de complexidade, árvores e tabelas hash. A disciplina ajuda a comparar soluções computacionais não só por funcionar, mas por eficiência.",
+            "Práticas de Empreendedorismo": "Conecta inovação, modelo de negócio, viabilidade econômica e planejamento. A proposta é mostrar como transformar conhecimento técnico em projeto com valor real.",
+            "Química Geral Teórica": "Oferece a base química necessária para entender estrutura da matéria, ligações, reações, cinética e equilíbrio. Isso amplia o repertório para materiais, biofísica e temas interdisciplinares.",
+            "Física IV": "Percorre óptica, física nuclear e noções de partículas. É a transição entre a física clássica mais avançada e temas que apontam para a física moderna.",
+            "Física Experimental IV": "Investiga fenômenos de óptica em laboratório, como refração, lentes, polarização e difração. A disciplina enfatiza observação controlada e interpretação de comportamento ondulatório da luz.",
+            "Equações Diferenciais Aplicadas à Física": "Foca nas equações diferenciais que aparecem o tempo todo na modelagem física. O aluno aprende a reconhecer, resolver e aplicar esses modelos em contextos concretos.",
+            "Inferência Bayesiana": "Apresenta a lógica bayesiana para atualizar crenças com dados. É uma disciplina importante para quem quer trabalhar com estatística moderna, modelagem probabilística e tomada de decisão.",
+            "Banco de Dados": "Ensina a estruturar, normalizar e consultar dados em sistemas relacionais. A disciplina aproxima o curso de problemas reais de armazenamento, organização e recuperação de informação.",
+            "Inteligência Artificial e Computacional": "Introduz as ideias centrais de IA, representação de conhecimento e aplicações computacionais. Funciona como porta de entrada para áreas mais avançadas de aprendizado e automação.",
+            "Mecânica Clássica": "Reorganiza a mecânica em um nível mais sofisticado, com sistemas de partículas, oscilações, gravitação e formulações de Lagrange e Hamilton. É uma disciplina de maturidade conceitual no curso.",
+            "Eletromagnetismo": "Aprofunda o formalismo matemático do campo eletromagnético com operadores vetoriais, meios materiais e equações de Maxwell. Aqui a teoria ganha uma cara mais completa e elegante.",
+            "Física Matemática": "Trabalha variáveis complexas e ferramentas como séries e transformadas de Fourier. Essas técnicas são fundamentais para resolver problemas em ondas, quântica, sinais e métodos teóricos.",
+            "Dinâmica Molecular e Aprendizado de Máquina em Física de Materiais": "Une simulação atomística e técnicas de machine learning para estudar materiais. É uma disciplina com perfil fortemente aplicado e muito alinhada à pesquisa contemporânea.",
+            "Teoria dos Grafos": "Apresenta grafos como linguagem para modelar redes e relações, além de algoritmos clássicos de busca, coloração e árvore geradora. É útil tanto em computação quanto em problemas científicos complexos.",
+            "Aprendizagem de Máquina": "Cobre os pilares de aprendizado supervisionado e não supervisionado, incluindo regressão, classificação, agrupamento e associação. A disciplina mostra como extrair estrutura e previsão a partir de dados.",
+            "Física Moderna": "Introduz os fenômenos que romperam com a física clássica, como relatividade, efeito fotoelétrico, quantização e o átomo de hidrogênio. É a base conceitual para quântica e física contemporânea.",
+            "Biofísica Molecular Computacional": "Conecta biologia molecular com modelagem computacional de biomoléculas. A disciplina mostra como ferramentas de simulação ajudam a estudar estruturas e interações em sistemas biológicos.",
+            "Computação de Alto Desempenho": "Apresenta arquiteturas paralelas, fundamentos de HPC e medição de desempenho. É a disciplina que prepara o aluno para rodar simulações e processamento pesado em escala maior.",
+            "Engenharia de Dados": "Passa por coleta, limpeza, transformação e processamento massivo de dados, incluindo NoSQL e computação distribuída. É um componente voltado para pipelines e infraestrutura analítica.",
+            "Redes Neurais Artificiais": "Percorre da história do perceptron até redes multicamadas, backpropagation e deep learning. A disciplina dá a base neural para aplicações modernas de IA.",
+            "Trabalho de Conclusão de Curso I": "Marca o início do TCC, com definição do problema, organização da pesquisa e construção das primeiras etapas do projeto. É onde o aluno começa a consolidar autonomia acadêmica ou técnica.",
+            "Optativa 1": "Espaço flexível da matriz para aprofundamento em um tema de interesse. A ideia é permitir personalização da formação conforme a trilha acadêmica ou profissional escolhida.",
+            "Termodinâmica e Física Estatística": "Integra leis da termodinâmica, potenciais termodinâmicos, transições de fase e descrição estatística de sistemas físicos. É uma ponte importante entre fenômenos macroscópicos e visão microscópica.",
+            "Mecânica Quântica": "Apresenta função de onda, equação de Schrödinger e o formalismo básico da teoria quântica. É o primeiro mergulho sistemático na física dos sistemas microscópicos.",
+            "Física do Estado Sólido": "Estuda cristais, rede recíproca, fônons, bandas de energia, semicondutores, magnetismo e supercondutividade. É uma disciplina central para materiais e matéria condensada.",
+            "Simulação Computacional de Primeiros Princípios": "Explora métodos ab initio, especialmente DFT, para calcular propriedades eletrônicas e vibracionais de materiais. É um curso com forte perfil de pesquisa computacional avançada.",
+            "Trabalho de Conclusão de Curso II": "Conclui o TCC com desenvolvimento final, entrega de produto acadêmico ou técnico e fechamento formal do trabalho. É o momento de transformar pesquisa em resultado apresentável.",
+            "Optativa 2": "Segundo espaço de escolha livre na matriz, pensado para aprofundar competências específicas ou complementar a trilha de pesquisa e aplicação do aluno.",
+            "Atividades Formativas": "Reúne experiências extracurriculares validadas pelo curso, como eventos, extensão, pesquisa e outras atividades acadêmicas relevantes. O objetivo é ampliar a formação para além das disciplinas formais."
+        };
+        const disciplineCatalogRoot = document.getElementById("discipline-catalog-root");
+        const disciplineSemesterOrder = ["1", "2", "3", "4", "5", "6", "7", ""];
+        const disciplineSemesterLabels = {
+            "1": "1º semestre",
+            "2": "2º semestre",
+            "3": "3º semestre",
+            "4": "4º semestre",
+            "5": "5º semestre",
+            "6": "6º semestre",
+            "7": "7º semestre",
+            "": "Formação complementar"
         };
 
-        const buttons = document.querySelectorAll(".switch-btn");
-        const panelCopy = document.getElementById("panel-copy");
-        function renderCourseItems(items) {
-            return items.map((item) => `
-                <li class="course-card${item.featured ? " featured-course" : ""}">
-                    <button class="course-toggle" type="button">
-                        <span class="course-toggle-main">
-                            <strong>${item.university}</strong>
-                            <span class="course-label">${item.course}</span>
-                            ${item.highlight ? `<span class="course-highlight">${item.highlight}</span>` : ""}
-                        </span>
-                        <span class="course-chevron">▾</span>
-                    </button>
-                    <div class="course-details">
-                        <div class="course-detail-grid two-items">
-                            <div class="course-detail-item">
-                                <span>Duração</span>
-                                <strong>${item.duration}</strong>
-                            </div>
-                            <div class="course-detail-item">
-                                <span>Local</span>
-                                <strong>${item.location}</strong>
-                            </div>
-                            <div class="course-detail-item">
-                                <span>Site oficial</span>
-                                <a href="${item.link}" target="_blank" rel="noopener noreferrer">${item.linkLabel}</a>
-                            </div>
-                        </div>
-                    </div>
-                </li>
-            `).join("");
+        function slugifyDisciplineType(value) {
+            return value
+                .normalize("NFD")
+                .replace(/[\u0300-\u036f]/g, "")
+                .toLowerCase()
+                .replace(/[^a-z0-9]+/g, "-")
+                .replace(/^-|-$/g, "");
         }
 
-        function renderPanel(panelKey) {
-            const content = panelContent[panelKey];
-            const body = content.html
-                ? content.html
-                : `<ul class="panel-list">${panelKey === "onde-cursar"
-                    ? renderCourseItems(content.items)
-                    : content.items.join("")}</ul>`;
-            const tags = content.tags.map((tag) => `<span class="panel-pill">${tag}</span>`).join("");
-            const meta = tags ? `<div class="panel-meta">${tags}</div>` : "";
-            const description = content.description ? `<p>${content.description}</p>` : "";
+        function formatDisciplineSemesterLabel(value) {
+            return disciplineSemesterLabels[value] || `${value}º semestre`;
+        }
 
-            panelCopy.innerHTML = `
-                <h3>${content.title}</h3>
-                ${description}
-                ${body}
-                ${meta}
-            `;
+        function renderDisciplineCatalog() {
+            const filtered = disciplines;
 
-            buttons.forEach((button) => {
-                button.classList.toggle("is-active", button.dataset.panel === panelKey);
+            if (!filtered.length) {
+                disciplineCatalogRoot.innerHTML = `
+                    <div class="discipline-empty-state">
+                        Nenhuma disciplina encontrada com esse filtro. Ajuste a busca ou volte para <strong>Todos</strong>.
+                    </div>
+                `;
+                return;
+            }
+
+            const groups = disciplineSemesterOrder.map((semester) => {
+                const items = filtered.filter((item) => item.semestre === semester);
+                if (!items.length) {
+                    return "";
+                }
+
+                const totalHours = items.reduce((sum, item) => sum + item.carga_horaria, 0);
+                const visualIndex = semester ? semester : "∞";
+                return `
+                    <section class="discipline-semester-group">
+                        <div class="discipline-semester-header">
+                            <div class="discipline-semester-title">
+                                <div class="discipline-semester-index">${visualIndex}</div>
+                                <div>
+                                    <h4>${formatDisciplineSemesterLabel(semester)}</h4>
+                                    <div class="discipline-semester-meta">${items.length} disciplina${items.length === 1 ? "" : "s"} • ${totalHours}h</div>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="discipline-course-grid">
+                            ${items.map((item) => `
+                                <article
+                                    class="discipline-course-card"
+                                    tabindex="0"
+                                    role="listitem"
+                                    aria-label="Abrir resumo de ${item.disciplina}"
+                                >
+                                    <button class="discipline-course-toggle" type="button" aria-expanded="false">
+                                        <div class="discipline-course-heading">
+                                            <div class="discipline-course-top">
+                                                <span class="discipline-course-code">${item.codigo || "SEM CÓDIGO"}</span>
+                                                <span class="discipline-course-hours">${item.carga_horaria}h</span>
+                                            </div>
+                                            <span class="discipline-course-chevron">▾</span>
+                                        </div>
+                                        <h5>${item.disciplina}</h5>
+                                        <span class="discipline-type-tag discipline-type-${slugifyDisciplineType(item.tipo)}">${item.tipo}</span>
+                                        <span class="discipline-course-hint">Clique para ver resumo</span>
+                                    </button>
+                                    <div class="discipline-course-details">
+                                        <div class="discipline-detail-meta">
+                                            <span class="discipline-detail-pill">${item.codigo || "SEM CÓDIGO"}</span>
+                                            <span class="discipline-detail-pill">${formatDisciplineSemesterLabel(item.semestre)}</span>
+                                            <span class="discipline-detail-pill">${item.tipo}</span>
+                                            <span class="discipline-detail-pill">${item.carga_horaria}h</span>
+                                        </div>
+                                        <p class="discipline-detail-copy">${disciplineSummaries[item.disciplina] || "Resumo em preparação a partir do PPC do curso."}</p>
+                                    </div>
+                                </article>
+                            `).join("")}
+                        </div>
+                    </section>
+                `;
+            }).join("");
+
+            disciplineCatalogRoot.innerHTML = groups;
+        }
+
+        function renderDisciplinesInline() {
+            renderDisciplineCatalog();
+        }
+
+        function setActivePanel(panelKey) {
+            panels.forEach((panel) => {
+                const isMatch = panel.dataset.panelContent === panelKey;
+                panel.classList.toggle("is-collapsed", !isMatch);
+            });
+
+            collapsibleButtons.forEach((button) => {
+                const isMatch = button.dataset.panel === panelKey;
+                button.classList.toggle("is-active", isMatch);
+                button.setAttribute("aria-expanded", String(isMatch));
             });
         }
 
-        buttons.forEach((button) => {
-            button.addEventListener("click", () => renderPanel(button.dataset.panel));
+        function closePanels() {
+            panels.forEach((panel) => panel.classList.add("is-collapsed"));
+            collapsibleButtons.forEach((button) => {
+                button.classList.remove("is-active");
+                button.setAttribute("aria-expanded", "false");
+            });
+        }
+
+        collapsibleButtons.forEach((button) => {
+            button.setAttribute("aria-expanded", button.classList.contains("is-active") ? "true" : "false");
+            button.setAttribute("aria-controls", `panel-${button.dataset.panel}`);
+            button.addEventListener("click", () => {
+                const isActive = button.classList.contains("is-active");
+                if (isActive) {
+                    closePanels();
+                    return;
+                }
+
+                setActivePanel(button.dataset.panel);
+            });
         });
 
-        panelCopy.addEventListener("click", (event) => {
+        setActivePanel("onde-cursar");
+        renderDisciplinesInline();
+
+        document.addEventListener("click", (event) => {
             const toggle = event.target.closest(".course-toggle");
             if (!toggle) {
                 return;
@@ -1523,12 +1900,59 @@
             }
 
             const willOpen = !card.classList.contains("is-open");
-            panelCopy.querySelectorAll(".course-card.is-open").forEach((openCard) => {
+            const scope = card.closest(".panel-list");
+            if (!scope) {
+                return;
+            }
+
+            scope.querySelectorAll(".course-card.is-open").forEach((openCard) => {
                 openCard.classList.remove("is-open");
             });
 
             if (willOpen) {
                 card.classList.add("is-open");
+            }
+        });
+
+        disciplineCatalogRoot.addEventListener("click", (event) => {
+            const toggle = event.target.closest(".discipline-course-toggle");
+            if (!toggle) {
+                return;
+            }
+
+            const card = toggle.closest(".discipline-course-card");
+            if (!card) {
+                return;
+            }
+
+            const scope = card.closest(".discipline-course-grid");
+            const willOpen = !card.classList.contains("is-open");
+
+            if (scope) {
+                scope.querySelectorAll(".discipline-course-card.is-open").forEach((openCard) => {
+                    openCard.classList.remove("is-open");
+                    const openToggle = openCard.querySelector(".discipline-course-toggle");
+                    if (openToggle) {
+                        openToggle.setAttribute("aria-expanded", "false");
+                    }
+                });
+            }
+
+            if (willOpen) {
+                card.classList.add("is-open");
+                toggle.setAttribute("aria-expanded", "true");
+            }
+        });
+
+        disciplineCatalogRoot.addEventListener("keydown", (event) => {
+            const toggle = event.target.closest(".discipline-course-toggle");
+            if (!toggle) {
+                return;
+            }
+
+            if (event.key === "Enter" || event.key === " ") {
+                event.preventDefault();
+                toggle.click();
             }
         });
     </script>
