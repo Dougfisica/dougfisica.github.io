@@ -56,6 +56,11 @@
       --card4-desc-bg: #f3e5f5;   /* Roxo mais claro */
       --card4-color: #7b1fa2;
       --card4-hover: #ce93d8;
+
+      --card5-title-bg: linear-gradient(135deg, #03130d 0%, #0a2218 100%);
+      --card5-desc-bg: linear-gradient(180deg, #08110d 0%, #0c1713 100%);
+      --card5-color: #7dff9b;
+      --card5-hover: #123126;
     }
     html, body {
       height: 100%;
@@ -190,6 +195,69 @@
       --btn-hover: var(--card4-hover);
     }
 
+    .link-btn:nth-child(5) {
+      --btn-title-bg: var(--card5-title-bg);
+      --btn-desc-bg: var(--card5-desc-bg);
+      --btn-color: var(--card5-color);
+      --btn-hover: var(--card5-hover);
+    }
+
+    .link-btn-computacional {
+      border-color: #1c5f42;
+      box-shadow: 0 0 0 1px rgba(125,255,155,0.12), 0 0 18px rgba(0,255,136,0.12);
+      background:
+        radial-gradient(circle at top right, rgba(125,255,155,0.16), transparent 34%),
+        linear-gradient(180deg, rgba(5,16,11,0.98), rgba(9,18,14,0.98));
+    }
+
+    .link-btn-computacional::before {
+      content: "0100110 101001 11 00101 1010";
+      position: absolute;
+      top: 10px;
+      right: 12px;
+      font-family: 'Roboto', Arial, sans-serif;
+      font-size: 0.66rem;
+      letter-spacing: 0.16em;
+      color: rgba(125,255,155,0.24);
+      pointer-events: none;
+    }
+
+    .link-btn-computacional::after {
+      content: "";
+      position: absolute;
+      inset: 0;
+      background:
+        linear-gradient(90deg, transparent 0%, rgba(125,255,155,0.08) 48%, transparent 100%),
+        repeating-linear-gradient(180deg, rgba(125,255,155,0.06) 0 1px, transparent 1px 16px);
+      opacity: 0.55;
+      pointer-events: none;
+    }
+
+    .link-btn-computacional:hover,
+    .link-btn-computacional:focus {
+      border-color: #7dff9b;
+      box-shadow: 0 0 0 1px rgba(125,255,155,0.24), 0 0 26px rgba(0,255,136,0.24);
+      background:
+        radial-gradient(circle at top right, rgba(125,255,155,0.24), transparent 40%),
+        linear-gradient(180deg, rgba(8,24,17,1), rgba(12,27,20,1));
+    }
+
+    .link-btn-computacional .btn-title-part {
+      position: relative;
+      background:
+        linear-gradient(135deg, rgba(4,20,13,0.98), rgba(12,40,28,0.98));
+      color: #8fffb0;
+      text-shadow: 0 0 12px rgba(125,255,155,0.28);
+      border-bottom: 1px solid rgba(125,255,155,0.18);
+      overflow: hidden;
+    }
+
+    .link-btn-computacional .btn-desc-part {
+      position: relative;
+      background: linear-gradient(180deg, rgba(9,19,14,0.94), rgba(11,23,17,0.98));
+      color: #b9ffd0;
+    }
+
     .link-btn:hover, .link-btn:focus {
       border: 2px solid var(--btn-color);
       box-shadow: 0 7px 24px 0 rgba(25,75,251,0.13), 0 1.5px 8px 0 rgba(0,0,0,0.12);
@@ -293,6 +361,10 @@
         <a class="link-btn" href="aulas/index.html" title="Aulas de Física" style="background: #FFCDD2;">
           <span class="btn-title-part" style="background: #EF9A9A; border-bottom: 1px solid rgba(255,255,255,0.1); color: #D32F2F;">Aulas<br>de Física</span>
           <span class="btn-desc-part" style="background: #FFCDD2;">Conteúdo didático e material de apoio para suas aulas.</span>
+        </a>
+        <a class="link-btn link-btn-computacional" href="fisicacomputacional.html" title="Física Computacional">
+          <span class="btn-title-part">Física Computacional</span>
+          <span class="btn-desc-part">Graduação em Física Computacional</span>
         </a>
       </nav>
     </section>
