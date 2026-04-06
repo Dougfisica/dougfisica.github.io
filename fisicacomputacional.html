@@ -285,6 +285,12 @@
             box-shadow: 0 0 0 1px rgba(255, 140, 0, 0.1), 0 14px 26px rgba(255, 140, 0, 0.12);
         }
 
+        .switch-btn.compare-trigger {
+            border-color: rgba(244, 114, 182, 0.45);
+            background: linear-gradient(180deg, rgba(244, 114, 182, 0.2), rgba(22, 27, 34, 0.88));
+            box-shadow: 0 0 0 1px rgba(244, 114, 182, 0.1), 0 14px 26px rgba(244, 114, 182, 0.12);
+        }
+
         .catalog-link {
             display: block;
             border-color: rgba(126, 255, 80, 0.5);
@@ -309,6 +315,13 @@
             border-color: rgba(255, 140, 0, 0.9);
             background: linear-gradient(180deg, rgba(255, 140, 0, 0.34), rgba(22, 27, 34, 0.92));
             box-shadow: 0 0 0 1px rgba(255, 140, 0, 0.2), 0 16px 30px rgba(255, 140, 0, 0.2);
+        }
+
+        .switch-btn.compare-trigger:hover,
+        .switch-btn.compare-trigger.is-active {
+            border-color: rgba(244, 114, 182, 0.88);
+            background: linear-gradient(180deg, rgba(244, 114, 182, 0.32), rgba(22, 27, 34, 0.92));
+            box-shadow: 0 0 0 1px rgba(244, 114, 182, 0.2), 0 16px 30px rgba(244, 114, 182, 0.18);
         }
 
         .catalog-link:hover {
@@ -541,6 +554,181 @@
         .course-detail-item a {
             color: var(--cyan-accent);
         }
+
+        .course-comparison-section {
+            padding: 0 5% 88px;
+        }
+
+        .course-comparison-section[hidden] {
+            display: none;
+        }
+
+        .course-comparison-shell {
+            width: min(100%, 1100px);
+            margin: 0 auto;
+            padding: 28px;
+            border-radius: 22px;
+            border: 1px solid rgba(0, 240, 255, 0.14);
+            background:
+                radial-gradient(circle at top right, rgba(0, 240, 255, 0.08), transparent 24%),
+                linear-gradient(180deg, rgba(22, 27, 34, 0.96), rgba(8, 12, 18, 0.98));
+            box-shadow: 0 20px 44px rgba(0, 0, 0, 0.28);
+        }
+
+        .course-comparison-shell h2 {
+            font-size: clamp(1.5rem, 3vw, 2rem);
+            margin-bottom: 10px;
+        }
+
+        .course-comparison-shell p {
+            color: var(--text-muted);
+            margin-bottom: 22px;
+        }
+
+        .comparison-grid {
+            display: grid;
+            grid-template-columns: 1fr;
+            gap: 1px;
+        }
+
+        .comparison-card {
+            padding: 6px 10px;
+            border-radius: 10px;
+            border: 1px solid rgba(255, 255, 255, 0.04);
+            background:
+                radial-gradient(circle at top, rgba(255, 255, 255, 0.05), transparent 28%),
+                linear-gradient(180deg, rgba(20, 25, 31, 0.98), rgba(10, 14, 20, 0.98));
+            display: grid;
+            gap: 0;
+        }
+
+        .comparison-card h3 {
+            font-size: 1rem;
+        }
+
+        .comparison-card-head {
+            display: flex;
+            justify-content: space-between;
+            gap: 12px;
+            align-items: center;
+            margin-bottom: -3px;
+        }
+
+        .comparison-course-label {
+            display: inline-flex;
+            padding: 5px 10px;
+            border-radius: 999px;
+            background: rgba(255, 255, 255, 0.04);
+            color: var(--text-muted);
+            font-family: "Fira Code", monospace;
+            font-size: 0.75rem;
+        }
+
+        .comparison-hours {
+            color: var(--text-muted);
+            font-family: "Fira Code", monospace;
+            font-size: 0.78rem;
+        }
+
+        .comparison-scale {
+            position: relative;
+            display: grid;
+            gap: 1px;
+        }
+
+        .comparison-ticks {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            font-family: "Fira Code", monospace;
+            font-size: 0.68rem;
+            color: var(--text-muted);
+        }
+
+        .comparison-bar {
+            width: 100%;
+            height: 18px;
+            border-radius: 999px;
+            overflow: hidden;
+            display: flex;
+            position: relative;
+            background: linear-gradient(90deg, rgba(255, 255, 255, 0.05), rgba(255, 255, 255, 0.05));
+            box-shadow: inset 0 0 0 1px rgba(255, 255, 255, 0.07);
+        }
+
+        .comparison-bar::after {
+            content: "";
+            position: absolute;
+            inset: 0;
+            background-image:
+                linear-gradient(to bottom, rgba(255, 255, 255, 0.38) 55%, rgba(255, 255, 255, 0) 0),
+                linear-gradient(to bottom, rgba(255, 255, 255, 0.38) 55%, rgba(255, 255, 255, 0) 0),
+                linear-gradient(to bottom, rgba(255, 255, 255, 0.38) 55%, rgba(255, 255, 255, 0) 0),
+                linear-gradient(to bottom, rgba(255, 255, 255, 0.38) 55%, rgba(255, 255, 255, 0) 0);
+            background-size: 1px 6px, 1px 6px, 1px 6px, 1px 6px;
+            background-repeat: repeat-y, repeat-y, repeat-y, repeat-y;
+            background-position: 20% 0, 40% 0, 60% 0, 80% 0;
+            pointer-events: none;
+        }
+
+        .comparison-segment {
+            height: 100%;
+            display: grid;
+            place-items: center;
+            position: relative;
+            z-index: 1;
+        }
+
+        .comparison-segment.physics {
+            background: linear-gradient(90deg, #2ea9b7, #5fbec8);
+        }
+
+        .comparison-segment.computing {
+            background: linear-gradient(90deg, #79a96b, #9dc091);
+        }
+
+        .comparison-segment.math {
+            background: linear-gradient(90deg, #5f86b8, #86a8d2);
+        }
+
+        .comparison-segment.other {
+            background: linear-gradient(90deg, #b5925c, #c9ab7b);
+        }
+
+        .comparison-legend {
+            list-style: none;
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(150px, 1fr));
+            gap: 6px 10px;
+        }
+
+        .comparison-legend li {
+            display: grid;
+            grid-template-columns: auto 1fr;
+            gap: 8px;
+            align-items: center;
+            color: var(--text-main);
+            font-size: 0.84rem;
+        }
+
+        .comparison-legend-label {
+            display: contents;
+        }
+
+        .comparison-legend-swatch {
+            width: 11px;
+            height: 11px;
+            border-radius: 50%;
+        }
+
+        .comparison-legend-name {
+            color: var(--text-muted);
+        }
+
+        .comparison-legend-swatch.physics { background: #4aaeb9; }
+        .comparison-legend-swatch.math { background: #6f94bf; }
+        .comparison-legend-swatch.computing { background: #8aac80; }
+        .comparison-legend-swatch.other { background: #b89b6b; }
 
         .panel-meta {
             display: flex;
@@ -1423,6 +1611,18 @@
                 grid-template-columns: 1fr;
             }
 
+            .course-comparison-shell {
+                padding: 22px 18px;
+            }
+
+            .comparison-card {
+                padding: 18px;
+            }
+
+            .comparison-legend {
+                grid-template-columns: 1fr 1fr;
+            }
+
             .discipline-course-grid {
                 grid-template-columns: 1fr;
             }
@@ -1446,6 +1646,7 @@
             </p>
             <div class="hero-actions" aria-label="Explorar informações principais">
                 <button class="switch-btn is-active" type="button" data-panel="onde-cursar" aria-expanded="true" aria-controls="panel-onde-cursar">Cursos de Graduação</button>
+                <button class="switch-btn compare-trigger" type="button" data-panel="comparar-cursos" aria-expanded="false" aria-controls="panel-comparar-cursos">Comparar Cursos de Graduação</button>
                 <button class="switch-btn" type="button" data-panel="o-que-faz">Mercado de Trabalho</button>
                 <button class="switch-btn catalog-link" type="button" data-panel="disciplinas-ufpr">Disciplinas UFPR</button>
             </div>
@@ -1586,6 +1787,39 @@
                 </div>
             </div>
                 </div>
+                <div class="hero-panel is-collapsed" id="panel-comparar-cursos" data-panel-content="comparar-cursos" aria-label="Comparar cursos de graduação">
+                    <div class="hero-panel-body">
+                        <div class="panel-copy">
+                            <ul class="comparison-legend comparison-legend-global" aria-label="Legenda das áreas">
+                                <li>
+                                    <span class="comparison-legend-label">
+                                        <span class="comparison-legend-swatch physics"></span>
+                                        <span class="comparison-legend-name">Física</span>
+                                    </span>
+                                </li>
+                                <li>
+                                    <span class="comparison-legend-label">
+                                        <span class="comparison-legend-swatch computing"></span>
+                                        <span class="comparison-legend-name">Computação/IA</span>
+                                    </span>
+                                </li>
+                                <li>
+                                    <span class="comparison-legend-label">
+                                        <span class="comparison-legend-swatch math"></span>
+                                        <span class="comparison-legend-name">Matemática</span>
+                                    </span>
+                                </li>
+                                <li>
+                                    <span class="comparison-legend-label">
+                                        <span class="comparison-legend-swatch other"></span>
+                                        <span class="comparison-legend-name">Outros</span>
+                                    </span>
+                                </li>
+                            </ul>
+                            <div class="comparison-grid" id="comparison-grid"></div>
+                        </div>
+                    </div>
+                </div>
                 <div class="hero-panel is-collapsed" id="panel-o-que-faz" data-panel-content="o-que-faz" aria-label="Mercado de trabalho">
                     <div class="hero-panel-body">
                         <div class="panel-copy">
@@ -1682,6 +1916,14 @@
     <script>
         const collapsibleButtons = document.querySelectorAll(".switch-btn[data-panel]");
         const panels = document.querySelectorAll(".hero-panel[data-panel-content]");
+        const courseComparisonData = [
+            { sigla: "UFPR", nome: "Física Computacional", duration: "3,5 anos", city: "Jandaia do Sul", total: 2385, physics: 41.51, math: 16.98, computing: 26.42, other: 15.09 },
+            { sigla: "USP", nome: "Bacharelado em Física Computacional", duration: "4 anos", city: "São Carlos", total: 1875, physics: 54.4, math: 16.0, computing: 12.0, other: 17.6 },
+            { sigla: "UNESP", nome: "Física Computacional no Bacharelado em Física", duration: "4 anos", city: "Bauru", total: 2490, physics: 45.78, math: 26.51, computing: 16.87, other: 10.84 },
+            { sigla: "UFF", nome: "Física com ênfase em Física Computacional", duration: "4 anos", city: "Volta Redonda", total: 2145, physics: 52.45, math: 27.97, computing: 16.78, other: 2.8 },
+            { sigla: "UFSJ", nome: "Física com ênfase em Física Computacional", duration: "4 anos", city: "São João del-Rei", total: 2220, physics: 67.57, math: 13.51, computing: 5.41, other: 13.51 }
+        ];
+        const comparisonGrid = document.getElementById("comparison-grid");
         const disciplines = [
             { semestre: "1", codigo: "JAN007A", disciplina: "Física I", carga_horaria: 60, tipo: "Física Básica" },
             { semestre: "1", codigo: "JAN025A", disciplina: "Física Experimental I", carga_horaria: 30, tipo: "Física Básica" },
@@ -1878,6 +2120,41 @@
             renderDisciplineCatalog();
         }
 
+        function formatPercent(value) {
+            return `${value.toFixed(2).replace(".", ",")}%`;
+        }
+
+        function renderCourseComparison() {
+            comparisonGrid.innerHTML = courseComparisonData.map((course) => `
+                <article
+                    class="comparison-card"
+                    aria-label="Comparativo do curso ${course.sigla}"
+                >
+                    <div class="comparison-card-head">
+                        <div>
+                            <h3>${course.sigla} <span class="comparison-course-label">${course.duration} • ${course.city}</span></h3>
+                        </div>
+                    </div>
+                    <div class="comparison-scale">
+                        <div class="comparison-ticks" aria-hidden="true">
+                            <span>0%</span>
+                            <span>20%</span>
+                            <span>40%</span>
+                            <span>60%</span>
+                            <span>80%</span>
+                            <span>100%</span>
+                        </div>
+                        <div class="comparison-bar" role="img" aria-label="${course.sigla}: física ${formatPercent(course.physics)}, matemática ${formatPercent(course.math)}, computação e IA ${formatPercent(course.computing)}, outros ${formatPercent(course.other)}">
+                            <span class="comparison-segment physics" style="width:${course.physics}%"></span>
+                            <span class="comparison-segment computing" style="width:${course.computing}%"></span>
+                            <span class="comparison-segment math" style="width:${course.math}%"></span>
+                            <span class="comparison-segment other" style="width:${course.other}%"></span>
+                        </div>
+                    </div>
+                </article>
+            `).join("");
+        }
+
         function setActivePanel(panelKey) {
             panels.forEach((panel) => {
                 const isMatch = panel.dataset.panelContent === panelKey;
@@ -1915,6 +2192,7 @@
 
         setActivePanel("onde-cursar");
         renderDisciplinesInline();
+        renderCourseComparison();
 
         document.addEventListener("click", (event) => {
             const toggle = event.target.closest(".course-toggle");
