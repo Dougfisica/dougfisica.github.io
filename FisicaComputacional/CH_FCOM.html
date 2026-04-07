@@ -364,6 +364,22 @@
             const type = item.tipo.toLowerCase();
             const code = (item.codigo || "").toLowerCase();
 
+            if (code === "biaes003" || name === "álgebra linear e geometria analítica") {
+                return "Matemática";
+            }
+
+            if (name === "biofísica molecular computacional") {
+                return "Física";
+            }
+
+            if (name === "introdução à prática profissional") {
+                return "Física";
+            }
+
+            if (name === "simulação computacional de primeiros princípios") {
+                return "Física";
+            }
+
             if (name === "interações culturais ambientais e humanísticas") {
                 return "Humanas";
             }
@@ -422,7 +438,6 @@
                 name.includes("engenharia de dados") ||
                 name.includes("alto desempenho") ||
                 name.includes("simulação computacional") ||
-                name.includes("biofísica molecular computacional") ||
                 code.startsWith("biaes")
             ) {
                 return "Computação";
@@ -496,13 +511,17 @@
             const id = getDisciplineId(item);
             const defaults = getDefaultSelection(item);
             const forcedBoardDisciplines = new Set([
+                "Álgebra Linear e Geometria Analítica",
+                "Biofísica Molecular Computacional",
                 "Divulgação Científica",
                 "Equações Diferenciais Aplicadas à Física",
+                "Introdução à Prática Profissional",
                 "Interações Culturais Ambientais e Humanísticas",
                 "Optativa 1",
                 "Optativa 2",
                 "Práticas de Empreendedorismo",
                 "Química Geral Teórica",
+                "Simulação Computacional de Primeiros Princípios",
                 "Trabalho de Conclusão de Curso I",
                 "Trabalho de Conclusão de Curso II"
             ]);
