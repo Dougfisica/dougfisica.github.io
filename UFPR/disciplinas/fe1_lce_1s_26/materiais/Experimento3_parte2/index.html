@@ -1,0 +1,88 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Applet de Lançamento Oblíquo</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=IBM+Plex+Sans:wght@400;500;600;700&family=Space+Grotesk:wght@500;700&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="styles.css">
+</head>
+<body>
+  <main class="app-shell">
+    <section class="simulation-panel">
+      <div class="panel-header">
+        <div>
+          <h1>Lançamento Oblíquo</h1>
+        </div>
+        <div class="status-chip" id="statusChip">Pronto para gerar um lançamento</div>
+      </div>
+
+      <div class="canvas-frame">
+        <canvas id="simulationCanvas" width="980" height="620" aria-label="Simulação de lançamento oblíquo"></canvas>
+      </div>
+    </section>
+
+    <aside class="control-panel">
+      <section class="card">
+        <h2>Controles</h2>
+        <div class="button-stack">
+          <button id="launchButton" class="primary-button">Preparar Novo Lançamento</button>
+          <button id="measureButton" class="secondary-button" disabled>Mostrar Medidas</button>
+          <button id="verifyButton" class="secondary-button" disabled>Verificar Cálculos</button>
+        </div>
+        <p class="hint">No quadro, clique no chão, arraste para definir direção e intensidade, e solte para lançar.</p>
+      </section>
+
+      <section class="card">
+        <h2>Ferramentas Visuais</h2>
+        <label class="toggle-row">
+          <input type="checkbox" id="toggleHeight" checked>
+          <span>Altura máxima</span>
+        </label>
+        <label class="toggle-row">
+          <input type="checkbox" id="toggleDistance" checked>
+          <span>Distância total</span>
+        </label>
+        <p class="hint">As cotas aparecem após o voo, quando "Mostrar Medidas" for acionado.</p>
+      </section>
+
+      <section class="card">
+        <h2>Dados para o caderno</h2>
+        <div class="constant-row">
+          <span>Gravidade</span>
+          <strong>9,81 m/s²</strong>
+        </div>
+        <div class="constant-row">
+          <span>Intervalo estroboscópico</span>
+          <strong>0,10 s</strong>
+        </div>
+      </section>
+
+      <section class="card">
+        <h2>Bloco de Respostas</h2>
+        <label class="input-group">
+          <span>Velocidade Y inicial V0y (m/s)</span>
+          <input id="inputV0y" type="number" step="any" inputmode="decimal" placeholder="Ex.: 6.25">
+        </label>
+        <label class="input-group">
+          <span>Tempo total de voo t (s)</span>
+          <input id="inputTime" type="number" step="any" inputmode="decimal" placeholder="Ex.: 1.27">
+        </label>
+        <label class="input-group">
+          <span>Velocidade X Vx (m/s)</span>
+          <input id="inputVx" type="number" step="any" inputmode="decimal" placeholder="Ex.: 4.80">
+        </label>
+      </section>
+
+      <section class="card feedback-card">
+        <h2>Feedback</h2>
+        <p id="feedbackMessage">Gere um lançamento, observe a trajetória e calcule as grandezas antes de verificar.</p>
+      </section>
+    </aside>
+  </main>
+
+  <script src="script.js"></script>
+</body>
+</html>

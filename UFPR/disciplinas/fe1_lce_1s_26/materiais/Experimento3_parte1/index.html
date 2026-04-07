@@ -1,0 +1,121 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Applet de Queda Livre</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link
+      href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@400;500;700&family=JetBrains+Mono:wght@500;700&display=swap"
+      rel="stylesheet"
+    />
+    <link rel="stylesheet" href="./styles.css" />
+  </head>
+  <body>
+    <main class="app-shell">
+      <section class="simulation-panel" aria-labelledby="simulacao-titulo">
+        <div class="simulation-topbar">
+          <div>
+            <p class="eyebrow">Área de Simulação</p>
+            <h1 id="simulacao-titulo">Queda Livre</h1>
+          </div>
+          <div class="environment-chip" id="environment-chip">Terra . 9.81 m/s²</div>
+        </div>
+
+        <div class="simulation-stage" id="simulation-stage">
+          <div class="orbital-glow orbital-glow-a"></div>
+          <div class="orbital-glow orbital-glow-b"></div>
+          <div class="stars"></div>
+          <div class="atmosphere"></div>
+          <div class="haze haze-back"></div>
+          <div class="cloud-bank cloud-bank-a"></div>
+          <div class="cloud-bank cloud-bank-b"></div>
+          <div class="ground-glow"></div>
+          <div class="height-badge">
+            <span class="height-badge-label">Altura da bola</span>
+            <strong id="height-value">100.0 m</strong>
+          </div>
+
+          <div class="meter-scale" id="meter-scale" aria-hidden="true"></div>
+
+          <div class="fall-lane">
+            <div class="drop-shadow" id="drop-shadow"></div>
+            <div class="sphere" id="sphere" aria-label="Objeto em queda" tabindex="0"></div>
+            <div class="impact-burst" id="impact-burst" aria-hidden="true"></div>
+          </div>
+
+          <div class="ground">
+            <span>0 m</span>
+            <span>Solo</span>
+          </div>
+        </div>
+      </section>
+
+      <aside class="control-panel" aria-labelledby="painel-titulo">
+        <p class="eyebrow">Controles e Resultados</p>
+        <h2 id="painel-titulo">Experimento de Gravidade</h2>
+
+        <div class="formula-card">
+          <span class="formula-label">Equações de referência</span>
+          <div class="formula-derivation">
+            <p>x = x₀ + v₀t + at² / 2</p>
+            <p>Na queda livre: x = 0, x₀ = h, v₀ = 0, a = -g</p>
+            <p>0 = h - gt² / 2</p>
+            <strong>g = 2h / t²</strong>
+          </div>
+        </div>
+
+        <section class="panel-section">
+          <h3>Configuração</h3>
+
+          <div class="field">
+            <span class="field-top">
+              <span>Ambiente</span>
+              <strong id="gravity-value">9.81 m/s²</strong>
+            </span>
+            <div class="environment-grid" id="environment-input" role="group" aria-label="Selecionar ambiente">
+              <button class="environment-button is-active" type="button" data-environment="terra">
+                <span>Terra</span>
+                <strong>9.81 m/s²</strong>
+              </button>
+              <button class="environment-button" type="button" data-environment="lua">
+                <span>Lua</span>
+                <strong>1.62 m/s²</strong>
+              </button>
+              <button class="environment-button" type="button" data-environment="marte">
+                <span>Marte</span>
+                <strong>3.71 m/s²</strong>
+              </button>
+              <button class="environment-button" type="button" data-environment="jupiter">
+                <span>Júpiter</span>
+                <strong>24.79 m/s²</strong>
+              </button>
+            </div>
+          </div>
+
+          <p class="drag-hint" id="drag-hint">Arraste a esfera na área de simulação e solte para iniciar a queda.</p>
+        </section>
+
+        <section class="panel-section timer-section">
+          <h3>Cronômetro</h3>
+          <div class="timer-display" id="timer-display">0.000 s</div>
+        </section>
+
+        <section class="panel-section result-section is-hidden" id="result-panel" aria-live="polite">
+          <h3>Resultados</h3>
+          <div class="result-card">
+            <p id="result-summary"></p>
+            <div class="math-block">
+              <p>g = 2h / t²</p>
+              <p id="result-substitution"></p>
+              <p id="result-value"></p>
+            </div>
+          </div>
+        </section>
+      </aside>
+    </main>
+
+    <script src="./script.js"></script>
+  </body>
+</html>
