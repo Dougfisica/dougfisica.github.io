@@ -254,7 +254,42 @@
             display: grid;
             gap: 14px;
             width: min(100%, 1000px);
-            margin-bottom: 2rem;
+            margin-bottom: 0.4rem;
+        }
+
+        .telegram-cta {
+            display: inline-flex;
+            align-items: center;
+            justify-content: center;
+            gap: 10px;
+            width: fit-content;
+            max-width: 100%;
+            margin: -0.2rem 0 0.3rem;
+            padding: 7px 14px;
+            border-radius: 999px;
+            border: 1px solid rgba(0, 240, 255, 0.45);
+            background: linear-gradient(180deg, rgba(0, 240, 255, 0.18), rgba(22, 27, 34, 0.92));
+            color: var(--text-main);
+            font-family: "Fira Code", monospace;
+            font-size: 0.86rem;
+            font-weight: 600;
+            box-shadow: 0 14px 26px rgba(0, 240, 255, 0.12);
+            transition: transform 0.25s ease, border-color 0.25s ease, background 0.25s ease, box-shadow 0.25s ease;
+        }
+
+        .telegram-cta img {
+            width: 18px;
+            height: 18px;
+            display: block;
+            object-fit: contain;
+        }
+
+        .telegram-cta:hover {
+            color: var(--text-main);
+            transform: translateY(-2px);
+            border-color: rgba(0, 240, 255, 0.85);
+            background: linear-gradient(180deg, rgba(0, 240, 255, 0.28), rgba(22, 27, 34, 0.96));
+            box-shadow: 0 16px 30px rgba(0, 240, 255, 0.18);
         }
 
         .switch-btn {
@@ -1650,6 +1685,10 @@
                 <button class="switch-btn" type="button" data-panel="o-que-faz">Mercado de Trabalho</button>
                 <button class="switch-btn catalog-link" type="button" data-panel="disciplinas-ufpr">Disciplinas UFPR</button>
             </div>
+            <a class="telegram-cta" href="https://t.me/+wGonktx9h1I0OWVh" target="_blank" rel="noopener noreferrer" aria-label="Alguma Dúvida?">
+                <img src="logo_telegram.webp" alt="Telegram">
+                <span>Alguma Dúvida?</span>
+            </a>
             <div class="hero-sections">
                 <div class="hero-panel" id="panel-onde-cursar" data-panel-content="onde-cursar" aria-label="Cursos de graduação">
                 <div class="hero-panel-body">
