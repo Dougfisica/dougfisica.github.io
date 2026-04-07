@@ -3,6 +3,20 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Simulações de Física Interativas | Movimento, Ondas, Newton e Mais</title>
+    <meta name="description" content="Simulações de física interativas em português para estudar movimento circular, ondas, torque, momento de inércia, equação horária, Segunda Lei de Newton e outros temas de física e matemática.">
+    <meta name="robots" content="index,follow,max-image-preview:large">
+    <meta name="keywords" content="simulações de física, simulacoes de fisica, física interativa, simulador de física, movimento circular, ondas, torque, momento de inércia, segunda lei de Newton, equação horária, MHS, soma de Riemann">
+    <link rel="canonical" href="https://dougfisica.github.io/simulacoes/">
+    <meta property="og:type" content="website">
+    <meta property="og:locale" content="pt_BR">
+    <meta property="og:site_name" content="DOUG.FÍSICA">
+    <meta property="og:title" content="Simulações de Física Interativas | DOUG.FÍSICA">
+    <meta property="og:description" content="Coleção de simulações de física interativas para estudar conceitos de mecânica, ondas e cálculo de forma visual e prática.">
+    <meta property="og:url" content="https://dougfisica.github.io/simulacoes/">
+    <meta name="twitter:card" content="summary">
+    <meta name="twitter:title" content="Simulações de Física Interativas | DOUG.FÍSICA">
+    <meta name="twitter:description" content="Explore simuladores de física em português com temas como ondas, MHS, Newton, torque e movimento circular.">
     <!-- Google Analytics -->
     <script async src="https://www.googletagmanager.com/gtag/js?id=G-83359NB2SY"></script>
     <script>
@@ -11,7 +25,28 @@
       gtag('js', new Date());
       gtag('config', 'G-83359NB2SY');
     </script>
-    <title>DOUG.FÍSICA - Simulações Interativas</title>
+    <script type="application/ld+json">
+    {
+      "@context": "https://schema.org",
+      "@type": "CollectionPage",
+      "name": "Simulações de Física Interativas",
+      "url": "https://dougfisica.github.io/simulacoes/",
+      "description": "Página com simulações de física e matemática em português para estudo visual e interativo.",
+      "inLanguage": "pt-BR",
+      "isPartOf": {
+        "@type": "WebSite",
+        "name": "DOUG.FÍSICA",
+        "url": "https://dougfisica.github.io/"
+      },
+      "about": [
+        "Física",
+        "Simulações interativas",
+        "Mecânica",
+        "Ondas",
+        "Cálculo"
+      ]
+    }
+    </script>
     <style>
         body {
             font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
@@ -44,6 +79,15 @@
             font-size: 1.1em;
             color: #34495e;
             margin-bottom: 25px;
+        }
+
+        .intro-text {
+            max-width: 860px;
+            margin: 0 auto 30px;
+            text-align: center;
+            line-height: 1.6;
+            color: #2f4858;
+            font-size: 1rem;
         }
 
         .simulations-grid {
@@ -157,70 +201,73 @@
             }
         }
     </style>
+    <script data-goatcounter="https://simul.goatcounter.com/count"
+        async src="//gc.zgo.at/count.js"></script>
 </head>
 <body>
     <div class="container">
         <header>
-            <h1>DOUG.FÍSICA - Simulações Interativas</h1>
-            <p class="subtitle">Explore conceitos físicos e matemáticos através de simulações interativas</p>
+            <h1>Simulações de Física Interativas</h1>
+            <p class="subtitle">Explore conceitos físicos e matemáticos com simuladores visuais, interativos e em português.</p>
+            <p class="intro-text">Nesta página você encontra simulações de física sobre ondas, movimento harmônico simples, Segunda Lei de Newton, torque, movimento circular, momento de inércia e outros tópicos úteis para estudar física no ensino médio, vestibulares e graduação.</p>
         </header>
 
         <div class="simulations-grid">
-            <a href="ONDAS1.html" class="simulation-card">
+            <a href="ONDAS1.html" class="simulation-card" aria-label="Abrir simulação de ondas senoidais">
                 <div class="card-header waves-header">
                     Ondas Senoidais
                 </div>
             </a>
 
-            <a href="MHS3.html" class="simulation-card">
+            <a href="MHS3.html" class="simulation-card" aria-label="Abrir simulação de movimento harmônico simples">
                 <div class="card-header mhs-header">
                     Movimento Harmônico Simples
                 </div>
             </a>
 
-            <a href="Força1.html" class="simulation-card">
+            <a href="Força1.html" class="simulation-card" aria-label="Abrir simulação da Segunda Lei de Newton">
                 <div class="card-header force-header">
                     Segunda Lei de Newton
                 </div>
             </a>
 
-            <a href="Soma de Riemann.html" class="simulation-card">
+            <a href="Soma de Riemann.html" class="simulation-card" aria-label="Abrir simulação de soma de Riemann">
                 <div class="card-header riemann-header">
                     Soma de Riemann
                 </div>
             </a>
 
-            <a href="equacao_horaria.html" class="simulation-card">
+            <a href="equacao_horaria.html" class="simulation-card" aria-label="Abrir simulação de equação horária">
                 <div class="card-header equacao-header">
                     Equação Horária
                 </div>
             </a>
 
-            <a href="jogo_unidades_si.html" class="simulation-card">
+            <a href="jogo_unidades_si.html" class="simulation-card" aria-label="Abrir jogo das unidades do SI">
                 <div class="card-header unidades-header">
                     🎓 Jogo das Unidades SI
                 </div>
             </a>
 
-            <a href="Derivada e velocidade instantanea.html" class="simulation-card">
+            <a href="Derivada e velocidade instantanea.html" class="simulation-card" aria-label="Abrir simulação de derivada e velocidade instantânea">
                 <div class="card-header derivada-header">
                     Derivada e Velocidade Instantânea
                 </div>
             </a>
 
-            <a href="MovimentoCircular.html" class="simulation-card">
+            <a href="MovimentoCircular.html" class="simulation-card" aria-label="Abrir simulação de movimento circular">
                 <div class="card-header circular-header">
                     Movimento Circular
                 </div>
             </a>
 
-            <a href="momento_de_inercia.html" class="simulation-card">
+            <a href="momento_de_inercia.html" class="simulation-card" aria-label="Abrir simulação de momento de inércia">
                 <div class="card-header inercia-header">
                     Momento de Inércia
                 </div>
             </a>
 
-            <a href="torque.html" class="simulation-card">
+            <a href="torque.html" class="simulation-card" aria-label="Abrir simulação de torque">
                 <div class="card-header force-header">
                     Torque
                 </div>
