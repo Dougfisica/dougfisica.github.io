@@ -1,0 +1,855 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Disciplinas UFPR | Salas e Colegiados</title>
+    <meta name="description" content="Página única com as disciplinas da matriz de Física Computacional da UFPR para seleção de sala e colegiado.">
+    <style>
+        :root {
+            --bg: #f5efe3;
+            --bg-panel: rgba(255, 250, 242, 0.9);
+            --bg-strong: #fffdf8;
+            --ink: #182126;
+            --muted: #5b666d;
+            --line: rgba(24, 33, 38, 0.14);
+            --accent: #0d5c63;
+            --accent-soft: rgba(13, 92, 99, 0.1);
+            --highlight: #c97b32;
+            --shadow: 0 20px 50px rgba(50, 44, 31, 0.12);
+        }
+
+        * {
+            box-sizing: border-box;
+        }
+
+        html {
+            scroll-behavior: smooth;
+        }
+
+        body {
+            margin: 0;
+            min-height: 100vh;
+            font-family: Georgia, "Times New Roman", serif;
+            color: var(--ink);
+            background:
+                radial-gradient(circle at top right, rgba(201, 123, 50, 0.16), transparent 24%),
+                radial-gradient(circle at bottom left, rgba(13, 92, 99, 0.14), transparent 28%),
+                linear-gradient(180deg, #f8f2e8 0%, #f3eadc 100%);
+        }
+
+        body::before {
+            content: "";
+            position: fixed;
+            inset: 0;
+            pointer-events: none;
+            background-image:
+                linear-gradient(rgba(24, 33, 38, 0.025) 1px, transparent 1px),
+                linear-gradient(90deg, rgba(24, 33, 38, 0.025) 1px, transparent 1px);
+            background-size: 28px 28px;
+            mask-image: linear-gradient(180deg, rgba(0, 0, 0, 0.45), transparent 90%);
+        }
+
+        .page {
+            width: min(1240px, calc(100% - 32px));
+            margin: 0 auto;
+            padding: 32px 0 56px;
+            position: relative;
+            z-index: 1;
+        }
+
+        .hero,
+        .report-bar,
+        .semester-block {
+            border: 1px solid var(--line);
+            background: var(--bg-panel);
+            backdrop-filter: blur(10px);
+            box-shadow: var(--shadow);
+        }
+
+        .hero {
+            padding: 28px;
+            border-radius: 28px;
+            margin-bottom: 18px;
+        }
+
+        h1 {
+            margin: 0;
+            font-size: clamp(2rem, 5vw, 4.2rem);
+            line-height: 0.96;
+            letter-spacing: -0.04em;
+        }
+
+        .report-bar {
+            border-radius: 24px;
+            padding: 18px;
+            margin-bottom: 22px;
+            display: flex;
+            justify-content: flex-start;
+        }
+
+        .field {
+            display: flex;
+            flex-direction: column;
+            gap: 8px;
+        }
+
+        .field select {
+            width: 100%;
+            appearance: none;
+            border: 1px solid var(--line);
+            border-radius: 16px;
+            padding: 14px 16px;
+            background: var(--bg-strong);
+            color: var(--ink);
+            font: inherit;
+        }
+
+        .report-button {
+            border: 1px solid rgba(13, 92, 99, 0.24);
+            border-radius: 999px;
+            padding: 14px 22px;
+            background: linear-gradient(180deg, rgba(13, 92, 99, 0.92), rgba(9, 70, 76, 0.96));
+            color: #fffdf8;
+            font: inherit;
+            font-size: 1rem;
+            cursor: pointer;
+            transition: transform 0.18s ease, box-shadow 0.18s ease;
+            box-shadow: 0 12px 24px rgba(13, 92, 99, 0.18);
+        }
+
+        .report-button:hover {
+            transform: translateY(-1px);
+            box-shadow: 0 16px 28px rgba(13, 92, 99, 0.22);
+        }
+
+        .content {
+            display: grid;
+            gap: 18px;
+        }
+
+        .semester-block {
+            border-radius: 28px;
+            padding: 20px;
+        }
+
+        .semester-head {
+            display: flex;
+            justify-content: space-between;
+            align-items: end;
+            gap: 16px;
+            margin-bottom: 16px;
+        }
+
+        .semester-head h2 {
+            margin: 0;
+            font-size: 1.8rem;
+        }
+
+        .semester-head p {
+            margin: 6px 0 0;
+            color: var(--muted);
+        }
+
+        .grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(290px, 1fr));
+            gap: 16px;
+        }
+
+        .card {
+            display: grid;
+            gap: 14px;
+            padding: 18px;
+            border-radius: 22px;
+            border: 1px solid var(--line);
+            background: linear-gradient(180deg, rgba(255, 255, 255, 0.88), rgba(249, 243, 232, 0.95));
+        }
+
+        .meta {
+            display: flex;
+            justify-content: space-between;
+            gap: 12px;
+            align-items: start;
+            color: var(--muted);
+            font-size: 0.9rem;
+        }
+
+        .code {
+            font-weight: 700;
+            color: var(--accent);
+        }
+
+        .name {
+            margin: 0;
+            font-size: 1.26rem;
+            line-height: 1.2;
+        }
+
+        .tags {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 8px;
+        }
+
+        .tag {
+            padding: 7px 10px;
+            border-radius: 999px;
+            background: rgba(13, 92, 99, 0.08);
+            color: var(--accent);
+            font-size: 0.84rem;
+        }
+
+        .selectors {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 12px;
+        }
+
+        .empty {
+            border: 1px dashed var(--line);
+            border-radius: 24px;
+            padding: 28px;
+            text-align: center;
+            color: var(--muted);
+            background: rgba(255, 255, 255, 0.45);
+        }
+
+        @media (max-width: 920px) {
+            .report-bar {
+                justify-content: stretch;
+            }
+        }
+
+        @media (max-width: 700px) {
+            .page {
+                width: min(100% - 20px, 1240px);
+                padding-top: 20px;
+            }
+
+            .selectors,
+            .semester-head {
+                grid-template-columns: 1fr;
+            }
+
+            .report-bar {
+                display: block;
+            }
+
+            .report-button {
+                width: 100%;
+            }
+
+            .semester-head {
+                display: grid;
+                align-items: start;
+            }
+
+            .grid {
+                grid-template-columns: 1fr;
+            }
+        }
+    </style>
+</head>
+<body>
+    <main class="page">
+        <section class="hero">
+            <h1>CH FCOM</h1>
+        </section>
+
+        <section class="report-bar">
+            <button id="report-button" class="report-button" type="button">gerar relatório</button>
+        </section>
+
+        <section class="content" id="content"></section>
+    </main>
+
+    <script>
+        const disciplines = [
+            { semestre: "1", codigo: "JAN007A", disciplina: "Física I", carga_horaria: 60, tipo: "Física Básica" },
+            { semestre: "1", codigo: "JAN025A", disciplina: "Física Experimental I", carga_horaria: 30, tipo: "Física Básica" },
+            { semestre: "1", codigo: "BIAES003", disciplina: "Álgebra Linear e Geometria Analítica", carga_horaria: 60, tipo: "Matemática" },
+            { semestre: "1", codigo: "JAN001A", disciplina: "Cálculo I", carga_horaria: 90, tipo: "Matemática" },
+            { semestre: "1", codigo: "BIAES001", disciplina: "Algoritmos e Estruturas de Dados I", carga_horaria: 60, tipo: "Computação" },
+            { semestre: "1", codigo: "FCOM101", disciplina: "Introdução à Prática Profissional", carga_horaria: 30, tipo: "Humanidades" },
+            { semestre: "2", codigo: "JAN0012A", disciplina: "Física II", carga_horaria: 60, tipo: "Física Básica" },
+            { semestre: "2", codigo: "JAN028A", disciplina: "Física Experimental II", carga_horaria: 30, tipo: "Física Básica" },
+            { semestre: "2", codigo: "JAN009A", disciplina: "Estatística I", carga_horaria: 30, tipo: "Matemática" },
+            { semestre: "2", codigo: "JAN006A", disciplina: "Cálculo II", carga_horaria: 60, tipo: "Matemática" },
+            { semestre: "2", codigo: "BIAES005", disciplina: "Algoritmos e Estruturas de Dados II", carga_horaria: 60, tipo: "Computação" },
+            { semestre: "2", codigo: "BIAES019", disciplina: "Divulgação Científica", carga_horaria: 45, tipo: "Humanidades" },
+            { semestre: "2", codigo: "FCOM201", disciplina: "Interações Culturais Ambientais e Humanísticas", carga_horaria: 30, tipo: "Humanidades" },
+            { semestre: "3", codigo: "JAN017A", disciplina: "Física III", carga_horaria: 60, tipo: "Física Básica" },
+            { semestre: "3", codigo: "JAN029A", disciplina: "Física Experimental III", carga_horaria: 30, tipo: "Física Básica" },
+            { semestre: "3", codigo: "JAN026A", disciplina: "Estatística II", carga_horaria: 45, tipo: "Matemática" },
+            { semestre: "3", codigo: "JAN011A", disciplina: "Cálculo III", carga_horaria: 60, tipo: "Matemática" },
+            { semestre: "3", codigo: "BIAES009", disciplina: "Algoritmos e Estruturas de Dados III", carga_horaria: 60, tipo: "Computação" },
+            { semestre: "3", codigo: "JAN033A", disciplina: "Práticas de Empreendedorismo", carga_horaria: 30, tipo: "Humanidades" },
+            { semestre: "3", codigo: "JAN002A", disciplina: "Química Geral Teórica", carga_horaria: 45, tipo: "Química" },
+            { semestre: "4", codigo: "FCOM401", disciplina: "Física IV", carga_horaria: 60, tipo: "Física Básica" },
+            { semestre: "4", codigo: "FCOM411", disciplina: "Física Experimental IV", carga_horaria: 30, tipo: "Física Básica" },
+            { semestre: "4", codigo: "FCOM471", disciplina: "Equações Diferenciais Aplicadas à Física", carga_horaria: 60, tipo: "Física Teórica" },
+            { semestre: "4", codigo: "FCOM472", disciplina: "Inferência Bayesiana", carga_horaria: 60, tipo: "Matemática" },
+            { semestre: "4", codigo: "BIAES014", disciplina: "Banco de Dados", carga_horaria: 60, tipo: "Computação" },
+            { semestre: "4", codigo: "BIAES017", disciplina: "Inteligência Artificial e Computacional", carga_horaria: 60, tipo: "Computação" },
+            { semestre: "5", codigo: "FCOM501", disciplina: "Mecânica Clássica", carga_horaria: 60, tipo: "Física Teórica" },
+            { semestre: "5", codigo: "FCOM502", disciplina: "Eletromagnetismo", carga_horaria: 60, tipo: "Física Teórica" },
+            { semestre: "5", codigo: "FCOM571", disciplina: "Física Matemática", carga_horaria: 60, tipo: "Física Teórica" },
+            { semestre: "5", codigo: "FCOM511", disciplina: "Dinâmica Molecular e Aprendizado de Máquina em Física de Materiais", carga_horaria: 60, tipo: "Física Experimental Profissional" },
+            { semestre: "5", codigo: "BIAES020", disciplina: "Teoria dos Grafos", carga_horaria: 60, tipo: "Computação" },
+            { semestre: "5", codigo: "BIAES024", disciplina: "Aprendizagem de Máquina", carga_horaria: 30, tipo: "Computação" },
+            { semestre: "6", codigo: "FCOM641", disciplina: "Física Moderna", carga_horaria: 60, tipo: "Física Teórica" },
+            { semestre: "6", codigo: "FCOM611", disciplina: "Biofísica Molecular Computacional", carga_horaria: 60, tipo: "Física Experimental Profissional" },
+            { semestre: "6", codigo: "BIAES026", disciplina: "Computação de Alto Desempenho", carga_horaria: 60, tipo: "Computação" },
+            { semestre: "6", codigo: "BIAES028", disciplina: "Engenharia de Dados", carga_horaria: 60, tipo: "Computação" },
+            { semestre: "6", codigo: "BIAES029", disciplina: "Redes Neurais Artificiais", carga_horaria: 60, tipo: "Computação" },
+            { semestre: "6", codigo: "FCOM691", disciplina: "Trabalho de Conclusão de Curso I", carga_horaria: 60, tipo: "Trabalho de Conclusão de Curso" },
+            { semestre: "6", codigo: "", disciplina: "Optativa 1", carga_horaria: 45, tipo: "Optativas" },
+            { semestre: "7", codigo: "FCOM701", disciplina: "Termodinâmica e Física Estatística", carga_horaria: 60, tipo: "Física Teórica" },
+            { semestre: "7", codigo: "FCOM741", disciplina: "Mecânica Quântica", carga_horaria: 60, tipo: "Física Teórica" },
+            { semestre: "7", codigo: "FCOM702", disciplina: "Física do Estado Sólido", carga_horaria: 60, tipo: "Física Teórica" },
+            { semestre: "7", codigo: "FCOM711", disciplina: "Simulação Computacional de Primeiros Princípios", carga_horaria: 60, tipo: "Física Experimental Profissional" },
+            { semestre: "7", codigo: "FCOM791", disciplina: "Trabalho de Conclusão de Curso II", carga_horaria: 60, tipo: "Trabalho de Conclusão de Curso" },
+            { semestre: "7", codigo: "", disciplina: "Optativa 2", carga_horaria: 45, tipo: "Optativas" },
+            { semestre: "", codigo: "", disciplina: "Atividades Formativas", carga_horaria: 45, tipo: "Atividades Formativas" }
+        ];
+
+        const roomOptions = ["Lab. Computador", "Lab. Física", "Lab. Química", "Normal"];
+        const boardOptions = ["Física", "Computação", "Matemática", "Química", "TCC", "Optativa", "Humanas", "Empreendedorismo"];
+        const reportBoardColumns = ["Física", "Computação", "Matemática", "Química", "TCC", "Optativa", "Humanas", "Empreendedorismo"];
+        const reportRoomColumns = ["Lab. Computador", "Lab. Física", "Lab. Química", "Normal"];
+        const reportBoardLabels = {
+            "Física": "Fis",
+            "Computação": "Comp",
+            "Matemática": "Mat",
+            "Química": "Qui",
+            "TCC": "TCC",
+            "Optativa": "Opt",
+            "Humanas": "Hum",
+            "Empreendedorismo": "Emp"
+        };
+        const reportRoomLabels = {
+            "Lab. Computador": "Lab Comp",
+            "Lab. Física": "Lab Fis",
+            "Lab. Química": "Lab Qui",
+            "Normal": "Normal"
+        };
+        const semesterOrder = ["1", "2", "3", "4", "5", "6", "7"];
+        const semesterLabels = {
+            "1": "1º semestre",
+            "2": "2º semestre",
+            "3": "3º semestre",
+            "4": "4º semestre",
+            "5": "5º semestre",
+            "6": "6º semestre",
+            "7": "7º semestre",
+            "": "Formação complementar"
+        };
+
+        const storageKey = "ufpr-disciplinas-salas-colegiados";
+        const savedSelections = JSON.parse(localStorage.getItem(storageKey) || "{}");
+        const reportButton = document.getElementById("report-button");
+        const content = document.getElementById("content");
+
+        function getSemesterLabel(semester) {
+            return semesterLabels[semester] || "Sem semestre";
+        }
+
+        function getDisciplineId(item) {
+            return `${item.semestre || "extra"}-${item.codigo || "sem-codigo"}-${item.disciplina}`;
+        }
+
+        function guessBoard(item) {
+            const name = item.disciplina.toLowerCase();
+            const type = item.tipo.toLowerCase();
+            const code = (item.codigo || "").toLowerCase();
+
+            if (name === "interações culturais ambientais e humanísticas") {
+                return "Humanas";
+            }
+
+            if (name === "divulgação científica") {
+                return "Humanas";
+            }
+
+            if (name === "práticas de empreendedorismo") {
+                return "Empreendedorismo";
+            }
+
+            if (name === "química geral teórica") {
+                return "Química";
+            }
+
+            if (name === "equações diferenciais aplicadas à física") {
+                return "Física";
+            }
+
+            if (name.includes("optativa")) {
+                return "Optativa";
+            }
+
+            if (name.includes("trabalho de conclusão de curso")) {
+                return "TCC";
+            }
+
+            if (type.includes("trabalho de conclusão") || name.includes("trabalho de conclusão")) {
+                return "TCC";
+            }
+
+            if (type.includes("optativas") || name.includes("optativa")) {
+                return "Optativa";
+            }
+
+            if (type.includes("química") || name.includes("química")) {
+                return "Química";
+            }
+
+            if (type.includes("humanidades") || name.includes("interações culturais") || name.includes("divulgação científica")) {
+                return "Humanas";
+            }
+
+            if (name.includes("empreendedorismo")) {
+                return "Empreendedorismo";
+            }
+
+            if (
+                type.includes("computação") ||
+                name.includes("algoritmos") ||
+                name.includes("banco de dados") ||
+                name.includes("inteligência artificial") ||
+                name.includes("aprendizagem de máquina") ||
+                name.includes("redes neurais") ||
+                name.includes("engenharia de dados") ||
+                name.includes("alto desempenho") ||
+                name.includes("simulação computacional") ||
+                name.includes("biofísica molecular computacional") ||
+                code.startsWith("biaes")
+            ) {
+                return "Computação";
+            }
+
+            if (
+                type.includes("matemática") ||
+                name.includes("cálculo") ||
+                name.includes("álgebra") ||
+                name.includes("estatística") ||
+                name.includes("equações diferenciais") ||
+                name.includes("inferência bayesiana")
+            ) {
+                return "Matemática";
+            }
+
+            if (
+                type.includes("física") ||
+                name.includes("física") ||
+                name.includes("mecânica") ||
+                name.includes("eletromagnetismo") ||
+                name.includes("termodinâmica") ||
+                name.includes("estado sólido")
+            ) {
+                return "Física";
+            }
+
+            return "Humanas";
+        }
+
+        function guessRoom(item) {
+            const name = item.disciplina.toLowerCase();
+            const type = item.tipo.toLowerCase();
+
+            if (name === "química geral teórica" || type.includes("química")) {
+                return "Lab. Química";
+            }
+
+            if (name.includes("experimental")) {
+                return "Lab. Física";
+            }
+
+            if (
+                type.includes("computação") ||
+                type.includes("experimental profissional") ||
+                name.includes("algoritmos") ||
+                name.includes("banco de dados") ||
+                name.includes("inteligência artificial") ||
+                name.includes("aprendizagem de máquina") ||
+                name.includes("redes neurais") ||
+                name.includes("engenharia de dados") ||
+                name.includes("alto desempenho") ||
+                name.includes("simulação computacional") ||
+                name.includes("dinâmica molecular") ||
+                name.includes("biofísica molecular computacional")
+            ) {
+                return "Lab. Computador";
+            }
+
+            return "Normal";
+        }
+
+        function getDefaultSelection(item) {
+            return {
+                sala: guessRoom(item),
+                colegiado: guessBoard(item)
+            };
+        }
+
+        function ensureSelection(item) {
+            const id = getDisciplineId(item);
+            const defaults = getDefaultSelection(item);
+            const forcedBoardDisciplines = new Set([
+                "Divulgação Científica",
+                "Equações Diferenciais Aplicadas à Física",
+                "Interações Culturais Ambientais e Humanísticas",
+                "Optativa 1",
+                "Optativa 2",
+                "Práticas de Empreendedorismo",
+                "Química Geral Teórica",
+                "Trabalho de Conclusão de Curso I",
+                "Trabalho de Conclusão de Curso II"
+            ]);
+            const forcedRoomDisciplines = new Set([
+                "Química Geral Teórica"
+            ]);
+
+            if (!savedSelections[id]) {
+                savedSelections[id] = defaults;
+                return savedSelections[id];
+            }
+
+            savedSelections[id] = {
+                sala: forcedRoomDisciplines.has(item.disciplina)
+                    ? defaults.sala
+                    : (savedSelections[id].sala || defaults.sala),
+                colegiado: forcedBoardDisciplines.has(item.disciplina)
+                    ? defaults.colegiado
+                    : (savedSelections[id].colegiado || defaults.colegiado)
+            };
+
+            return savedSelections[id];
+        }
+
+        function saveSelections() {
+            localStorage.setItem(storageKey, JSON.stringify(savedSelections));
+        }
+
+        function escapeHtml(value) {
+            return String(value)
+                .replace(/&/g, "&amp;")
+                .replace(/</g, "&lt;")
+                .replace(/>/g, "&gt;")
+                .replace(/"/g, "&quot;")
+                .replace(/'/g, "&#39;");
+        }
+
+        function getReportPeriods() {
+            const periods = [];
+
+            for (let year = 2027; year <= 2031; year += 1) {
+                periods.push({ label: `1s${year}`, semesterParity: 1, step: (year - 2027) * 2 + 1 });
+                periods.push({ label: `2s${year}`, semesterParity: 0, step: (year - 2027) * 2 + 2 });
+            }
+
+            return periods;
+        }
+
+        function getOfferedSemesters(period) {
+            return semesterOrder.filter((semester) => {
+                const semesterNumber = Number(semester);
+                return semesterNumber <= period.step && semesterNumber % 2 === period.semesterParity;
+            });
+        }
+
+        function getTeachingLoadRows() {
+            return getReportPeriods().map((period) => {
+                const totals = Object.fromEntries(reportBoardColumns.map((column) => [column, 0]));
+
+                const offeredSemesters = new Set(getOfferedSemesters(period));
+
+                disciplines.forEach((item) => {
+                    if (!offeredSemesters.has(item.semestre)) {
+                        return;
+                    }
+
+                    const selection = ensureSelection(item);
+                    const board = boardOptions.includes(selection.colegiado) ? selection.colegiado : "Humanas";
+                    totals[board] += item.carga_horaria / 15;
+                });
+
+                return {
+                    period: period.label,
+                    totals,
+                    total: reportBoardColumns.reduce((sum, column) => sum + totals[column], 0)
+                };
+            });
+        }
+
+        function getRoomOccupationRows() {
+            return getReportPeriods().map((period) => {
+                const totals = Object.fromEntries(reportRoomColumns.map((column) => [column, 0]));
+
+                const offeredSemesters = new Set(getOfferedSemesters(period));
+
+                disciplines.forEach((item) => {
+                    if (!offeredSemesters.has(item.semestre)) {
+                        return;
+                    }
+
+                    const selection = ensureSelection(item);
+                    const room = roomOptions.includes(selection.sala) ? selection.sala : "Normal";
+                    totals[room] += item.carga_horaria / 15;
+                });
+
+                return {
+                    period: period.label,
+                    totals,
+                    total: reportRoomColumns.reduce((sum, column) => sum + totals[column], 0)
+                };
+            });
+        }
+
+        function buildReportHtml() {
+            const loadRows = getTeachingLoadRows();
+            const roomRows = getRoomOccupationRows();
+            const reportHeaders = reportBoardColumns.map((column) => `<th>${escapeHtml(reportBoardLabels[column] || column)}</th>`).join("");
+            const roomHeaders = reportRoomColumns.map((column) => `<th>${escapeHtml(reportRoomLabels[column] || column)}</th>`).join("");
+            const detailRows = disciplines.map((item) => {
+                const selection = ensureSelection(item);
+                return `
+                <tr>
+                    <td>${escapeHtml(item.disciplina)}</td>
+                    <td>${escapeHtml(getSemesterLabel(item.semestre))}</td>
+                    <td>${item.carga_horaria}</td>
+                    <td>${escapeHtml(selection.sala)}</td>
+                    <td>${escapeHtml(selection.colegiado)}</td>
+                </tr>
+            `;
+            }).join("");
+            const loadTableRows = loadRows.map((row) => `
+                <tr>
+                    <td>${escapeHtml(row.period)}</td>
+                    ${reportBoardColumns.map((column) => `<td>${row.totals[column]}</td>`).join("")}
+                    <td>${row.total}</td>
+                </tr>
+            `).join("");
+            const roomTableRows = roomRows.map((row) => `
+                <tr>
+                    <td>${escapeHtml(row.period)}</td>
+                    ${reportRoomColumns.map((column) => `<td>${row.totals[column]}</td>`).join("")}
+                    <td>${row.total}</td>
+                </tr>
+            `).join("");
+
+            return `
+                <!DOCTYPE html>
+                <html lang="pt-BR">
+                <head>
+                    <meta charset="UTF-8">
+                    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+                    <title>Estudo de carga horária e ocupação de salas Física Computacional</title>
+                    <style>
+                        body {
+                            margin: 32px;
+                            font-family: Georgia, "Times New Roman", serif;
+                            color: #1f2529;
+                        }
+
+                        h1 {
+                            margin: 0 0 28px;
+                            font-size: 28px;
+                        }
+
+                        h2 {
+                            margin: 0 0 14px;
+                            font-size: 20px;
+                        }
+
+                        .legend {
+                            margin-top: 12px;
+                            font-size: 12px;
+                            color: #4f5b61;
+                        }
+
+                        .page-break {
+                            break-before: page;
+                            page-break-before: always;
+                        }
+
+                        table {
+                            width: 100%;
+                            border-collapse: collapse;
+                            font-size: 14px;
+                        }
+
+                        th,
+                        td {
+                            border: 1px solid #b7c0c5;
+                            padding: 10px 12px;
+                            text-align: left;
+                        }
+
+                        th {
+                            background: #e8eef0;
+                        }
+
+                        @page {
+                            size: A4 portrait;
+                            margin: 16mm;
+                        }
+                    </style>
+                </head>
+                <body>
+                    <h1>Estudo de carga horária e ocupação de salas Física Computacional</h1>
+                    <h2>Estudo de Carga Horária (em horas semanais)</h2>
+                    <table>
+                        <thead>
+                            <tr>
+                                <th>Semestre e ano</th>
+                                ${reportHeaders}
+                                <th>TOTAL</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            ${loadTableRows}
+                        </tbody>
+                    </table>
+                    <p class="legend">Legenda: Fis = Física; Comp = Computação; Mat = Matemática; Qui = Química; TCC = Trabalho de Conclusão de Curso; Opt = Optativa; Hum = Humanas; Emp = Empreendedorismo.</p>
+                    <h2>Estudo Ocupação das Salas (em horas semanais)</h2>
+                    <table>
+                        <thead>
+                            <tr>
+                                <th>Semestre e ano</th>
+                                ${roomHeaders}
+                                <th>TOTAL</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            ${roomTableRows}
+                        </tbody>
+                    </table>
+                    <p class="legend">Legenda: Lab Comp = Laboratório de Computador; Lab Fis = Laboratório de Física; Lab Qui = Laboratório de Química.</p>
+                    <div class="page-break"></div>
+                    <h2>Detalhamento disciplinas</h2>
+                    <table>
+                        <thead>
+                            <tr>
+                                <th>Disciplina</th>
+                                <th>Semestre</th>
+                                <th>CH</th>
+                                <th>Sala</th>
+                                <th>Colegiado</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            ${detailRows}
+                        </tbody>
+                    </table>
+                </body>
+                </html>
+            `;
+        }
+
+        function generateReport() {
+            const reportWindow = window.open("", "_blank");
+            if (!reportWindow) {
+                return;
+            }
+
+            reportWindow.document.open();
+            reportWindow.document.write(buildReportHtml());
+            reportWindow.document.close();
+            reportWindow.focus();
+            reportWindow.onload = () => {
+                reportWindow.print();
+            };
+        }
+
+        function renderContent() {
+            const filtered = disciplines;
+
+            if (!filtered.length) {
+                content.innerHTML = `<div class="empty">Nenhuma disciplina corresponde aos filtros atuais.</div>`;
+                return;
+            }
+
+            const blocks = semesterOrder.map((semester) => {
+                const items = filtered.filter((item) => item.semestre === semester);
+                if (!items.length) {
+                    return "";
+                }
+
+                return `
+                    <section class="semester-block">
+                        <div class="semester-head">
+                            <div>
+                                <h2>${getSemesterLabel(semester)}</h2>
+                                <p>${items.length} disciplina${items.length > 1 ? "s" : ""}</p>
+                            </div>
+                        </div>
+                        <div class="grid">
+                            ${items.map((item) => {
+                                const id = getDisciplineId(item);
+                                const selection = ensureSelection(item);
+                                return `
+                                    <article class="card">
+                                        <div class="meta">
+                                            <span class="code">${item.codigo || "SEM CÓDIGO"}</span>
+                                            <span>${item.carga_horaria}h</span>
+                                        </div>
+                                        <h3 class="name">${item.disciplina}</h3>
+                                        <div class="tags">
+                                            <span class="tag">${item.tipo}</span>
+                                            <span class="tag">${getSemesterLabel(item.semestre)}</span>
+                                        </div>
+                                        <div class="selectors">
+                                            <div class="field">
+                                                <label for="sala-${id}">Sala</label>
+                                                <select id="sala-${id}" data-id="${id}" data-kind="sala">
+                                                    <option value="">Selecione</option>
+                                                    ${roomOptions.map((option) => `
+                                                        <option value="${option}" ${selection.sala === option ? "selected" : ""}>${option}</option>
+                                                    `).join("")}
+                                                </select>
+                                            </div>
+                                            <div class="field">
+                                                <label for="colegiado-${id}">Colegiado</label>
+                                                <select id="colegiado-${id}" data-id="${id}" data-kind="colegiado">
+                                                    <option value="">Selecione</option>
+                                                    ${boardOptions.map((option) => `
+                                                        <option value="${option}" ${selection.colegiado === option ? "selected" : ""}>${option}</option>
+                                                    `).join("")}
+                                                </select>
+                                            </div>
+                                        </div>
+                                    </article>
+                                `;
+                            }).join("")}
+                        </div>
+                    </section>
+                `;
+            }).join("");
+
+            content.innerHTML = blocks;
+        }
+
+        content.addEventListener("change", (event) => {
+            const select = event.target.closest("select[data-id]");
+            if (!select) {
+                return;
+            }
+
+            const { id, kind } = select.dataset;
+            if (!savedSelections[id]) {
+                savedSelections[id] = { sala: "", colegiado: "" };
+            }
+
+            savedSelections[id][kind] = select.value;
+            saveSelections();
+        });
+
+        reportButton.addEventListener("click", generateReport);
+
+        disciplines.forEach((item) => ensureSelection(item));
+        saveSelections();
+        renderContent();
+    </script>
+</body>
+</html>
