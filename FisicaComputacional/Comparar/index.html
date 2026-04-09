@@ -1,0 +1,712 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Comparador de Bibliografia</title>
+  <style>
+    :root {
+      --bg: #f3efe4;
+      --surface: rgba(255, 252, 245, 0.92);
+      --surface-strong: #fffdf8;
+      --surface-muted: #ebe3d2;
+      --text: #1f1c16;
+      --text-soft: #5c5346;
+      --line: rgba(63, 51, 34, 0.14);
+      --accent: #0e7c66;
+      --accent-strong: #095a4a;
+      --accent-soft: rgba(14, 124, 102, 0.12);
+      --danger: #9b2c2c;
+      --danger-soft: rgba(155, 44, 44, 0.12);
+      --warn: #9a6700;
+      --shadow: 0 18px 60px rgba(59, 45, 20, 0.12);
+      --radius: 22px;
+      --mono: "IBM Plex Mono", "SFMono-Regular", Consolas, monospace;
+      --sans: "Manrope", "Segoe UI", sans-serif;
+    }
+
+    * { box-sizing: border-box; }
+
+    body {
+      margin: 0;
+      font-family: var(--sans);
+      color: var(--text);
+      background:
+        radial-gradient(circle at top left, rgba(255, 255, 255, 0.9), transparent 34%),
+        radial-gradient(circle at right 15%, rgba(14, 124, 102, 0.12), transparent 30%),
+        linear-gradient(135deg, #efe6d6 0%, #f8f3ea 48%, #e8f0ea 100%);
+      min-height: 100vh;
+      overflow-x: auto;
+    }
+
+    .page {
+      width: 100%;
+      max-width: 1440px;
+      margin: 0 auto;
+      padding: 28px 12px 44px;
+    }
+
+    .layout {
+      display: grid;
+      gap: 20px;
+      align-items: start;
+      min-width: 0;
+    }
+
+    .panel, .content-block {
+      background: var(--surface);
+      backdrop-filter: blur(12px);
+      border: 1px solid var(--line);
+      border-radius: var(--radius);
+      box-shadow: var(--shadow);
+      min-width: 0;
+    }
+
+    .panel {
+      padding: 14px;
+    }
+
+    .panel h2, .content-block h2 {
+      margin: 0 0 10px;
+      font-size: 0.96rem;
+      letter-spacing: 0.01em;
+    }
+
+    .filters-grid {
+      display: grid;
+      grid-template-columns: 1.35fr repeat(4, minmax(0, 1fr));
+      gap: 10px;
+      align-items: start;
+    }
+
+    .filter-group {
+      min-width: 0;
+      padding: 10px 11px;
+      border: 1px solid var(--line);
+      border-radius: 14px;
+      background: rgba(255, 255, 255, 0.45);
+    }
+
+    .filter-group.filter-group-wide {
+      grid-column: span 2;
+    }
+
+    .group-label {
+      display: block;
+      margin-bottom: 7px;
+      font-size: 0.76rem;
+      text-transform: uppercase;
+      letter-spacing: 0.08em;
+      color: var(--text-soft);
+    }
+
+    input[type="search"], select {
+      width: 100%;
+      padding: 9px 11px;
+      border: 1px solid rgba(67, 53, 35, 0.18);
+      border-radius: 10px;
+      font: inherit;
+      font-size: 0.92rem;
+      color: var(--text);
+      background: var(--surface-strong);
+      outline: none;
+    }
+
+    input[type="search"]:focus, select:focus {
+      border-color: rgba(14, 124, 102, 0.55);
+      box-shadow: 0 0 0 4px rgba(14, 124, 102, 0.12);
+    }
+
+    .checkbox-grid, .radio-list {
+      display: grid;
+      gap: 5px;
+    }
+
+    .checkbox-grid.compact-two {
+      grid-template-columns: repeat(2, minmax(0, 1fr));
+    }
+
+    label.option {
+      display: flex;
+      align-items: center;
+      gap: 8px;
+      padding: 7px 9px;
+      border-radius: 10px;
+      background: rgba(255, 255, 255, 0.54);
+      border: 1px solid transparent;
+      transition: transform 120ms ease, border-color 120ms ease, background 120ms ease;
+    }
+
+    label.option:hover {
+      transform: translateY(-1px);
+      border-color: rgba(14, 124, 102, 0.28);
+      background: rgba(14, 124, 102, 0.05);
+    }
+
+    input[type="checkbox"], input[type="radio"] {
+      accent-color: var(--accent);
+      width: 14px;
+      height: 14px;
+      margin: 0;
+      flex: 0 0 auto;
+    }
+
+    .option span:last-child {
+      font-size: 0.85rem;
+      line-height: 1.2;
+    }
+
+    .actions {
+      display: flex;
+      align-items: center;
+      justify-content: flex-end;
+      gap: 8px;
+      grid-column: span 5;
+    }
+
+    button {
+      border: 0;
+      border-radius: 999px;
+      padding: 10px 14px;
+      font: inherit;
+      font-size: 0.9rem;
+      cursor: pointer;
+      transition: transform 120ms ease, opacity 120ms ease;
+    }
+
+    button:hover { transform: translateY(-1px); }
+
+    .primary {
+      background: var(--accent);
+      color: white;
+    }
+
+    .ghost {
+      background: rgba(31, 28, 22, 0.08);
+      color: var(--text);
+    }
+
+    .content {
+      display: grid;
+      gap: 20px;
+    }
+
+    .content-block {
+      padding: 14px;
+    }
+
+    .table-wrap {
+      width: 100%;
+      max-width: 100%;
+      overflow-x: auto;
+      overflow-y: auto;
+      border-radius: 16px;
+      border: 1px solid var(--line);
+    }
+
+    table {
+      width: 100%;
+      border-collapse: collapse;
+      min-width: 980px;
+      background: rgba(255, 255, 255, 0.58);
+    }
+
+    thead th {
+      position: sticky;
+      top: 0;
+      z-index: 1;
+      background: #f6efe3;
+      text-align: left;
+      padding: 14px 12px;
+      font-size: 0.77rem;
+      text-transform: uppercase;
+      letter-spacing: 0.08em;
+      color: var(--text-soft);
+      border-bottom: 1px solid var(--line);
+    }
+
+    tbody td {
+      padding: 12px;
+      border-bottom: 1px solid rgba(63, 51, 34, 0.08);
+      vertical-align: top;
+      font-size: 0.93rem;
+    }
+
+    tbody tr:hover {
+      background: rgba(14, 124, 102, 0.05);
+    }
+
+    .pill {
+      display: inline-flex;
+      align-items: center;
+      border-radius: 999px;
+      padding: 5px 9px;
+      font-size: 0.75rem;
+      font-weight: 700;
+      letter-spacing: 0.02em;
+      white-space: nowrap;
+    }
+
+    .pill.ok {
+      color: var(--accent-strong);
+      background: var(--accent-soft);
+    }
+
+    .pill.no {
+      color: var(--danger);
+      background: var(--danger-soft);
+    }
+
+    .pill.warn {
+      color: var(--warn);
+      background: rgba(154, 103, 0, 0.12);
+    }
+
+    .muted {
+      color: var(--text-soft);
+    }
+
+    .meta {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 10px;
+      margin: 10px 0 0;
+      color: var(--text-soft);
+      font-size: 0.88rem;
+    }
+
+    @media (max-width: 1120px) {
+      .filters-grid {
+        grid-template-columns: repeat(3, minmax(0, 1fr));
+      }
+
+      .filter-group.filter-group-wide,
+      .actions {
+        grid-column: span 3;
+      }
+    }
+
+    @media (max-width: 700px) {
+      .page {
+        padding-top: 12px;
+        padding-left: 6px;
+        padding-right: 6px;
+      }
+
+      .panel, .content-block {
+        border-radius: 20px;
+      }
+
+      .filters-grid {
+        grid-template-columns: 1fr;
+      }
+
+      .filter-group.filter-group-wide,
+      .actions {
+        grid-column: span 1;
+      }
+
+      .checkbox-grid.compact-two {
+        grid-template-columns: 1fr;
+      }
+
+      .actions {
+        flex-direction: column;
+        align-items: stretch;
+      }
+    }
+  </style>
+</head>
+<body>
+  <div class="page">
+    <div class="layout">
+      <section class="panel">
+        <h2>Filtros</h2>
+        <div class="filters-grid">
+          <div class="filter-group filter-group-wide">
+            <label class="group-label" for="searchInput">Busca livre</label>
+            <input id="searchInput" type="search" placeholder="Disciplina, livro, autor, título comparado">
+          </div>
+
+          <div class="filter-group">
+            <span class="group-label">Cursos nos registros</span>
+            <div id="courseFilters" class="checkbox-grid compact-two"></div>
+          </div>
+
+          <div class="filter-group">
+            <span class="group-label">Natureza</span>
+            <div id="natureFilters" class="checkbox-grid"></div>
+          </div>
+
+          <div class="filter-group">
+            <span class="group-label">Tipo de bibliografia</span>
+            <div id="typeFilters" class="checkbox-grid"></div>
+          </div>
+
+          <div class="filter-group">
+            <span class="group-label">Correspondência</span>
+            <div id="correspondenceFilters" class="radio-list">
+              <label class="option"><input type="radio" name="correspondenciaFiltro" value="all" checked><span>Todas</span></label>
+              <label class="option"><input type="radio" name="correspondenciaFiltro" value="Sim"><span>Somente com correspondência</span></label>
+              <label class="option"><input type="radio" name="correspondenciaFiltro" value="Não"><span>Somente sem correspondência</span></label>
+              <label class="option"><input type="radio" name="correspondenciaFiltro" value="Não informado"><span>Sem informação</span></label>
+            </div>
+          </div>
+
+          <div class="filter-group">
+            <span class="group-label">Situação da disciplina</span>
+            <div id="disciplineMatchFilters" class="radio-list">
+              <label class="option"><input type="radio" name="disciplinaFiltro" value="all" checked><span>Todas as disciplinas</span></label>
+              <label class="option"><input type="radio" name="disciplinaFiltro" value="has-match"><span>Disciplina tem ao menos 1 livro com correspondência</span></label>
+              <label class="option"><input type="radio" name="disciplinaFiltro" value="no-match"><span>Disciplina não possui nenhum livro com correspondência</span></label>
+            </div>
+          </div>
+
+          <div class="filter-group">
+            <span class="group-label">Presença da disciplina entre cursos</span>
+            <div id="presenceCourseFilters" class="checkbox-grid compact-two"></div>
+            <div id="presenceModeFilters" class="radio-list" style="margin-top: 8px;">
+              <label class="option"><input type="radio" name="presenceMode" value="any" checked><span>Em qualquer curso marcado</span></label>
+              <label class="option"><input type="radio" name="presenceMode" value="all"><span>Ao mesmo tempo em todos os cursos marcados</span></label>
+              <label class="option"><input type="radio" name="presenceMode" value="exact"><span>Exatamente nos cursos marcados</span></label>
+            </div>
+          </div>
+
+          <div class="actions">
+            <button id="resetButton" class="ghost" type="button">Limpar filtros</button>
+            <button id="downloadButton" class="primary" type="button">Baixar CSV filtrado</button>
+          </div>
+        </div>
+      </section>
+
+      <main class="content">
+        <section class="content-block">
+          <h2>Resultados</h2>
+          <div class="meta">
+            <span id="resultsMeta"></span>
+          </div>
+          <div class="table-wrap" style="margin-top: 12px;">
+            <table>
+              <thead>
+                <tr>
+                  <th>Curso</th>
+                  <th>Disciplina</th>
+                  <th>Natureza</th>
+                  <th>Tipo</th>
+                  <th>Correspondência</th>
+                  <th>Livro no PPC</th>
+                  <th>Livro no campus</th>
+                  <th>Autor</th>
+                  <th>Edição / Vol.</th>
+                  <th>Exemplares</th>
+                </tr>
+              </thead>
+              <tbody id="resultsBody"></tbody>
+            </table>
+          </div>
+        </section>
+      </main>
+    </div>
+  </div>
+
+  <script src="./data.js"></script>
+  <script>
+    const records = Array.isArray(window.BOOK_DATA) ? window.BOOK_DATA : [];
+
+    const els = {
+      searchInput: document.getElementById("searchInput"),
+      courseFilters: document.getElementById("courseFilters"),
+      natureFilters: document.getElementById("natureFilters"),
+      typeFilters: document.getElementById("typeFilters"),
+      presenceCourseFilters: document.getElementById("presenceCourseFilters"),
+      resetButton: document.getElementById("resetButton"),
+      downloadButton: document.getElementById("downloadButton"),
+      resultsBody: document.getElementById("resultsBody"),
+      resultsMeta: document.getElementById("resultsMeta")
+    };
+
+    const uniqueValues = key => [...new Set(records.map(item => item[key]).filter(Boolean))].sort((a, b) => a.localeCompare(b, "pt-BR"));
+
+    const disciplineCourseMap = new Map();
+    for (const record of records) {
+      const key = `${record.disciplina}||${record.curso}`;
+      if (!disciplineCourseMap.has(key)) {
+        disciplineCourseMap.set(key, {
+          disciplina: record.disciplina,
+          curso: record.curso,
+          cursoId: record.cursoId,
+          natureza: record.natureza,
+          total: 0,
+          matched: 0
+        });
+      }
+      const bucket = disciplineCourseMap.get(key);
+      bucket.total += 1;
+      if (record.correspondencia === "Sim") {
+        bucket.matched += 1;
+      }
+    }
+
+    const disciplinePresence = new Map();
+    for (const summary of disciplineCourseMap.values()) {
+      if (!disciplinePresence.has(summary.disciplina)) {
+        disciplinePresence.set(summary.disciplina, {
+          disciplina: summary.disciplina,
+          cursos: new Set(),
+          hasAnyMatch: false,
+          naturezas: new Set()
+        });
+      }
+      const info = disciplinePresence.get(summary.disciplina);
+      info.cursos.add(summary.cursoId);
+      info.naturezas.add(summary.natureza);
+      if (summary.matched > 0) {
+        info.hasAnyMatch = true;
+      }
+    }
+
+    function courseDisciplineStatus(record) {
+      return disciplineCourseMap.get(`${record.disciplina}||${record.curso}`);
+    }
+
+    function renderCheckboxes(container, values, name, checkedValues = values) {
+      container.innerHTML = values.map(value => `
+        <label class="option">
+          <input type="checkbox" name="${name}" value="${escapeHtml(value)}" ${checkedValues.includes(value) ? "checked" : ""}>
+          <span>${escapeHtml(value)}</span>
+        </label>
+      `).join("");
+    }
+
+    function escapeHtml(value) {
+      return String(value)
+        .replaceAll("&", "&amp;")
+        .replaceAll("<", "&lt;")
+        .replaceAll(">", "&gt;")
+        .replaceAll('"', "&quot;");
+    }
+
+    const courseValues = uniqueValues("curso");
+    const courseIdByName = new Map(records.map(record => [record.curso, record.cursoId]));
+    const courseIdValues = [...new Set(records.map(item => item.cursoId))];
+    const courseNameById = new Map(records.map(record => [record.cursoId, record.curso]));
+
+    renderCheckboxes(els.courseFilters, courseValues, "curso");
+    renderCheckboxes(els.natureFilters, uniqueValues("natureza"), "natureza");
+    renderCheckboxes(els.typeFilters, uniqueValues("tipoBibliografia"), "tipoBibliografia");
+    renderCheckboxes(els.presenceCourseFilters, courseIdValues.map(id => courseNameById.get(id)), "presenceCurso");
+
+    function getCheckedValues(name) {
+      return [...document.querySelectorAll(`input[name="${name}"]:checked`)].map(input => input.value);
+    }
+
+    function getPresenceCourseIds() {
+      return getCheckedValues("presenceCurso").map(name => courseIdByName.get(name));
+    }
+
+    function normalizeText(value) {
+      return String(value || "")
+        .normalize("NFD")
+        .replace(/[\u0300-\u036f]/g, "")
+        .toLowerCase();
+    }
+
+    function matchesPresence(record, selectedCourseIds, mode) {
+      if (!selectedCourseIds.length) {
+        return true;
+      }
+      const presence = disciplinePresence.get(record.disciplina);
+      const available = presence ? [...presence.cursos] : [];
+      if (mode === "any") {
+        return selectedCourseIds.some(id => available.includes(id));
+      }
+      if (mode === "all") {
+        return selectedCourseIds.every(id => available.includes(id));
+      }
+      if (mode === "exact") {
+        return available.length === selectedCourseIds.length && selectedCourseIds.every(id => available.includes(id));
+      }
+      return true;
+    }
+
+    function applyFilters() {
+      const term = normalizeText(els.searchInput.value);
+      const selectedCourses = getCheckedValues("curso");
+      const selectedNaturezas = getCheckedValues("natureza");
+      const selectedTipos = getCheckedValues("tipoBibliografia");
+      const correspondence = document.querySelector('input[name="correspondenciaFiltro"]:checked').value;
+      const disciplineMatch = document.querySelector('input[name="disciplinaFiltro"]:checked').value;
+      const presenceMode = document.querySelector('input[name="presenceMode"]:checked').value;
+      const selectedPresenceCourseIds = getPresenceCourseIds();
+
+      const filtered = records.filter(record => {
+        if (selectedCourses.length && !selectedCourses.includes(record.curso)) return false;
+        if (selectedNaturezas.length && !selectedNaturezas.includes(record.natureza)) return false;
+        if (selectedTipos.length && !selectedTipos.includes(record.tipoBibliografia)) return false;
+        if (correspondence !== "all" && record.correspondencia !== correspondence) return false;
+
+        const courseStatus = courseDisciplineStatus(record);
+        if (disciplineMatch === "has-match" && !(courseStatus?.matched > 0)) return false;
+        if (disciplineMatch === "no-match" && courseStatus?.matched > 0) return false;
+        if (!matchesPresence(record, selectedPresenceCourseIds, presenceMode)) return false;
+
+        if (!term) return true;
+        const searchable = [
+          record.curso,
+          record.disciplina,
+          record.natureza,
+          record.tipoBibliografia,
+          record.correspondencia,
+          record.livroPPC,
+          record.livroCampus,
+          record.autor,
+          record.tituloComparado
+        ].map(normalizeText).join(" ");
+        return searchable.includes(term);
+      });
+
+      renderTable(filtered);
+      const disciplinas = new Set(filtered.map(item => `${item.disciplina}||${item.curso}`));
+      els.resultsMeta.textContent = `${filtered.length} registros em ${disciplinas.size} disciplinas filtradas.`;
+    }
+
+    function badge(correspondencia) {
+      if (correspondencia === "Sim") return '<span class="pill ok">Sim</span>';
+      if (correspondencia === "Não") return '<span class="pill no">Não</span>';
+      return '<span class="pill warn">Sem info</span>';
+    }
+
+    function renderTable(filtered) {
+      els.resultsBody.innerHTML = filtered.map(item => `
+        <tr>
+          <td>${escapeHtml(item.curso)}</td>
+          <td>
+            <strong>${escapeHtml(item.disciplina)}</strong>
+            <div class="muted">${escapeHtml(item.tituloComparado || "Sem título comparado")}</div>
+          </td>
+          <td>${escapeHtml(item.natureza)}</td>
+          <td>${escapeHtml(item.tipoBibliografia)}</td>
+          <td>${badge(item.correspondencia)}</td>
+          <td>${escapeHtml(item.livroPPC || "Sem registro")}</td>
+          <td>${escapeHtml(item.livroCampus || "Não encontrado")}</td>
+          <td>${escapeHtml(item.autor || "Não informado")}</td>
+          <td>${escapeHtml([item.edicao, item.volume].filter(Boolean).join(" / ") || "Não informado")}</td>
+          <td>${item.exemplares || 0}</td>
+        </tr>
+      `).join("");
+
+      if (!filtered.length) {
+        els.resultsBody.innerHTML = `
+          <tr>
+            <td colspan="10" class="muted" style="padding: 20px;">Nenhum registro encontrado com os filtros atuais.</td>
+          </tr>
+        `;
+      }
+    }
+
+    function resetFilters() {
+      els.searchInput.value = "";
+      for (const checkbox of document.querySelectorAll('input[type="checkbox"]')) {
+        checkbox.checked = true;
+      }
+      document.querySelector('input[name="correspondenciaFiltro"][value="all"]').checked = true;
+      document.querySelector('input[name="disciplinaFiltro"][value="all"]').checked = true;
+      document.querySelector('input[name="presenceMode"][value="any"]').checked = true;
+      applyFilters();
+    }
+
+    function toCsvValue(value) {
+      const text = String(value ?? "");
+      return `"${text.replaceAll('"', '""')}"`;
+    }
+
+    function downloadCsv() {
+      const rows = [...els.resultsBody.querySelectorAll("tr")];
+      if (!rows.length || rows[0].children.length === 1) {
+        return;
+      }
+
+      const filtered = getCurrentFilteredRecords();
+      const header = ["Curso", "Disciplina", "Natureza", "Tipo de Bibliografia", "Correspondência", "Livro no PPC", "Livro no campus", "Autor", "Edição", "Volume", "Exemplares", "Título comparado"];
+      const csv = [
+        header.map(toCsvValue).join(","),
+        ...filtered.map(item => [
+          item.curso,
+          item.disciplina,
+          item.natureza,
+          item.tipoBibliografia,
+          item.correspondencia,
+          item.livroPPC,
+          item.livroCampus,
+          item.autor,
+          item.edicao,
+          item.volume,
+          item.exemplares,
+          item.tituloComparado
+        ].map(toCsvValue).join(","))
+      ].join("\n");
+
+      const blob = new Blob([csv], { type: "text/csv;charset=utf-8;" });
+      const url = URL.createObjectURL(blob);
+      const link = document.createElement("a");
+      link.href = url;
+      link.download = "bibliografia_filtrada.csv";
+      link.click();
+      URL.revokeObjectURL(url);
+    }
+
+    function getCurrentFilteredRecords() {
+      const term = normalizeText(els.searchInput.value);
+      const selectedCourses = getCheckedValues("curso");
+      const selectedNaturezas = getCheckedValues("natureza");
+      const selectedTipos = getCheckedValues("tipoBibliografia");
+      const correspondence = document.querySelector('input[name="correspondenciaFiltro"]:checked').value;
+      const disciplineMatch = document.querySelector('input[name="disciplinaFiltro"]:checked').value;
+      const presenceMode = document.querySelector('input[name="presenceMode"]:checked').value;
+      const selectedPresenceCourseIds = getPresenceCourseIds();
+
+      return records.filter(record => {
+        if (selectedCourses.length && !selectedCourses.includes(record.curso)) return false;
+        if (selectedNaturezas.length && !selectedNaturezas.includes(record.natureza)) return false;
+        if (selectedTipos.length && !selectedTipos.includes(record.tipoBibliografia)) return false;
+        if (correspondence !== "all" && record.correspondencia !== correspondence) return false;
+
+        const courseStatus = courseDisciplineStatus(record);
+        if (disciplineMatch === "has-match" && !(courseStatus?.matched > 0)) return false;
+        if (disciplineMatch === "no-match" && courseStatus?.matched > 0) return false;
+        if (!matchesPresence(record, selectedPresenceCourseIds, presenceMode)) return false;
+
+        if (!term) return true;
+        const searchable = [
+          record.curso,
+          record.disciplina,
+          record.natureza,
+          record.tipoBibliografia,
+          record.correspondencia,
+          record.livroPPC,
+          record.livroCampus,
+          record.autor,
+          record.tituloComparado
+        ].map(normalizeText).join(" ");
+        return searchable.includes(term);
+      });
+    }
+
+    [
+      "input",
+      "change"
+    ].forEach(eventName => {
+      document.addEventListener(eventName, event => {
+        if (event.target.matches("input, select")) {
+          applyFilters();
+        }
+      });
+    });
+
+    els.resetButton.addEventListener("click", resetFilters);
+    els.downloadButton.addEventListener("click", downloadCsv);
+
+    applyFilters();
+  </script>
+</body>
+</html>
