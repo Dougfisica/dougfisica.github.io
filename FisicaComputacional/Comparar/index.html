@@ -321,7 +321,7 @@
   <div class="page">
     <div class="layout">
       <section class="panel">
-        <h2>Filtros</h2>
+        <h2>Filtros da tabela</h2>
         <div class="filters-grid">
           <div class="filter-group filter-group-wide">
             <label class="group-label" for="searchInput">Busca livre</label>
@@ -359,6 +359,7 @@
               <label class="option"><input type="radio" name="disciplinaFiltro" value="all" checked><span>Todas as disciplinas</span></label>
               <label class="option"><input type="radio" name="disciplinaFiltro" value="has-match"><span>Disciplina tem ao menos 1 livro com correspondência</span></label>
               <label class="option"><input type="radio" name="disciplinaFiltro" value="no-match"><span>Disciplina não possui nenhum livro com correspondência</span></label>
+              <label class="option"><input type="radio" name="disciplinaFiltro" value="no-basic-match"><span>Disciplina não possui nenhum livro básico com correspondência</span></label>
             </div>
           </div>
 
@@ -381,7 +382,7 @@
 
       <main class="content">
         <section class="content-block">
-          <h2>Resultados</h2>
+          <h2>Livros de bibliografia básica sem correspondência por disciplina</h2>
           <div class="meta">
             <span id="resultsMeta"></span>
           </div>
@@ -437,13 +438,17 @@
           cursoId: record.cursoId,
           natureza: record.natureza,
           total: 0,
-          matched: 0
+          matched: 0,
+          basicMatched: 0
         });
       }
       const bucket = disciplineCourseMap.get(key);
       bucket.total += 1;
       if (record.correspondencia === "Sim") {
         bucket.matched += 1;
+      }
+      if (record.tipoBibliografia === "Básica" && record.correspondencia === "Sim") {
+        bucket.basicMatched += 1;
       }
     }
 
@@ -491,10 +496,44 @@
     const courseIdValues = [...new Set(records.map(item => item.cursoId))];
     const courseNameById = new Map(records.map(record => [record.cursoId, record.curso]));
 
-    renderCheckboxes(els.courseFilters, courseValues, "curso");
-    renderCheckboxes(els.natureFilters, uniqueValues("natureza"), "natureza");
-    renderCheckboxes(els.typeFilters, uniqueValues("tipoBibliografia"), "tipoBibliografia");
+    const defaultCourses = ["Agronomia", "Física Computacional"];
+    const defaultNaturezas = ["Obrigatória"];
+    const defaultTipos = ["Básica"];
+
+    renderCheckboxes(els.courseFilters, courseValues, "curso", defaultCourses);
+    renderCheckboxes(els.natureFilters, uniqueValues("natureza"), "natureza", defaultNaturezas);
+    renderCheckboxes(els.typeFilters, uniqueValues("tipoBibliografia"), "tipoBibliografia", defaultTipos);
     renderCheckboxes(els.presenceCourseFilters, courseIdValues.map(id => courseNameById.get(id)), "presenceCurso");
+
+    function setRadioValue(name, value) {
+      const input = document.querySelector(`input[name="${name}"][value="${value}"]`);
+      if (input) {
+        input.checked = true;
+      }
+    }
+
+    function applyDefaultSelection() {
+      for (const checkbox of document.querySelectorAll('input[type="checkbox"]')) {
+        checkbox.checked = false;
+      }
+
+      for (const checkbox of document.querySelectorAll('input[name="curso"]')) {
+        checkbox.checked = defaultCourses.includes(checkbox.value);
+      }
+
+      for (const checkbox of document.querySelectorAll('input[name="natureza"]')) {
+        checkbox.checked = defaultNaturezas.includes(checkbox.value);
+      }
+
+      for (const checkbox of document.querySelectorAll('input[name="tipoBibliografia"]')) {
+        checkbox.checked = defaultTipos.includes(checkbox.value);
+      }
+
+      els.searchInput.value = "";
+      setRadioValue("correspondenciaFiltro", "Não");
+      setRadioValue("disciplinaFiltro", "no-match");
+      setRadioValue("presenceMode", "any");
+    }
 
     function getCheckedValues(name) {
       return [...document.querySelectorAll(`input[name="${name}"]:checked`)].map(input => input.value);
@@ -529,25 +568,51 @@
       return true;
     }
 
-    function applyFilters() {
-      const term = normalizeText(els.searchInput.value);
-      const selectedCourses = getCheckedValues("curso");
-      const selectedNaturezas = getCheckedValues("natureza");
-      const selectedTipos = getCheckedValues("tipoBibliografia");
-      const correspondence = document.querySelector('input[name="correspondenciaFiltro"]:checked').value;
-      const disciplineMatch = document.querySelector('input[name="disciplinaFiltro"]:checked').value;
-      const presenceMode = document.querySelector('input[name="presenceMode"]:checked').value;
-      const selectedPresenceCourseIds = getPresenceCourseIds();
+    function matchesDisciplineFilter(record, disciplineMatch) {
+      const courseStatus = courseDisciplineStatus(record);
+      if (disciplineMatch === "has-match") {
+        return courseStatus?.matched > 0;
+      }
+      if (disciplineMatch === "no-match") {
+        return !(courseStatus?.matched > 0);
+      }
+      if (disciplineMatch === "no-basic-match") {
+        return !(courseStatus?.basicMatched > 0);
+      }
+      return true;
+    }
 
-      const filtered = records.filter(record => {
+    function getCurrentFilterState() {
+      return {
+        term: normalizeText(els.searchInput.value),
+        selectedCourses: getCheckedValues("curso"),
+        selectedNaturezas: getCheckedValues("natureza"),
+        selectedTipos: getCheckedValues("tipoBibliografia"),
+        correspondence: document.querySelector('input[name="correspondenciaFiltro"]:checked').value,
+        disciplineMatch: document.querySelector('input[name="disciplinaFiltro"]:checked').value,
+        presenceMode: document.querySelector('input[name="presenceMode"]:checked').value,
+        selectedPresenceCourseIds: getPresenceCourseIds()
+      };
+    }
+
+    function getFilteredRecords(filters = getCurrentFilterState()) {
+      const {
+        term,
+        selectedCourses,
+        selectedNaturezas,
+        selectedTipos,
+        correspondence,
+        disciplineMatch,
+        presenceMode,
+        selectedPresenceCourseIds
+      } = filters;
+
+      return records.filter(record => {
         if (selectedCourses.length && !selectedCourses.includes(record.curso)) return false;
         if (selectedNaturezas.length && !selectedNaturezas.includes(record.natureza)) return false;
         if (selectedTipos.length && !selectedTipos.includes(record.tipoBibliografia)) return false;
         if (correspondence !== "all" && record.correspondencia !== correspondence) return false;
-
-        const courseStatus = courseDisciplineStatus(record);
-        if (disciplineMatch === "has-match" && !(courseStatus?.matched > 0)) return false;
-        if (disciplineMatch === "no-match" && courseStatus?.matched > 0) return false;
+        if (!matchesDisciplineFilter(record, disciplineMatch)) return false;
         if (!matchesPresence(record, selectedPresenceCourseIds, presenceMode)) return false;
 
         if (!term) return true;
@@ -564,7 +629,10 @@
         ].map(normalizeText).join(" ");
         return searchable.includes(term);
       });
+    }
 
+    function applyFilters() {
+      const filtered = getFilteredRecords();
       renderTable(filtered);
       const disciplinas = new Set(filtered.map(item => `${item.disciplina}||${item.curso}`));
       els.resultsMeta.textContent = `${filtered.length} registros em ${disciplinas.size} disciplinas filtradas.`;
@@ -605,13 +673,7 @@
     }
 
     function resetFilters() {
-      els.searchInput.value = "";
-      for (const checkbox of document.querySelectorAll('input[type="checkbox"]')) {
-        checkbox.checked = true;
-      }
-      document.querySelector('input[name="correspondenciaFiltro"][value="all"]').checked = true;
-      document.querySelector('input[name="disciplinaFiltro"][value="all"]').checked = true;
-      document.querySelector('input[name="presenceMode"][value="any"]').checked = true;
+      applyDefaultSelection();
       applyFilters();
     }
 
@@ -656,40 +718,7 @@
     }
 
     function getCurrentFilteredRecords() {
-      const term = normalizeText(els.searchInput.value);
-      const selectedCourses = getCheckedValues("curso");
-      const selectedNaturezas = getCheckedValues("natureza");
-      const selectedTipos = getCheckedValues("tipoBibliografia");
-      const correspondence = document.querySelector('input[name="correspondenciaFiltro"]:checked').value;
-      const disciplineMatch = document.querySelector('input[name="disciplinaFiltro"]:checked').value;
-      const presenceMode = document.querySelector('input[name="presenceMode"]:checked').value;
-      const selectedPresenceCourseIds = getPresenceCourseIds();
-
-      return records.filter(record => {
-        if (selectedCourses.length && !selectedCourses.includes(record.curso)) return false;
-        if (selectedNaturezas.length && !selectedNaturezas.includes(record.natureza)) return false;
-        if (selectedTipos.length && !selectedTipos.includes(record.tipoBibliografia)) return false;
-        if (correspondence !== "all" && record.correspondencia !== correspondence) return false;
-
-        const courseStatus = courseDisciplineStatus(record);
-        if (disciplineMatch === "has-match" && !(courseStatus?.matched > 0)) return false;
-        if (disciplineMatch === "no-match" && courseStatus?.matched > 0) return false;
-        if (!matchesPresence(record, selectedPresenceCourseIds, presenceMode)) return false;
-
-        if (!term) return true;
-        const searchable = [
-          record.curso,
-          record.disciplina,
-          record.natureza,
-          record.tipoBibliografia,
-          record.correspondencia,
-          record.livroPPC,
-          record.livroCampus,
-          record.autor,
-          record.tituloComparado
-        ].map(normalizeText).join(" ");
-        return searchable.includes(term);
-      });
+      return getFilteredRecords();
     }
 
     [
@@ -706,6 +735,7 @@
     els.resetButton.addEventListener("click", resetFilters);
     els.downloadButton.addEventListener("click", downloadCsv);
 
+    applyDefaultSelection();
     applyFilters();
   </script>
 </body>

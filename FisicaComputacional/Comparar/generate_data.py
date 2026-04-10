@@ -8,6 +8,7 @@ from xml.etree import ElementTree as ET
 
 NS = {"a": "http://schemas.openxmlformats.org/spreadsheetml/2006/main"}
 COURSE_FILES = [
+    ("AGRO", "Agronomia", "AGRONOMIA_comparacao_bibliografia_x_livros_completa.xlsx"),
     ("FCOM", "Física Computacional", "FCOM_comparacao_bibliografia_x_livros_completa.xlsx"),
     ("MAT", "Matemática", "MAT_comparacao_bibliografia_x_livros_completa.xlsx"),
     ("IAES", "IAES", "IAES_comparacao_bibliografia_x_livros_completa.xlsx"),
