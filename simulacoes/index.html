@@ -3,20 +3,20 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Simulações de Física Interativas | Movimento, Ondas, Newton e Mais</title>
-    <meta name="description" content="Simulações de física interativas em português para estudar movimento circular, ondas, torque, momento de inércia, equação horária, Segunda Lei de Newton e outros temas de física e matemática.">
+    <title>Simulações de Física Interativas | Movimento, Ondas, Estruturas Cristalinas e Mais</title>
+    <meta name="description" content="Simulações de física interativas em português para estudar movimento circular, ondas, estruturas cristalinas, torque, momento de inércia, equação horária, Segunda Lei de Newton e outros temas de física e matemática.">
     <meta name="robots" content="index,follow,max-image-preview:large">
-    <meta name="keywords" content="simulações de física, simulacoes de fisica, física interativa, simulador de física, movimento circular, ondas, torque, momento de inércia, segunda lei de Newton, equação horária, MHS, soma de Riemann">
+    <meta name="keywords" content="simulações de física, simulacoes de fisica, física interativa, simulador de física, estruturas cristalinas, crystal structure, movimento circular, ondas, torque, momento de inércia, segunda lei de Newton, equação horária, MHS, soma de Riemann">
     <link rel="canonical" href="https://dougfisica.github.io/simulacoes/">
     <meta property="og:type" content="website">
     <meta property="og:locale" content="pt_BR">
     <meta property="og:site_name" content="DOUG.FÍSICA">
     <meta property="og:title" content="Simulações de Física Interativas | DOUG.FÍSICA">
-    <meta property="og:description" content="Coleção de simulações de física interativas para estudar conceitos de mecânica, ondas e cálculo de forma visual e prática.">
+    <meta property="og:description" content="Coleção de simulações de física interativas para estudar conceitos de mecânica, estruturas cristalinas, ondas e cálculo de forma visual e prática.">
     <meta property="og:url" content="https://dougfisica.github.io/simulacoes/">
     <meta name="twitter:card" content="summary">
     <meta name="twitter:title" content="Simulações de Física Interativas | DOUG.FÍSICA">
-    <meta name="twitter:description" content="Explore simuladores de física em português com temas como ondas, MHS, Newton, torque e movimento circular.">
+    <meta name="twitter:description" content="Explore simuladores de física em português com temas como ondas, estruturas cristalinas, MHS, Newton, torque e movimento circular.">
     <!-- Google Analytics -->
     <script async src="https://www.googletagmanager.com/gtag/js?id=G-83359NB2SY"></script>
     <script>
@@ -42,6 +42,7 @@
         "Física",
         "Simulações interativas",
         "Mecânica",
+        "Estruturas cristalinas",
         "Ondas",
         "Cálculo"
       ]
@@ -184,6 +185,10 @@
             background: linear-gradient(45deg, #6c5ce7, #4834d4);
         }
 
+        .crystal-header {
+            background: linear-gradient(45deg, #00b894, #0984e3);
+        }
+
         @media (max-width: 600px) {
             .simulations-grid {
                 grid-template-columns: repeat(2, 1fr);
@@ -209,7 +214,7 @@
         <header>
             <h1>Simulações de Física Interativas</h1>
             <p class="subtitle">Explore conceitos físicos e matemáticos com simuladores visuais, interativos e em português.</p>
-            <p class="intro-text">Nesta página você encontra simulações de física sobre ondas, movimento harmônico simples, Segunda Lei de Newton, torque, movimento circular, momento de inércia e outros tópicos úteis para estudar física no ensino médio, vestibulares e graduação.</p>
+            <p class="intro-text">Nesta página você encontra simulações de física sobre ondas, movimento harmônico simples, estruturas cristalinas, Segunda Lei de Newton, torque, movimento circular, momento de inércia e outros tópicos úteis para estudar física no ensino médio, vestibulares e graduação.</p>
         </header>
 
         <div class="simulations-grid">
@@ -270,6 +275,12 @@
             <a href="torque.html" class="simulation-card" aria-label="Abrir simulação de torque">
                 <div class="card-header force-header">
                     Torque
+                </div>
+            </a>
+
+            <a href="crystal_structure.html" class="simulation-card" aria-label="Abrir simulação de estruturas cristalinas">
+                <div class="card-header crystal-header">
+                    Estruturas Cristalinas
                 </div>
             </a>
         </div>

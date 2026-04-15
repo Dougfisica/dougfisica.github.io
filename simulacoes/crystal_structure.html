@@ -1,0 +1,97 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Crystal Structure Viewer</title>
+  <link rel="stylesheet" href="crystal_structure/webui/styles.css">
+</head>
+<body>
+  <main class="app-shell">
+    <section class="panel selector-panel">
+      <div id="structure-buttons" class="structure-buttons" aria-label="Structure selection"></div>
+      <div class="compare-actions">
+        <button id="open-compare" type="button" class="compare-trigger">Compare SC/BCC/FCC</button>
+      </div>
+    </section>
+
+    <section class="panel viewer-panel">
+      <div class="viewer-toolbar">
+        <div>
+          <h2 id="viewer-title">Structure</h2>
+          <p id="viewer-subtitle">Interactive view</p>
+        </div>
+        <p class="hint">Drag to rotate • Mouse wheel to zoom</p>
+      </div>
+
+      <div class="viewer-controls">
+        <label class="checkbox">
+          <input type="checkbox" id="show-bonds" checked>
+          <span>Show bonds</span>
+        </label>
+        <button id="reset-view" type="button">Reset view</button>
+      </div>
+
+      <section id="planes-panel" class="planes-panel" hidden>
+        <p class="planes-title">Main planes</p>
+        <div id="plane-buttons" class="plane-buttons" aria-label="Crystallographic plane selection"></div>
+      </section>
+
+      <section id="graphene-plane-panel" class="planes-panel" hidden>
+        <p class="planes-title">Graphene plane</p>
+        <div class="graphene-plane-control">
+          <label class="checkbox">
+            <input type="checkbox" id="show-graphene-plane" checked>
+            <span>Show plane</span>
+          </label>
+        </div>
+      </section>
+
+      <dl class="stats">
+        <div>
+          <dt>Description</dt>
+          <dd id="structure-description">-</dd>
+        </div>
+      </dl>
+
+      <canvas id="viewer" aria-label="3D viewer for the selected structure"></canvas>
+    </section>
+  </main>
+
+  <section id="compare-modal" class="compare-modal" hidden>
+    <div class="compare-dialog panel">
+      <div class="compare-header">
+        <div>
+          <h2>Compare Simple Cubic, BCC, and FCC</h2>
+          <p>Smaller supercells with synchronized rotation.</p>
+        </div>
+        <div class="compare-header-actions">
+          <button id="reset-compare" type="button">Reset comparison</button>
+          <button id="close-compare" type="button">Close</button>
+        </div>
+      </div>
+
+      <div class="compare-grid">
+        <article class="compare-card">
+          <h3>Simple cubic</h3>
+          <p>One atom at each lattice corner.</p>
+          <canvas id="compare-sc" class="compare-canvas" aria-label="Simple cubic comparison"></canvas>
+        </article>
+        <article class="compare-card">
+          <h3>BCC</h3>
+          <p>One additional atom at the cube center.</p>
+          <canvas id="compare-bcc" class="compare-canvas" aria-label="BCC comparison"></canvas>
+        </article>
+        <article class="compare-card">
+          <h3>FCC</h3>
+          <p>Additional atoms at the centers of the faces.</p>
+          <canvas id="compare-fcc" class="compare-canvas" aria-label="FCC comparison"></canvas>
+        </article>
+      </div>
+    </div>
+  </section>
+
+  <script src="crystal_structure/webui/data.js"></script>
+  <script src="crystal_structure/webui/app.js"></script>
+</body>
+</html>
