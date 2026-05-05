@@ -1,0 +1,346 @@
+<!doctype html>
+<html lang="pt-BR">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Bio1 - Cartoon com webcam</title>
+  <script src="https://3Dmol.org/build/3Dmol-min.js"></script>
+  <script src="https://cdn.jsdelivr.net/npm/@mediapipe/camera_utils/camera_utils.js"></script>
+  <script src="https://cdn.jsdelivr.net/npm/@mediapipe/drawing_utils/drawing_utils.js"></script>
+  <script src="https://cdn.jsdelivr.net/npm/@mediapipe/hands/hands.js"></script>
+  <style>
+    html, body {
+      margin: 0;
+      width: 100%;
+      height: 100%;
+      overflow: hidden;
+      background: #111417;
+      color: #e8edf2;
+      font-family: Arial, Helvetica, sans-serif;
+    }
+
+    #viewer {
+      position: fixed;
+      left: 0;
+      top: 0;
+      width: 50vw;
+      height: 100vh;
+      border-right: 1px solid rgba(255, 255, 255, 0.14);
+    }
+
+    #webcam-panel {
+      position: fixed;
+      right: 0;
+      top: 0;
+      width: 50vw;
+      height: 100vh;
+      background: #050607;
+    }
+
+    #webcam, #overlay {
+      position: absolute;
+      inset: 0;
+      width: 100%;
+      height: 100%;
+      object-fit: fill;
+    }
+
+    #webcam {
+      transform: scaleX(-1);
+    }
+
+    #hud {
+      position: fixed;
+      left: 14px;
+      top: 14px;
+      max-width: min(520px, calc(50vw - 28px));
+      padding: 10px 12px;
+      background: rgba(11, 14, 17, 0.76);
+      border: 1px solid rgba(255, 255, 255, 0.16);
+      font-size: 14px;
+      line-height: 1.45;
+    }
+
+    #status {
+      color: #9fe870;
+      font-weight: 700;
+    }
+
+    #error {
+      position: fixed;
+      left: 50%;
+      top: 50%;
+      transform: translate(-50%, -50%);
+      max-width: min(680px, calc(100vw - 32px));
+      padding: 16px 18px;
+      display: none;
+      background: #2a1111;
+      border: 1px solid #e05c5c;
+      color: #fff2f2;
+      font-size: 15px;
+      line-height: 1.45;
+    }
+
+    #webcam-label {
+      position: fixed;
+      right: 14px;
+      top: 14px;
+      padding: 8px 10px;
+      background: rgba(11, 14, 17, 0.76);
+      border: 1px solid rgba(255, 255, 255, 0.16);
+      font-size: 14px;
+      line-height: 1.35;
+    }
+  </style>
+</head>
+<body>
+  <div id="viewer"></div>
+  <div id="hud">
+    <div><strong>Bio1 cartoon/ribbon</strong></div>
+    <div><span id="status">carregando</span></div>
+    <div>mão fechada: girar | pinça indicador+polegar: zoom | roda do mouse: zoom | arrastar: girar</div>
+  </div>
+  <div id="webcam-panel">
+    <video id="webcam" playsinline></video>
+    <canvas id="overlay"></canvas>
+  </div>
+  <div id="webcam-label">Webcam</div>
+  <div id="error"></div>
+
+  <script>
+    const statusEl = document.getElementById("status");
+    const errorEl = document.getElementById("error");
+    const videoEl = document.getElementById("webcam");
+    const canvasEl = document.getElementById("overlay");
+    const canvasCtx = canvasEl.getContext("2d");
+
+    let viewer;
+    let previousOneHand = null;
+    let previousPinch = null;
+
+    function showError(message) {
+      errorEl.style.display = "block";
+      errorEl.textContent = message;
+      statusEl.textContent = "erro";
+      statusEl.style.color = "#ff8c8c";
+    }
+
+    function resizeCanvas() {
+      const rect = canvasEl.getBoundingClientRect();
+      canvasEl.width = Math.max(1, Math.round(rect.width));
+      canvasEl.height = Math.max(1, Math.round(rect.height));
+    }
+
+    function isFistClosed(landmarks) {
+      const fingers = [[8, 6], [12, 10], [16, 14], [20, 18]];
+      let folded = 0;
+      for (const [tip, pip] of fingers) {
+        if (landmarks[tip].y > landmarks[pip].y) folded += 1;
+      }
+      return folded >= 3;
+    }
+
+    function handCenter(landmarks) {
+      return {
+        x: 0.5 * (landmarks[0].x + landmarks[9].x),
+        y: 0.5 * (landmarks[0].y + landmarks[9].y)
+      };
+    }
+
+    function pinchState(landmarks) {
+      const thumb = landmarks[4];
+      const index = landmarks[8];
+      const distance = Math.hypot(thumb.x - index.x, thumb.y - index.y);
+      return {
+        active: distance < 0.065,
+        distance,
+        center: {
+          x: 0.5 * (thumb.x + index.x),
+          y: 0.5 * (thumb.y + index.y)
+        }
+      };
+    }
+
+    function mirrorLandmark(landmark) {
+      return {...landmark, x: 1 - landmark.x};
+    }
+
+    function mirrorLandmarks(landmarks) {
+      return landmarks.map(mirrorLandmark);
+    }
+
+    function toCanvasPoint(landmark) {
+      return {
+        x: (1 - landmark.x) * canvasEl.width,
+        y: landmark.y * canvasEl.height
+      };
+    }
+
+    function rotateWithHand(current) {
+      if (!current.closed) {
+        previousOneHand = null;
+        return;
+      }
+      if (previousOneHand) {
+        const dx = current.center.x - previousOneHand.center.x;
+        const dy = current.center.y - previousOneHand.center.y;
+        if (Math.abs(dx) > 0.004) viewer.rotate(-dx * 170, "y");
+        if (Math.abs(dy) > 0.004) viewer.rotate(dy * 170, "x");
+        viewer.render();
+      }
+      previousOneHand = current;
+      previousPinch = null;
+    }
+
+    function zoomWithPinch(current) {
+      if (!current.pinch.active || current.closed) {
+        previousPinch = null;
+        return;
+      }
+      if (previousPinch) {
+        const dy = current.pinch.center.y - previousPinch.center.y;
+        if (Math.abs(dy) > 0.004) {
+          const factor = Math.exp(-dy * 4.0);
+          if (factor > 0.85 && factor < 1.18) {
+            viewer.zoom(factor);
+            viewer.render();
+          }
+        }
+      }
+      previousPinch = current.pinch;
+      previousOneHand = null;
+    }
+
+    function applyGesture(current) {
+      if (current.closed) {
+        rotateWithHand(current);
+        return;
+      }
+      if (current.pinch.active) {
+        zoomWithPinch(current);
+        return;
+      }
+      previousOneHand = null;
+      previousPinch = null;
+    }
+
+    async function loadProtein() {
+      viewer = $3Dmol.createViewer("viewer", {
+        backgroundColor: "#111417",
+        antialias: true
+      });
+
+      const response = await fetch("1o86_processed.pdb");
+      if (!response.ok) throw new Error("Nao foi possivel carregar 1o86_processed.pdb");
+      const pdb = await response.text();
+
+      viewer.addModel(pdb, "pdb");
+      viewer.setStyle({}, {
+        cartoon: {
+          color: "spectrum",
+          thickness: 0.55,
+          arrows: true,
+          tubes: true
+        }
+      });
+      viewer.addStyle({hetflag: true}, {
+        stick: {radius: 0.18, colorscheme: "Jmol"},
+        sphere: {scale: 0.34, colorscheme: "Jmol"}
+      });
+      viewer.zoomTo();
+      viewer.render();
+      statusEl.textContent = "PDB carregado em modo cartoon";
+
+      window.addEventListener("resize", () => {
+        if (viewer && typeof viewer.resize === "function") {
+          viewer.resize();
+          viewer.render();
+        }
+      });
+    }
+
+    async function startHands() {
+      resizeCanvas();
+      window.addEventListener("resize", resizeCanvas);
+
+      const hands = new Hands({
+        locateFile: file => `https://cdn.jsdelivr.net/npm/@mediapipe/hands/${file}`
+      });
+      hands.setOptions({
+        maxNumHands: 2,
+        modelComplexity: 1,
+        minDetectionConfidence: 0.65,
+        minTrackingConfidence: 0.55
+      });
+
+      hands.onResults(results => {
+        resizeCanvas();
+        canvasCtx.save();
+        canvasCtx.clearRect(0, 0, canvasEl.width, canvasEl.height);
+        const detected = [];
+
+        if (results.multiHandLandmarks) {
+          for (const landmarks of results.multiHandLandmarks) {
+            const mirrored = mirrorLandmarks(landmarks);
+            drawConnectors(canvasCtx, mirrored, HAND_CONNECTIONS, {color: "#00d084", lineWidth: 3});
+            drawLandmarks(canvasCtx, mirrored, {color: "#f5f141", lineWidth: 1, radius: 2});
+
+            const center = handCenter(landmarks);
+            const closed = isFistClosed(landmarks);
+            const pinch = pinchState(landmarks);
+            detected.push({center, closed, pinch});
+
+            const x = (1 - center.x) * canvasEl.width;
+            const y = center.y * canvasEl.height;
+            const label = closed ? "FECHADA" : (pinch.active ? "PINCA" : "ABERTA");
+            canvasCtx.fillStyle = closed ? "#5cff70" : (pinch.active ? "#63a7ff" : "#f5f141");
+            canvasCtx.beginPath();
+            canvasCtx.arc(x, y, 7, 0, Math.PI * 2);
+            canvasCtx.fill();
+            if (pinch.active && !closed) {
+              const thumb = toCanvasPoint(landmarks[4]);
+              const index = toCanvasPoint(landmarks[8]);
+              canvasCtx.strokeStyle = "#63a7ff";
+              canvasCtx.lineWidth = 5;
+              canvasCtx.beginPath();
+              canvasCtx.moveTo(thumb.x, thumb.y);
+              canvasCtx.lineTo(index.x, index.y);
+              canvasCtx.stroke();
+            }
+            canvasCtx.font = "bold 15px Arial";
+            canvasCtx.fillText(label, x + 12, y + 5);
+          }
+        }
+
+        canvasCtx.restore();
+
+        if (!viewer) return;
+        if (detected.length >= 1) applyGesture(detected[0]);
+        else {
+          previousOneHand = null;
+          previousPinch = null;
+        }
+      });
+
+      const camera = new Camera(videoEl, {
+        onFrame: async () => {
+          await hands.send({image: videoEl});
+        },
+        width: 640,
+        height: 480
+      });
+      await camera.start();
+      statusEl.textContent = "webcam ativa";
+    }
+
+    (async () => {
+      try {
+        await loadProtein();
+        await startHands();
+      } catch (error) {
+        showError(String(error && error.message ? error.message : error));
+      }
+    })();
+  </script>
+</body>
+</html>
