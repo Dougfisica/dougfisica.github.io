@@ -49,23 +49,6 @@
       transform: scaleX(-1);
     }
 
-    #hud {
-      position: fixed;
-      left: 14px;
-      top: 64px;
-      max-width: min(520px, calc(50vw - 28px));
-      padding: 10px 12px;
-      background: rgba(11, 14, 17, 0.76);
-      border: 1px solid rgba(255, 255, 255, 0.16);
-      font-size: 14px;
-      line-height: 1.45;
-    }
-
-    #status {
-      color: #9fe870;
-      font-weight: 700;
-    }
-
     #error {
       position: fixed;
       left: 50%;
@@ -99,11 +82,6 @@
 <body>
   <div id="viewer"></div>
   <div id="molecule-title">Proteína ACE, com ligante lisinopril</div>
-  <div id="hud">
-    <div><strong>Bio1 cartoon/ribbon</strong></div>
-    <div><span id="status">carregando</span></div>
-    <div>mão fechada: girar | pinça indicador+polegar: zoom | roda do mouse: zoom | arrastar: girar</div>
-  </div>
   <div id="webcam-panel">
     <video id="webcam" playsinline></video>
     <canvas id="overlay"></canvas>
@@ -111,7 +89,6 @@
   <div id="error"></div>
 
   <script>
-    const statusEl = document.getElementById("status");
     const errorEl = document.getElementById("error");
     const videoEl = document.getElementById("webcam");
     const canvasEl = document.getElementById("overlay");
@@ -124,8 +101,6 @@
     function showError(message) {
       errorEl.style.display = "block";
       errorEl.textContent = message;
-      statusEl.textContent = "erro";
-      statusEl.style.color = "#ff8c8c";
     }
 
     function resizeCanvas() {
@@ -260,8 +235,6 @@
       });
       viewer.zoomTo();
       viewer.render();
-      statusEl.textContent = "PDB carregado em modo cartoon";
-
       window.addEventListener("resize", () => {
         if (viewer && typeof viewer.resize === "function") {
           viewer.resize();
@@ -342,7 +315,6 @@
         height: 480
       });
       await camera.start();
-      statusEl.textContent = "webcam ativa";
     }
 
     (async () => {
