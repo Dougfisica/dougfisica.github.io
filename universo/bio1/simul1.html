@@ -97,6 +97,9 @@
     let viewer;
     let activeGrab = null;
     let previousPinch = null;
+    let activeController = null;
+    const CONTROLLER_LOCK_MS = 1200;
+    const CONTROLLER_MAX_JUMP = 0.28;
 
     function showError(message) {
       errorEl.style.display = "block";
@@ -123,6 +126,20 @@
         x: 0.5 * (landmarks[0].x + landmarks[9].x),
         y: 0.5 * (landmarks[0].y + landmarks[9].y)
       };
+    }
+
+    function handSize(landmarks) {
+      let minX = 1;
+      let minY = 1;
+      let maxX = 0;
+      let maxY = 0;
+      for (const landmark of landmarks) {
+        minX = Math.min(minX, landmark.x);
+        minY = Math.min(minY, landmark.y);
+        maxX = Math.max(maxX, landmark.x);
+        maxY = Math.max(maxY, landmark.y);
+      }
+      return Math.hypot(maxX - minX, maxY - minY);
     }
 
     function pinchState(landmarks) {
@@ -210,6 +227,59 @@
       previousPinch = null;
     }
 
+    function hasControlGesture(hand) {
+      return hand.closed || hand.pinch.active;
+    }
+
+    function handDistance(a, b) {
+      return Math.hypot(a.x - b.x, a.y - b.y);
+    }
+
+    function chooseController(detected) {
+      const now = performance.now();
+      const locked = activeController && now - activeController.lastGestureAt < CONTROLLER_LOCK_MS;
+
+      if (locked) {
+        let closest = null;
+        let closestDistance = Infinity;
+        for (const hand of detected) {
+          const distance = handDistance(hand.center, activeController.center);
+          if (distance < closestDistance) {
+            closest = hand;
+            closestDistance = distance;
+          }
+        }
+        if (closest && closestDistance < CONTROLLER_MAX_JUMP) {
+          activeController.center = {...closest.center};
+          if (hasControlGesture(closest)) activeController.lastGestureAt = now;
+          return closest;
+        }
+      }
+
+      const candidates = detected.filter(hasControlGesture);
+      if (!candidates.length) {
+        if (!locked) activeController = null;
+        return null;
+      }
+
+      let best = null;
+      let bestScore = -Infinity;
+      for (const hand of candidates) {
+        const distanceToCenter = handDistance(hand.center, {x: 0.5, y: 0.5});
+        const score = hand.size * 2.2 - distanceToCenter * 0.8;
+        if (score > bestScore) {
+          best = hand;
+          bestScore = score;
+        }
+      }
+
+      activeController = {
+        center: {...best.center},
+        lastGestureAt: now
+      };
+      return best;
+    }
+
     async function loadProtein() {
       viewer = $3Dmol.createViewer("viewer", {
         backgroundColor: "#111417",
@@ -251,7 +321,7 @@
         locateFile: file => `https://cdn.jsdelivr.net/npm/@mediapipe/hands/${file}`
       });
       hands.setOptions({
-        maxNumHands: 2,
+        maxNumHands: 4,
         modelComplexity: 1,
         minDetectionConfidence: 0.65,
         minTrackingConfidence: 0.55
@@ -273,7 +343,9 @@
             const center = handCenter(landmarks);
             const closed = isFistClosed(landmarks);
             const pinch = pinchState(landmarks);
-            detected.push({center, closed, pinch});
+            const size = handSize(landmarks);
+            const hand = {center, closed, pinch, size};
+            detected.push(hand);
 
             const x = (1 - center.x) * canvasEl.width;
             const y = center.y * canvasEl.height;
@@ -299,8 +371,10 @@
 
         canvasCtx.restore();
 
+        const controller = chooseController(detected);
+
         if (!viewer) return;
-        if (detected.length >= 1) applyGesture(detected[0]);
+        if (controller) applyGesture(controller);
         else {
           activeGrab = null;
           previousPinch = null;
