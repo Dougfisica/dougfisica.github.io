@@ -1,0 +1,1127 @@
+<!doctype html>
+<html lang="pt-BR">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Dados LAMMPS - Cartoon com webcam</title>
+  <script type="importmap">
+    {
+      "imports": {
+        "three": "https://cdn.jsdelivr.net/npm/three@0.164.1/build/three.module.js",
+        "three/addons/": "https://cdn.jsdelivr.net/npm/three@0.164.1/examples/jsm/"
+      }
+    }
+  </script>
+  <script src="https://cdn.jsdelivr.net/npm/@mediapipe/camera_utils/camera_utils.js"></script>
+  <script src="https://cdn.jsdelivr.net/npm/@mediapipe/drawing_utils/drawing_utils.js"></script>
+  <script src="https://cdn.jsdelivr.net/npm/@mediapipe/hands/hands.js"></script>
+  <style>
+    html, body {
+      margin: 0;
+      width: 100%;
+      height: 100%;
+      overflow: hidden;
+      background: #f2f2f2;
+      color: #1a1d20;
+      font-family: Arial, Helvetica, sans-serif;
+    }
+
+    button, select, input {
+      font: inherit;
+    }
+
+    #viewer {
+      position: fixed;
+      left: 0;
+      top: 0;
+      width: 50vw;
+      height: 100vh;
+      border-right: 1px solid rgba(0, 0, 0, 0.18);
+      background: #f2f2f2;
+      display: grid;
+      grid-template-rows: 1fr 1fr;
+      gap: 0;
+    }
+
+    .viewport {
+      position: relative;
+      min-height: 0;
+      overflow: hidden;
+      background: #f2f2f2;
+    }
+
+    .viewport + .viewport {
+      border-top: 0;
+    }
+
+    .viewport canvas {
+      display: block;
+      width: 100%;
+      height: 100%;
+    }
+
+    .viewport-label {
+      position: absolute;
+      right: 10px;
+      top: 10px;
+      z-index: 2;
+      padding: 5px 8px;
+      background: rgba(246, 246, 246, 0.86);
+      border: 1px solid rgba(0, 0, 0, 0.16);
+      color: #1a1d20;
+      font-size: 13px;
+      font-weight: 700;
+    }
+
+    .viewport-export {
+      position: absolute;
+      left: 10px;
+      top: 10px;
+      z-index: 3;
+      height: 30px;
+      padding: 0 10px;
+      min-width: 78px;
+      color: #1a1d20;
+      background: rgba(255, 255, 255, 0.9);
+      border: 1px solid rgba(0, 0, 0, 0.22);
+      border-radius: 6px;
+      font-size: 13px;
+      font-weight: 700;
+    }
+
+    .viewport-export:hover {
+      background: #e8ecef;
+    }
+
+    #webcam-panel {
+      position: fixed;
+      right: 0;
+      top: 0;
+      width: 50vw;
+      height: 100vh;
+      background: #050607;
+    }
+
+    #webcam, #overlay {
+      position: absolute;
+      inset: 0;
+      width: 100%;
+      height: 100%;
+      object-fit: fill;
+    }
+
+    #webcam {
+      transform: scaleX(-1);
+    }
+
+    #title {
+      position: fixed;
+      left: 14px;
+      top: 14px;
+      z-index: 5;
+      max-width: calc(50vw - 28px);
+      padding: 9px 12px;
+      background: rgba(246, 246, 246, 0.88);
+      border: 1px solid rgba(0, 0, 0, 0.18);
+      color: #171a1d;
+      font-size: 20px;
+      line-height: 1.15;
+      font-weight: 700;
+    }
+
+    #hud {
+      position: fixed;
+      left: 14px;
+      bottom: 14px;
+      z-index: 6;
+      width: min(560px, calc(50vw - 28px));
+      padding: 12px;
+      background: rgba(246, 246, 246, 0.9);
+      border: 1px solid rgba(0, 0, 0, 0.16);
+      backdrop-filter: blur(8px);
+    }
+
+    .row {
+      display: grid;
+      grid-template-columns: auto 1fr auto;
+      gap: 8px;
+      align-items: center;
+      margin-bottom: 9px;
+    }
+
+    .row:last-child {
+      margin-bottom: 0;
+    }
+
+    .buttons {
+      display: flex;
+      gap: 6px;
+    }
+
+    button, select {
+      height: 32px;
+      color: #1a1d20;
+      background: #ffffff;
+      border: 1px solid rgba(0, 0, 0, 0.22);
+      border-radius: 6px;
+      cursor: pointer;
+    }
+
+    button {
+      min-width: 36px;
+      padding: 0 10px;
+      font-weight: 700;
+    }
+
+    button:hover, select:hover {
+      background: #e8ecef;
+    }
+
+    select {
+      width: 100%;
+      padding: 0 8px;
+    }
+
+    input[type="range"] {
+      width: 100%;
+      accent-color: #1d74d8;
+    }
+
+    .label {
+      color: #5c646b;
+      font-size: 12px;
+      text-transform: uppercase;
+      letter-spacing: 0;
+      white-space: nowrap;
+    }
+
+    .value {
+      color: #1a1d20;
+      font-size: 13px;
+      text-align: right;
+      white-space: nowrap;
+    }
+
+    #scale {
+      height: 10px;
+      border-radius: 5px;
+      background: linear-gradient(90deg, #2534d8, #1eb7d9, #f3e64f, #d72d1f);
+    }
+
+    #status {
+      position: fixed;
+      right: 14px;
+      top: 14px;
+      z-index: 6;
+      max-width: calc(50vw - 28px);
+      padding: 9px 12px;
+      background: rgba(246, 246, 246, 0.88);
+      border: 1px solid rgba(0, 0, 0, 0.18);
+      color: #1a1d20;
+      font-size: 14px;
+      line-height: 1.3;
+    }
+
+    #error {
+      position: fixed;
+      left: 50%;
+      top: 50%;
+      z-index: 10;
+      transform: translate(-50%, -50%);
+      max-width: min(720px, calc(100vw - 32px));
+      padding: 16px 18px;
+      display: none;
+      background: #2a1111;
+      border: 1px solid #e05c5c;
+      color: #fff2f2;
+      font-size: 15px;
+      line-height: 1.45;
+    }
+
+    @media (max-width: 900px) {
+      #viewer, #webcam-panel {
+        width: 100vw;
+        height: 50vh;
+      }
+
+      #viewer {
+        border-right: 0;
+        border-bottom: 1px solid rgba(255, 255, 255, 0.14);
+      }
+
+      #webcam-panel {
+        top: 50vh;
+        right: auto;
+        left: 0;
+      }
+
+      #title, #hud, #status {
+        max-width: calc(100vw - 28px);
+      }
+
+      #hud {
+        width: calc(100vw - 28px);
+        bottom: calc(50vh + 14px);
+      }
+
+      #status {
+        top: calc(50vh + 14px);
+      }
+    }
+  </style>
+</head>
+<body>
+  <div id="viewer">
+    <div class="viewport" id="viewer-full">
+      <button class="viewport-export" id="export-full" title="Exportar camera do cristal completo">Exportar</button>
+      <div class="viewport-label">Cristal completo</div>
+    </div>
+    <div class="viewport" id="viewer-cut">
+      <button class="viewport-export" id="export-cut" title="Exportar camera do cristal cortado">Exportar</button>
+      <div class="viewport-label">Cristal cortado</div>
+    </div>
+  </div>
+  <div id="title">Dados LAMMPS - Von Mises</div>
+  <div id="hud">
+    <div class="row">
+      <div class="buttons">
+        <button id="prev" title="Quadro anterior">&lt;</button>
+        <button id="play" title="Reproduzir ou pausar">Play</button>
+        <button id="next" title="Proximo quadro">&gt;</button>
+      </div>
+      <select id="file-select" aria-label="Arquivo"></select>
+      <div class="value" id="time-value">-</div>
+    </div>
+    <div class="row">
+      <div class="label">Quadro</div>
+      <input id="frame-slider" type="range" min="0" max="0" value="0">
+      <div class="value" id="frame-value">0/0</div>
+    </div>
+    <div class="row">
+      <div class="label">Escala</div>
+      <div id="scale"></div>
+      <div class="value" id="range-value">-</div>
+    </div>
+  </div>
+  <div id="webcam-panel">
+    <video id="webcam" playsinline></video>
+    <canvas id="overlay"></canvas>
+  </div>
+  <div id="status">Carregando visualizador...</div>
+  <div id="error"></div>
+
+  <script>
+    window.addEventListener("error", event => {
+      const status = document.getElementById("status");
+      const error = document.getElementById("error");
+      const message = event.message || "Falha ao carregar recurso externo.";
+      if (status) status.textContent = `Erro: ${message}`;
+      if (error) {
+        error.style.display = "block";
+        error.textContent = message;
+      }
+    });
+
+    window.addEventListener("unhandledrejection", event => {
+      const status = document.getElementById("status");
+      const error = document.getElementById("error");
+      const reason = event.reason && event.reason.message ? event.reason.message : event.reason;
+      const message = String(reason || "Falha ao inicializar o visualizador.");
+      if (status) status.textContent = `Erro: ${message}`;
+      if (error) {
+        error.style.display = "block";
+        error.textContent = message;
+      }
+    });
+  </script>
+
+  <script type="module">
+    import * as THREE from "three";
+    import { OrbitControls } from "three/addons/controls/OrbitControls.js";
+
+    const DATA_FILES = [
+      "15.lammpstrj", "20.lammpstrj", "25.lammpstrj", "30.lammpstrj",
+      "35.lammpstrj", "40.lammpstrj", "45.lammpstrj", "50.lammpstrj",
+      "55.lammpstrj", "60.lammpstrj", "65.lammpstrj", "70.lammpstrj",
+      "75.lammpstrj", "80.lammpstrj", "85.lammpstrj", "90.lammpstrj",
+      "95.lammpstrj", "100.lammpstrj"
+    ];
+    const DATA_VERSION = "bounds-from-atoms-20260602";
+    const ATOM_POINT_SIZE = 8.0;
+    const COLOR_MIN = 1;
+    const COLOR_MAX = 20000;
+    const CUT_VIEW_ZOOM_FACTOR = 0.86;
+    const REST_FRAME = 0;
+    const CAMERA_PRESETS = {
+      full: {
+        camera: {
+          position: [-0.4596977714851914, -204.4, 65.0],
+          target: [0, 0, -29.705000000000002],
+          up: [0, 1, 0],
+          fov: 45,
+          zoom: 1,
+          near: 0.615732,
+          far: 1000
+        }
+      },
+      cut: {
+        camera: {
+          position: [-0.0000018246604045739495, -223.23622674795936, -29.70473730010997],
+          target: [0, 39.47, -29.705000000000002],
+          up: [0, 1, 0],
+          fov: 45,
+          zoom: 1,
+          near: 0.615732,
+          far: 1000
+        }
+      }
+    };
+
+    const state = {
+      frame: 0,
+      playing: false,
+      cache: new Map(),
+      pressGesture: null,
+      timer: null
+    };
+
+    const fullViewerEl = document.getElementById("viewer-full");
+    const cutViewerEl = document.getElementById("viewer-cut");
+    const statusEl = document.getElementById("status");
+    const errorEl = document.getElementById("error");
+    const videoEl = document.getElementById("webcam");
+    const canvasEl = document.getElementById("overlay");
+    const canvasCtx = canvasEl.getContext("2d");
+    const fileSelect = document.getElementById("file-select");
+    const frameSlider = document.getElementById("frame-slider");
+    const frameValue = document.getElementById("frame-value");
+    const timeValue = document.getElementById("time-value");
+    const rangeValue = document.getElementById("range-value");
+    const playButton = document.getElementById("play");
+    const exportFullButton = document.getElementById("export-full");
+    const exportCutButton = document.getElementById("export-cut");
+
+    let fullView;
+    let cutView;
+    let animationId;
+
+    function showError(message) {
+      errorEl.style.display = "block";
+      errorEl.textContent = message;
+    }
+
+    function setStatus(message) {
+      statusEl.textContent = message;
+    }
+
+    function formatNumber(value) {
+      return Number.isFinite(value) ? Math.round(value).toLocaleString("pt-BR") : "-";
+    }
+
+    function initControls() {
+      frameSlider.max = String(DATA_FILES.length - 1);
+      DATA_FILES.forEach((file, index) => {
+        const option = document.createElement("option");
+        option.value = String(index);
+        option.textContent = file;
+        fileSelect.appendChild(option);
+      });
+
+      document.getElementById("prev").addEventListener("click", () => showFrame(state.frame - 1));
+      document.getElementById("next").addEventListener("click", () => showFrame(state.frame + 1));
+      playButton.addEventListener("click", togglePlayback);
+      frameSlider.addEventListener("input", event => showFrame(Number(event.target.value)));
+      fileSelect.addEventListener("change", event => showFrame(Number(event.target.value)));
+      exportFullButton.addEventListener("click", event => {
+        event.stopPropagation();
+        exportViewState("cristal-completo", fullView);
+      });
+      exportCutButton.addEventListener("click", event => {
+        event.stopPropagation();
+        exportViewState("cristal-cortado", cutView);
+      });
+    }
+
+    function initThree() {
+      fullView = createView(fullViewerEl);
+      cutView = createView(cutViewerEl);
+      fullView.controls.enabled = false;
+      cutView.controls.enabled = false;
+
+      resizeThree();
+      window.addEventListener("resize", resizeThree);
+    }
+
+    function createView(container) {
+      const scene = new THREE.Scene();
+      scene.background = new THREE.Color(0xf2f2f2);
+
+      const camera = new THREE.PerspectiveCamera(45, 1, 0.1, 5000);
+      camera.position.set(0, -360, 220);
+
+      const renderer = new THREE.WebGLRenderer({antialias: true});
+      renderer.setPixelRatio(Math.min(window.devicePixelRatio || 1, 2));
+      container.appendChild(renderer.domElement);
+
+      const controls = new OrbitControls(camera, renderer.domElement);
+      controls.enabled = false;
+      controls.enableRotate = false;
+      controls.enablePan = false;
+      controls.enableZoom = false;
+      controls.enableDamping = false;
+      controls.dampingFactor = 0.08;
+
+      const ambient = new THREE.AmbientLight(0xffffff, 0.92);
+      scene.add(ambient);
+
+      const axes = new THREE.AxesHelper(60);
+      axes.material.depthTest = false;
+      axes.renderOrder = 1;
+      scene.add(axes);
+
+      return {
+        container,
+        scene,
+        camera,
+        renderer,
+        controls,
+        points: null,
+        simulationBox: null,
+        material: null
+      };
+    }
+
+    function createAtomSpriteTexture() {
+      const size = 96;
+      const canvas = document.createElement("canvas");
+      canvas.width = size;
+      canvas.height = size;
+      const ctx = canvas.getContext("2d");
+      const gradient = ctx.createRadialGradient(32, 28, 4, 48, 48, 45);
+      gradient.addColorStop(0.0, "rgba(255,255,255,1.0)");
+      gradient.addColorStop(0.18, "rgba(255,255,255,0.92)");
+      gradient.addColorStop(0.62, "rgba(210,210,210,0.88)");
+      gradient.addColorStop(0.9, "rgba(95,95,95,0.72)");
+      gradient.addColorStop(1.0, "rgba(0,0,0,0.0)");
+      ctx.fillStyle = gradient;
+      ctx.beginPath();
+      ctx.arc(48, 48, 45, 0, Math.PI * 2);
+      ctx.fill();
+
+      const texture = new THREE.CanvasTexture(canvas);
+      texture.colorSpace = THREE.SRGBColorSpace;
+      return texture;
+    }
+
+    function createSimulationBox(bounds) {
+      const x0 = bounds[0][0];
+      const x1 = bounds[0][1];
+      const y0 = bounds[1][0];
+      const y1 = bounds[1][1];
+      const z0 = bounds[2][0];
+      const z1 = bounds[2][1];
+      const vertices = new Float32Array([
+        x0, y0, z0, x1, y0, z0, x1, y0, z0, x1, y1, z0,
+        x1, y1, z0, x0, y1, z0, x0, y1, z0, x0, y0, z0,
+        x0, y0, z1, x1, y0, z1, x1, y0, z1, x1, y1, z1,
+        x1, y1, z1, x0, y1, z1, x0, y1, z1, x0, y0, z1,
+        x0, y0, z0, x0, y0, z1, x1, y0, z0, x1, y0, z1,
+        x1, y1, z0, x1, y1, z1, x0, y1, z0, x0, y1, z1
+      ]);
+      const geometry = new THREE.BufferGeometry();
+      geometry.setAttribute("position", new THREE.BufferAttribute(vertices, 3));
+      const lineMaterial = new THREE.LineBasicMaterial({
+        color: 0x202020,
+        transparent: true,
+        opacity: 0.82
+      });
+      const box = new THREE.LineSegments(geometry, lineMaterial);
+      box.renderOrder = 2;
+      return box;
+    }
+
+    function getAtomMaterial(view) {
+      if (!view.material) {
+        const atomTexture = createAtomSpriteTexture();
+        view.material = new THREE.PointsMaterial({
+          size: ATOM_POINT_SIZE,
+          vertexColors: true,
+          transparent: false,
+          opacity: 1.0,
+          map: atomTexture,
+          alphaTest: 0.5,
+          sizeAttenuation: true
+        });
+      }
+      return view.material;
+    }
+
+    function setCrystalView(view, geometry, bounds) {
+      if (view.points) {
+        disposeObject3D(view.points, view.material);
+        view.scene.remove(view.points);
+      }
+      if (view.simulationBox) {
+        disposeObject3D(view.simulationBox);
+        view.scene.remove(view.simulationBox);
+      }
+
+      view.points = new THREE.Points(geometry, getAtomMaterial(view));
+      view.simulationBox = createSimulationBox(bounds);
+      view.scene.add(view.points);
+      view.scene.add(view.simulationBox);
+    }
+
+    function buildCrystalGeometry(frame, yMin = -Infinity) {
+      let count = 0;
+      for (let i = 0; i < frame.count; i += 1) {
+        if (frame.positions[i * 3 + 1] >= yMin) count += 1;
+      }
+
+      const positions = new Float32Array(count * 3);
+      const colors = new Float32Array(count * 3);
+      let written = 0;
+      for (let i = 0; i < frame.count; i += 1) {
+        const sourceOffset = i * 3;
+        if (frame.positions[sourceOffset + 1] < yMin) continue;
+
+        const targetOffset = written * 3;
+        positions[targetOffset] = frame.positions[sourceOffset];
+        positions[targetOffset + 1] = frame.positions[sourceOffset + 1];
+        positions[targetOffset + 2] = frame.positions[sourceOffset + 2];
+        colors[targetOffset] = frame.colors[sourceOffset];
+        colors[targetOffset + 1] = frame.colors[sourceOffset + 1];
+        colors[targetOffset + 2] = frame.colors[sourceOffset + 2];
+        written += 1;
+      }
+
+      const geometry = new THREE.BufferGeometry();
+      geometry.setAttribute("position", new THREE.BufferAttribute(positions, 3));
+      geometry.setAttribute("color", new THREE.BufferAttribute(colors, 3));
+      geometry.computeBoundingSphere();
+      return {geometry, count};
+    }
+
+    function disposeObject3D(object, persistentMaterial = null) {
+      object.traverse(child => {
+        if (child.geometry) child.geometry.dispose();
+        if (child.material && child.material !== persistentMaterial) child.material.dispose();
+      });
+    }
+
+    function resizeThree() {
+      for (const view of [fullView, cutView]) {
+        const rect = view.container.getBoundingClientRect();
+        view.renderer.setSize(Math.max(1, rect.width), Math.max(1, rect.height), false);
+        view.camera.aspect = Math.max(1, rect.width) / Math.max(1, rect.height);
+        view.camera.updateProjectionMatrix();
+      }
+    }
+
+    function animate() {
+      animationId = requestAnimationFrame(animate);
+      fullView.renderer.render(fullView.scene, fullView.camera);
+      cutView.renderer.render(cutView.scene, cutView.camera);
+    }
+
+    function vectorToArray(vector) {
+      return [vector.x, vector.y, vector.z];
+    }
+
+    function boundsCenter(bounds) {
+      return new THREE.Vector3(
+        0.5 * (bounds[0][0] + bounds[0][1]),
+        0.5 * (bounds[1][0] + bounds[1][1]),
+        0.5 * (bounds[2][0] + bounds[2][1])
+      );
+    }
+
+    function applyCameraPreset(view, preset, bounds, zoomFactor = 1) {
+      const camera = view.camera;
+      const savedPosition = new THREE.Vector3(...preset.camera.position);
+      const savedTarget = new THREE.Vector3(...preset.camera.target);
+      const savedUp = new THREE.Vector3(...preset.camera.up);
+      const direction = savedPosition.sub(savedTarget);
+      const distance = direction.length() * zoomFactor;
+      const target = boundsCenter(bounds);
+
+      camera.fov = preset.camera.fov;
+      camera.zoom = preset.camera.zoom;
+      camera.near = preset.camera.near;
+      camera.far = preset.camera.far;
+      camera.up.copy(savedUp);
+      camera.position.copy(target).add(direction.normalize().multiplyScalar(distance));
+      camera.lookAt(target);
+      camera.updateProjectionMatrix();
+
+      view.controls.target.copy(target);
+      view.controls.update();
+    }
+
+    function exportViewState(name, view) {
+      if (!view) return;
+      const target = view.controls.target;
+      const camera = view.camera;
+      const stateData = {
+        name,
+        exportedAt: new Date().toISOString(),
+        frameIndex: state.frame,
+        file: DATA_FILES[state.frame],
+        camera: {
+          position: vectorToArray(camera.position),
+          target: vectorToArray(target),
+          up: vectorToArray(camera.up),
+          rotation: [camera.rotation.x, camera.rotation.y, camera.rotation.z, camera.rotation.order],
+          quaternion: [camera.quaternion.x, camera.quaternion.y, camera.quaternion.z, camera.quaternion.w],
+          fov: camera.fov,
+          zoom: camera.zoom,
+          near: camera.near,
+          far: camera.far,
+          distance: camera.position.distanceTo(target)
+        },
+        controls: {
+          target: vectorToArray(target),
+          minDistance: view.controls.minDistance,
+          maxDistance: view.controls.maxDistance,
+          enableDamping: view.controls.enableDamping,
+          dampingFactor: view.controls.dampingFactor
+        }
+      };
+
+      const json = JSON.stringify(stateData, null, 2);
+      localStorage.setItem(`crystal-view:${name}`, json);
+
+      const blob = new Blob([json], {type: "application/json"});
+      const url = URL.createObjectURL(blob);
+      const link = document.createElement("a");
+      link.href = url;
+      link.download = `${name}-camera-${DATA_FILES[state.frame].replace(".lammpstrj", "")}.json`;
+      document.body.appendChild(link);
+      link.click();
+      link.remove();
+      URL.revokeObjectURL(url);
+      setStatus(`Camera exportada: ${name}`);
+    }
+
+    function parseLammpstrj(text, file) {
+      const lines = text.split(/\r?\n/);
+      const timestep = Number(lines[1]);
+      const count = Number(lines[3]);
+      const boundsStart = 5;
+      const bounds = [
+        lines[boundsStart].trim().split(/\s+/).map(Number),
+        lines[boundsStart + 1].trim().split(/\s+/).map(Number),
+        lines[boundsStart + 2].trim().split(/\s+/).map(Number)
+      ];
+      const atomHeaderIndex = lines.findIndex(line => line.startsWith("ITEM: ATOMS"));
+      if (atomHeaderIndex < 0 || !Number.isFinite(count)) {
+        throw new Error(`Formato LAMMPS inesperado em ${file}`);
+      }
+
+      const columns = lines[atomHeaderIndex].replace("ITEM: ATOMS", "").trim().split(/\s+/);
+      const xIndex = columns.indexOf("x");
+      const yIndex = columns.indexOf("y");
+      const zIndex = columns.indexOf("z");
+      const scalarIndex = columns.findIndex(column => {
+        const normalized = column.toLowerCase();
+        return normalized.startsWith("von_mises") || normalized.startsWith("von_misses");
+      });
+      if (xIndex < 0 || yIndex < 0 || zIndex < 0 || scalarIndex < 0) {
+        throw new Error(`Colunas x/y/z/von_mises ou von_misses ausentes em ${file}`);
+      }
+      const scalarColumn = columns[scalarIndex];
+
+      const positions = new Float32Array(count * 3);
+      const values = new Float32Array(count);
+      const atomMins = [Infinity, Infinity, Infinity];
+      const atomMaxs = [-Infinity, -Infinity, -Infinity];
+      let minValue = Infinity;
+      let maxValue = -Infinity;
+      let written = 0;
+
+      for (let i = atomHeaderIndex + 1; i < lines.length && written < count; i += 1) {
+        const line = lines[i].trim();
+        if (!line) continue;
+        const parts = line.split(/\s+/);
+        const x = Number(parts[xIndex]);
+        const y = Number(parts[yIndex]);
+        const z = Number(parts[zIndex]);
+        const value = Number(parts[scalarIndex]);
+        if (!Number.isFinite(x) || !Number.isFinite(y) || !Number.isFinite(z)) continue;
+
+        const offset = written * 3;
+        positions[offset] = x;
+        positions[offset + 1] = y;
+        positions[offset + 2] = z;
+        values[written] = value;
+        atomMins[0] = Math.min(atomMins[0], x);
+        atomMins[1] = Math.min(atomMins[1], y);
+        atomMins[2] = Math.min(atomMins[2], z);
+        atomMaxs[0] = Math.max(atomMaxs[0], x);
+        atomMaxs[1] = Math.max(atomMaxs[1], y);
+        atomMaxs[2] = Math.max(atomMaxs[2], z);
+        minValue = Math.min(minValue, value);
+        maxValue = Math.max(maxValue, value);
+        written += 1;
+      }
+
+      const atomBounds = [
+        [atomMins[0], atomMaxs[0]],
+        [atomMins[1], atomMaxs[1]],
+        [atomMins[2], atomMaxs[2]]
+      ];
+
+      return {
+        file,
+        timestep,
+        count: written,
+        bounds: atomBounds,
+        fileBounds: bounds,
+        positions,
+        values,
+        minValue,
+        maxValue,
+        scalarColumn
+      };
+    }
+
+    function buildColors(values, minValue, maxValue) {
+      const colors = new Float32Array(values.length * 3);
+      const span = Math.max(1, maxValue - minValue);
+      const stops = [
+        [0.0, 0x25 / 255, 0x34 / 255, 0xd8 / 255],
+        [0.35, 0x1e / 255, 0xb7 / 255, 0xd9 / 255],
+        [0.68, 0xf3 / 255, 0xe6 / 255, 0x4f / 255],
+        [1.0, 0xd7 / 255, 0x2d / 255, 0x1f / 255]
+      ];
+      for (let i = 0; i < values.length; i += 1) {
+        const t = Math.max(0, Math.min(1, (values[i] - minValue) / span));
+        let a = stops[0];
+        let b = stops[stops.length - 1];
+        for (let j = 1; j < stops.length; j += 1) {
+          if (t <= stops[j][0]) {
+            a = stops[j - 1];
+            b = stops[j];
+            break;
+          }
+        }
+        const local = (t - a[0]) / Math.max(0.0001, b[0] - a[0]);
+        const offset = i * 3;
+        colors[offset] = a[1] + (b[1] - a[1]) * local;
+        colors[offset + 1] = a[2] + (b[2] - a[2]) * local;
+        colors[offset + 2] = a[3] + (b[3] - a[3]) * local;
+      }
+      return colors;
+    }
+
+    function fitCamera(view, bounds) {
+      const cx = 0.5 * (bounds[0][0] + bounds[0][1]);
+      const cy = 0.5 * (bounds[1][0] + bounds[1][1]);
+      const cz = 0.5 * (bounds[2][0] + bounds[2][1]);
+      const sx = bounds[0][1] - bounds[0][0];
+      const sy = bounds[1][1] - bounds[1][0];
+      const sz = bounds[2][1] - bounds[2][0];
+      const radius = Math.max(sx, sy, sz) * 0.78;
+
+      view.controls.target.set(cx, cy, cz);
+      view.camera.position.set(cx + radius * 0.65, cy - radius * 1.9, cz + radius * 0.72);
+      view.camera.near = Math.max(0.1, radius / 200);
+      view.camera.far = Math.max(1000, radius * 8);
+      view.camera.updateProjectionMatrix();
+      view.controls.update();
+    }
+
+    async function loadFrame(index) {
+      const normalized = (index + DATA_FILES.length) % DATA_FILES.length;
+      const file = DATA_FILES[normalized];
+      if (state.cache.has(file)) return state.cache.get(file);
+
+      setStatus(`Carregando dados/${file}...`);
+      const response = await fetch(`dados/${file}?v=${DATA_VERSION}`);
+      if (!response.ok) throw new Error(`Nao foi possivel carregar dados/${file}`);
+      const frame = parseLammpstrj(await response.text(), file);
+      state.cache.set(file, frame);
+      return frame;
+    }
+
+    async function showFrame(index, fit = false) {
+      const normalized = (index + DATA_FILES.length) % DATA_FILES.length;
+      state.frame = normalized;
+      frameSlider.value = String(normalized);
+      fileSelect.value = String(normalized);
+      frameValue.textContent = `${normalized + 1}/${DATA_FILES.length}`;
+
+      const frame = await loadFrame(normalized);
+      if (!frame.colors) frame.colors = buildColors(frame.values, COLOR_MIN, COLOR_MAX);
+      const cutY = 0.5 * (frame.bounds[1][0] + frame.bounds[1][1]);
+      const fullCrystal = buildCrystalGeometry(frame);
+      const cutCrystal = buildCrystalGeometry(frame, cutY);
+      const cutBounds = [
+        frame.bounds[0],
+        [cutY, frame.bounds[1][1]],
+        frame.bounds[2]
+      ];
+
+      setCrystalView(fullView, fullCrystal.geometry, frame.bounds);
+      setCrystalView(cutView, cutCrystal.geometry, cutBounds);
+      applyCameraPreset(fullView, CAMERA_PRESETS.full, frame.bounds);
+      applyCameraPreset(cutView, CAMERA_PRESETS.cut, cutBounds, CUT_VIEW_ZOOM_FACTOR);
+
+      timeValue.textContent = `t=${formatNumber(frame.timestep)}`;
+      rangeValue.textContent = `${formatNumber(COLOR_MIN)} a ${formatNumber(COLOR_MAX)}`;
+      setStatus(`${frame.file}: ${formatNumber(frame.count)} + ${formatNumber(cutCrystal.count)} atomos; cor = ${frame.scalarColumn}`);
+      void loadFrame(normalized + 1).catch(() => {});
+    }
+
+    function togglePlayback() {
+      state.playing = !state.playing;
+      playButton.textContent = state.playing ? "Pause" : "Play";
+      if (state.timer) clearInterval(state.timer);
+      if (state.playing) {
+        state.timer = setInterval(() => {
+          void showFrame(state.frame + 1);
+        }, 850);
+      }
+    }
+
+    function resizeCanvas() {
+      const rect = canvasEl.getBoundingClientRect();
+      canvasEl.width = Math.max(1, Math.round(rect.width));
+      canvasEl.height = Math.max(1, Math.round(rect.height));
+    }
+
+    function handCenter(landmarks) {
+      return {
+        x: 0.5 * (landmarks[0].x + landmarks[9].x),
+        y: 0.5 * (landmarks[0].y + landmarks[9].y)
+      };
+    }
+
+    function handSize(landmarks) {
+      let minX = 1;
+      let minY = 1;
+      let maxX = 0;
+      let maxY = 0;
+      for (const landmark of landmarks) {
+        minX = Math.min(minX, landmark.x);
+        minY = Math.min(minY, landmark.y);
+        maxX = Math.max(maxX, landmark.x);
+        maxY = Math.max(maxY, landmark.y);
+      }
+      return Math.hypot(maxX - minX, maxY - minY);
+    }
+
+    function landmarkDistance(a, b) {
+      return Math.hypot(a.x - b.x, a.y - b.y, (a.z || 0) - (b.z || 0));
+    }
+
+    function isFingerFolded(landmarks, tip, pip, mcp) {
+      const wrist = landmarks[0];
+      const tipToWrist = landmarkDistance(landmarks[tip], wrist);
+      const pipToWrist = landmarkDistance(landmarks[pip], wrist);
+      const mcpToWrist = landmarkDistance(landmarks[mcp], wrist);
+      return tipToWrist < pipToWrist * 1.18 || tipToWrist < mcpToWrist * 1.55;
+    }
+
+    function isPressGesture(landmarks) {
+      const indexTip = landmarks[8];
+      const indexPip = landmarks[6];
+      const indexMcp = landmarks[5];
+      const indexDx = Math.abs(indexTip.x - indexMcp.x);
+      const indexDy = indexTip.y - indexMcp.y;
+      const indexLength = landmarkDistance(indexTip, indexMcp);
+      const indexExtended = landmarkDistance(indexTip, landmarks[0]) > landmarkDistance(indexPip, landmarks[0]) * 1.16;
+      const indexDown = indexExtended && indexDy > 0.035 && indexDy > indexDx * 0.85 && indexLength > 0.07;
+      const otherFingersFolded =
+        isFingerFolded(landmarks, 12, 10, 9) &&
+        isFingerFolded(landmarks, 16, 14, 13) &&
+        isFingerFolded(landmarks, 20, 18, 17);
+      return indexDown && otherFingersFolded;
+    }
+
+    function selectPressHand(rawHands) {
+      let selected = null;
+      let selectedSize = -Infinity;
+      for (const landmarks of rawHands) {
+        if (!isPressGesture(landmarks)) continue;
+        const size = handSize(landmarks);
+        if (size > selectedSize) {
+          selected = landmarks;
+          selectedSize = size;
+        }
+      }
+      return selected;
+    }
+
+    function stopPlayback() {
+      state.playing = false;
+      playButton.textContent = "Play";
+      if (state.timer) clearInterval(state.timer);
+      state.timer = null;
+    }
+
+    function updatePressGesture(landmarks) {
+      if (!landmarks) {
+        return returnToPressStartFrame();
+      }
+
+      if (state.pressGesture && state.pressGesture.returning) {
+        state.pressGesture = null;
+      }
+
+      stopPlayback();
+      const center = handCenter(landmarks);
+      if (!state.pressGesture) {
+        state.pressGesture = {
+          startY: center.y,
+          startFrame: REST_FRAME,
+          lastTarget: state.frame
+        };
+      }
+
+      const downwardTravel = Math.max(0, center.y - state.pressGesture.startY);
+      const frameStep = 0.035 / 3;
+      const advance = Math.floor(downwardTravel / frameStep);
+      const target = Math.min(DATA_FILES.length - 1, state.pressGesture.startFrame + advance);
+      if (target !== state.pressGesture.lastTarget) {
+        state.pressGesture.lastTarget = target;
+        void showFrame(target);
+      }
+
+      return {
+        center,
+        progress: Math.min(1, downwardTravel / (frameStep * 5)),
+        advance
+      };
+    }
+
+    function returnToPressStartFrame() {
+      const gesture = state.pressGesture;
+      if (!gesture) return null;
+
+      gesture.returning = true;
+      const startFrame = REST_FRAME;
+      if (state.frame > startFrame) {
+        const target = Math.max(startFrame, state.frame - 1);
+        gesture.lastTarget = target;
+        void showFrame(target);
+        return {
+          center: {x: 0.5, y: 0.5},
+          progress: Math.max(0, (target - startFrame) / Math.max(1, DATA_FILES.length - 1 - startFrame)),
+          advance: target - startFrame,
+          returning: true
+        };
+      }
+
+      state.pressGesture = null;
+      return null;
+    }
+
+    function drawPressFeedback(gesture) {
+      if (!gesture) return;
+      const x = (1 - gesture.center.x) * canvasEl.width;
+      const y = gesture.center.y * canvasEl.height;
+      canvasCtx.fillStyle = "#ff3d2e";
+      canvasCtx.beginPath();
+      canvasCtx.arc(x, y, 10, 0, Math.PI * 2);
+      canvasCtx.fill();
+
+      const barWidth = 160;
+      const barHeight = 12;
+      const barX = Math.max(12, Math.min(canvasEl.width - barWidth - 12, x - barWidth / 2));
+      const barY = Math.max(12, y - 42);
+      canvasCtx.fillStyle = "rgba(0, 0, 0, 0.55)";
+      canvasCtx.fillRect(barX, barY, barWidth, barHeight);
+      canvasCtx.fillStyle = "#ff3d2e";
+      canvasCtx.fillRect(barX, barY, barWidth * gesture.progress, barHeight);
+      canvasCtx.font = "bold 15px Arial";
+      canvasCtx.fillStyle = "#ffffff";
+      canvasCtx.fillText(gesture.returning ? "RETORNANDO" : "PRESSIONANDO", barX, barY - 8);
+    }
+
+    function mirrorLandmark(landmark) {
+      return {...landmark, x: 1 - landmark.x};
+    }
+
+    function mirrorLandmarks(landmarks) {
+      return landmarks.map(mirrorLandmark);
+    }
+
+    async function startHands() {
+      if (!window.Hands || !window.Camera) {
+        setStatus("Visualizador ativo. MediaPipe nao carregou para a webcam.");
+        return;
+      }
+
+      resizeCanvas();
+      window.addEventListener("resize", resizeCanvas);
+
+      const hands = new Hands({
+        locateFile: file => `https://cdn.jsdelivr.net/npm/@mediapipe/hands/${file}`
+      });
+      hands.setOptions({
+        maxNumHands: 4,
+        modelComplexity: 1,
+        minDetectionConfidence: 0.65,
+        minTrackingConfidence: 0.55
+      });
+
+      hands.onResults(results => {
+        resizeCanvas();
+        canvasCtx.save();
+        canvasCtx.clearRect(0, 0, canvasEl.width, canvasEl.height);
+        const rawHands = results.multiHandLandmarks || [];
+        const pressHand = selectPressHand(rawHands);
+
+        for (const landmarks of rawHands) {
+          const mirrored = mirrorLandmarks(landmarks);
+          const isActive = landmarks === pressHand;
+          drawConnectors(canvasCtx, mirrored, HAND_CONNECTIONS, {color: isActive ? "#ff3d2e" : "#00d084", lineWidth: 3});
+          drawLandmarks(canvasCtx, mirrored, {color: "#f5f141", lineWidth: 1, radius: 2});
+
+          const center = handCenter(landmarks);
+          const x = (1 - center.x) * canvasEl.width;
+          const y = center.y * canvasEl.height;
+          canvasCtx.fillStyle = "#f5f141";
+          canvasCtx.beginPath();
+          canvasCtx.arc(x, y, 7, 0, Math.PI * 2);
+          canvasCtx.fill();
+        }
+
+        drawPressFeedback(updatePressGesture(pressHand));
+        canvasCtx.restore();
+      });
+
+      const cameraFeed = new Camera(videoEl, {
+        onFrame: async () => {
+          await hands.send({image: videoEl});
+        },
+        width: 640,
+        height: 480
+      });
+      await cameraFeed.start();
+    }
+
+    window.addEventListener("beforeunload", () => {
+      if (animationId) cancelAnimationFrame(animationId);
+      if (state.timer) clearInterval(state.timer);
+    });
+
+    (async () => {
+      try {
+        initControls();
+        initThree();
+        animate();
+        await showFrame(0, true);
+        startHands().catch(error => {
+          setStatus(`Visualizador ativo. Webcam indisponivel: ${error.message || error}`);
+        });
+      } catch (error) {
+        const message = String(error && error.message ? error.message : error);
+        setStatus(`Erro: ${message}`);
+        showError(message);
+      }
+    })();
+  </script>
+</body>
+</html>
