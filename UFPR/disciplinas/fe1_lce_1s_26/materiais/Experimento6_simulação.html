@@ -1,0 +1,1555 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Applet de Colisões Unidimensionais</title>
+  <style>
+    :root {
+      color-scheme: light;
+      --bg: #f4f6f8;
+      --surface: #ffffff;
+      --surface-2: #eef2f5;
+      --ink: #17212b;
+      --muted: #5f6f7f;
+      --line: #d6dee6;
+      --rail: #53606c;
+      --accent: #2364aa;
+      --accent-2: #0f8b8d;
+      --cart-1: #d64545;
+      --cart-2: #16855f;
+      --warning: #b7791f;
+      --shadow: 0 14px 35px rgba(28, 39, 49, 0.10);
+      font-family: Inter, ui-sans-serif, system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif;
+    }
+
+    * {
+      box-sizing: border-box;
+    }
+
+    body {
+      margin: 0;
+      min-height: 100vh;
+      background:
+        linear-gradient(180deg, rgba(255, 255, 255, 0.76), rgba(244, 246, 248, 0.94)),
+        radial-gradient(circle at 20% 0%, rgba(35, 100, 170, 0.10), transparent 32rem);
+      color: var(--ink);
+    }
+
+    button,
+    input {
+      font: inherit;
+    }
+
+    .app {
+      width: min(1480px, calc(100% - 32px));
+      margin: 0 auto;
+      padding: 24px 0 32px;
+    }
+
+    .topbar {
+      display: flex;
+      align-items: end;
+      justify-content: space-between;
+      gap: 16px;
+      margin-bottom: 18px;
+    }
+
+    h1 {
+      margin: 0;
+      font-size: clamp(1.45rem, 1rem + 1.1vw, 2.15rem);
+      line-height: 1.1;
+      letter-spacing: 0;
+      overflow-wrap: anywhere;
+    }
+
+    .subtitle {
+      margin: 6px 0 0;
+      color: var(--muted);
+      max-width: 820px;
+      font-size: 0.98rem;
+      overflow-wrap: anywhere;
+    }
+
+    .status-pill {
+      flex: 0 0 auto;
+      display: inline-flex;
+      align-items: center;
+      gap: 8px;
+      min-height: 36px;
+      padding: 8px 12px;
+      border: 1px solid var(--line);
+      border-radius: 999px;
+      background: rgba(255, 255, 255, 0.86);
+      box-shadow: 0 8px 18px rgba(28, 39, 49, 0.06);
+      color: var(--muted);
+      font-size: 0.93rem;
+      white-space: nowrap;
+    }
+
+    .status-dot {
+      width: 9px;
+      height: 9px;
+      border-radius: 50%;
+      background: var(--warning);
+    }
+
+    .status-pill.running .status-dot {
+      background: var(--accent-2);
+    }
+
+    .workspace {
+      display: grid;
+      grid-template-columns: minmax(0, 1fr) 410px;
+      gap: 18px;
+      align-items: start;
+    }
+
+    .workspace > *,
+    .topbar > * {
+      min-width: 0;
+    }
+
+    .panel {
+      background: rgba(255, 255, 255, 0.96);
+      border: 1px solid var(--line);
+      border-radius: 8px;
+      box-shadow: var(--shadow);
+      min-width: 0;
+    }
+
+    .simulation-panel {
+      overflow: hidden;
+    }
+
+    .canvas-wrap {
+      padding: 14px;
+      background: linear-gradient(180deg, #fbfcfd 0%, #eef3f6 100%);
+    }
+
+    canvas {
+      display: block;
+      width: 100%;
+      height: 440px;
+      border: 1px solid var(--line);
+      border-radius: 8px;
+      background: #f9fbfc;
+    }
+
+    .controls {
+      padding: 16px;
+    }
+
+    .section + .section {
+      margin-top: 18px;
+      padding-top: 18px;
+      border-top: 1px solid var(--line);
+    }
+
+    .section-title {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      gap: 12px;
+      margin: 0 0 12px;
+      font-size: 0.95rem;
+      font-weight: 800;
+    }
+
+    .control-grid {
+      display: grid;
+      gap: 12px;
+    }
+
+    .control {
+      display: grid;
+      grid-template-columns: 1fr 92px;
+      gap: 10px;
+      align-items: center;
+      min-width: 0;
+    }
+
+    .control label {
+      display: grid;
+      gap: 5px;
+      min-width: 0;
+    }
+
+    .label-row {
+      display: flex;
+      align-items: baseline;
+      justify-content: space-between;
+      gap: 10px;
+      color: var(--ink);
+      font-weight: 700;
+      font-size: 0.92rem;
+    }
+
+    .label-row span:last-child {
+      color: var(--muted);
+      font-weight: 600;
+      font-size: 0.8rem;
+      white-space: nowrap;
+    }
+
+    input[type="range"] {
+      width: 100%;
+      min-width: 0;
+      accent-color: var(--accent);
+    }
+
+    input[type="number"] {
+      width: 92px;
+      min-height: 36px;
+      border: 1px solid var(--line);
+      border-radius: 6px;
+      padding: 7px 8px;
+      font-variant-numeric: tabular-nums;
+      color: var(--ink);
+      background: var(--surface);
+    }
+
+    .segmented {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 6px;
+      padding: 4px;
+      border-radius: 8px;
+      background: var(--surface-2);
+      border: 1px solid var(--line);
+    }
+
+    .segmented label {
+      position: relative;
+      min-width: 0;
+    }
+
+    .segmented input {
+      position: absolute;
+      opacity: 0;
+      pointer-events: none;
+    }
+
+    .segmented span {
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      min-height: 42px;
+      padding: 8px;
+      border-radius: 6px;
+      color: var(--muted);
+      text-align: center;
+      font-size: 0.86rem;
+      font-weight: 800;
+      line-height: 1.15;
+      cursor: pointer;
+    }
+
+    .segmented input:checked + span {
+      background: #fff;
+      color: var(--accent);
+      box-shadow: 0 4px 12px rgba(28, 39, 49, 0.08);
+    }
+
+    .button-row {
+      display: grid;
+      grid-template-columns: repeat(3, 1fr);
+      gap: 8px;
+    }
+
+    .action-btn {
+      min-height: 40px;
+      border: 1px solid var(--line);
+      border-radius: 6px;
+      background: #fff;
+      color: var(--ink);
+      font-weight: 800;
+      cursor: pointer;
+      transition: transform 120ms ease, box-shadow 120ms ease, border-color 120ms ease;
+    }
+
+    .action-btn:hover {
+      transform: translateY(-1px);
+      border-color: #aebbc8;
+      box-shadow: 0 8px 18px rgba(28, 39, 49, 0.10);
+    }
+
+    .action-btn.primary {
+      border-color: var(--accent);
+      background: var(--accent);
+      color: #fff;
+    }
+
+    .equations {
+      display: grid;
+      gap: 9px;
+      color: var(--muted);
+      font-size: 0.83rem;
+      line-height: 1.35;
+    }
+
+    .equation {
+      padding: 9px 10px;
+      border-radius: 6px;
+      background: #f8fafb;
+      border: 1px solid var(--line);
+      overflow-x: auto;
+      white-space: nowrap;
+    }
+
+    .chart-card {
+      border: 1px solid var(--line);
+      border-radius: 8px;
+      background: #fff;
+      margin-bottom: 14px;
+      overflow: hidden;
+    }
+
+    .chart-heading {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      gap: 14px;
+      padding: 12px 14px;
+      border-bottom: 1px solid var(--line);
+      background: #f8fafb;
+    }
+
+    .chart-heading h3 {
+      margin: 0;
+      font-size: 0.96rem;
+    }
+
+    .chart-legend {
+      display: flex;
+      align-items: center;
+      gap: 12px;
+      flex-wrap: wrap;
+      color: var(--muted);
+      font-size: 0.82rem;
+      font-weight: 800;
+    }
+
+    .legend-item {
+      display: inline-flex;
+      align-items: center;
+      gap: 6px;
+      white-space: nowrap;
+    }
+
+    .legend-line {
+      width: 24px;
+      height: 4px;
+      border-radius: 999px;
+      background: currentColor;
+    }
+
+    .legend-cart-1 {
+      color: var(--cart-1);
+    }
+
+    .legend-cart-2 {
+      color: var(--cart-2);
+    }
+
+    .chart-canvas-wrap {
+      padding: 12px;
+      background: #fff;
+    }
+
+    .velocity-chart {
+      height: 260px;
+      background: #fff;
+      cursor: crosshair;
+      touch-action: none;
+    }
+
+    @media (max-width: 1180px) {
+      .workspace {
+        grid-template-columns: 1fr;
+      }
+
+      .controls {
+        display: grid;
+        grid-template-columns: 1fr 1fr;
+        gap: 16px 18px;
+      }
+
+      .section + .section {
+        margin-top: 0;
+        padding-top: 0;
+        border-top: 0;
+      }
+    }
+
+    @media (max-width: 760px) {
+      body {
+        overflow-x: hidden;
+      }
+
+      .app {
+        width: calc(100% - 20px);
+        max-width: calc(100vw - 20px);
+        padding-top: 14px;
+      }
+
+      .topbar {
+        display: grid;
+        align-items: start;
+      }
+
+      .chart-heading {
+        display: grid;
+      }
+
+      .topbar,
+      .topbar > div:first-child,
+      .topbar h1,
+      .workspace,
+      .panel,
+      .controls,
+      .subtitle {
+        max-width: calc(100vw - 20px);
+      }
+
+      .topbar,
+      .topbar > div:first-child,
+      .topbar h1,
+      .subtitle {
+        width: calc(100vw - 20px);
+      }
+
+      .workspace {
+        gap: 12px;
+      }
+
+      canvas {
+        height: 340px;
+      }
+
+      .velocity-chart {
+        height: 240px;
+      }
+
+      .controls {
+        grid-template-columns: 1fr;
+      }
+
+      .button-row,
+      .segmented {
+        grid-template-columns: 1fr;
+      }
+
+      .control {
+        grid-template-columns: 1fr;
+      }
+
+      input[type="number"] {
+        width: min(110px, 100%);
+      }
+
+      table {
+        min-width: 620px;
+      }
+    }
+  </style>
+</head>
+<body>
+  <main class="app">
+    <header class="topbar">
+      <div>
+        <h1>Colisões unidimensionais em trilho nivelado</h1>
+        <p class="subtitle">Applet para comparar previsões teóricas e medidas gráficas de momento linear e energia cinética em colisões elásticas e perfeitamente inelásticas.</p>
+      </div>
+      <div class="status-pill" id="statusPill">
+        <span class="status-dot" aria-hidden="true"></span>
+        <span id="statusText">Pronto para iniciar</span>
+      </div>
+    </header>
+
+    <section class="workspace" aria-label="Simulação e controles">
+      <div class="panel simulation-panel">
+        <div class="canvas-wrap">
+          <canvas id="simulationCanvas" aria-label="Canvas com dois carrinhos em um trilho horizontal nivelado"></canvas>
+        </div>
+        <div class="chart-card" aria-label="Gráfico da velocidade em função do tempo">
+          <div class="chart-heading">
+            <h3>Velocidade em função do tempo</h3>
+            <div class="chart-legend" aria-hidden="true">
+              <span class="legend-item legend-cart-1"><span class="legend-line"></span>carrinho 1</span>
+              <span class="legend-item legend-cart-2"><span class="legend-line"></span>carrinho 2</span>
+            </div>
+          </div>
+          <div class="chart-canvas-wrap">
+            <canvas id="velocityChart" class="velocity-chart" aria-label="Gráfico v por t para os dois carrinhos"></canvas>
+          </div>
+        </div>
+      </div>
+
+      <aside class="panel controls" aria-label="Controles da simulação">
+        <section class="section">
+          <h2 class="section-title">Parâmetros iniciais</h2>
+          <div class="control-grid">
+            <div class="control">
+              <label for="m1Range">
+                <span class="label-row"><span>m<sub>1</sub></span><span>kg</span></span>
+                <input id="m1Range" data-number="m1Number" data-key="m1" type="range" min="0.2" max="5" step="0.1" value="1">
+              </label>
+              <input id="m1Number" data-range="m1Range" data-key="m1" type="number" min="0.2" max="5" step="0.1" value="1">
+            </div>
+            <div class="control">
+              <label for="m2Range">
+                <span class="label-row"><span>m<sub>2</sub></span><span>kg</span></span>
+                <input id="m2Range" data-number="m2Number" data-key="m2" type="range" min="0.2" max="5" step="0.1" value="1">
+              </label>
+              <input id="m2Number" data-range="m2Range" data-key="m2" type="number" min="0.2" max="5" step="0.1" value="1">
+            </div>
+            <div class="control">
+              <label for="v1Range">
+                <span class="label-row"><span>v<sub>1</sub> inicial</span><span>m/s</span></span>
+                <input id="v1Range" data-number="v1Number" data-key="v1" type="range" min="-3" max="3" step="0.05" value="2">
+              </label>
+              <input id="v1Number" data-range="v1Range" data-key="v1" type="number" min="-3" max="3" step="0.05" value="2">
+            </div>
+            <div class="control">
+              <label for="v2Range">
+                <span class="label-row"><span>v<sub>2</sub> inicial</span><span>m/s</span></span>
+                <input id="v2Range" data-number="v2Number" data-key="v2" type="range" min="-3" max="3" step="0.05" value="0">
+              </label>
+              <input id="v2Number" data-range="v2Range" data-key="v2" type="number" min="-3" max="3" step="0.05" value="0">
+            </div>
+          </div>
+        </section>
+
+        <section class="section">
+          <h2 class="section-title">Tipo de evento</h2>
+          <div class="segmented" role="radiogroup" aria-label="Tipo de colisão">
+            <label>
+              <input type="radio" name="collisionType" value="elastic" checked>
+              <span>Elástica<br>repulsão magnética</span>
+            </label>
+            <label>
+              <input type="radio" name="collisionType" value="inelastic">
+              <span>Perfeitamente inelástica<br>faces de feltro</span>
+            </label>
+          </div>
+        </section>
+
+        <section class="section">
+          <h2 class="section-title">Execução</h2>
+          <div class="button-row">
+            <button class="action-btn primary" id="startBtn" type="button">Iniciar</button>
+            <button class="action-btn" id="pauseBtn" type="button">Pausar</button>
+            <button class="action-btn" id="resetBtn" type="button">Reiniciar</button>
+          </div>
+        </section>
+
+        <section class="section">
+          <h2 class="section-title">Equações usadas</h2>
+          <div class="equations">
+            <div class="equation">P = m<sub>1</sub>v<sub>1</sub> + m<sub>2</sub>v<sub>2</sub></div>
+            <div class="equation">v<sub>1f</sub> = ((m<sub>1</sub> - m<sub>2</sub>)/(m<sub>1</sub> + m<sub>2</sub>))v<sub>1i</sub> + (2m<sub>2</sub>/(m<sub>1</sub> + m<sub>2</sub>))v<sub>2i</sub></div>
+            <div class="equation">v<sub>2f</sub> = (2m<sub>1</sub>/(m<sub>1</sub> + m<sub>2</sub>))v<sub>1i</sub> + ((m<sub>2</sub> - m<sub>1</sub>)/(m<sub>1</sub> + m<sub>2</sub>))v<sub>2i</sub></div>
+            <div class="equation">m<sub>1</sub>v<sub>1i</sub> + m<sub>2</sub>v<sub>2i</sub> = (m<sub>1</sub> + m<sub>2</sub>)V</div>
+            <div class="equation">a<sub>atrito</sub> = -μg · sinal(v)</div>
+          </div>
+        </section>
+      </aside>
+    </section>
+  </main>
+
+  <script>
+    const canvas = document.getElementById("simulationCanvas");
+    const ctx = canvas.getContext("2d");
+    const chartCanvas = document.getElementById("velocityChart");
+    const chartCtx = chartCanvas.getContext("2d");
+    const chartHover = {
+      active: false,
+      x: 0,
+      y: 0
+    };
+
+    const inputs = {
+      m1Range: document.getElementById("m1Range"),
+      m1Number: document.getElementById("m1Number"),
+      m2Range: document.getElementById("m2Range"),
+      m2Number: document.getElementById("m2Number"),
+      v1Range: document.getElementById("v1Range"),
+      v1Number: document.getElementById("v1Number"),
+      v2Range: document.getElementById("v2Range"),
+      v2Number: document.getElementById("v2Number")
+    };
+
+    const ui = {
+      statusPill: document.getElementById("statusPill"),
+      statusText: document.getElementById("statusText")
+    };
+
+    const constants = {
+      worldMin: 0,
+      worldMax: 10,
+      cartLength: 0.76,
+      gravity: 9.81,
+      timeScale: 1,
+      velocityArrowScale: 38,
+      chartSampleInterval: 0.035,
+      chartNoiseSigma: 0.035
+    };
+
+    const config = {
+      m1: 1,
+      m2: 1,
+      v1: 2,
+      v2: 0,
+      mu: 0.02,
+      type: "elastic",
+      initialX1: 2.4,
+      initialX2: 7.2
+    };
+
+    const sim = {
+      running: false,
+      time: 0,
+      lastTimestamp: null,
+      x1: config.initialX1,
+      x2: config.initialX2,
+      v1: config.v1,
+      v2: config.v2,
+      measuredV1: config.v1,
+      measuredV2: config.v2,
+      collided: false,
+      stuck: false,
+      collisionTime: null,
+      stoppedAtBoundary: false,
+      stoppedByFriction: false,
+      velocitySamples: []
+    };
+
+    function clamp(value, min, max) {
+      return Math.min(max, Math.max(min, value));
+    }
+
+    function fmt(value, digits = 3) {
+      if (!Number.isFinite(value)) return "—";
+      return value.toLocaleString("pt-BR", {
+        minimumFractionDigits: digits,
+        maximumFractionDigits: digits
+      });
+    }
+
+    function signed(value, digits = 3) {
+      if (!Number.isFinite(value)) return "—";
+      const sign = value > 0 ? "+" : "";
+      return `${sign}${fmt(value, digits)}`;
+    }
+
+    function readConfigFromInputs() {
+      config.m1 = Number(inputs.m1Number.value);
+      config.m2 = Number(inputs.m2Number.value);
+      config.v1 = Number(inputs.v1Number.value);
+      config.v2 = Number(inputs.v2Number.value);
+      config.type = document.querySelector("input[name='collisionType']:checked").value;
+    }
+
+    function syncInputPair(source) {
+      const key = source.dataset.key;
+      const min = Number(source.min);
+      const max = Number(source.max);
+      const value = clamp(Number(source.value), min, max);
+      source.value = value;
+
+      const mateId = source.dataset.number || source.dataset.range;
+      const mate = document.getElementById(mateId);
+      mate.value = value;
+
+      config[key] = value;
+      resetSimulation();
+    }
+
+    function kinetic(m1, m2, v1, v2) {
+      return 0.5 * m1 * v1 * v1 + 0.5 * m2 * v2 * v2;
+    }
+
+    function momentum(m1, m2, v1, v2) {
+      return m1 * v1 + m2 * v2;
+    }
+
+    function theoreticalValues(v1Input = config.v1, v2Input = config.v2) {
+      const { m1, m2, type } = config;
+      const v1 = v1Input;
+      const v2 = v2Input;
+      const denominator = m1 + m2;
+      const p0 = momentum(m1, m2, v1, v2);
+      const k0 = kinetic(m1, m2, v1, v2);
+
+      if (type === "elastic") {
+        const v1f = ((m1 - m2) / denominator) * v1 + ((2 * m2) / denominator) * v2;
+        const v2f = ((2 * m1) / denominator) * v1 + ((m2 - m1) / denominator) * v2;
+        return {
+          v1f,
+          v2f,
+          p0,
+          pf: momentum(m1, m2, v1f, v2f),
+          k0,
+          kf: kinetic(m1, m2, v1f, v2f),
+          energyLoss: 0
+        };
+      }
+
+      const jointV = p0 / denominator;
+      const kf = kinetic(m1, m2, jointV, jointV);
+      return {
+        v1f: jointV,
+        v2f: jointV,
+        p0,
+        pf: p0,
+        k0,
+        kf,
+        energyLoss: k0 - kf
+      };
+    }
+
+    function resetSimulation() {
+      sim.running = false;
+      sim.time = 0;
+      sim.lastTimestamp = null;
+      sim.x1 = config.initialX1;
+      sim.x2 = config.initialX2;
+      sim.v1 = config.v1;
+      sim.v2 = config.v2;
+      sim.measuredV1 = config.v1;
+      sim.measuredV2 = config.v2;
+      sim.collided = false;
+      sim.stuck = false;
+      sim.collisionTime = null;
+      sim.stoppedAtBoundary = false;
+      sim.stoppedByFriction = false;
+      resetVelocitySamples();
+      updateInterface();
+      draw();
+    }
+
+    function startSimulation() {
+      if (sim.running) return;
+      readConfigFromInputs();
+      sim.running = true;
+      sim.lastTimestamp = null;
+      requestAnimationFrame(tick);
+      updateInterface();
+    }
+
+    function pauseSimulation() {
+      sim.running = false;
+      updateInterface();
+    }
+
+    function tick(timestamp) {
+      if (!sim.running) return;
+
+      if (sim.lastTimestamp === null) {
+        sim.lastTimestamp = timestamp;
+      }
+
+      const rawDt = (timestamp - sim.lastTimestamp) / 1000;
+      const dt = Math.min(rawDt, 0.035) * constants.timeScale;
+      sim.lastTimestamp = timestamp;
+
+      if (dt > 0) {
+        advance(dt);
+        updateInterface();
+        draw();
+      }
+
+      requestAnimationFrame(tick);
+    }
+
+    function advance(dt) {
+      const previousX1 = sim.x1;
+      const previousX2 = sim.x2;
+      const previousDelta = previousX2 - previousX1;
+      const previousDirection = Math.sign(previousDelta) || 1;
+      const previouslySeparated = Math.abs(previousDelta) > constants.cartLength;
+
+      moveCartsWithFriction(dt);
+      sim.time += dt;
+
+      if (!sim.collided) {
+        const currentDelta = sim.x2 - sim.x1;
+        const currentDirection = Math.sign(currentDelta) || previousDirection;
+        const overlapped = Math.abs(currentDelta) <= constants.cartLength;
+        const crossed = previouslySeparated && currentDirection !== previousDirection;
+        if (overlapped || crossed) {
+          placeAtContact(previousDirection);
+          collide();
+        }
+      }
+
+      if (sim.stuck) {
+        const direction = Math.sign(sim.x2 - sim.x1) || 1;
+        placeAtContact(direction);
+      }
+
+      sim.measuredV1 = (sim.x1 - previousX1) / dt;
+      sim.measuredV2 = (sim.x2 - previousX2) / dt;
+      recordVelocitySample();
+
+      const lowest = Math.min(sim.x1, sim.x2);
+      const highest = Math.max(sim.x1, sim.x2);
+      if (lowest < -0.85 || highest > 10.85) {
+        sim.running = false;
+        sim.stoppedAtBoundary = true;
+      }
+
+      if (Math.abs(sim.v1) < 1e-5 && Math.abs(sim.v2) < 1e-5) {
+        sim.running = false;
+        sim.stoppedByFriction = true;
+      }
+    }
+
+    function placeAtContact(direction) {
+      const midpoint = (sim.x1 + sim.x2) / 2;
+      sim.x1 = midpoint - direction * constants.cartLength / 2;
+      sim.x2 = midpoint + direction * constants.cartLength / 2;
+    }
+
+    function collide() {
+      const theory = theoreticalValues(sim.v1, sim.v2);
+      recordVelocitySample("pré-choque", true);
+      sim.v1 = theory.v1f;
+      sim.v2 = theory.v2f;
+      sim.measuredV1 = theory.v1f;
+      sim.measuredV2 = theory.v2f;
+      sim.collided = true;
+      sim.stuck = config.type === "inelastic";
+      sim.collisionTime = sim.time;
+      recordVelocitySample("pós-choque", true);
+    }
+
+    function moveCartsWithFriction(dt) {
+      if (dt <= 0) return;
+      if (sim.stuck) {
+        const moved = moveBodyWithFriction(sim.x1, sim.v1, dt);
+        const displacement = moved.x - sim.x1;
+        sim.x1 += displacement;
+        sim.x2 += displacement;
+        sim.v1 = moved.v;
+        sim.v2 = moved.v;
+        return;
+      }
+
+      const moved1 = moveBodyWithFriction(sim.x1, sim.v1, dt);
+      const moved2 = moveBodyWithFriction(sim.x2, sim.v2, dt);
+      sim.x1 = moved1.x;
+      sim.v1 = moved1.v;
+      sim.x2 = moved2.x;
+      sim.v2 = moved2.v;
+    }
+
+    function moveBodyWithFriction(x, v, dt) {
+      const frictionA = config.mu * constants.gravity;
+      if (frictionA <= 0 || Math.abs(v) < 1e-6) {
+        return { x: x + v * dt, v };
+      }
+
+      const direction = Math.sign(v);
+      const stopTime = Math.abs(v) / frictionA;
+      if (dt >= stopTime) {
+        const stopDistance = 0.5 * v * stopTime;
+        return { x: x + stopDistance, v: 0 };
+      }
+
+      const nextV = v - direction * frictionA * dt;
+      const displacement = v * dt - 0.5 * direction * frictionA * dt * dt;
+      return { x: x + displacement, v: nextV };
+    }
+
+    function resetVelocitySamples() {
+      sim.velocitySamples = [];
+      recordVelocitySample("inicial", true);
+    }
+
+    function recordVelocitySample(label = "", force = false) {
+      const last = sim.velocitySamples[sim.velocitySamples.length - 1];
+      const enoughTime = !last || sim.time - last.t >= constants.chartSampleInterval;
+      if (!force && !enoughTime) return;
+
+      sim.velocitySamples.push({
+        t: sim.time,
+        v1: sim.v1,
+        v2: sim.v2,
+        observedV1: noisyVelocity(sim.v1),
+        observedV2: noisyVelocity(sim.v2),
+        label
+      });
+
+      if (sim.velocitySamples.length > 900) {
+        sim.velocitySamples.splice(1, sim.velocitySamples.length - 900);
+      }
+    }
+
+    function noisyVelocity(value) {
+      if (Math.abs(value) < 1e-6) return 0;
+      const noise = gaussianRandom() * constants.chartNoiseSigma;
+      const noisy = value + noise;
+      if (Math.sign(noisy) !== Math.sign(value) && Math.abs(value) < constants.chartNoiseSigma * 1.5) {
+        return 0;
+      }
+      return noisy;
+    }
+
+    function gaussianRandom() {
+      let u = 0;
+      let v = 0;
+      while (u === 0) u = Math.random();
+      while (v === 0) v = Math.random();
+      return Math.sqrt(-2 * Math.log(u)) * Math.cos(2 * Math.PI * v);
+    }
+
+    function updateInterface() {
+      ui.statusPill.classList.toggle("running", sim.running);
+      if (sim.running) {
+        ui.statusText.textContent = "Experimento em execução";
+      } else if (sim.stoppedAtBoundary) {
+        ui.statusText.textContent = "Carrinhos chegaram ao limite visual do trilho";
+      } else if (sim.stoppedByFriction) {
+        ui.statusText.textContent = "Carrinhos pararam devido ao atrito";
+      } else if (sim.collided) {
+        ui.statusText.textContent = "Experimento pausado após colisão";
+      } else {
+        ui.statusText.textContent = "Pronto para iniciar";
+      }
+
+      drawVelocityChart();
+    }
+
+    function drawVelocityChart() {
+      const width = chartCanvas.clientWidth;
+      const height = chartCanvas.clientHeight;
+      if (!width || !height) return;
+
+      chartCtx.clearRect(0, 0, width, height);
+      chartCtx.fillStyle = "#ffffff";
+      chartCtx.fillRect(0, 0, width, height);
+
+      const samples = sim.velocitySamples.length
+        ? sim.velocitySamples
+        : [{ t: 0, v1: config.v1, v2: config.v2, observedV1: config.v1, observedV2: config.v2 }];
+      const theory = theoreticalValues();
+      const margin = {
+        left: width < 560 ? 48 : 58,
+        right: 18,
+        top: 20,
+        bottom: 42
+      };
+      const plotW = Math.max(10, width - margin.left - margin.right);
+      const plotH = Math.max(10, height - margin.top - margin.bottom);
+      const lastT = samples.reduce((max, sample) => Math.max(max, sample.t), 0);
+      const xMax = Math.max(5, Math.ceil((lastT + 0.15) * 2) / 2);
+      const speedValues = [
+        config.v1,
+        config.v2,
+        theory.v1f,
+        theory.v2f,
+        ...samples.flatMap((sample) => [sample.observedV1, sample.observedV2])
+      ];
+      const maxAbsSpeed = speedValues.reduce((max, value) => Math.max(max, Math.abs(value)), 0);
+      const yMax = Math.max(1, Math.ceil(maxAbsSpeed * 1.25 * 2) / 2);
+
+      const xFor = (t) => margin.left + (t / xMax) * plotW;
+      const yFor = (v) => margin.top + ((yMax - v) / (2 * yMax)) * plotH;
+
+      chartCtx.strokeStyle = "#d6dee6";
+      chartCtx.lineWidth = 1;
+      chartCtx.fillStyle = "#5f6f7f";
+      chartCtx.font = "12px system-ui, sans-serif";
+      chartCtx.textAlign = "center";
+      chartCtx.textBaseline = "top";
+
+      const xTickCount = width < 560 ? 4 : 5;
+      for (let i = 0; i <= xTickCount; i += 1) {
+        const t = (xMax / xTickCount) * i;
+        const x = xFor(t);
+        chartCtx.beginPath();
+        chartCtx.moveTo(x, margin.top);
+        chartCtx.lineTo(x, margin.top + plotH);
+        chartCtx.stroke();
+        chartCtx.fillText(fmt(t, 1), x, margin.top + plotH + 8);
+      }
+
+      chartCtx.textAlign = "right";
+      chartCtx.textBaseline = "middle";
+      for (let i = -2; i <= 2; i += 1) {
+        const v = (yMax / 2) * i;
+        const y = yFor(v);
+        chartCtx.beginPath();
+        chartCtx.moveTo(margin.left, y);
+        chartCtx.lineTo(margin.left + plotW, y);
+        chartCtx.stroke();
+        chartCtx.fillText(signed(v, 1), margin.left - 8, y);
+      }
+
+      chartCtx.strokeStyle = "#8996a3";
+      chartCtx.lineWidth = 1.5;
+      chartCtx.beginPath();
+      chartCtx.moveTo(margin.left, margin.top);
+      chartCtx.lineTo(margin.left, margin.top + plotH);
+      chartCtx.lineTo(margin.left + plotW, margin.top + plotH);
+      chartCtx.stroke();
+
+      const zeroY = yFor(0);
+      chartCtx.strokeStyle = "#667582";
+      chartCtx.lineWidth = 1.5;
+      chartCtx.beginPath();
+      chartCtx.moveTo(margin.left, zeroY);
+      chartCtx.lineTo(margin.left + plotW, zeroY);
+      chartCtx.stroke();
+
+      if (sim.collided) {
+        const collisionT = sim.collisionTime;
+        if (collisionT !== null && collisionT <= xMax) {
+          const collisionX = xFor(collisionT);
+          chartCtx.save();
+          chartCtx.setLineDash([6, 5]);
+          chartCtx.strokeStyle = "rgba(183, 121, 31, 0.72)";
+          chartCtx.lineWidth = 1.5;
+          chartCtx.beginPath();
+          chartCtx.moveTo(collisionX, margin.top);
+          chartCtx.lineTo(collisionX, margin.top + plotH);
+          chartCtx.stroke();
+          chartCtx.restore();
+        }
+      }
+
+      drawVelocitySeries(samples, "observedV1", "#d64545", xFor, yFor);
+      drawVelocitySeries(samples, "observedV2", "#16855f", xFor, yFor);
+
+      chartCtx.fillStyle = "#17212b";
+      chartCtx.font = "800 12px system-ui, sans-serif";
+      chartCtx.textAlign = "center";
+      chartCtx.textBaseline = "bottom";
+      chartCtx.fillText("t (s)", margin.left + plotW / 2, height - 6);
+
+      chartCtx.save();
+      chartCtx.translate(14, margin.top + plotH / 2);
+      chartCtx.rotate(-Math.PI / 2);
+      chartCtx.textAlign = "center";
+      chartCtx.fillText("v (m/s)", 0, 0);
+      chartCtx.restore();
+
+      drawVelocityTooltip(samples, xFor, yFor, margin, plotW, plotH);
+    }
+
+    function drawVelocitySeries(samples, key, color, xFor, yFor) {
+      if (!samples.length) return;
+
+      chartCtx.strokeStyle = color;
+      chartCtx.lineWidth = 3;
+      chartCtx.lineJoin = "round";
+      chartCtx.lineCap = "round";
+      chartCtx.beginPath();
+      samples.forEach((sample, index) => {
+        const x = xFor(sample.t);
+        const y = yFor(sample[key]);
+        if (index === 0) {
+          chartCtx.moveTo(x, y);
+        } else {
+          chartCtx.lineTo(x, y);
+        }
+      });
+      chartCtx.stroke();
+
+      const last = samples[samples.length - 1];
+      chartCtx.fillStyle = color;
+      chartCtx.beginPath();
+      chartCtx.arc(xFor(last.t), yFor(last[key]), 4, 0, Math.PI * 2);
+      chartCtx.fill();
+    }
+
+    function drawVelocityTooltip(samples, xFor, yFor, margin, plotW, plotH) {
+      if (!chartHover.active || samples.length < 1) return;
+
+      const insidePlot =
+        chartHover.x >= margin.left &&
+        chartHover.x <= margin.left + plotW &&
+        chartHover.y >= margin.top &&
+        chartHover.y <= margin.top + plotH;
+      if (!insidePlot) return;
+
+      const candidates = [
+        findClosestVelocityPoint(samples, "observedV1", "#d64545", "carrinho 1", xFor, yFor),
+        findClosestVelocityPoint(samples, "observedV2", "#16855f", "carrinho 2", xFor, yFor)
+      ].filter(Boolean);
+      if (!candidates.length) return;
+
+      const nearest = candidates.reduce((best, item) => item.distance < best.distance ? item : best);
+      if (nearest.distance > 18) return;
+
+      chartCtx.save();
+      chartCtx.strokeStyle = "rgba(23, 33, 43, 0.26)";
+      chartCtx.lineWidth = 1;
+      chartCtx.setLineDash([4, 4]);
+      chartCtx.beginPath();
+      chartCtx.moveTo(nearest.x, margin.top);
+      chartCtx.lineTo(nearest.x, margin.top + plotH);
+      chartCtx.stroke();
+      chartCtx.restore();
+
+      chartCtx.fillStyle = nearest.color;
+      chartCtx.beginPath();
+      chartCtx.arc(nearest.x, nearest.y, 5, 0, Math.PI * 2);
+      chartCtx.fill();
+      chartCtx.strokeStyle = "#fff";
+      chartCtx.lineWidth = 2;
+      chartCtx.stroke();
+
+      const lines = [
+        nearest.label,
+        `t = ${fmt(nearest.t, 2)} s`,
+        `v = ${signed(nearest.v, 2)} m/s`
+      ];
+      chartCtx.font = "800 12px system-ui, sans-serif";
+      const textWidth = Math.max(...lines.map((line) => chartCtx.measureText(line).width));
+      const boxW = textWidth + 22;
+      const boxH = 60;
+      const chartW = chartCanvas.clientWidth;
+      const chartH = chartCanvas.clientHeight;
+      let boxX = nearest.x + 12;
+      let boxY = nearest.y - boxH - 12;
+      if (boxX + boxW > chartW - 8) boxX = nearest.x - boxW - 12;
+      if (boxY < 8) boxY = nearest.y + 12;
+      if (boxY + boxH > chartH - 8) boxY = chartH - boxH - 8;
+
+      roundChartRect(boxX, boxY, boxW, boxH, 7, "#ffffff", "rgba(23, 33, 43, 0.18)");
+      chartCtx.fillStyle = nearest.color;
+      chartCtx.fillRect(boxX, boxY, 4, boxH);
+      chartCtx.fillStyle = "#17212b";
+      chartCtx.textAlign = "left";
+      chartCtx.textBaseline = "top";
+      chartCtx.font = "800 12px system-ui, sans-serif";
+      chartCtx.fillText(lines[0], boxX + 12, boxY + 9);
+      chartCtx.font = "700 12px system-ui, sans-serif";
+      chartCtx.fillText(lines[1], boxX + 12, boxY + 27);
+      chartCtx.fillText(lines[2], boxX + 12, boxY + 43);
+    }
+
+    function findClosestVelocityPoint(samples, key, color, label, xFor, yFor) {
+      if (samples.length === 1) {
+        const x = xFor(samples[0].t);
+        const y = yFor(samples[0][key]);
+        return {
+          color,
+          label,
+          x,
+          y,
+          t: samples[0].t,
+          v: samples[0][key],
+          distance: Math.hypot(chartHover.x - x, chartHover.y - y)
+        };
+      }
+
+      let best = null;
+      for (let i = 0; i < samples.length - 1; i += 1) {
+        const a = samples[i];
+        const b = samples[i + 1];
+        const ax = xFor(a.t);
+        const ay = yFor(a[key]);
+        const bx = xFor(b.t);
+        const by = yFor(b[key]);
+        const projection = closestPointOnSegment(chartHover.x, chartHover.y, ax, ay, bx, by);
+        const t = a.t + (b.t - a.t) * projection.ratio;
+        const v = a[key] + (b[key] - a[key]) * projection.ratio;
+        const item = {
+          color,
+          label,
+          x: projection.x,
+          y: projection.y,
+          t,
+          v,
+          distance: projection.distance
+        };
+        if (!best || item.distance < best.distance) best = item;
+      }
+      return best;
+    }
+
+    function closestPointOnSegment(px, py, ax, ay, bx, by) {
+      const dx = bx - ax;
+      const dy = by - ay;
+      const lengthSquared = dx * dx + dy * dy;
+      const ratio = lengthSquared === 0
+        ? 0
+        : clamp(((px - ax) * dx + (py - ay) * dy) / lengthSquared, 0, 1);
+      const x = ax + dx * ratio;
+      const y = ay + dy * ratio;
+      return {
+        x,
+        y,
+        ratio,
+        distance: Math.hypot(px - x, py - y)
+      };
+    }
+
+    function roundChartRect(x, y, width, height, radius, fill, stroke) {
+      const r = Math.min(radius, width / 2, height / 2);
+      chartCtx.beginPath();
+      chartCtx.moveTo(x + r, y);
+      chartCtx.lineTo(x + width - r, y);
+      chartCtx.quadraticCurveTo(x + width, y, x + width, y + r);
+      chartCtx.lineTo(x + width, y + height - r);
+      chartCtx.quadraticCurveTo(x + width, y + height, x + width - r, y + height);
+      chartCtx.lineTo(x + r, y + height);
+      chartCtx.quadraticCurveTo(x, y + height, x, y + height - r);
+      chartCtx.lineTo(x, y + r);
+      chartCtx.quadraticCurveTo(x, y, x + r, y);
+      chartCtx.closePath();
+      chartCtx.fillStyle = fill;
+      chartCtx.fill();
+      chartCtx.strokeStyle = stroke;
+      chartCtx.lineWidth = 1;
+      chartCtx.stroke();
+    }
+
+    function setChartHoverFromEvent(event) {
+      const rect = chartCanvas.getBoundingClientRect();
+      chartHover.active = true;
+      chartHover.x = event.clientX - rect.left;
+      chartHover.y = event.clientY - rect.top;
+      drawVelocityChart();
+    }
+
+    function setChartHoverFromTouch(event) {
+      if (!event.touches.length) return;
+      event.preventDefault();
+      setChartHoverFromEvent(event.touches[0]);
+    }
+
+    function clearChartHover() {
+      chartHover.active = false;
+      drawVelocityChart();
+    }
+
+    function resizeCanvas() {
+      const rect = canvas.getBoundingClientRect();
+      const dpr = window.devicePixelRatio || 1;
+      canvas.width = Math.round(rect.width * dpr);
+      canvas.height = Math.round(rect.height * dpr);
+      ctx.setTransform(dpr, 0, 0, dpr, 0, 0);
+
+      const chartRect = chartCanvas.getBoundingClientRect();
+      chartCanvas.width = Math.round(chartRect.width * dpr);
+      chartCanvas.height = Math.round(chartRect.height * dpr);
+      chartCtx.setTransform(dpr, 0, 0, dpr, 0, 0);
+
+      draw();
+      drawVelocityChart();
+    }
+
+    function worldToCanvas(x, width) {
+      const margin = Math.max(42, width * 0.065);
+      const usable = width - 2 * margin;
+      const fraction = (x - constants.worldMin) / (constants.worldMax - constants.worldMin);
+      return margin + fraction * usable;
+    }
+
+    function draw() {
+      const width = canvas.clientWidth;
+      const height = canvas.clientHeight;
+      if (!width || !height) return;
+
+      ctx.clearRect(0, 0, width, height);
+      drawBackground(width, height);
+      drawTrack(width, height);
+      drawInteractionCue(width, height);
+      drawCart(1, sim.x1, sim.measuredV1, config.m1, width, height);
+      drawCart(2, sim.x2, sim.measuredV2, config.m2, width, height);
+      drawAxis(width, height);
+    }
+
+    function drawBackground(width, height) {
+      ctx.fillStyle = "#f9fbfc";
+      ctx.fillRect(0, 0, width, height);
+
+      const margin = Math.max(42, width * 0.065);
+      const top = 38;
+      const bottom = height - 54;
+      ctx.strokeStyle = "rgba(83, 96, 108, 0.12)";
+      ctx.lineWidth = 1;
+      for (let i = 0; i <= 10; i += 1) {
+        const x = worldToCanvas(i, width);
+        ctx.beginPath();
+        ctx.moveTo(x, top);
+        ctx.lineTo(x, bottom);
+        ctx.stroke();
+      }
+
+      ctx.fillStyle = "rgba(95, 111, 127, 0.72)";
+      ctx.font = "12px system-ui, sans-serif";
+      ctx.textAlign = "left";
+      ctx.fillText("escala horizontal em metros", margin, 24);
+    }
+
+    function drawTrack(width, height) {
+      const railY = railYFor(height);
+      const start = worldToCanvas(0, width);
+      const end = worldToCanvas(10, width);
+
+      ctx.strokeStyle = "#6b7885";
+      ctx.lineWidth = 7;
+      ctx.lineCap = "round";
+      ctx.beginPath();
+      ctx.moveTo(start, railY);
+      ctx.lineTo(end, railY);
+      ctx.stroke();
+
+      ctx.strokeStyle = "#a9b4bd";
+      ctx.lineWidth = 3;
+      ctx.beginPath();
+      ctx.moveTo(start, railY + 13);
+      ctx.lineTo(end, railY + 13);
+      ctx.stroke();
+
+      ctx.lineWidth = 2;
+      ctx.strokeStyle = "#8c99a6";
+      for (let i = 0; i <= 10; i += 1) {
+        const x = worldToCanvas(i, width);
+        ctx.beginPath();
+        ctx.moveTo(x, railY + 23);
+        ctx.lineTo(x, railY + 35);
+        ctx.stroke();
+      }
+
+      ctx.strokeStyle = "#7c8994";
+      ctx.lineWidth = 4;
+      for (const x of [start + 18, (start + end) / 2, end - 18]) {
+        ctx.beginPath();
+        ctx.moveTo(x, railY + 16);
+        ctx.lineTo(x - 20, height - 42);
+        ctx.moveTo(x, railY + 16);
+        ctx.lineTo(x + 20, height - 42);
+        ctx.stroke();
+      }
+
+    }
+
+    function drawAxis(width, height) {
+      const railY = railYFor(height);
+      const start = worldToCanvas(0, width);
+      const end = worldToCanvas(10, width);
+      const y = railY + 49;
+
+      ctx.strokeStyle = "#9aa7b2";
+      ctx.lineWidth = 1.5;
+      ctx.beginPath();
+      ctx.moveTo(start, y);
+      ctx.lineTo(end, y);
+      ctx.stroke();
+
+      ctx.fillStyle = "#5f6f7f";
+      ctx.font = "12px system-ui, sans-serif";
+      ctx.textAlign = "center";
+      for (let i = 0; i <= 10; i += 2) {
+        const x = worldToCanvas(i, width);
+        ctx.beginPath();
+        ctx.moveTo(x, y - 5);
+        ctx.lineTo(x, y + 5);
+        ctx.stroke();
+        ctx.fillText(`${i} m`, x, y + 22);
+      }
+
+      ctx.textAlign = "right";
+      ctx.fillText("+x", end, y - 10);
+    }
+
+    function drawInteractionCue(width, height) {
+      if (!sim.collided) return;
+      const railY = railYFor(height);
+      const x1 = worldToCanvas(sim.x1, width);
+      const x2 = worldToCanvas(sim.x2, width);
+      const center = (x1 + x2) / 2;
+
+      if (config.type === "elastic") {
+        ctx.save();
+        ctx.strokeStyle = "rgba(35, 100, 170, 0.54)";
+        ctx.lineWidth = 2;
+        for (let r = 16; r <= 40; r += 12) {
+          ctx.beginPath();
+          ctx.arc(center, railY - 44, r, Math.PI * 1.18, Math.PI * 1.82);
+          ctx.stroke();
+          ctx.beginPath();
+          ctx.arc(center, railY - 44, r, -Math.PI * 0.18, Math.PI * 0.18);
+          ctx.stroke();
+        }
+        ctx.restore();
+      } else {
+        ctx.save();
+        ctx.fillStyle = "rgba(65, 70, 75, 0.38)";
+        roundRect(center - 9, railY - 77, 18, 58, 4, "rgba(65, 70, 75, 0.36)", "rgba(65, 70, 75, 0.36)", 1);
+        ctx.restore();
+      }
+    }
+
+    function drawCart(index, worldX, velocity, mass, width, height) {
+      const railY = railYFor(height);
+      const x = worldToCanvas(worldX, width);
+      const cartWidth = Math.max(54, worldToCanvas(constants.cartLength, width) - worldToCanvas(0, width));
+      const bodyHeight = 54;
+      const y = railY - bodyHeight - 16;
+      const color = index === 1 ? "#d64545" : "#16855f";
+      const dark = index === 1 ? "#9f2727" : "#0d5f43";
+      const light = index === 1 ? "#f2b3b3" : "#a9e1ce";
+
+      drawVelocityArrow(x, y - 36, velocity, color, index);
+
+      roundRect(x - cartWidth / 2, y, cartWidth, bodyHeight, 7, color, dark, 2);
+      roundRect(x - cartWidth / 2 + 8, y + 10, cartWidth - 16, 17, 4, "rgba(255,255,255,0.22)", "rgba(255,255,255,0.12)", 1);
+
+      const faceDirection = index === 1
+        ? Math.sign(sim.x2 - sim.x1) || 1
+        : Math.sign(sim.x1 - sim.x2) || -1;
+      drawFace(index, x + faceDirection * (cartWidth / 2 - 2), y + 4, faceDirection, bodyHeight - 8, light);
+
+      ctx.fillStyle = "#fff";
+      ctx.textAlign = "center";
+      ctx.font = "800 13px system-ui, sans-serif";
+      ctx.fillText(`m${index}`, x, y + 28);
+      ctx.font = "800 12px system-ui, sans-serif";
+      ctx.fillText(`${fmt(mass, 1)} kg`, x, y + 43);
+
+      drawWheel(x - cartWidth * 0.28, railY - 8, dark);
+      drawWheel(x + cartWidth * 0.28, railY - 8, dark);
+    }
+
+    function drawFace(index, x, y, direction, height, lightColor) {
+      const width = 10;
+      const left = direction > 0 ? x - width : x;
+      if (config.type === "elastic") {
+        roundRect(left, y, width, height, 3, lightColor, "rgba(23, 33, 43, 0.35)", 1);
+        ctx.fillStyle = "#17212b";
+        ctx.font = "800 10px system-ui, sans-serif";
+        ctx.textAlign = "center";
+        ctx.fillText(index === 1 ? "N" : "S", left + width / 2, y + height / 2 + 4);
+      } else {
+        roundRect(left, y, width, height, 2, "#595f66", "#2e3338", 1);
+        ctx.strokeStyle = "rgba(255,255,255,0.45)";
+        ctx.lineWidth = 1;
+        for (let yy = y + 5; yy < y + height - 3; yy += 7) {
+          ctx.beginPath();
+          ctx.moveTo(left + 2, yy);
+          ctx.lineTo(left + width - 2, yy + 3);
+          ctx.stroke();
+        }
+      }
+    }
+
+    function drawWheel(x, y, color) {
+      ctx.fillStyle = "#222b33";
+      ctx.beginPath();
+      ctx.arc(x, y, 11, 0, Math.PI * 2);
+      ctx.fill();
+      ctx.fillStyle = "#dce4ea";
+      ctx.beginPath();
+      ctx.arc(x, y, 5, 0, Math.PI * 2);
+      ctx.fill();
+      ctx.strokeStyle = color;
+      ctx.lineWidth = 1;
+      ctx.beginPath();
+      ctx.arc(x, y, 7, 0, Math.PI * 2);
+      ctx.stroke();
+    }
+
+    function drawVelocityArrow(x, y, velocity, color, index) {
+      const magnitude = Math.abs(velocity);
+      ctx.save();
+      ctx.font = "700 12px system-ui, sans-serif";
+      ctx.textAlign = "center";
+      ctx.fillStyle = color;
+
+      if (magnitude < 0.02) {
+        ctx.beginPath();
+        ctx.arc(x, y, 5, 0, Math.PI * 2);
+        ctx.fill();
+        ctx.fillText(`v${index} = 0,00 m/s`, x, y - 12);
+        ctx.restore();
+        return;
+      }
+
+      const direction = Math.sign(velocity);
+      const length = clamp(magnitude * constants.velocityArrowScale, 28, 116);
+      const start = x - direction * length / 2;
+      const end = x + direction * length / 2;
+
+      ctx.strokeStyle = color;
+      ctx.lineWidth = 3;
+      ctx.lineCap = "round";
+      ctx.beginPath();
+      ctx.moveTo(start, y);
+      ctx.lineTo(end, y);
+      ctx.stroke();
+
+      ctx.beginPath();
+      ctx.moveTo(end, y);
+      ctx.lineTo(end - direction * 10, y - 7);
+      ctx.lineTo(end - direction * 10, y + 7);
+      ctx.closePath();
+      ctx.fill();
+
+      ctx.fillText(`v${index} = ${signed(velocity, 2)} m/s`, x, y - 12);
+      ctx.restore();
+    }
+
+    function railYFor(height) {
+      return Math.round(height * 0.66);
+    }
+
+    function roundRect(x, y, width, height, radius, fill, stroke, lineWidth = 1) {
+      const r = Math.min(radius, width / 2, height / 2);
+      ctx.beginPath();
+      ctx.moveTo(x + r, y);
+      ctx.lineTo(x + width - r, y);
+      ctx.quadraticCurveTo(x + width, y, x + width, y + r);
+      ctx.lineTo(x + width, y + height - r);
+      ctx.quadraticCurveTo(x + width, y + height, x + width - r, y + height);
+      ctx.lineTo(x + r, y + height);
+      ctx.quadraticCurveTo(x, y + height, x, y + height - r);
+      ctx.lineTo(x, y + r);
+      ctx.quadraticCurveTo(x, y, x + r, y);
+      ctx.closePath();
+      if (fill) {
+        ctx.fillStyle = fill;
+        ctx.fill();
+      }
+      if (stroke) {
+        ctx.strokeStyle = stroke;
+        ctx.lineWidth = lineWidth;
+        ctx.stroke();
+      }
+    }
+
+    document.querySelectorAll("input[type='range'][data-key], input[type='number'][data-key]").forEach((input) => {
+      input.addEventListener("input", () => syncInputPair(input));
+    });
+
+    document.querySelectorAll("input[name='collisionType']").forEach((input) => {
+      input.addEventListener("change", () => {
+        readConfigFromInputs();
+        resetSimulation();
+      });
+    });
+
+    document.getElementById("startBtn").addEventListener("click", startSimulation);
+    document.getElementById("pauseBtn").addEventListener("click", pauseSimulation);
+    document.getElementById("resetBtn").addEventListener("click", resetSimulation);
+    chartCanvas.addEventListener("mousemove", setChartHoverFromEvent);
+    chartCanvas.addEventListener("mouseleave", clearChartHover);
+    chartCanvas.addEventListener("touchmove", setChartHoverFromTouch, { passive: false });
+    chartCanvas.addEventListener("touchend", clearChartHover);
+    chartCanvas.addEventListener("touchcancel", clearChartHover);
+    window.addEventListener("resize", resizeCanvas);
+
+    readConfigFromInputs();
+    resetVelocitySamples();
+    resizeCanvas();
+    updateInterface();
+  </script>
+</body>
+</html>
