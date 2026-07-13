@@ -284,7 +284,7 @@
     <section class="section" aria-labelledby="resultsTitle">
       <div class="section-head"><h2 id="resultsTitle">Novos imóveis</h2><span class="section-note">Apenas anúncios ainda não vistos</span></div>
       <div class="results" id="results">
-        <div class="empty"><svg width="36" height="36" viewBox="0 0 24 24" fill="none" aria-hidden="true"><path d="M4 10.5 12 4l8 6.5V20H4v-9.5Z" stroke="currentColor" stroke-width="1.5"/><path d="M9 20v-5h6v5" stroke="currentColor" stroke-width="1.5"/></svg><strong>Nenhuma consulta realizada</strong>Clique em “Verificar agora” para procurar novos imóveis.</div>
+        <div class="empty"><svg width="36" height="36" viewBox="0 0 24 24" fill="none" aria-hidden="true"><path d="M4 10.5 12 4l8 6.5V20H4v-9.5Z" stroke="currentColor" stroke-width="1.5"/><path d="M9 20v-5h6v5" stroke="currentColor" stroke-width="1.5"/></svg><strong>Aguardando atualização</strong>Os novos imóveis aparecerão aqui após a próxima consulta.</div>
       </div>
     </section>
 
@@ -307,6 +307,7 @@
     };
     const button = document.querySelector("#checkButton");
     const buttonLabel = document.querySelector("#buttonLabel");
+    const checkTitle = document.querySelector("#checkTitle");
     const actionSubtitle = document.querySelector("#actionSubtitle");
     const statusBar = document.querySelector("#statusBar");
     const statusSymbol = document.querySelector("#statusSymbol");
@@ -452,7 +453,7 @@
       headerLastUpdate.textContent = formatHeaderDate(data.generated_at);
       const failures = (data.sources || []).filter(source => source.error).length;
       if (!data.generated_at) {
-        setStatus("idle", "i", "O radar ainda não foi executado. Clique em “Verificar agora” para iniciar.");
+        setStatus("idle", "i", "O radar ainda não realizou a primeira atualização automática.");
       } else if (failures) {
         setStatus("error", "!", `Painel atualizado, mas ${failures} fonte(s) apresentaram falha.`);
       } else if (data.new_count > 0) {
@@ -535,8 +536,10 @@
     if (localMode) {
       loadStatus();
     } else {
-      actionSubtitle.textContent = "Você será levado ao GitHub para confirmar a execução segura do monitor.";
-      footerText.textContent = "Atualização automática diária às 09:17, com verificação manual disponível pelo GitHub.";
+      button.remove();
+      checkTitle.textContent = "Monitoramento automático";
+      actionSubtitle.textContent = "As imobiliárias são consultadas diariamente às 09:17, no horário de São Paulo.";
+      footerText.textContent = "Atualização automática diária às 09:17 pelo GitHub Actions.";
       loadPublishedData();
     }
   </script>

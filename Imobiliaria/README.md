@@ -94,7 +94,7 @@ Para escolher outra porta:
 O repositório inclui um workflow em `.github/workflows/atualizar-site.yml`.
 O GitHub Pages mostra o painel, e o GitHub Actions executa o monitor Python
 todos os dias às 09:17 no fuso `America/Sao_Paulo`. Também é possível iniciar
-uma consulta manual pelo botão do painel.
+uma consulta manual pela aba **Actions** do repositório.
 
 ### Publicar pela primeira vez
 
@@ -106,11 +106,9 @@ uma consulta manual pelo botão do painel.
 6. Ao terminar, o endereço do site aparecerá no resumo da execução e em
    **Settings → Pages**.
 
-No site publicado, o botão **Verificar agora** abre essa mesma tela do workflow.
-Depois de confirmar **Run workflow**, o Actions consulta as quatro imobiliárias,
-salva o histórico, atualiza `dados.json` e republica o painel. Essa confirmação
-no GitHub é necessária para que nenhuma chave de acesso fique exposta no código
-público do Pages.
+Para uma consulta manual, abra **Actions → Atualizar radar e publicar Pages** e
+confirme **Run workflow**. O Actions consulta as quatro imobiliárias, salva o
+histórico, atualiza `dados.json` e republica o painel.
 
 ### Alertas opcionais no GitHub
 
