@@ -91,10 +91,10 @@ Para escolher outra porta:
 
 ## Usar no GitHub Pages
 
-O repositório inclui um workflow manual em
-`.github/workflows/atualizar-site.yml`. O GitHub Pages mostra o painel, e o
-GitHub Actions executa o monitor Python somente quando você solicitar. Não há
-agendamento automático.
+O repositório inclui um workflow em `.github/workflows/atualizar-site.yml`.
+O GitHub Pages mostra o painel, e o GitHub Actions executa o monitor Python
+todos os dias às 09:17 no fuso `America/Sao_Paulo`. Também é possível iniciar
+uma consulta manual pelo botão do painel.
 
 ### Publicar pela primeira vez
 

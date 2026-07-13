@@ -231,9 +231,8 @@
 
     @media (max-width: 580px) {
       .shell { width: min(100% - 22px, 1120px); padding-top: 18px; }
-      header { padding-bottom: 18px; }
-      .live-pill { padding: 8px; }
-      .live-pill span:last-child { display: none; }
+      header { align-items: stretch; flex-direction: column; padding-bottom: 18px; }
+      .live-pill { align-self: stretch; justify-content: center; padding: 8px; }
       .action-card { margin-top: 30px; }
       .action-main { align-items: stretch; flex-direction: column; padding: 22px; }
       button { width: 100%; }
@@ -258,7 +257,7 @@
         </div>
         <div><div class="brand-name">Radar de Casas</div><div class="brand-place">Jandaia do Sul · PR</div></div>
       </div>
-      <div class="live-pill"><span class="live-dot"></span><span>4 fontes monitoradas</span></div>
+      <div class="live-pill"><span class="live-dot"></span><span id="headerLastUpdate">Ainda não atualizado</span></div>
     </header>
 
     <section class="action-card" aria-labelledby="checkTitle">
@@ -318,6 +317,7 @@
     const currentResults = document.querySelector("#currentResults");
     const totalNote = document.querySelector("#totalNote");
     const footerText = document.querySelector("#footerText");
+    const headerLastUpdate = document.querySelector("#headerLastUpdate");
     const localMode = window.location.protocol === "file:" || ["127.0.0.1", "localhost"].includes(window.location.hostname);
     const apiBase = window.location.protocol === "file:" ? "http://127.0.0.1:8000" : "";
     let repositoryName = "";
@@ -327,6 +327,16 @@
       const date = new Date(value);
       if (Number.isNaN(date.getTime())) return value;
       return "Última verificação: " + new Intl.DateTimeFormat("pt-BR", { dateStyle: "short", timeStyle: "short" }).format(date);
+    }
+
+    function formatHeaderDate(value) {
+      if (!value) return "Ainda não atualizado";
+      const date = new Date(value);
+      if (Number.isNaN(date.getTime())) return "Última atualização bem-sucedida: " + value;
+      return "Última atualização bem-sucedida: " + new Intl.DateTimeFormat("pt-BR", {
+        dateStyle: "short",
+        timeStyle: "short"
+      }).format(date);
     }
 
     function renderSources(items, pending = false) {
@@ -426,6 +436,7 @@
         const data = await response.json();
         renderSources(data.sources);
         lastCheck.textContent = formatDate(data.last_checked_at);
+        headerLastUpdate.textContent = formatHeaderDate(data.last_checked_at);
         const counts = Object.values(data.source_counts || {});
         if (counts.length) totalNote.textContent = counts.reduce((sum, value) => sum + value, 0) + " casas monitoradas";
       } catch (_) { /* O botão continuará disponível mesmo sem status anterior. */ }
@@ -438,6 +449,7 @@
       renderHouses(data.current_houses || [], currentResults, false);
       totalNote.textContent = data.total_count + (data.total_count === 1 ? " casa monitorada" : " casas monitoradas");
       lastCheck.textContent = formatDate(data.generated_at);
+      headerLastUpdate.textContent = formatHeaderDate(data.generated_at);
       const failures = (data.sources || []).filter(source => source.error).length;
       if (!data.generated_at) {
         setStatus("idle", "i", "O radar ainda não foi executado. Clique em “Verificar agora” para iniciar.");
@@ -496,6 +508,7 @@
         renderHouses(data.current_houses, currentResults, false);
         totalNote.textContent = data.total_count + (data.total_count === 1 ? " casa monitorada" : " casas monitoradas");
         lastCheck.textContent = formatDate(data.last_checked_at);
+        headerLastUpdate.textContent = formatHeaderDate(data.last_checked_at);
         if (data.first_run) {
           setStatus("success", "✓", `Primeira verificação concluída. ${data.total_count} anúncio(s) atual(is) foram registrados como base.`);
         } else if (data.new_count > 0) {
@@ -523,7 +536,7 @@
       loadStatus();
     } else {
       actionSubtitle.textContent = "Você será levado ao GitHub para confirmar a execução segura do monitor.";
-      footerText.textContent = "Os dados são consultados somente quando você inicia a verificação manual no GitHub.";
+      footerText.textContent = "Atualização automática diária às 09:17, com verificação manual disponível pelo GitHub.";
       loadPublishedData();
     }
   </script>
