@@ -1,0 +1,7 @@
+.env
+estado_imoveis.json
+estado_imoveis.json.tmp
+dados.json.tmp
+estado_pages.json.tmp
+monitor.log
+__pycache__/

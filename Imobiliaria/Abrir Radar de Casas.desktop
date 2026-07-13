@@ -1,0 +1,10 @@
+[Desktop Entry]
+Version=1.0
+Type=Application
+Name=Radar de Casas
+Comment=Inicia o monitor e abre o painel no navegador
+Exec=/media/douglas/Disco1/codex/Imobiliaria/executar_painel.sh
+Icon=home
+Terminal=true
+Categories=Utility;
+StartupNotify=true
