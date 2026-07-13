@@ -1,11 +1,111 @@
 {
   "ok": true,
-  "repository": "",
-  "generated_at": null,
+  "repository": "Dougfisica/dougfisica.github.io",
+  "generated_at": "2026-07-13T12:34:45+00:00",
   "first_run": true,
   "new_count": 0,
-  "total_count": 0,
-  "sources": [],
+  "total_count": 5,
+  "sources": [
+    {
+      "id": "hashimoto",
+      "name": "Hashimoto Corretor de Imóveis",
+      "ok": true,
+      "count": 2,
+      "error": null
+    },
+    {
+      "id": "imobivale",
+      "name": "Imobivale Imóveis",
+      "ok": true,
+      "count": 1,
+      "error": null
+    },
+    {
+      "id": "jol",
+      "name": "JOL Negócios Imobiliários",
+      "ok": true,
+      "count": 2,
+      "error": null
+    },
+    {
+      "id": "ideal",
+      "name": "Ideal Maringá Imóveis",
+      "ok": true,
+      "count": 0,
+      "error": null
+    }
+  ],
   "new_houses": [],
-  "current_houses": []
+  "current_houses": [
+    {
+      "id": "imobivale:125327",
+      "source": "imobivale",
+      "source_name": "Imobivale Imóveis",
+      "code": "197",
+      "category": "Casa em alvenaria",
+      "price": "2800.00",
+      "price_formatted": "R$ 2.800,00",
+      "address": "Rua Pedro Malavazi, 22",
+      "neighborhood": "Jardim Miguel Capocci",
+      "city": "JANDAIA DO SUL",
+      "url": "https://www.imobivaleimoveis.com.br/imovel/exibir/197",
+      "image_url": "https://cdnmidia.simob.com.br/cdn/imovelImages/125327/cac70968ef4529d5a6eefdef11426b80.jpeg?idImobiliaria=428"
+    },
+    {
+      "id": "hashimoto:778",
+      "source": "hashimoto",
+      "source_name": "Hashimoto Corretor de Imóveis",
+      "code": "1037",
+      "category": "CASA",
+      "price": "2800.00",
+      "price_formatted": "R$ 2.800,00",
+      "address": "R. PADRE JOAO BARBIERI, 628",
+      "neighborhood": "CENTRO",
+      "city": "JANDAIA DO SUL",
+      "url": "https://hashimotocorretordeimoveis.com.br/imovel/exibir/1037",
+      "image_url": "https://cdnmidia.simob.com.br/cdn/imovelImages/778/d2516e5797ef1df1565c9dd1799f9491.jpeg?idImobiliaria=388"
+    },
+    {
+      "id": "jol:4276738",
+      "source": "jol",
+      "source_name": "JOL Negócios Imobiliários",
+      "code": "4276738",
+      "category": "Casa",
+      "price": "2777.00",
+      "price_formatted": "R$ 2.777,00",
+      "address": "",
+      "neighborhood": "Casa Locacao Jandaia Do Sul Pr Centro",
+      "city": "Jandaia do Sul",
+      "url": "https://www.jolnegociosimobiliarios.com.br/imovel/4276738/casa-locacao-jandaia-do-sul-pr-centro",
+      "image_url": "https://www.jolnegociosimobiliarios.com.br/imagens/imoveis/202606291040371636.jpeg"
+    },
+    {
+      "id": "jol:4268715",
+      "source": "jol",
+      "source_name": "JOL Negócios Imobiliários",
+      "code": "4268715",
+      "category": "Casa",
+      "price": "2444.00",
+      "price_formatted": "R$ 2.444,00",
+      "address": "",
+      "neighborhood": "Casa Locacao Jandaia Do Sul Pr Centro",
+      "city": "Jandaia do Sul",
+      "url": "https://www.jolnegociosimobiliarios.com.br/imovel/4268715/casa-locacao-jandaia-do-sul-pr-centro",
+      "image_url": "https://www.jolnegociosimobiliarios.com.br/imagens/imoveis/202606261534386319.jpeg"
+    },
+    {
+      "id": "hashimoto:739",
+      "source": "hashimoto",
+      "source_name": "Hashimoto Corretor de Imóveis",
+      "code": "991",
+      "category": "CASA",
+      "price": "2200.00",
+      "price_formatted": "R$ 2.200,00",
+      "address": "R. CLEMENTINO S PUPPI, 2066",
+      "neighborhood": "CENTRO",
+      "city": "JANDAIA DO SUL",
+      "url": "https://hashimotocorretordeimoveis.com.br/imovel/exibir/991",
+      "image_url": "https://cdnmidia.simob.com.br/cdn/imovelImages/739/fa94971e6352fc9488b6b5d9f928a2a3.jpeg?idImobiliaria=388"
+    }
+  ]
 }
