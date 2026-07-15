@@ -1,16 +1,16 @@
 {
   "ok": true,
   "repository": "Dougfisica/dougfisica.github.io",
-  "generated_at": "2026-07-14T14:15:56+00:00",
+  "generated_at": "2026-07-15T14:13:30+00:00",
   "first_run": false,
   "new_count": 0,
-  "total_count": 5,
+  "total_count": 4,
   "sources": [
     {
       "id": "hashimoto",
       "name": "Hashimoto Corretor de Imóveis",
       "ok": true,
-      "count": 2,
+      "count": 1,
       "error": null
     },
     {
@@ -92,20 +92,6 @@
       "city": "Jandaia do Sul",
       "url": "https://www.jolnegociosimobiliarios.com.br/imovel/4268715/casa-locacao-jandaia-do-sul-pr-centro",
       "image_url": "https://www.jolnegociosimobiliarios.com.br/imagens/imoveis/202606261534386319.jpeg"
-    },
-    {
-      "id": "hashimoto:739",
-      "source": "hashimoto",
-      "source_name": "Hashimoto Corretor de Imóveis",
-      "code": "991",
-      "category": "CASA",
-      "price": "2200.00",
-      "price_formatted": "R$ 2.200,00",
-      "address": "R. CLEMENTINO S PUPPI, 2066",
-      "neighborhood": "CENTRO",
-      "city": "JANDAIA DO SUL",
-      "url": "https://hashimotocorretordeimoveis.com.br/imovel/exibir/991",
-      "image_url": "https://cdnmidia.simob.com.br/cdn/imovelImages/739/fa94971e6352fc9488b6b5d9f928a2a3.jpeg?idImobiliaria=388"
     }
   ]
 }
