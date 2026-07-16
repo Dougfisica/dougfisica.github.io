@@ -7,15 +7,17 @@
     "jol"
   ],
   "seen_ids": [
+    "hashimoto:1728",
+    "hashimoto:1820",
     "hashimoto:739",
     "hashimoto:778",
     "imobivale:125327",
     "jol:4268715",
     "jol:4276738"
   ],
-  "last_checked_at": "2026-07-15T14:13:30+00:00",
+  "last_checked_at": "2026-07-16T14:25:54+00:00",
   "source_counts": {
-    "hashimoto": 1,
+    "hashimoto": 3,
     "imobivale": 1,
     "jol": 2,
     "ideal": 0
