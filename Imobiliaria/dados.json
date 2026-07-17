@@ -1,9 +1,9 @@
 {
   "ok": true,
   "repository": "Dougfisica/dougfisica.github.io",
-  "generated_at": "2026-07-16T14:25:54+00:00",
+  "generated_at": "2026-07-17T14:05:24+00:00",
   "first_run": false,
-  "new_count": 2,
+  "new_count": 0,
   "total_count": 6,
   "sources": [
     {
@@ -35,36 +35,7 @@
       "error": null
     }
   ],
-  "new_houses": [
-    {
-      "id": "hashimoto:1728",
-      "source": "hashimoto",
-      "source_name": "Hashimoto Corretor de Imóveis",
-      "code": "1986",
-      "category": "CASA",
-      "price": "3500.00",
-      "price_formatted": "R$ 3.500,00",
-      "address": "RUA JOSE FRANCISCO BORGES, 931",
-      "neighborhood": "CENTRO",
-      "city": "JANDAIA DO SUL",
-      "url": "https://hashimotocorretordeimoveis.com.br/imovel/exibir/1986",
-      "image_url": "https://cdnmidia.simob.com.br/cdn/imovelImages/1728/7018ab40cf1afe0e7d41614e5a043539.jpeg?idImobiliaria=388"
-    },
-    {
-      "id": "hashimoto:1820",
-      "source": "hashimoto",
-      "source_name": "Hashimoto Corretor de Imóveis",
-      "code": "2078",
-      "category": "CASA",
-      "price": "4000.00",
-      "price_formatted": "R$ 4.000,00",
-      "address": "RUA JOSE FRANCISCO BORGES, 935",
-      "neighborhood": "JARDIM MORETTI",
-      "city": "JANDAIA DO SUL",
-      "url": "https://hashimotocorretordeimoveis.com.br/imovel/exibir/2078",
-      "image_url": "https://cdnmidia.simob.com.br/cdn/imovelImages/1820/b3266a1ff8d72a20e4536f7b94088bad.jpeg?idImobiliaria=388"
-    }
-  ],
+  "new_houses": [],
   "current_houses": [
     {
       "id": "hashimoto:1820",
