@@ -1,0 +1,26 @@
+{
+  "version": 2,
+  "initialized_sources": [
+    "hashimoto",
+    "ideal",
+    "imobivale",
+    "jol"
+  ],
+  "seen_ids": [
+    "hashimoto:1728",
+    "hashimoto:1820",
+    "hashimoto:739",
+    "hashimoto:778",
+    "imobivale:125327",
+    "jol:4268715",
+    "jol:4276738"
+  ],
+  "last_checked_at": "2026-07-29T14:33:13+00:00",
+  "source_counts": {
+    "hashimoto": 3,
+    "imobivale": 1,
+    "jol": 2,
+    "ideal": 0
+  },
+  "source_errors": {}
+}

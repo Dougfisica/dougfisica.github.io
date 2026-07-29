@@ -1,6 +1,9 @@
 name: Atualizar radar e publicar Pages
 
 on:
+  schedule:
+    - cron: "17 9 * * *"
+      timezone: "America/Sao_Paulo"
   workflow_dispatch:
 
 permissions:
@@ -9,12 +12,15 @@ permissions:
   id-token: write
 
 concurrency:
-  group: radar-imoveis-pages
+  group: pages
   cancel-in-progress: false
 
 jobs:
   atualizar:
     runs-on: ubuntu-latest
+    defaults:
+      run:
+        working-directory: Imobiliaria
     steps:
       - name: Baixar o repositório
         uses: actions/checkout@v6
@@ -41,15 +47,9 @@ jobs:
           git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
           git add dados.json estado_pages.json
           if ! git diff --cached --quiet; then
-            git commit -m "Atualiza dados do radar [skip ci]"
+            git commit -m "Atualiza dados do radar"
             git push
           fi
-
-      - name: Preparar arquivos do site
-        run: |
-          mkdir -p _site
-          cp index.html dados.json _site/
-          touch _site/.nojekyll
 
       - name: Configurar GitHub Pages
         uses: actions/configure-pages@v5
@@ -57,7 +57,8 @@ jobs:
       - name: Enviar arquivos do site
         uses: actions/upload-pages-artifact@v4
         with:
-          path: _site
+          # Publica o site completo e preserva as demais páginas do repositório.
+          path: .
 
   publicar:
     needs: atualizar

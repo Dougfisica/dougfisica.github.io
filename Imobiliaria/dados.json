@@ -1,11 +1,125 @@
 {
   "ok": true,
-  "repository": "",
-  "generated_at": null,
-  "first_run": true,
+  "repository": "Dougfisica/dougfisica.github.io",
+  "generated_at": "2026-07-29T14:33:13+00:00",
+  "first_run": false,
   "new_count": 0,
-  "total_count": 0,
-  "sources": [],
+  "total_count": 6,
+  "sources": [
+    {
+      "id": "hashimoto",
+      "name": "Hashimoto Corretor de Imóveis",
+      "ok": true,
+      "count": 3,
+      "error": null
+    },
+    {
+      "id": "imobivale",
+      "name": "Imobivale Imóveis",
+      "ok": true,
+      "count": 1,
+      "error": null
+    },
+    {
+      "id": "jol",
+      "name": "JOL Negócios Imobiliários",
+      "ok": true,
+      "count": 2,
+      "error": null
+    },
+    {
+      "id": "ideal",
+      "name": "Ideal Maringá Imóveis",
+      "ok": true,
+      "count": 0,
+      "error": null
+    }
+  ],
   "new_houses": [],
-  "current_houses": []
+  "current_houses": [
+    {
+      "id": "hashimoto:1820",
+      "source": "hashimoto",
+      "source_name": "Hashimoto Corretor de Imóveis",
+      "code": "2078",
+      "category": "CASA",
+      "price": "4000.00",
+      "price_formatted": "R$ 4.000,00",
+      "address": "RUA JOSE FRANCISCO BORGES, 935",
+      "neighborhood": "JARDIM MORETTI",
+      "city": "JANDAIA DO SUL",
+      "url": "https://hashimotocorretordeimoveis.com.br/imovel/exibir/2078",
+      "image_url": "https://cdnmidia.simob.com.br/cdn/imovelImages/1820/b3266a1ff8d72a20e4536f7b94088bad.jpeg?idImobiliaria=388"
+    },
+    {
+      "id": "hashimoto:1728",
+      "source": "hashimoto",
+      "source_name": "Hashimoto Corretor de Imóveis",
+      "code": "1986",
+      "category": "CASA",
+      "price": "3500.00",
+      "price_formatted": "R$ 3.500,00",
+      "address": "RUA JOSE FRANCISCO BORGES, 931",
+      "neighborhood": "CENTRO",
+      "city": "JANDAIA DO SUL",
+      "url": "https://hashimotocorretordeimoveis.com.br/imovel/exibir/1986",
+      "image_url": "https://cdnmidia.simob.com.br/cdn/imovelImages/1728/7018ab40cf1afe0e7d41614e5a043539.jpeg?idImobiliaria=388"
+    },
+    {
+      "id": "imobivale:125327",
+      "source": "imobivale",
+      "source_name": "Imobivale Imóveis",
+      "code": "197",
+      "category": "Casa em alvenaria",
+      "price": "2800.00",
+      "price_formatted": "R$ 2.800,00",
+      "address": "Rua Pedro Malavazi, 22",
+      "neighborhood": "Jardim Miguel Capocci",
+      "city": "JANDAIA DO SUL",
+      "url": "https://www.imobivaleimoveis.com.br/imovel/exibir/197",
+      "image_url": "https://cdnmidia.simob.com.br/cdn/imovelImages/125327/cac70968ef4529d5a6eefdef11426b80.jpeg?idImobiliaria=428"
+    },
+    {
+      "id": "hashimoto:778",
+      "source": "hashimoto",
+      "source_name": "Hashimoto Corretor de Imóveis",
+      "code": "1037",
+      "category": "CASA",
+      "price": "2800.00",
+      "price_formatted": "R$ 2.800,00",
+      "address": "R. PADRE JOAO BARBIERI, 628",
+      "neighborhood": "CENTRO",
+      "city": "JANDAIA DO SUL",
+      "url": "https://hashimotocorretordeimoveis.com.br/imovel/exibir/1037",
+      "image_url": "https://cdnmidia.simob.com.br/cdn/imovelImages/778/d2516e5797ef1df1565c9dd1799f9491.jpeg?idImobiliaria=388"
+    },
+    {
+      "id": "jol:4276738",
+      "source": "jol",
+      "source_name": "JOL Negócios Imobiliários",
+      "code": "4276738",
+      "category": "Casa",
+      "price": "2777.00",
+      "price_formatted": "R$ 2.777,00",
+      "address": "",
+      "neighborhood": "Casa Locacao Jandaia Do Sul Pr Centro",
+      "city": "Jandaia do Sul",
+      "url": "https://www.jolnegociosimobiliarios.com.br/imovel/4276738/casa-locacao-jandaia-do-sul-pr-centro",
+      "image_url": "https://www.jolnegociosimobiliarios.com.br/imagens/imoveis/202606291040371636.jpeg"
+    },
+    {
+      "id": "jol:4268715",
+      "source": "jol",
+      "source_name": "JOL Negócios Imobiliários",
+      "code": "4268715",
+      "category": "Casa",
+      "price": "2444.00",
+      "price_formatted": "R$ 2.444,00",
+      "address": "",
+      "neighborhood": "Casa Locacao Jandaia Do Sul Pr Centro",
+      "city": "Jandaia do Sul",
+      "url": "https://www.jolnegociosimobiliarios.com.br/imovel/4268715/casa-locacao-jandaia-do-sul-pr-centro",
+      "image_url": "https://www.jolnegociosimobiliarios.com.br/imagens/imoveis/202606261534386319.jpeg"
+    }
+  ]
 }
