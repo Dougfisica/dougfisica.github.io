@@ -1,0 +1,395 @@
+@import url('https://fonts.googleapis.com/css2?family=Barlow+Condensed:ital,wght@0,600;0,700;0,800;0,900;1,800&family=Inter:wght@400;500;600;700&display=swap');
+
+:root {
+    --anime-ink: #101c3a;
+    --anime-ink-soft: #2d3b5c;
+    --anime-paper: #fff8e9;
+    --anime-white: #ffffff;
+    --anime-coral: #ff4f55;
+    --anime-cyan: #20bee8;
+    --anime-gold: #ffbd3e;
+    --anime-violet: #7454d8;
+    --anime-border: 3px solid var(--anime-ink);
+    --anime-shadow: 7px 7px 0 var(--anime-ink);
+}
+
+body.anime-course-inner {
+    min-height: 100vh;
+    color: var(--anime-ink) !important;
+    background-color: var(--anime-paper) !important;
+    background-image:
+        radial-gradient(circle, rgba(16, 28, 58, .085) 1.2px, transparent 1.3px),
+        linear-gradient(135deg, transparent 48%, rgba(32, 190, 232, .05) 49%, rgba(32, 190, 232, .05) 51%, transparent 52%) !important;
+    background-size: 18px 18px, 74px 74px !important;
+    font-family: "Inter", sans-serif !important;
+}
+
+body.anime-course-inner::before,
+body.anime-course-inner::after {
+    display: none !important;
+}
+
+.anime-course-inner .container {
+    width: min(1180px, calc(100% - 32px)) !important;
+    max-width: 1180px !important;
+    margin: 0 auto !important;
+    padding: 28px 0 64px !important;
+    color: var(--anime-ink) !important;
+    background: transparent !important;
+    border: 0 !important;
+    box-shadow: none !important;
+    animation: none !important;
+}
+
+.anime-course-inner .container::before,
+.anime-course-inner .container::after {
+    display: none !important;
+}
+
+.anime-course-inner .header,
+.anime-course-inner.notes-page .notes-heading {
+    position: relative !important;
+    overflow: hidden !important;
+    margin: 0 0 34px !important;
+    padding: 30px 34px 28px !important;
+    border: var(--anime-border) !important;
+    border-radius: 4px !important;
+    color: var(--anime-white) !important;
+    background:
+        linear-gradient(112deg, rgba(16, 28, 58, .97), rgba(20, 44, 85, .95)),
+        var(--anime-ink) !important;
+    box-shadow: var(--anime-shadow) !important;
+    text-align: left !important;
+}
+
+.anime-course-inner .header::before,
+.anime-course-inner.notes-page .notes-heading::before {
+    content: "";
+    position: absolute;
+    inset: 0;
+    opacity: .12;
+    background: repeating-linear-gradient(118deg, transparent 0 22px, #fff 23px 25px, transparent 26px 50px);
+    pointer-events: none;
+}
+
+.anime-course-inner .header::after,
+.anime-course-inner.notes-page .notes-heading::after {
+    content: "FÍSICA 1 · UFPR";
+    position: absolute;
+    right: 22px;
+    bottom: 14px;
+    color: rgba(255, 255, 255, .11);
+    font: italic 900 clamp(2rem, 5vw, 4rem) "Barlow Condensed", sans-serif;
+    letter-spacing: .02em;
+    pointer-events: none;
+}
+
+.anime-course-inner .voltar-link,
+.anime-course-inner .anime-back {
+    position: relative !important;
+    z-index: 2;
+    display: inline-flex !important;
+    align-items: center;
+    margin: 0 0 20px !important;
+    padding: 6px 10px !important;
+    border: 2px solid var(--anime-white) !important;
+    border-radius: 999px !important;
+    color: var(--anime-white) !important;
+    background: transparent !important;
+    font: 800 .78rem "Barlow Condensed", sans-serif !important;
+    letter-spacing: .09em !important;
+    text-decoration: none !important;
+    text-transform: uppercase;
+}
+
+.anime-course-inner .voltar-link:hover,
+.anime-course-inner .anime-back:hover {
+    color: var(--anime-ink) !important;
+    background: var(--anime-gold) !important;
+    transform: translateX(-3px) !important;
+}
+
+.anime-course-inner h1 {
+    position: relative !important;
+    z-index: 2;
+    margin: 0 !important;
+    color: var(--anime-white) !important;
+    font: italic 900 clamp(2.8rem, 7vw, 5.4rem)/.88 "Barlow Condensed", sans-serif !important;
+    letter-spacing: -.035em !important;
+    text-align: left !important;
+    text-shadow: 4px 4px 0 var(--anime-coral) !important;
+    text-transform: uppercase !important;
+}
+
+.anime-course-inner .subtitle {
+    position: relative !important;
+    z-index: 2;
+    margin: 13px 0 0 !important;
+    color: #dcecff !important;
+    font: 700 .83rem "Inter", sans-serif !important;
+    letter-spacing: .05em !important;
+    text-align: left !important;
+}
+
+.anime-course-inner .info-badges {
+    position: relative;
+    z-index: 2;
+    justify-content: flex-start !important;
+    margin-top: 18px !important;
+}
+
+.anime-course-inner .badge {
+    padding: 6px 10px !important;
+    border: 2px solid var(--anime-white) !important;
+    border-radius: 999px !important;
+    color: var(--anime-white) !important;
+    background: rgba(255, 255, 255, .06) !important;
+    box-shadow: none !important;
+    font: 700 .68rem "Inter", sans-serif !important;
+}
+
+/* Video lessons */
+.anime-course-inner .aulas-section { margin-top: 0 !important; }
+
+.anime-course-inner .aulas-grid {
+    display: grid !important;
+    grid-template-columns: repeat(3, minmax(0, 1fr)) !important;
+    gap: 22px !important;
+}
+
+.anime-course-inner .aula-card {
+    overflow: hidden !important;
+    border: var(--anime-border) !important;
+    border-radius: 3px !important;
+    color: var(--anime-ink) !important;
+    background: var(--anime-white) !important;
+    box-shadow: var(--anime-shadow) !important;
+    transform: none !important;
+    opacity: 1 !important;
+    animation: none !important;
+    transition: transform .22s ease, box-shadow .22s ease !important;
+}
+
+.anime-course-inner .aula-card:hover {
+    transform: translate(-4px, -4px) !important;
+    box-shadow: 11px 11px 0 var(--anime-ink) !important;
+}
+
+.anime-course-inner .aula-thumb-container {
+    border-bottom: var(--anime-border) !important;
+    background: var(--anime-ink) !important;
+}
+
+.anime-course-inner .aula-thumb { filter: saturate(.9) contrast(1.04); }
+
+.anime-course-inner .play-overlay {
+    display: grid !important;
+    place-items: center;
+    width: 58px !important;
+    height: 58px !important;
+    color: var(--anime-white) !important;
+    background: var(--anime-coral) !important;
+    border: 3px solid var(--anime-ink) !important;
+    box-shadow: 4px 4px 0 var(--anime-ink) !important;
+}
+
+.anime-course-inner .aula-content { padding: 21px !important; background: var(--anime-white) !important; }
+.anime-course-inner .aula-numero { color: var(--anime-coral) !important; font: 900 .76rem "Barlow Condensed", sans-serif !important; letter-spacing: .12em; }
+.anime-course-inner .aula-titulo { color: var(--anime-ink) !important; font: 900 1.28rem/1.02 "Barlow Condensed", sans-serif !important; text-transform: uppercase; }
+.anime-course-inner .aula-desc { color: var(--anime-ink-soft) !important; font: 400 .82rem/1.55 "Inter", sans-serif !important; }
+
+/* Exercise lists */
+.anime-course-inner .provas-grid {
+    display: grid !important;
+    grid-template-columns: repeat(3, minmax(0, 1fr)) !important;
+    gap: 22px !important;
+}
+
+.anime-course-inner .prova-section {
+    overflow: hidden !important;
+    margin: 0 !important;
+    border: var(--anime-border) !important;
+    border-radius: 3px !important;
+    background: var(--anime-white) !important;
+    box-shadow: var(--anime-shadow) !important;
+}
+
+.anime-course-inner .prova-header {
+    padding: 18px 20px !important;
+    border: 0 !important;
+    border-bottom: var(--anime-border) !important;
+    color: var(--anime-white) !important;
+    background: var(--anime-ink) !important;
+    font: italic 900 1.55rem "Barlow Condensed", sans-serif !important;
+    letter-spacing: .04em !important;
+    text-align: left !important;
+}
+
+.anime-course-inner .prova-section.prova1 .prova-header { background: var(--anime-coral) !important; }
+.anime-course-inner .prova-section.prova2 .prova-header { background: var(--anime-cyan) !important; color: var(--anime-ink) !important; }
+.anime-course-inner .prova-section.prova3 .prova-header { background: var(--anime-violet) !important; }
+.anime-course-inner .prova-content { padding: 18px !important; background: var(--anime-white) !important; }
+
+.anime-course-inner .prova-info {
+    margin-bottom: 14px !important;
+    padding: 12px !important;
+    border: 2px solid var(--anime-ink) !important;
+    color: var(--anime-ink) !important;
+    background: var(--anime-paper) !important;
+}
+
+.anime-course-inner .prova-info-text { color: var(--anime-ink-soft) !important; font: 600 .78rem/1.45 "Inter", sans-serif !important; }
+.anime-course-inner .lista-link { text-decoration: none !important; }
+
+.anime-course-inner .lista-item {
+    display: grid !important;
+    grid-template-columns: 30px 72px 1fr !important;
+    align-items: center !important;
+    gap: 8px !important;
+    margin: 10px 0 !important;
+    padding: 12px !important;
+    border: 2px solid var(--anime-ink) !important;
+    border-radius: 0 !important;
+    color: var(--anime-ink) !important;
+    background: var(--anime-white) !important;
+    box-shadow: 3px 3px 0 var(--anime-ink) !important;
+    transform: none !important;
+}
+
+.anime-course-inner .lista-item:hover { transform: translate(-2px, -2px) !important; box-shadow: 5px 5px 0 var(--anime-ink) !important; }
+.anime-course-inner .download-icon { font-size: 1.1rem !important; }
+.anime-course-inner .lista-numero { color: var(--anime-coral) !important; font: 900 .78rem "Barlow Condensed", sans-serif !important; white-space: nowrap !important; }
+.anime-course-inner .lista-nome { color: var(--anime-ink) !important; font: 700 .76rem/1.3 "Inter", sans-serif !important; }
+
+/* Calendars */
+.anime-course-inner .calendar-grid {
+    display: grid !important;
+    grid-template-columns: repeat(2, minmax(0, 1fr)) !important;
+    gap: 24px !important;
+}
+
+.anime-course-inner .day-card {
+    overflow: hidden !important;
+    border: var(--anime-border) !important;
+    border-radius: 3px !important;
+    background: var(--anime-white) !important;
+    box-shadow: var(--anime-shadow) !important;
+}
+
+.anime-course-inner .day-header {
+    padding: 19px 22px !important;
+    border: 0 !important;
+    border-bottom: var(--anime-border) !important;
+    color: var(--anime-white) !important;
+    background: var(--anime-ink) !important;
+    font: italic 900 1.6rem "Barlow Condensed", sans-serif !important;
+    letter-spacing: .04em !important;
+    text-align: left !important;
+}
+
+.anime-course-inner .day-content { padding: 18px !important; background: var(--anime-white) !important; }
+
+.anime-course-inner .aula-item {
+    display: grid !important;
+    grid-template-columns: 86px 1fr !important;
+    gap: 13px !important;
+    align-items: center !important;
+    margin: 9px 0 !important;
+    padding: 12px !important;
+    border: 2px solid var(--anime-ink) !important;
+    border-left: 8px solid var(--anime-cyan) !important;
+    border-radius: 0 !important;
+    color: var(--anime-ink) !important;
+    background: var(--anime-white) !important;
+    box-shadow: 3px 3px 0 var(--anime-ink) !important;
+    transform: none !important;
+}
+
+.anime-course-inner .aula-item.prova { border-left-color: var(--anime-coral) !important; background: #fff0ef !important; }
+.anime-course-inner .aula-item.gravacao { border-left-color: var(--anime-violet) !important; background: #f5f0ff !important; }
+.anime-course-inner .aula-item.feriado { border-left-color: var(--anime-gold) !important; background: #fff7d8 !important; }
+.anime-course-inner .aula-data { color: var(--anime-coral) !important; font: 900 .92rem "Barlow Condensed", sans-serif !important; }
+.anime-course-inner .aula-assunto { color: var(--anime-ink) !important; font: 700 .82rem/1.35 "Inter", sans-serif !important; }
+
+.anime-course-inner .exame-section {
+    margin-top: 30px !important;
+    overflow: hidden !important;
+    border: var(--anime-border) !important;
+    border-radius: 3px !important;
+    background: var(--anime-white) !important;
+    box-shadow: var(--anime-shadow) !important;
+}
+
+.anime-course-inner .exame-header { padding: 16px 20px !important; border: 0 !important; border-bottom: var(--anime-border) !important; color: var(--anime-ink) !important; background: var(--anime-gold) !important; font: 900 1.35rem "Barlow Condensed", sans-serif !important; }
+.anime-course-inner .exame-content { padding: 20px !important; color: var(--anime-ink) !important; background: var(--anime-white) !important; }
+.anime-course-inner .exame-data { color: var(--anime-coral) !important; font: 900 2.1rem "Barlow Condensed", sans-serif !important; }
+.anime-course-inner .exame-content div[style] { color: var(--anime-ink-soft) !important; font-family: "Inter", sans-serif !important; font-size: .82rem !important; }
+
+/* Grade lookup */
+.anime-course-inner.notes-page .notes-heading { margin-bottom: 26px !important; }
+.anime-course-inner.notes-page .notes-subtitle { position: relative; z-index: 2; margin-top: 12px; color: #dcecff; font-size: .84rem; }
+
+.anime-course-inner .input-container {
+    margin: 0 0 26px !important;
+    padding: 26px !important;
+    border: var(--anime-border) !important;
+    border-radius: 3px !important;
+    background: var(--anime-white) !important;
+    box-shadow: var(--anime-shadow) !important;
+}
+
+.anime-course-inner .input-container label { color: var(--anime-ink) !important; font: 900 1.05rem "Barlow Condensed", sans-serif !important; letter-spacing: .08em !important; }
+.anime-course-inner .input-container input { border: 3px solid var(--anime-ink) !important; border-radius: 0 !important; color: var(--anime-ink) !important; background: var(--anime-paper) !important; font-family: "Inter", sans-serif !important; }
+.anime-course-inner .input-container input:focus { border-color: var(--anime-cyan) !important; box-shadow: 4px 4px 0 var(--anime-ink) !important; outline: none !important; }
+.anime-course-inner .input-container button { border: 3px solid var(--anime-ink) !important; border-radius: 0 !important; color: var(--anime-white) !important; background: var(--anime-coral) !important; box-shadow: 4px 4px 0 var(--anime-ink) !important; font: 900 .95rem "Barlow Condensed", sans-serif !important; letter-spacing: .06em !important; }
+.anime-course-inner .input-container button:hover { transform: translate(-2px, -2px) !important; box-shadow: 6px 6px 0 var(--anime-ink) !important; }
+
+.anime-course-inner .erro,
+.anime-course-inner .notas-container,
+.anime-course-inner .presenca-info {
+    border: var(--anime-border) !important;
+    border-radius: 3px !important;
+    color: var(--anime-ink) !important;
+    background: var(--anime-white) !important;
+    box-shadow: var(--anime-shadow) !important;
+    font-family: "Inter", sans-serif !important;
+}
+
+.anime-course-inner #resultado h2,
+.anime-course-inner .notas-container h3 { color: var(--anime-ink) !important; font-family: "Barlow Condensed", sans-serif !important; font-weight: 900 !important; text-transform: uppercase; }
+.anime-course-inner table { border: 2px solid var(--anime-ink) !important; color: var(--anime-ink) !important; background: var(--anime-white) !important; }
+.anime-course-inner th { color: var(--anime-white) !important; background: var(--anime-ink) !important; font-family: "Barlow Condensed", sans-serif !important; }
+.anime-course-inner td { border-color: rgba(16, 28, 58, .2) !important; color: var(--anime-ink) !important; background: var(--anime-white) !important; }
+.anime-course-inner .notas-container.final { border-color: var(--anime-ink) !important; }
+.anime-course-inner .notas-container.final .valor { color: var(--anime-coral) !important; }
+.anime-course-inner .presenca-info .valor { color: var(--anime-cyan) !important; }
+
+@media (max-width: 900px) {
+    .anime-course-inner .aulas-grid { grid-template-columns: repeat(2, minmax(0, 1fr)) !important; }
+    .anime-course-inner .provas-grid { grid-template-columns: 1fr !important; }
+}
+
+@media (max-width: 640px) {
+    .anime-course-inner .container { width: calc(100% - 20px) !important; padding-top: 16px !important; }
+    .anime-course-inner .header,
+    .anime-course-inner.notes-page .notes-heading { padding: 24px 20px !important; box-shadow: 5px 5px 0 var(--anime-ink) !important; }
+    .anime-course-inner h1 { font-size: clamp(2.4rem, 14vw, 4rem) !important; }
+    .anime-course-inner .aulas-grid,
+    .anime-course-inner .calendar-grid { grid-template-columns: 1fr !important; }
+    .anime-course-inner .aula-card,
+    .anime-course-inner .prova-section,
+    .anime-course-inner .day-card,
+    .anime-course-inner .exame-section,
+    .anime-course-inner .input-container { box-shadow: 5px 5px 0 var(--anime-ink) !important; }
+    .anime-course-inner .aula-item { grid-template-columns: 72px 1fr !important; }
+}
+
+@media (prefers-reduced-motion: reduce) {
+    .anime-course-inner *,
+    .anime-course-inner *::before,
+    .anime-course-inner *::after {
+        animation-duration: .01ms !important;
+        animation-iteration-count: 1 !important;
+        scroll-behavior: auto !important;
+    }
+}
