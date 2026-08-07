@@ -1,16 +1,16 @@
 {
   "ok": true,
   "repository": "Dougfisica/dougfisica.github.io",
-  "generated_at": "2026-08-06T14:37:00+00:00",
+  "generated_at": "2026-08-07T13:41:08+00:00",
   "first_run": false,
-  "new_count": 0,
-  "total_count": 6,
+  "new_count": 1,
+  "total_count": 7,
   "sources": [
     {
       "id": "hashimoto",
       "name": "Hashimoto Corretor de Imóveis",
       "ok": true,
-      "count": 3,
+      "count": 4,
       "error": null
     },
     {
@@ -35,7 +35,22 @@
       "error": null
     }
   ],
-  "new_houses": [],
+  "new_houses": [
+    {
+      "id": "hashimoto:1821",
+      "source": "hashimoto",
+      "source_name": "Hashimoto Corretor de Imóveis",
+      "code": "2079",
+      "category": "CASA",
+      "price": "2250.00",
+      "price_formatted": "R$ 2.250,00",
+      "address": "RUA JOAO DIAS DO NASCIMENTO, 16",
+      "neighborhood": "CENTRO",
+      "city": "JANDAIA DO SUL",
+      "url": "https://hashimotocorretordeimoveis.com.br/imovel/exibir/2079",
+      "image_url": "https://cdnmidia.simob.com.br/cdn/imovelImages/1821/616d4ebe9acda04aa4c708f4e7ac69ed.jpeg?idImobiliaria=388"
+    }
+  ],
   "current_houses": [
     {
       "id": "hashimoto:1820",
@@ -120,6 +135,20 @@
       "city": "Jandaia do Sul",
       "url": "https://www.jolnegociosimobiliarios.com.br/imovel/4268715/casa-locacao-jandaia-do-sul-pr-centro",
       "image_url": "https://www.jolnegociosimobiliarios.com.br/imagens/imoveis/202606261534386319.jpeg"
+    },
+    {
+      "id": "hashimoto:1821",
+      "source": "hashimoto",
+      "source_name": "Hashimoto Corretor de Imóveis",
+      "code": "2079",
+      "category": "CASA",
+      "price": "2250.00",
+      "price_formatted": "R$ 2.250,00",
+      "address": "RUA JOAO DIAS DO NASCIMENTO, 16",
+      "neighborhood": "CENTRO",
+      "city": "JANDAIA DO SUL",
+      "url": "https://hashimotocorretordeimoveis.com.br/imovel/exibir/2079",
+      "image_url": "https://cdnmidia.simob.com.br/cdn/imovelImages/1821/616d4ebe9acda04aa4c708f4e7ac69ed.jpeg?idImobiliaria=388"
     }
   ]
 }
