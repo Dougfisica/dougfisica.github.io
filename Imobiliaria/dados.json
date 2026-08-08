@@ -1,9 +1,9 @@
 {
   "ok": true,
   "repository": "Dougfisica/dougfisica.github.io",
-  "generated_at": "2026-08-07T13:41:08+00:00",
+  "generated_at": "2026-08-08T13:14:05+00:00",
   "first_run": false,
-  "new_count": 1,
+  "new_count": 0,
   "total_count": 7,
   "sources": [
     {
@@ -35,22 +35,7 @@
       "error": null
     }
   ],
-  "new_houses": [
-    {
-      "id": "hashimoto:1821",
-      "source": "hashimoto",
-      "source_name": "Hashimoto Corretor de Imóveis",
-      "code": "2079",
-      "category": "CASA",
-      "price": "2250.00",
-      "price_formatted": "R$ 2.250,00",
-      "address": "RUA JOAO DIAS DO NASCIMENTO, 16",
-      "neighborhood": "CENTRO",
-      "city": "JANDAIA DO SUL",
-      "url": "https://hashimotocorretordeimoveis.com.br/imovel/exibir/2079",
-      "image_url": "https://cdnmidia.simob.com.br/cdn/imovelImages/1821/616d4ebe9acda04aa4c708f4e7ac69ed.jpeg?idImobiliaria=388"
-    }
-  ],
+  "new_houses": [],
   "current_houses": [
     {
       "id": "hashimoto:1820",
