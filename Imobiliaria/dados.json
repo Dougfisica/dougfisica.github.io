@@ -1,9 +1,9 @@
 {
   "ok": true,
   "repository": "Dougfisica/dougfisica.github.io",
-  "generated_at": "2026-08-12T13:50:39+00:00",
+  "generated_at": "2026-08-13T13:50:18+00:00",
   "first_run": false,
-  "new_count": 1,
+  "new_count": 0,
   "total_count": 8,
   "sources": [
     {
@@ -35,22 +35,7 @@
       "error": null
     }
   ],
-  "new_houses": [
-    {
-      "id": "ideal:40720005008",
-      "source": "ideal",
-      "source_name": "Ideal Maringá Imóveis",
-      "code": "40720005008",
-      "category": "Casa",
-      "price": "2800",
-      "price_formatted": "R$ 2.800,00",
-      "address": "",
-      "neighborhood": "Jardim Miguel Capocci",
-      "city": "Jandaia do Sul",
-      "url": "https://idealimoveismga.com.br/imovel/40720005008/locacao/casa-em-jandaia-do-sul/jardim-miguel-capocci",
-      "image_url": "https://media.sub100.com.br/imoveis/407/40720005008/40720005008am.jpg?id=20260812052936"
-    }
-  ],
+  "new_houses": [],
   "current_houses": [
     {
       "id": "hashimoto:1820",
@@ -106,7 +91,7 @@
       "neighborhood": "Jardim Miguel Capocci",
       "city": "Jandaia do Sul",
       "url": "https://idealimoveismga.com.br/imovel/40720005008/locacao/casa-em-jandaia-do-sul/jardim-miguel-capocci",
-      "image_url": "https://media.sub100.com.br/imoveis/407/40720005008/40720005008am.jpg?id=20260812052936"
+      "image_url": "https://media.sub100.com.br/imoveis/407/40720005008/40720005008am.jpg?id=20260813053616"
     },
     {
       "id": "hashimoto:778",
