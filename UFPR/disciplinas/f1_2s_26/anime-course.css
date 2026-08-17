@@ -291,7 +291,7 @@ body.anime-course-inner::after {
 
 .anime-course-inner .aula-item {
     display: grid !important;
-    grid-template-columns: 86px 1fr !important;
+    grid-template-columns: 86px minmax(0, 1fr) auto !important;
     gap: 13px !important;
     align-items: center !important;
     margin: 9px 0 !important;
@@ -308,8 +308,21 @@ body.anime-course-inner::after {
 .anime-course-inner .aula-item.prova { border-left-color: var(--anime-coral) !important; background: #fff0ef !important; }
 .anime-course-inner .aula-item.gravacao { border-left-color: var(--anime-violet) !important; background: #f5f0ff !important; }
 .anime-course-inner .aula-item.feriado { border-left-color: var(--anime-gold) !important; background: #fff7d8 !important; }
+.anime-course-inner .aula-item.cancelada { border-left-color: #7f899d !important; background: #eef0f4 !important; opacity: .78; }
 .anime-course-inner .aula-data { color: var(--anime-coral) !important; font: 900 .92rem "Barlow Condensed", sans-serif !important; }
 .anime-course-inner .aula-assunto { color: var(--anime-ink) !important; font: 700 .82rem/1.35 "Inter", sans-serif !important; }
+.anime-course-inner .aula-rotulo {
+    justify-self: end;
+    padding: 3px 7px;
+    border: 1px solid var(--anime-ink);
+    color: var(--anime-white);
+    background: var(--anime-violet);
+    font: 800 .57rem "Inter", sans-serif;
+    letter-spacing: .04em;
+}
+.anime-course-inner .aula-item.prova .aula-rotulo { background: var(--anime-coral); }
+.anime-course-inner .aula-item.feriado .aula-rotulo { color: var(--anime-ink); background: var(--anime-gold); }
+.anime-course-inner .aula-item.cancelada .aula-rotulo { background: #697386; }
 
 .anime-course-inner .exame-section {
     margin-top: 30px !important;
@@ -381,7 +394,8 @@ body.anime-course-inner::after {
     .anime-course-inner .day-card,
     .anime-course-inner .exame-section,
     .anime-course-inner .input-container { box-shadow: 5px 5px 0 var(--anime-ink) !important; }
-    .anime-course-inner .aula-item { grid-template-columns: 72px 1fr !important; }
+    .anime-course-inner .aula-item { grid-template-columns: 72px minmax(0, 1fr) !important; }
+    .anime-course-inner .aula-rotulo { grid-column: 2; justify-self: start; }
 }
 
 @media (prefers-reduced-motion: reduce) {
