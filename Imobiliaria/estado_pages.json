@@ -17,12 +17,12 @@
     "jol:4268715",
     "jol:4276738"
   ],
-  "last_checked_at": "2026-09-03T16:28:38+00:00",
+  "last_checked_at": "2026-09-04T16:24:38+00:00",
   "source_counts": {
     "hashimoto": 2,
-    "imobivale": 1,
+    "imobivale": 0,
     "jol": 2,
-    "ideal": 1
+    "ideal": 0
   },
   "source_errors": {}
 }
