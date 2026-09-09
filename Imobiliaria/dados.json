@@ -1,10 +1,10 @@
 {
   "ok": true,
   "repository": "Dougfisica/dougfisica.github.io",
-  "generated_at": "2026-09-08T16:41:01+00:00",
+  "generated_at": "2026-09-09T16:41:32+00:00",
   "first_run": false,
-  "new_count": 0,
-  "total_count": 4,
+  "new_count": 1,
+  "total_count": 5,
   "sources": [
     {
       "id": "hashimoto",
@@ -17,7 +17,7 @@
       "id": "imobivale",
       "name": "Imobivale Imóveis",
       "ok": true,
-      "count": 0,
+      "count": 1,
       "error": null
     },
     {
@@ -35,7 +35,22 @@
       "error": null
     }
   ],
-  "new_houses": [],
+  "new_houses": [
+    {
+      "id": "imobivale:279327",
+      "source": "imobivale",
+      "source_name": "Imobivale Imóveis",
+      "code": "699",
+      "category": "Casa em alvenaria",
+      "price": "2800.00",
+      "price_formatted": "R$ 2.800,00",
+      "address": "Rua Padre João Barbieri, 628",
+      "neighborhood": "Centro",
+      "city": "JANDAIA DO SUL",
+      "url": "https://www.imobivaleimoveis.com.br/imovel/exibir/699",
+      "image_url": "https://cdnmidia.simob.com.br/cdn/imovelImages/279327/37df47db81babd2e0368cd058c29d8d7.jpeg?idImobiliaria=428"
+    }
+  ],
   "current_houses": [
     {
       "id": "hashimoto:1728",
@@ -50,6 +65,20 @@
       "city": "JANDAIA DO SUL",
       "url": "https://hashimotocorretordeimoveis.com.br/imovel/exibir/1986",
       "image_url": "https://cdnmidia.simob.com.br/cdn/imovelImages/1728/7018ab40cf1afe0e7d41614e5a043539.jpeg?idImobiliaria=388"
+    },
+    {
+      "id": "imobivale:279327",
+      "source": "imobivale",
+      "source_name": "Imobivale Imóveis",
+      "code": "699",
+      "category": "Casa em alvenaria",
+      "price": "2800.00",
+      "price_formatted": "R$ 2.800,00",
+      "address": "Rua Padre João Barbieri, 628",
+      "neighborhood": "Centro",
+      "city": "JANDAIA DO SUL",
+      "url": "https://www.imobivaleimoveis.com.br/imovel/exibir/699",
+      "image_url": "https://cdnmidia.simob.com.br/cdn/imovelImages/279327/37df47db81babd2e0368cd058c29d8d7.jpeg?idImobiliaria=428"
     },
     {
       "id": "hashimoto:778",
