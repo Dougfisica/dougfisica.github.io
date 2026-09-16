@@ -14,14 +14,15 @@
     "hashimoto:778",
     "ideal:40720005008",
     "imobivale:125327",
+    "imobivale:128107",
     "imobivale:279327",
     "jol:4268715",
     "jol:4276738"
   ],
-  "last_checked_at": "2026-09-15T17:03:04+00:00",
+  "last_checked_at": "2026-09-16T17:02:20+00:00",
   "source_counts": {
     "hashimoto": 2,
-    "imobivale": 1,
+    "imobivale": 2,
     "jol": 2,
     "ideal": 0
   },
