@@ -1,9 +1,9 @@
 {
   "ok": true,
   "repository": "Dougfisica/dougfisica.github.io",
-  "generated_at": "2026-09-16T17:02:20+00:00",
+  "generated_at": "2026-09-17T17:02:56+00:00",
   "first_run": false,
-  "new_count": 1,
+  "new_count": 0,
   "total_count": 6,
   "sources": [
     {
@@ -35,22 +35,7 @@
       "error": null
     }
   ],
-  "new_houses": [
-    {
-      "id": "imobivale:128107",
-      "source": "imobivale",
-      "source_name": "Imobivale Imóveis",
-      "code": "311",
-      "category": "Casa em alvenaria",
-      "price": "2200.00",
-      "price_formatted": "R$ 2.200,00",
-      "address": "Rua Roberto Farinazzo, 6",
-      "neighborhood": "Jardim Perola",
-      "city": "JANDAIA DO SUL",
-      "url": "https://www.imobivaleimoveis.com.br/imovel/exibir/311",
-      "image_url": "https://cdnmidia.simob.com.br/cdn/imovelImages/128107/f69b9f4c5c57211b09bc5e83ed5e5c9e.jpeg?idImobiliaria=428"
-    }
-  ],
+  "new_houses": [],
   "current_houses": [
     {
       "id": "hashimoto:1728",
