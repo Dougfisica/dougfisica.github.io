@@ -1,17 +1,17 @@
 {
   "ok": true,
   "repository": "Dougfisica/dougfisica.github.io",
-  "generated_at": "2026-09-28T19:41:59+00:00",
+  "generated_at": "2026-09-29T18:06:30+00:00",
   "first_run": false,
   "new_count": 0,
-  "total_count": 4,
+  "total_count": 3,
   "sources": [
     {
       "id": "hashimoto",
       "name": "Hashimoto Corretor de Imóveis",
-      "ok": true,
-      "count": 1,
-      "error": null
+      "ok": false,
+      "count": 0,
+      "error": "O portal hashimotocorretordeimoveis.com.br não retornou a configuração da API"
     },
     {
       "id": "imobivale",
@@ -37,20 +37,6 @@
   ],
   "new_houses": [],
   "current_houses": [
-    {
-      "id": "hashimoto:1728",
-      "source": "hashimoto",
-      "source_name": "Hashimoto Corretor de Imóveis",
-      "code": "1986",
-      "category": "CASA",
-      "price": "3500.00",
-      "price_formatted": "R$ 3.500,00",
-      "address": "RUA JOSE FRANCISCO BORGES, 931",
-      "neighborhood": "CENTRO",
-      "city": "JANDAIA DO SUL",
-      "url": "https://hashimotocorretordeimoveis.com.br/imovel/exibir/1986",
-      "image_url": "https://cdnmidia.simob.com.br/cdn/imovelImages/1728/7018ab40cf1afe0e7d41614e5a043539.jpeg?idImobiliaria=388"
-    },
     {
       "id": "jol:4276738",
       "source": "jol",
