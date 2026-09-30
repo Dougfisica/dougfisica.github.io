@@ -19,13 +19,12 @@
     "jol:4268715",
     "jol:4276738"
   ],
-  "last_checked_at": "2026-09-29T18:06:30+00:00",
+  "last_checked_at": "2026-09-30T18:01:08+00:00",
   "source_counts": {
+    "hashimoto": 1,
     "imobivale": 1,
     "jol": 2,
     "ideal": 0
   },
-  "source_errors": {
-    "hashimoto": "O portal hashimotocorretordeimoveis.com.br não retornou a configuração da API"
-  }
+  "source_errors": {}
 }
