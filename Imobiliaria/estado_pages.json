@@ -17,14 +17,16 @@
     "imobivale:128107",
     "imobivale:279327",
     "jol:4268715",
-    "jol:4276738"
+    "jol:4276738",
+    "jol:4387055"
   ],
-  "last_checked_at": "2026-10-06T18:25:14+00:00",
+  "last_checked_at": "2026-10-29T18:31:08+00:00",
   "source_counts": {
-    "hashimoto": 1,
-    "imobivale": 0,
-    "jol": 2,
+    "jol": 3,
     "ideal": 0
   },
-  "source_errors": {}
+  "source_errors": {
+    "hashimoto": "Falha ao consultar https://simob.com.br/v2/imobiliaria/site/params?host=hashimotocorretordeimoveis.com.br: <urlopen error timed out>",
+    "imobivale": "Falha ao consultar https://simob.com.br/v2/imobiliaria/site/params?host=imobivaleimoveis.com.br: <urlopen error timed out>"
+  }
 }
