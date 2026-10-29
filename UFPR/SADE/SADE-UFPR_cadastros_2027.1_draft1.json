@@ -1,0 +1,6429 @@
+{
+  "rooms": [
+    {
+      "id": "sala_a101",
+      "code": "A101",
+      "building": "Bloco A",
+      "name": "Lab de Práticas Pedagógicas LCE",
+      "capacity": 20,
+      "type": "comum",
+      "resources": [
+        "projetor"
+      ]
+    },
+    {
+      "id": "sala_a102",
+      "code": "A102",
+      "building": "Bloco A",
+      "name": "Laboratório de Informática (computadores: 38 +1)",
+      "capacity": 39,
+      "type": "lab_info",
+      "resources": [
+        "projetor",
+        "ar"
+      ]
+    },
+    {
+      "id": "sala_a109",
+      "code": "A109",
+      "building": "Bloco A",
+      "name": "Sala Extensão / Intervenções, Reuniões e Aulas",
+      "capacity": 20,
+      "type": "comum",
+      "resources": [
+        "projetor"
+      ]
+    },
+    {
+      "id": "sala_b101",
+      "code": "B101",
+      "building": "Bloco B",
+      "name": "Laboratório de Processos Fermentativos e Enzimáticos e Microbiologia",
+      "capacity": 1,
+      "type": "comum",
+      "resources": []
+    },
+    {
+      "id": "sala_b102",
+      "code": "B102",
+      "building": "Bloco B",
+      "name": "Laboratório de Pesquisa Multiusuário 01",
+      "capacity": 1,
+      "type": "comum",
+      "resources": []
+    },
+    {
+      "id": "sala_b103",
+      "code": "B103",
+      "building": "Bloco B",
+      "name": "Laboratório de Tecnologia de Produtos de Origem Vegetal",
+      "capacity": 1,
+      "type": "comum",
+      "resources": []
+    },
+    {
+      "id": "sala_b105",
+      "code": "B105",
+      "building": "Bloco B",
+      "name": "Laboratório de Protótipos e Mecanização Agrícola",
+      "capacity": 20,
+      "type": "comum",
+      "resources": []
+    },
+    {
+      "id": "sala_b106",
+      "code": "B106",
+      "building": "Bloco B",
+      "name": "Laboratório de Módulos Didáticos (LAMODI) – Operações Unitárias e Fenômenos de Transporte",
+      "capacity": 1,
+      "type": "comum",
+      "resources": []
+    },
+    {
+      "id": "sala_b201",
+      "code": "B201",
+      "building": "Bloco B",
+      "name": "Sala Centenário Paulo Freire",
+      "capacity": 40,
+      "type": "comum",
+      "resources": [
+        "projetor"
+      ]
+    },
+    {
+      "id": "sala_b203",
+      "code": "B203",
+      "building": "Bloco B",
+      "name": "Laboratório de Instalações Elétricas e Eletrotécnica",
+      "capacity": 30,
+      "type": "comum",
+      "resources": []
+    },
+    {
+      "id": "sala_b204",
+      "code": "B204",
+      "building": "Bloco B",
+      "name": "Laboratório de Saneamento e Águas",
+      "capacity": 20,
+      "type": "comum",
+      "resources": []
+    },
+    {
+      "id": "sala_b205",
+      "code": "B205",
+      "building": "Bloco B",
+      "name": "Laboratório de Pesquisa Multiusuário 02",
+      "capacity": 1,
+      "type": "comum",
+      "resources": []
+    },
+    {
+      "id": "sala_b206",
+      "code": "B206",
+      "building": "Bloco B",
+      "name": "Laboratório de Tecnologia de Produtos de Origem Animal",
+      "capacity": 1,
+      "type": "comum",
+      "resources": []
+    },
+    {
+      "id": "sala_b210",
+      "code": "B210",
+      "building": "Bloco B",
+      "name": "Laboratório de Química 1",
+      "capacity": 25,
+      "type": "lab_quimica",
+      "resources": []
+    },
+    {
+      "id": "sala_b301",
+      "code": "B301",
+      "building": "Bloco B",
+      "name": "Laboratório de Física",
+      "capacity": 25,
+      "type": "lab_fisica",
+      "resources": []
+    },
+    {
+      "id": "sala_b303",
+      "code": "B303",
+      "building": "Bloco B",
+      "name": "Sala de Expressão Gráfica",
+      "capacity": 36,
+      "type": "desenho",
+      "resources": []
+    },
+    {
+      "id": "sala_b307",
+      "code": "B307",
+      "building": "Bloco B",
+      "name": "Laboratório de Informática (computadores: 17)",
+      "capacity": 30,
+      "type": "lab_info",
+      "resources": []
+    },
+    {
+      "id": "sala_b308",
+      "code": "B308",
+      "building": "Bloco B",
+      "name": "Laboratório de Análise Sensorial",
+      "capacity": 1,
+      "type": "comum",
+      "resources": []
+    },
+    {
+      "id": "sala_c101",
+      "code": "C101",
+      "building": "Bloco C",
+      "name": "Sala de aula padrão",
+      "capacity": 60,
+      "type": "comum",
+      "resources": [
+        "projetor",
+        "ar"
+      ]
+    },
+    {
+      "id": "sala_c102",
+      "code": "C102",
+      "building": "Bloco C",
+      "name": "Sala de aula padrão",
+      "capacity": 60,
+      "type": "comum",
+      "resources": [
+        "projetor",
+        "ar"
+      ]
+    },
+    {
+      "id": "sala_c103",
+      "code": "C103",
+      "building": "Bloco C",
+      "name": "Laboratório de Informática (computadores: 22 +1)",
+      "capacity": 22,
+      "type": "lab_info",
+      "resources": []
+    },
+    {
+      "id": "sala_c104",
+      "code": "C104",
+      "building": "Bloco C",
+      "name": "Sala de aula padrão",
+      "capacity": 60,
+      "type": "comum",
+      "resources": [
+        "projetor",
+        "ar"
+      ]
+    },
+    {
+      "id": "sala_c105",
+      "code": "C105",
+      "building": "Bloco C",
+      "name": "Laboratório de Informática (computadores: 21 +1)",
+      "capacity": 21,
+      "type": "lab_info",
+      "resources": []
+    },
+    {
+      "id": "sala_c106",
+      "code": "C106",
+      "building": "Bloco C",
+      "name": "Laboratório de Informática (computadores: 21 +1)",
+      "capacity": 1,
+      "type": "lab_info",
+      "resources": []
+    },
+    {
+      "id": "sala_c107",
+      "code": "C107",
+      "building": "Bloco C",
+      "name": "Sala de aula padrão",
+      "capacity": 30,
+      "type": "comum",
+      "resources": [
+        "projetor",
+        "ar"
+      ]
+    },
+    {
+      "id": "sala_c108",
+      "code": "C108",
+      "building": "Bloco C",
+      "name": "Sala de aula padrão",
+      "capacity": 30,
+      "type": "comum",
+      "resources": [
+        "projetor",
+        "ar"
+      ]
+    },
+    {
+      "id": "sala_c109",
+      "code": "C109",
+      "building": "Bloco C",
+      "name": "Sala de aula padrão",
+      "capacity": 30,
+      "type": "comum",
+      "resources": [
+        "projetor",
+        "ar"
+      ]
+    },
+    {
+      "id": "sala_c110",
+      "code": "C110",
+      "building": "Bloco C",
+      "name": "Sala de aula padrão",
+      "capacity": 30,
+      "type": "comum",
+      "resources": [
+        "projetor",
+        "ar"
+      ]
+    },
+    {
+      "id": "sala_c111",
+      "code": "C111",
+      "building": "Bloco C",
+      "name": "Laboratório de Química 2",
+      "capacity": 25,
+      "type": "lab_quimica",
+      "resources": []
+    },
+    {
+      "id": "sala_c116",
+      "code": "C116",
+      "building": "Bloco C",
+      "name": "Sala de aula padrão",
+      "capacity": 30,
+      "type": "comum",
+      "resources": [
+        "projetor"
+      ]
+    },
+    {
+      "id": "sala_c117",
+      "code": "C117",
+      "building": "Bloco C",
+      "name": "Sala de aula padrão",
+      "capacity": 30,
+      "type": "comum",
+      "resources": [
+        "projetor"
+      ]
+    },
+    {
+      "id": "sala_c118",
+      "code": "C118",
+      "building": "Bloco C",
+      "name": "Sala de aula padrão",
+      "capacity": 30,
+      "type": "comum",
+      "resources": [
+        "projetor"
+      ]
+    },
+    {
+      "id": "sala_c119",
+      "code": "C119",
+      "building": "Bloco C",
+      "name": "Sala de aula padrão",
+      "capacity": 30,
+      "type": "comum",
+      "resources": [
+        "projetor",
+        "ar"
+      ]
+    },
+    {
+      "id": "sala_lataq",
+      "code": "LATAQ",
+      "building": "Localização a confirmar",
+      "name": "Laboratório de Tecnologia em Aquicultura [capacidade a confirmar] [tipo específico a confirmar]",
+      "capacity": 1,
+      "type": "comum",
+      "resources": []
+    }
+  ],
+  "professors": [
+    {
+      "id": "prof_a_definir_l077",
+      "name": "A DEFINIR · EAL · JAN005A · L77",
+      "siape": "",
+      "department": "Responsável provisório — confirmar docente",
+      "email": "",
+      "maxWeeklyHours": 20,
+      "unavailableSlots": []
+    },
+    {
+      "id": "prof_a_definir_l108",
+      "name": "A DEFINIR · EPR · JAN005A · L108",
+      "siape": "",
+      "department": "Responsável provisório — confirmar docente",
+      "email": "",
+      "maxWeeklyHours": 20,
+      "unavailableSlots": []
+    },
+    {
+      "id": "prof_a_definir_l181",
+      "name": "A DEFINIR · LCE · JCE342 · L181",
+      "siape": "",
+      "department": "Responsável provisório — confirmar docente",
+      "email": "",
+      "maxWeeklyHours": 20,
+      "unavailableSlots": []
+    },
+    {
+      "id": "prof_adriano_rodrigues_mansanera",
+      "name": "ADRIANO RODRIGUES MANSANERA",
+      "siape": "",
+      "department": "Campus Jandaia do Sul — departamento a confirmar",
+      "email": "",
+      "maxWeeklyHours": 20,
+      "unavailableSlots": [
+        "SEG_T1",
+        "SEG_T2",
+        "SEG_T3",
+        "SEG_T4",
+        "SEG_N1",
+        "SEG_N2",
+        "SEG_N3",
+        "SEG_N4",
+        "SEX_T1",
+        "SEX_T2",
+        "SEX_T3",
+        "SEX_T4",
+        "SEX_N1",
+        "SEX_N2",
+        "SEX_N3",
+        "SEX_N4",
+        "SEG_M1",
+        "SEG_M2",
+        "SEG_M3",
+        "SEG_M4",
+        "SEG_M5",
+        "QUA_M1",
+        "QUA_M2",
+        "QUA_M3",
+        "QUA_M4",
+        "QUA_M5",
+        "SEX_M5",
+        "SEX_M4",
+        "SEX_M3",
+        "SEX_M2",
+        "SEX_M1",
+        "SAB_M1",
+        "SAB_M2",
+        "SAB_M3",
+        "SAB_M4",
+        "SAB_M5",
+        "SAB_T1",
+        "SAB_T2",
+        "SAB_T3",
+        "SAB_T4",
+        "SAB_T5",
+        "SEX_T5",
+        "SEG_T5",
+        "QUA_T1",
+        "QUA_T2",
+        "QUA_T3",
+        "QUA_T4",
+        "QUA_T5",
+        "SAB_N1",
+        "SAB_N2",
+        "SAB_N3",
+        "SAB_N4",
+        "QUA_N4",
+        "QUA_N3",
+        "QUA_N2",
+        "QUA_N1"
+      ]
+    },
+    {
+      "id": "prof_adriano_thibes_hoshino",
+      "name": "ADRIANO THIBES HOSHINO",
+      "siape": "",
+      "department": "Campus Jandaia do Sul — departamento a confirmar",
+      "email": "",
+      "maxWeeklyHours": 20,
+      "unavailableSlots": []
+    },
+    {
+      "id": "prof_alexandre_jose_sousa_ferreira",
+      "name": "ALEXANDRE JOSÉ SOUSA FERREIRA",
+      "siape": "",
+      "department": "Campus Jandaia do Sul — departamento a confirmar",
+      "email": "",
+      "maxWeeklyHours": 20,
+      "unavailableSlots": []
+    },
+    {
+      "id": "prof_alexandre_prusch_zuge",
+      "name": "ALEXANDRE PRUSCH ZÜGE",
+      "siape": "",
+      "department": "Campus Jandaia do Sul — departamento a confirmar",
+      "email": "",
+      "maxWeeklyHours": 20,
+      "unavailableSlots": []
+    },
+    {
+      "id": "prof_ana_claudia_nogueira_mulati",
+      "name": "ANA CLAUDIA NOGUEIRA MULATI",
+      "siape": "",
+      "department": "Campus Jandaia do Sul — departamento a confirmar",
+      "email": "",
+      "maxWeeklyHours": 20,
+      "unavailableSlots": [
+        "TER_N1",
+        "TER_N2",
+        "TER_N3",
+        "TER_N4",
+        "SEX_N1",
+        "SEX_N2",
+        "SEX_N3",
+        "SEX_N4"
+      ]
+    },
+    {
+      "id": "prof_andre_luiz_gazoli_de_oliveira",
+      "name": "ANDRÉ LUIZ GAZOLI DE OLIVEIRA",
+      "siape": "",
+      "department": "Campus Jandaia do Sul — departamento a confirmar",
+      "email": "",
+      "maxWeeklyHours": 20,
+      "unavailableSlots": [
+        "QUA_M1",
+        "QUA_M2",
+        "QUA_M3",
+        "QUA_M4",
+        "QUA_M5",
+        "QUA_T1",
+        "QUA_T2",
+        "QUA_T3",
+        "QUA_T4"
+      ]
+    },
+    {
+      "id": "prof_andre_luiz_justi",
+      "name": "ANDRÉ LUIZ JUSTI",
+      "siape": "",
+      "department": "Campus Jandaia do Sul — departamento a confirmar",
+      "email": "",
+      "maxWeeklyHours": 20,
+      "unavailableSlots": [
+        "SEX_M1",
+        "SEX_M2",
+        "SEX_M3",
+        "SEX_M4",
+        "SEX_M5",
+        "SEX_T1",
+        "SEX_T2",
+        "SEX_T3",
+        "SEX_T4"
+      ]
+    },
+    {
+      "id": "prof_andressa_algayer_da_silva_moretti",
+      "name": "ANDRESSA ALGAYER DA SILVA MORETTI",
+      "siape": "",
+      "department": "Campus Jandaia do Sul — departamento a confirmar",
+      "email": "",
+      "maxWeeklyHours": 20,
+      "unavailableSlots": []
+    },
+    {
+      "id": "prof_barbara_candido_braz",
+      "name": "BARBARA CANDIDO BRAZ",
+      "siape": "",
+      "department": "Campus Jandaia do Sul — departamento a confirmar",
+      "email": "",
+      "maxWeeklyHours": 20,
+      "unavailableSlots": []
+    },
+    {
+      "id": "prof_camila_andrade_de_macedo",
+      "name": "CAMILA ANDRADE DE MACEDO",
+      "siape": "",
+      "department": "Campus Jandaia do Sul — departamento a confirmar",
+      "email": "",
+      "maxWeeklyHours": 20,
+      "unavailableSlots": []
+    },
+    {
+      "id": "prof_carlos_eurico_galvao_rosa",
+      "name": "CARLOS EURICO GALVÃO ROSA",
+      "siape": "",
+      "department": "Campus Jandaia do Sul — departamento a confirmar",
+      "email": "",
+      "maxWeeklyHours": 20,
+      "unavailableSlots": [
+        "TER_M5",
+        "TER_M4",
+        "TER_M3",
+        "SEG_N4",
+        "SEG_N3",
+        "SEG_N2",
+        "SEG_N1",
+        "TER_N3",
+        "TER_N4",
+        "QUA_N4",
+        "QUA_N3",
+        "QUI_N3",
+        "QUI_N4",
+        "SEX_N4",
+        "SEX_N3",
+        "SAB_N3",
+        "SAB_N4"
+      ]
+    },
+    {
+      "id": "prof_carlos_henrique_wachholz_de_souza",
+      "name": "CARLOS HENRIQUE WACHHOLZ DE SOUZA",
+      "siape": "",
+      "department": "Campus Jandaia do Sul — departamento a confirmar",
+      "email": "",
+      "maxWeeklyHours": 20,
+      "unavailableSlots": []
+    },
+    {
+      "id": "prof_carlos_roberto_beleti_junior",
+      "name": "CARLOS ROBERTO BELETI JUNIOR",
+      "siape": "",
+      "department": "Campus Jandaia do Sul — departamento a confirmar",
+      "email": "",
+      "maxWeeklyHours": 20,
+      "unavailableSlots": [
+        "QUI_T1",
+        "QUI_T2",
+        "QUI_T3",
+        "QUI_T4",
+        "SEX_M1",
+        "SEX_M2",
+        "SEX_M3",
+        "SEX_M4",
+        "SEX_M5",
+        "SEX_T1",
+        "SEX_T2",
+        "SEX_T3",
+        "SEX_T4",
+        "TER_M5",
+        "TER_M4",
+        "TER_M3"
+      ]
+    },
+    {
+      "id": "prof_daniel_angelo_longhi",
+      "name": "DANIEL ANGELO LONGHI",
+      "siape": "",
+      "department": "Campus Jandaia do Sul — departamento a confirmar",
+      "email": "",
+      "maxWeeklyHours": 20,
+      "unavailableSlots": []
+    },
+    {
+      "id": "prof_dirlei_diedrich_kieling",
+      "name": "DIRLEI DIEDRICH KIELING",
+      "siape": "",
+      "department": "Campus Jandaia do Sul — departamento a confirmar",
+      "email": "",
+      "maxWeeklyHours": 20,
+      "unavailableSlots": [
+        "SEG_M1",
+        "SEG_M2",
+        "SEG_M3",
+        "SEG_M4",
+        "SEG_M5",
+        "QUI_T1",
+        "QUI_T2",
+        "QUI_T3",
+        "QUI_T4",
+        "SEX_M1",
+        "SEX_M2",
+        "SEX_M3",
+        "SEX_M4",
+        "SEX_M5",
+        "SEX_T1",
+        "SEX_T2",
+        "SEX_T3",
+        "SEX_T4"
+      ]
+    },
+    {
+      "id": "prof_douglas_soares_de_oliveira",
+      "name": "DOUGLAS SOARES DE OLIVEIRA",
+      "siape": "",
+      "department": "Campus Jandaia do Sul — departamento a confirmar",
+      "email": "",
+      "maxWeeklyHours": 20,
+      "unavailableSlots": [
+        "SEX_T1",
+        "SEX_T2",
+        "SEX_T3",
+        "SEX_T4",
+        "SEX_N1",
+        "SEX_N2",
+        "SEX_N3",
+        "SEX_N4",
+        "TER_M5",
+        "TER_M4",
+        "TER_M3"
+      ]
+    },
+    {
+      "id": "prof_eduardo_cesar_meurer",
+      "name": "EDUARDO CESAR MEURER",
+      "siape": "",
+      "department": "Campus Jandaia do Sul — departamento a confirmar",
+      "email": "",
+      "maxWeeklyHours": 20,
+      "unavailableSlots": [
+        "SEG_M1",
+        "SEG_M2",
+        "SEG_M3",
+        "SEG_M4",
+        "SEG_M5",
+        "QUA_M1",
+        "QUA_M2",
+        "QUA_M3",
+        "QUA_M4",
+        "QUA_M5",
+        "QUI_N1",
+        "QUI_N2",
+        "QUI_N3",
+        "QUI_N4"
+      ]
+    },
+    {
+      "id": "prof_erika_de_castro_vasques",
+      "name": "ERIKA DE CASTRO VASQUES",
+      "siape": "",
+      "department": "Campus Jandaia do Sul — departamento a confirmar",
+      "email": "",
+      "maxWeeklyHours": 20,
+      "unavailableSlots": []
+    },
+    {
+      "id": "prof_fabio_meurer",
+      "name": "FÁBIO MEURER",
+      "siape": "",
+      "department": "Campus Jandaia do Sul — departamento a confirmar",
+      "email": "",
+      "maxWeeklyHours": 20,
+      "unavailableSlots": []
+    },
+    {
+      "id": "prof_flavio_franchello",
+      "name": "FLAVIO FRANCHELLO",
+      "siape": "",
+      "department": "Campus Jandaia do Sul — departamento a confirmar",
+      "email": "",
+      "maxWeeklyHours": 20,
+      "unavailableSlots": []
+    },
+    {
+      "id": "prof_giancarlo_alfonso_lovon_canchumani",
+      "name": "GIANCARLO ALFONSO LOVON CANCHUMANI",
+      "siape": "",
+      "department": "Campus Jandaia do Sul — departamento a confirmar",
+      "email": "",
+      "maxWeeklyHours": 20,
+      "unavailableSlots": []
+    },
+    {
+      "id": "prof_gisele_strieder_philippsen",
+      "name": "GISELE STRIEDER PHILIPPSEN",
+      "siape": "",
+      "department": "Campus Jandaia do Sul — departamento a confirmar",
+      "email": "",
+      "maxWeeklyHours": 20,
+      "unavailableSlots": [
+        "SEG_M1",
+        "SEG_M2",
+        "SEG_M3",
+        "SEG_M4",
+        "SEG_M5",
+        "SEX_N1",
+        "SEX_N2",
+        "SEX_N3",
+        "SEX_N4"
+      ]
+    },
+    {
+      "id": "prof_gustavo_ferreira_coelho",
+      "name": "GUSTAVO FERREIRA COELHO",
+      "siape": "",
+      "department": "Campus Jandaia do Sul — departamento a confirmar",
+      "email": "",
+      "maxWeeklyHours": 20,
+      "unavailableSlots": [
+        "SEG_M1",
+        "SEG_M2",
+        "SEG_M3",
+        "SEG_M4",
+        "SEG_M5",
+        "SEG_T1",
+        "SEG_T2",
+        "SEG_T3",
+        "SEG_T4",
+        "TER_M1",
+        "TER_M2",
+        "TER_M3",
+        "TER_M4",
+        "TER_M5",
+        "TER_T1",
+        "TER_T2",
+        "TER_T3",
+        "TER_T4",
+        "SEX_M1",
+        "SEX_M2",
+        "SEX_M3",
+        "SEX_M4",
+        "SEX_M5",
+        "SEX_T1",
+        "SEX_T2",
+        "SEX_T3",
+        "SEX_T4"
+      ]
+    },
+    {
+      "id": "prof_helio_henrique_lopes_costa_monte_alto",
+      "name": "HELIO HENRIQUE LOPES COSTA MONTE ALTO",
+      "siape": "",
+      "department": "Campus Jandaia do Sul — departamento a confirmar",
+      "email": "",
+      "maxWeeklyHours": 20,
+      "unavailableSlots": []
+    },
+    {
+      "id": "prof_hercilia_alves_pereira_de_carvalho",
+      "name": "HERCILIA ALVES PEREIRA DE CARVALHO",
+      "siape": "",
+      "department": "Campus Jandaia do Sul — departamento a confirmar",
+      "email": "",
+      "maxWeeklyHours": 20,
+      "unavailableSlots": [
+        "SEX_M1",
+        "SEX_M2",
+        "SEX_M3",
+        "SEX_M4",
+        "SEX_M5",
+        "SEX_T1",
+        "SEX_T2",
+        "SEX_T3",
+        "SEX_T4",
+        "SEX_N1",
+        "SEX_N2",
+        "SEX_N3",
+        "SEX_N4"
+      ]
+    },
+    {
+      "id": "prof_igor_jose_do_nascimento",
+      "name": "IGOR JOSE DO NASCIMENTO",
+      "siape": "",
+      "department": "Campus Jandaia do Sul — departamento a confirmar",
+      "email": "",
+      "maxWeeklyHours": 20,
+      "unavailableSlots": []
+    },
+    {
+      "id": "prof_jair_da_silva",
+      "name": "JAIR DA SILVA",
+      "siape": "",
+      "department": "Campus Jandaia do Sul — departamento a confirmar",
+      "email": "",
+      "maxWeeklyHours": 20,
+      "unavailableSlots": []
+    },
+    {
+      "id": "prof_janete_de_paula_ferrareze_silva",
+      "name": "JANETE DE PAULA FERRAREZE SILVA",
+      "siape": "",
+      "department": "Campus Jandaia do Sul — departamento a confirmar",
+      "email": "",
+      "maxWeeklyHours": 20,
+      "unavailableSlots": [
+        "SEG_N1",
+        "SEG_N2",
+        "SEG_N3",
+        "SEG_N4"
+      ]
+    },
+    {
+      "id": "prof_jose_gabriel_viera_neto",
+      "name": "JOSÉ GABRIEL VIERA NETO",
+      "siape": "",
+      "department": "Campus Jandaia do Sul — departamento a confirmar",
+      "email": "",
+      "maxWeeklyHours": 20,
+      "unavailableSlots": [
+        "TER_M3",
+        "TER_M4",
+        "TER_M5"
+      ]
+    },
+    {
+      "id": "prof_josielle_abrahao_de_souza",
+      "name": "JOSIELLE ABRAHAO DE SOUZA",
+      "siape": "",
+      "department": "Campus Jandaia do Sul — departamento a confirmar",
+      "email": "",
+      "maxWeeklyHours": 20,
+      "unavailableSlots": [
+        "SEG_M1",
+        "SEG_M2",
+        "SEG_M3",
+        "SEG_M4",
+        "SEG_M5",
+        "TER_M1",
+        "TER_M2",
+        "TER_M3",
+        "TER_M4",
+        "TER_M5",
+        "QUA_T1",
+        "QUA_T2",
+        "QUA_T3",
+        "QUA_T4",
+        "QUI_T1",
+        "QUI_T2",
+        "QUI_T3",
+        "QUI_T4"
+      ]
+    },
+    {
+      "id": "prof_juliana_verga_shirabayashi",
+      "name": "JULIANA VERGA SHIRABAYASHI",
+      "siape": "",
+      "department": "Campus Jandaia do Sul — departamento a confirmar",
+      "email": "",
+      "maxWeeklyHours": 20,
+      "unavailableSlots": [
+        "SEG_T1",
+        "SEG_T2",
+        "SEG_T3",
+        "SEG_T4",
+        "SEX_T1",
+        "SEX_T2",
+        "SEX_T3",
+        "SEX_T4"
+      ]
+    },
+    {
+      "id": "prof_kelly_priscilla_loddo_cezar",
+      "name": "KELLY PRISCILLA LODDO CEZAR",
+      "siape": "",
+      "department": "Campus Jandaia do Sul — departamento a confirmar",
+      "email": "",
+      "maxWeeklyHours": 20,
+      "unavailableSlots": []
+    },
+    {
+      "id": "prof_landir_saviniec",
+      "name": "LANDIR SAVINIEC",
+      "siape": "",
+      "department": "Campus Jandaia do Sul — departamento a confirmar",
+      "email": "",
+      "maxWeeklyHours": 20,
+      "unavailableSlots": [
+        "SEG_M1",
+        "SEG_M2",
+        "SEG_M3",
+        "SEG_M4",
+        "SEG_M5",
+        "SEX_T1",
+        "SEX_T2",
+        "SEX_T3",
+        "SEX_T4"
+      ]
+    },
+    {
+      "id": "prof_leda_maria_saragiotto_colpini",
+      "name": "LEDA MARIA SARAGIOTTO COLPINI",
+      "siape": "",
+      "department": "Campus Jandaia do Sul — departamento a confirmar",
+      "email": "",
+      "maxWeeklyHours": 20,
+      "unavailableSlots": [
+        "TER_T1",
+        "TER_T2",
+        "TER_T3",
+        "TER_T4"
+      ]
+    },
+    {
+      "id": "prof_leomara_floriano_ribeiro",
+      "name": "LEOMARA FLORIANO RIBEIRO",
+      "siape": "",
+      "department": "Campus Jandaia do Sul — departamento a confirmar",
+      "email": "",
+      "maxWeeklyHours": 20,
+      "unavailableSlots": [
+        "TER_M1",
+        "TER_M2",
+        "TER_M3",
+        "TER_M4",
+        "TER_M5"
+      ]
+    },
+    {
+      "id": "prof_leticia_saragiotto_colpini",
+      "name": "LETÍCIA SARAGIOTTO COLPINI",
+      "siape": "",
+      "department": "Campus Jandaia do Sul — departamento a confirmar",
+      "email": "",
+      "maxWeeklyHours": 20,
+      "unavailableSlots": [
+        "SEG_T3",
+        "SEG_T4",
+        "QUA_T3",
+        "QUA_T4"
+      ]
+    },
+    {
+      "id": "prof_luana_carolina_bosmuler_zuge",
+      "name": "LUANA CAROLINA BOSMULER ZUGE",
+      "siape": "",
+      "department": "Campus Jandaia do Sul — departamento a confirmar",
+      "email": "",
+      "maxWeeklyHours": 20,
+      "unavailableSlots": [
+        "SEX_T1",
+        "SEX_T2",
+        "SEX_T3",
+        "SEX_T4"
+      ]
+    },
+    {
+      "id": "prof_marcelo_franco_de_oliveira",
+      "name": "MARCELO FRANCO DE OLIVEIRA",
+      "siape": "",
+      "department": "Campus Jandaia do Sul — departamento a confirmar",
+      "email": "",
+      "maxWeeklyHours": 20,
+      "unavailableSlots": [
+        "TER_M5",
+        "TER_M4",
+        "TER_M3"
+      ]
+    },
+    {
+      "id": "prof_marcelo_jose_da_silva",
+      "name": "MARCELO JOSE DA SILVA",
+      "siape": "",
+      "department": "Campus Jandaia do Sul — departamento a confirmar",
+      "email": "",
+      "maxWeeklyHours": 20,
+      "unavailableSlots": [
+        "TER_M5",
+        "TER_M4",
+        "TER_M3"
+      ]
+    },
+    {
+      "id": "prof_marco_aurelio_reis_dos_santos",
+      "name": "MARCO AURÉLIO REIS DOS SANTOS",
+      "siape": "",
+      "department": "Campus Jandaia do Sul — departamento a confirmar",
+      "email": "",
+      "maxWeeklyHours": 20,
+      "unavailableSlots": []
+    },
+    {
+      "id": "prof_maycon_diego_ribeiro",
+      "name": "MAYCON DIEGO RIBEIRO",
+      "siape": "",
+      "department": "Campus Jandaia do Sul — departamento a confirmar",
+      "email": "",
+      "maxWeeklyHours": 20,
+      "unavailableSlots": []
+    },
+    {
+      "id": "prof_mayte_gouvea_coleto",
+      "name": "MAYTE GOUVEA COLETO",
+      "siape": "",
+      "department": "Campus Jandaia do Sul — departamento a confirmar",
+      "email": "",
+      "maxWeeklyHours": 20,
+      "unavailableSlots": [
+        "TER_M1",
+        "TER_M2",
+        "TER_M3",
+        "TER_M4",
+        "TER_M5",
+        "TER_N1",
+        "TER_N2",
+        "TER_N3",
+        "TER_N4",
+        "SEX_N1",
+        "SEX_N2",
+        "SEX_N3",
+        "SEX_N4"
+      ]
+    },
+    {
+      "id": "prof_milena_do_prado_ferreira",
+      "name": "MILENA DO PRADO FERREIRA",
+      "siape": "",
+      "department": "Campus Jandaia do Sul — departamento a confirmar",
+      "email": "",
+      "maxWeeklyHours": 20,
+      "unavailableSlots": []
+    },
+    {
+      "id": "prof_osvaldo_guedes_filho",
+      "name": "OSVALDO GUEDES FILHO",
+      "siape": "",
+      "department": "Campus Jandaia do Sul — departamento a confirmar",
+      "email": "",
+      "maxWeeklyHours": 20,
+      "unavailableSlots": [
+        "TER_M5",
+        "TER_M4",
+        "TER_M3"
+      ]
+    },
+    {
+      "id": "prof_paola_beatriz_sanches",
+      "name": "PAOLA BEATRIZ SANCHES",
+      "siape": "",
+      "department": "Campus Jandaia do Sul — departamento a confirmar",
+      "email": "",
+      "maxWeeklyHours": 20,
+      "unavailableSlots": [
+        "SEX_N1",
+        "SEX_N2",
+        "SEX_N3",
+        "SEX_N4",
+        "SAB_M1",
+        "SAB_M2",
+        "SAB_M3",
+        "SAB_M4",
+        "SAB_M5",
+        "SAB_T1",
+        "SAB_T2",
+        "SAB_T3",
+        "SAB_T4",
+        "SAB_N1",
+        "SAB_N2",
+        "SAB_N3",
+        "SAB_N4"
+      ]
+    },
+    {
+      "id": "prof_paulo_henrique_soares",
+      "name": "PAULO HENRIQUE SOARES",
+      "siape": "",
+      "department": "Campus Jandaia do Sul — departamento a confirmar",
+      "email": "",
+      "maxWeeklyHours": 20,
+      "unavailableSlots": []
+    },
+    {
+      "id": "prof_rafael_ariente_neto",
+      "name": "RAFAEL ARIENTE NETO",
+      "siape": "",
+      "department": "Campus Jandaia do Sul — departamento a confirmar",
+      "email": "",
+      "maxWeeklyHours": 20,
+      "unavailableSlots": []
+    },
+    {
+      "id": "prof_rafael_germano_dal_molin_filho",
+      "name": "RAFAEL GERMANO DAL MOLIN FILHO",
+      "siape": "",
+      "department": "Campus Jandaia do Sul — departamento a confirmar",
+      "email": "",
+      "maxWeeklyHours": 20,
+      "unavailableSlots": [
+        "TER_M1",
+        "TER_M2",
+        "TER_M3",
+        "TER_M4",
+        "TER_M5"
+      ]
+    },
+    {
+      "id": "prof_raimundo_alberto_tostes",
+      "name": "RAIMUNDO ALBERTO TOSTES",
+      "siape": "",
+      "department": "Campus Jandaia do Sul — departamento a confirmar",
+      "email": "",
+      "maxWeeklyHours": 20,
+      "unavailableSlots": []
+    },
+    {
+      "id": "prof_renata_bachin_mazzini_guedes",
+      "name": "RENATA BACHIN MAZZINI GUEDES",
+      "siape": "",
+      "department": "Campus Jandaia do Sul — departamento a confirmar",
+      "email": "",
+      "maxWeeklyHours": 20,
+      "unavailableSlots": [
+        "SEG_M5",
+        "TER_M5",
+        "QUA_M5",
+        "QUI_M5",
+        "SEX_M5",
+        "SAB_M5"
+      ]
+    },
+    {
+      "id": "prof_robertino_mendes_santiago_junior",
+      "name": "ROBERTINO MENDES SANTIAGO JUNIOR",
+      "siape": "",
+      "department": "Campus Jandaia do Sul — departamento a confirmar",
+      "email": "",
+      "maxWeeklyHours": 40,
+      "unavailableSlots": [
+        "TER_M1",
+        "TER_M2",
+        "TER_M3",
+        "TER_M4",
+        "TER_M5",
+        "QUA_T1",
+        "QUA_T2",
+        "QUA_T3",
+        "QUA_T4"
+      ]
+    },
+    {
+      "id": "prof_rodrigo_clemente_thom_de_souza",
+      "name": "RODRIGO CLEMENTE THOM DE SOUZA",
+      "siape": "",
+      "department": "Campus Jandaia do Sul — departamento a confirmar",
+      "email": "",
+      "maxWeeklyHours": 20,
+      "unavailableSlots": []
+    },
+    {
+      "id": "prof_rogerio_ferreira_da_silva",
+      "name": "ROGERIO FERREIRA DA SILVA",
+      "siape": "",
+      "department": "Campus Jandaia do Sul — departamento a confirmar",
+      "email": "",
+      "maxWeeklyHours": 20,
+      "unavailableSlots": [
+        "SEX_M1",
+        "SEX_M2",
+        "SEX_M3",
+        "SEX_M4",
+        "SEX_M5",
+        "SEX_T1",
+        "SEX_T2",
+        "SEX_T3",
+        "SEX_T4"
+      ]
+    },
+    {
+      "id": "prof_silvia_graciele_hulse_de_souza",
+      "name": "SILVIA GRACIELE HULSE DE SOUZA",
+      "siape": "",
+      "department": "Campus Jandaia do Sul — departamento a confirmar",
+      "email": "",
+      "maxWeeklyHours": 20,
+      "unavailableSlots": []
+    },
+    {
+      "id": "prof_suelen_siqueira_dos_santos",
+      "name": "SUELEN SIQUEIRA DOS SANTOS",
+      "siape": "",
+      "department": "Campus Jandaia do Sul — departamento a confirmar",
+      "email": "",
+      "maxWeeklyHours": 20,
+      "unavailableSlots": []
+    },
+    {
+      "id": "prof_valquiria_de_moraes_silva",
+      "name": "VALQUIRIA DE MORAES SILVA",
+      "siape": "",
+      "department": "Campus Jandaia do Sul — departamento a confirmar",
+      "email": "",
+      "maxWeeklyHours": 20,
+      "unavailableSlots": [
+        "SEG_M1",
+        "SEG_M2",
+        "SEG_M3",
+        "SEG_M4",
+        "SEG_M5",
+        "SEX_T1",
+        "SEX_T2",
+        "SEX_T3",
+        "SEX_T4",
+        "SEX_N1",
+        "SEX_N2",
+        "SEX_N3",
+        "SEX_N4"
+      ]
+    },
+    {
+      "id": "prof_wellington_piveta_oliveira",
+      "name": "WELLINGTON PIVETA OLIVEIRA",
+      "siape": "",
+      "department": "Campus Jandaia do Sul — departamento a confirmar",
+      "email": "",
+      "maxWeeklyHours": 20,
+      "unavailableSlots": [
+        "SEG_N1",
+        "SEG_N2",
+        "SEG_N3",
+        "SEG_N4",
+        "SEX_M1",
+        "SEX_M2",
+        "SEX_M3",
+        "SEX_M4",
+        "SEX_M5",
+        "SEX_T1",
+        "SEX_T2",
+        "SEX_T3",
+        "SEX_T4",
+        "SEX_N1",
+        "SEX_N2",
+        "SEX_N3",
+        "SEX_N4"
+      ]
+    },
+    {
+      "id": "prof_william_junior_do_nascimento",
+      "name": "WILLIAM JUNIOR DO NASCIMENTO",
+      "siape": "",
+      "department": "Campus Jandaia do Sul — departamento a confirmar",
+      "email": "",
+      "maxWeeklyHours": 20,
+      "unavailableSlots": [
+        "QUI_T1",
+        "QUI_T2",
+        "QUI_T3",
+        "QUI_T4",
+        "SEX_T1",
+        "SEX_T2",
+        "SEX_T3",
+        "SEX_T4"
+      ]
+    },
+    {
+      "id": "prof_william_rodrigues_dos_santos",
+      "name": "WILLIAM RODRIGUES DOS SANTOS",
+      "siape": "",
+      "department": "Campus Jandaia do Sul — departamento a confirmar",
+      "email": "",
+      "maxWeeklyHours": 20,
+      "unavailableSlots": []
+    },
+    {
+      "id": "pro_d151b1d2-c0a8-4815-9d1a-309026188114",
+      "name": "A definir",
+      "siape": "",
+      "department": "a definir",
+      "email": "",
+      "maxWeeklyHours": 20,
+      "unavailableSlots": []
+    },
+    {
+      "id": "pro_40bd41c8-5045-41be-9460-2d161042a1ba",
+      "name": "Igor José Nascimento",
+      "siape": "",
+      "department": "LCE",
+      "email": "",
+      "maxWeeklyHours": 20,
+      "unavailableSlots": []
+    },
+    {
+      "id": "pro_1d155690-6eef-4d63-8a54-79d9d8834191",
+      "name": "TCC",
+      "siape": "",
+      "department": "TCC",
+      "email": "",
+      "maxWeeklyHours": 40,
+      "unavailableSlots": []
+    },
+    {
+      "id": "pro_ce751400-8694-4f52-ae57-459d10a01967",
+      "name": "Pedagogo 1",
+      "siape": "",
+      "department": "Pedagogia",
+      "email": "",
+      "maxWeeklyHours": 20,
+      "unavailableSlots": []
+    },
+    {
+      "id": "pro_aa7c0b05-ce22-4706-8ce6-0644cf14a6a4",
+      "name": "Pedagogo 3",
+      "siape": "",
+      "department": "Pedagogio",
+      "email": "",
+      "maxWeeklyHours": 20,
+      "unavailableSlots": []
+    },
+    {
+      "id": "pro_f6aa1a7f-e61c-48cf-81d9-79d69141d963",
+      "name": "Pedagogo 5",
+      "siape": "",
+      "department": "Pedagogia",
+      "email": "",
+      "maxWeeklyHours": 20,
+      "unavailableSlots": []
+    }
+  ],
+  "courses": [
+    {
+      "id": "curso_agro",
+      "name": "Agronomia",
+      "code": "AGRO",
+      "colorTheme": "emerald"
+    },
+    {
+      "id": "curso_eag",
+      "name": "Engenharia Agrícola",
+      "code": "EAG",
+      "colorTheme": "blue"
+    },
+    {
+      "id": "curso_eal",
+      "name": "Engenharia de Alimentos",
+      "code": "EAL",
+      "colorTheme": "emerald"
+    },
+    {
+      "id": "curso_epr",
+      "name": "Engenharia de Produção",
+      "code": "EPR",
+      "colorTheme": "blue"
+    },
+    {
+      "id": "curso_iaes",
+      "name": "Inteligência Artificial e Engenharia de Software",
+      "code": "IAES",
+      "colorTheme": "purple"
+    },
+    {
+      "id": "curso_lco",
+      "name": "Licenciatura em Computação",
+      "code": "LCO",
+      "colorTheme": "purple"
+    },
+    {
+      "id": "curso_lce",
+      "name": "Licenciatura em Ciências Exatas",
+      "code": "LCE",
+      "colorTheme": "amber"
+    },
+    {
+      "id": "curso_fcomp",
+      "name": "Física Computacional",
+      "code": "FCOMP",
+      "colorTheme": "purple"
+    },
+    {
+      "id": "curso_lmtd",
+      "name": "Matemática Licenciatura",
+      "code": "LMTD",
+      "colorTheme": "amber"
+    },
+    {
+      "id": "curso_ped",
+      "name": "Pedagogia",
+      "code": "PED",
+      "colorTheme": "amber"
+    },
+    {
+      "id": "cou_b2341f67-62aa-4ddc-a9f0-85606ba1e89b",
+      "name": "LCE - Matemática",
+      "code": "LCE-MAT",
+      "colorTheme": "amber"
+    },
+    {
+      "id": "cou_b2031b26-20ab-4546-bd9b-187a5fc31955",
+      "name": "LCE-Física",
+      "code": "LCE-FIS",
+      "colorTheme": "amber"
+    },
+    {
+      "id": "cou_a82d4f73-6d68-4638-a3b4-cad9c46a8935",
+      "name": "LCE-Química",
+      "code": "LCE-QUI",
+      "colorTheme": "amber"
+    }
+  ],
+  "classes": [
+    {
+      "id": "turma_2027_1_l002",
+      "code": "JAN001A",
+      "name": "Cálculo I",
+      "turma": "Turma A",
+      "courseId": "curso_agro",
+      "period": 1,
+      "professorId": "prof_leticia_saragiotto_colpini",
+      "doNotAllocate": false,
+      "weeklySlotsRequired": 6,
+      "weeklyDaysRequired": 3,
+      "allowedShifts": [
+        "M"
+      ],
+      "enrolledStudents": 42,
+      "requiredRoomType": "comum",
+      "requiredResources": [],
+      "joinedClasses": [
+        {
+          "id": "turma_2027_1_l002",
+          "code": "JAN001A",
+          "name": "Cálculo I",
+          "turma": "Turma A",
+          "courseId": "curso_agro",
+          "period": 1,
+          "professorId": "prof_leticia_saragiotto_colpini",
+          "doNotAllocate": false,
+          "weeklySlotsRequired": 6,
+          "weeklyDaysRequired": 3,
+          "allowedShifts": [
+            "M",
+            "T"
+          ],
+          "enrolledStudents": 40,
+          "requiredRoomType": "comum",
+          "requiredResources": []
+        },
+        {
+          "id": "turma_2027_1_l015",
+          "code": "JAN001A",
+          "name": "Cálculo I",
+          "turma": "Turma A",
+          "courseId": "curso_eag",
+          "period": 1,
+          "professorId": "prof_leticia_saragiotto_colpini",
+          "doNotAllocate": false,
+          "weeklySlotsRequired": 6,
+          "weeklyDaysRequired": 3,
+          "allowedShifts": [
+            "M",
+            "T"
+          ],
+          "enrolledStudents": 1,
+          "requiredRoomType": "comum",
+          "requiredResources": []
+        },
+        {
+          "id": "turma_2027_1_l047",
+          "code": "JAN001A",
+          "name": "Cálculo",
+          "turma": "Turma A",
+          "courseId": "curso_eal",
+          "period": 1,
+          "professorId": "prof_leticia_saragiotto_colpini",
+          "doNotAllocate": false,
+          "weeklySlotsRequired": 6,
+          "weeklyDaysRequired": 3,
+          "allowedShifts": [
+            "M",
+            "T"
+          ],
+          "enrolledStudents": 1,
+          "requiredRoomType": "comum",
+          "requiredResources": []
+        }
+      ]
+    },
+    {
+      "id": "turma_2027_1_l003",
+      "code": "JAN002A",
+      "name": "Química Geral Teórica",
+      "turma": "Turma A",
+      "courseId": "curso_agro",
+      "period": 1,
+      "professorId": "prof_leda_maria_saragiotto_colpini",
+      "doNotAllocate": false,
+      "weeklySlotsRequired": 3,
+      "weeklyDaysRequired": 1,
+      "allowedShifts": [
+        "M"
+      ],
+      "enrolledStudents": 45,
+      "requiredRoomType": "comum",
+      "requiredResources": [],
+      "joinedClasses": [
+        {
+          "id": "turma_2027_1_l003",
+          "code": "JAN002A",
+          "name": "Química Geral Teórica",
+          "turma": "Turma A",
+          "courseId": "curso_agro",
+          "period": 1,
+          "professorId": "prof_leda_maria_saragiotto_colpini",
+          "doNotAllocate": false,
+          "weeklySlotsRequired": 3,
+          "weeklyDaysRequired": 1,
+          "allowedShifts": [
+            "M",
+            "T"
+          ],
+          "enrolledStudents": 40,
+          "requiredRoomType": "comum",
+          "requiredResources": []
+        },
+        {
+          "id": "turma_2027_1_l048",
+          "code": "JAN002A",
+          "name": "Química Geral teórica",
+          "turma": "Turma A",
+          "courseId": "curso_eal",
+          "period": 1,
+          "professorId": "prof_leda_maria_saragiotto_colpini",
+          "doNotAllocate": false,
+          "weeklySlotsRequired": 3,
+          "weeklyDaysRequired": 1,
+          "allowedShifts": [
+            "M",
+            "T"
+          ],
+          "enrolledStudents": 5,
+          "requiredRoomType": "comum",
+          "requiredResources": []
+        }
+      ]
+    },
+    {
+      "id": "turma_2027_1_l004",
+      "code": "JAN0024A",
+      "name": "Química Geral Experimental",
+      "turma": "Turma A",
+      "courseId": "curso_agro",
+      "period": 1,
+      "professorId": "prof_leda_maria_saragiotto_colpini",
+      "doNotAllocate": false,
+      "weeklySlotsRequired": 1,
+      "weeklyDaysRequired": 1,
+      "allowedShifts": [
+        "M"
+      ],
+      "enrolledStudents": 25,
+      "requiredRoomType": "lab_quimica",
+      "requiredResources": []
+    },
+    {
+      "id": "turma_2027_1_l005",
+      "code": "JAG067A",
+      "name": "Introdução à Agronomia",
+      "turma": "Turma A",
+      "courseId": "curso_agro",
+      "period": 1,
+      "professorId": "prof_adriano_thibes_hoshino",
+      "doNotAllocate": false,
+      "weeklySlotsRequired": 2,
+      "weeklyDaysRequired": 1,
+      "allowedShifts": [
+        "M",
+        "T"
+      ],
+      "enrolledStudents": 40,
+      "requiredRoomType": "comum",
+      "requiredResources": []
+    },
+    {
+      "id": "turma_2027_1_l006",
+      "code": "JAN014A",
+      "name": "Desenho Técnico",
+      "turma": "Turma A",
+      "courseId": "curso_agro",
+      "period": 1,
+      "professorId": "prof_renata_bachin_mazzini_guedes",
+      "doNotAllocate": false,
+      "weeklySlotsRequired": 3,
+      "weeklyDaysRequired": 1,
+      "allowedShifts": [
+        "M",
+        "T"
+      ],
+      "enrolledStudents": 32,
+      "requiredRoomType": "desenho",
+      "requiredResources": []
+    },
+    {
+      "id": "turma_2027_1_l007",
+      "code": "JAG068A",
+      "name": "Biologia Celular",
+      "turma": "Turma A",
+      "courseId": "curso_agro",
+      "period": 1,
+      "professorId": "prof_josielle_abrahao_de_souza",
+      "doNotAllocate": false,
+      "weeklySlotsRequired": 3,
+      "weeklyDaysRequired": 1,
+      "allowedShifts": [
+        "M",
+        "T"
+      ],
+      "enrolledStudents": 40,
+      "requiredRoomType": "comum",
+      "requiredResources": []
+    },
+    {
+      "id": "turma_2027_1_l008",
+      "code": "JAG069A",
+      "name": "Ecologia e Gestão Ambiental",
+      "turma": "Turma A",
+      "courseId": "curso_agro",
+      "period": 1,
+      "professorId": "prof_josielle_abrahao_de_souza",
+      "doNotAllocate": false,
+      "weeklySlotsRequired": 2,
+      "weeklyDaysRequired": 1,
+      "allowedShifts": [
+        "M",
+        "T"
+      ],
+      "enrolledStudents": 40,
+      "requiredRoomType": "comum",
+      "requiredResources": []
+    },
+    {
+      "id": "turma_2027_1_l009",
+      "code": "JAN008A",
+      "name": "Algoritmos e Programação de Computadores · Teoria",
+      "turma": "Turma A",
+      "courseId": "curso_agro",
+      "period": 1,
+      "professorId": "prof_helio_henrique_lopes_costa_monte_alto",
+      "doNotAllocate": false,
+      "weeklySlotsRequired": 2,
+      "weeklyDaysRequired": 1,
+      "allowedShifts": [
+        "M",
+        "T"
+      ],
+      "enrolledStudents": 50,
+      "requiredRoomType": "comum",
+      "requiredResources": [],
+      "teachingComponent": {
+        "familyId": "turma_2027_1_l009",
+        "kind": "theory",
+        "groupIndex": 0,
+        "theorySlots": 2,
+        "practiceSlots": 2,
+        "groupSizes": [
+          25,
+          25
+        ],
+        "sourceClass": {
+          "id": "turma_2027_1_l009",
+          "code": "JAN008A",
+          "name": "Algoritmos e Programação de Computadores",
+          "turma": "Turma A",
+          "courseId": "curso_agro",
+          "period": 1,
+          "professorId": "prof_helio_henrique_lopes_costa_monte_alto",
+          "doNotAllocate": false,
+          "weeklySlotsRequired": 4,
+          "weeklyDaysRequired": 2,
+          "allowedShifts": [
+            "M",
+            "T"
+          ],
+          "enrolledStudents": 50,
+          "requiredRoomType": "comum",
+          "requiredResources": [],
+          "joinedClasses": [
+            {
+              "id": "turma_2027_1_l009",
+              "code": "JAN008A",
+              "name": "Algoritmos e Programação de Computadores",
+              "turma": "Turma A",
+              "courseId": "curso_agro",
+              "period": 1,
+              "professorId": "prof_helio_henrique_lopes_costa_monte_alto",
+              "doNotAllocate": false,
+              "weeklySlotsRequired": 4,
+              "weeklyDaysRequired": 2,
+              "allowedShifts": [
+                "M",
+                "T"
+              ],
+              "enrolledStudents": 40,
+              "requiredRoomType": "comum",
+              "requiredResources": []
+            },
+            {
+              "id": "turma_2027_1_l012",
+              "code": "JAN008A",
+              "name": "Algoritmos e Programação de Computadores",
+              "turma": "Turma A",
+              "courseId": "curso_eag",
+              "period": 3,
+              "professorId": "prof_helio_henrique_lopes_costa_monte_alto",
+              "doNotAllocate": false,
+              "weeklySlotsRequired": 4,
+              "weeklyDaysRequired": 2,
+              "allowedShifts": [
+                "M",
+                "T"
+              ],
+              "enrolledStudents": 10,
+              "requiredRoomType": "comum",
+              "requiredResources": []
+            }
+          ]
+        }
+      }
+    },
+    {
+      "id": "pratica_5aabc914-ea71-4352-812d-c77a72284892",
+      "code": "JAN008A",
+      "name": "Algoritmos e Programação de Computadores · Prática G1/2",
+      "turma": "Turma A",
+      "courseId": "curso_agro",
+      "period": 1,
+      "professorId": "prof_helio_henrique_lopes_costa_monte_alto",
+      "doNotAllocate": false,
+      "weeklySlotsRequired": 2,
+      "weeklyDaysRequired": 1,
+      "allowedShifts": [
+        "M",
+        "T"
+      ],
+      "enrolledStudents": 25,
+      "requiredRoomType": "lab_info",
+      "requiredResources": [],
+      "teachingComponent": {
+        "familyId": "turma_2027_1_l009",
+        "kind": "practice",
+        "groupIndex": 1,
+        "theorySlots": 2,
+        "practiceSlots": 2,
+        "groupSizes": [
+          25,
+          25
+        ],
+        "sourceClass": {
+          "id": "turma_2027_1_l009",
+          "code": "JAN008A",
+          "name": "Algoritmos e Programação de Computadores",
+          "turma": "Turma A",
+          "courseId": "curso_agro",
+          "period": 1,
+          "professorId": "prof_helio_henrique_lopes_costa_monte_alto",
+          "doNotAllocate": false,
+          "weeklySlotsRequired": 4,
+          "weeklyDaysRequired": 2,
+          "allowedShifts": [
+            "M",
+            "T"
+          ],
+          "enrolledStudents": 50,
+          "requiredRoomType": "comum",
+          "requiredResources": [],
+          "joinedClasses": [
+            {
+              "id": "turma_2027_1_l009",
+              "code": "JAN008A",
+              "name": "Algoritmos e Programação de Computadores",
+              "turma": "Turma A",
+              "courseId": "curso_agro",
+              "period": 1,
+              "professorId": "prof_helio_henrique_lopes_costa_monte_alto",
+              "doNotAllocate": false,
+              "weeklySlotsRequired": 4,
+              "weeklyDaysRequired": 2,
+              "allowedShifts": [
+                "M",
+                "T"
+              ],
+              "enrolledStudents": 40,
+              "requiredRoomType": "comum",
+              "requiredResources": []
+            },
+            {
+              "id": "turma_2027_1_l012",
+              "code": "JAN008A",
+              "name": "Algoritmos e Programação de Computadores",
+              "turma": "Turma A",
+              "courseId": "curso_eag",
+              "period": 3,
+              "professorId": "prof_helio_henrique_lopes_costa_monte_alto",
+              "doNotAllocate": false,
+              "weeklySlotsRequired": 4,
+              "weeklyDaysRequired": 2,
+              "allowedShifts": [
+                "M",
+                "T"
+              ],
+              "enrolledStudents": 10,
+              "requiredRoomType": "comum",
+              "requiredResources": []
+            }
+          ]
+        }
+      }
+    },
+    {
+      "id": "pratica_f7fe4284-6224-4229-83fb-4c082cfbc77f",
+      "code": "JAN008A",
+      "name": "Algoritmos e Programação de Computadores · Prática G2/2",
+      "turma": "Turma A",
+      "courseId": "curso_agro",
+      "period": 1,
+      "professorId": "prof_helio_henrique_lopes_costa_monte_alto",
+      "doNotAllocate": false,
+      "weeklySlotsRequired": 2,
+      "weeklyDaysRequired": 1,
+      "allowedShifts": [
+        "M",
+        "T"
+      ],
+      "enrolledStudents": 25,
+      "requiredRoomType": "lab_info",
+      "requiredResources": [],
+      "teachingComponent": {
+        "familyId": "turma_2027_1_l009",
+        "kind": "practice",
+        "groupIndex": 2,
+        "theorySlots": 2,
+        "practiceSlots": 2,
+        "groupSizes": [
+          25,
+          25
+        ],
+        "sourceClass": {
+          "id": "turma_2027_1_l009",
+          "code": "JAN008A",
+          "name": "Algoritmos e Programação de Computadores",
+          "turma": "Turma A",
+          "courseId": "curso_agro",
+          "period": 1,
+          "professorId": "prof_helio_henrique_lopes_costa_monte_alto",
+          "doNotAllocate": false,
+          "weeklySlotsRequired": 4,
+          "weeklyDaysRequired": 2,
+          "allowedShifts": [
+            "M",
+            "T"
+          ],
+          "enrolledStudents": 50,
+          "requiredRoomType": "comum",
+          "requiredResources": [],
+          "joinedClasses": [
+            {
+              "id": "turma_2027_1_l009",
+              "code": "JAN008A",
+              "name": "Algoritmos e Programação de Computadores",
+              "turma": "Turma A",
+              "courseId": "curso_agro",
+              "period": 1,
+              "professorId": "prof_helio_henrique_lopes_costa_monte_alto",
+              "doNotAllocate": false,
+              "weeklySlotsRequired": 4,
+              "weeklyDaysRequired": 2,
+              "allowedShifts": [
+                "M",
+                "T"
+              ],
+              "enrolledStudents": 40,
+              "requiredRoomType": "comum",
+              "requiredResources": []
+            },
+            {
+              "id": "turma_2027_1_l012",
+              "code": "JAN008A",
+              "name": "Algoritmos e Programação de Computadores",
+              "turma": "Turma A",
+              "courseId": "curso_eag",
+              "period": 3,
+              "professorId": "prof_helio_henrique_lopes_costa_monte_alto",
+              "doNotAllocate": false,
+              "weeklySlotsRequired": 4,
+              "weeklyDaysRequired": 2,
+              "allowedShifts": [
+                "M",
+                "T"
+              ],
+              "enrolledStudents": 10,
+              "requiredRoomType": "comum",
+              "requiredResources": []
+            }
+          ]
+        }
+      }
+    },
+    {
+      "id": "turma_2027_1_l010",
+      "code": "JAG009A E JAG009AESP",
+      "name": "Tecnologia dos Materiais de Construções",
+      "turma": "Turma A",
+      "courseId": "curso_agro",
+      "period": 1,
+      "professorId": "prof_andre_luiz_justi",
+      "doNotAllocate": false,
+      "weeklySlotsRequired": 5,
+      "weeklyDaysRequired": 1,
+      "allowedShifts": [
+        "M",
+        "T"
+      ],
+      "enrolledStudents": 40,
+      "requiredRoomType": "comum",
+      "requiredResources": []
+    },
+    {
+      "id": "turma_2027_1_l011",
+      "code": "JAN003A",
+      "name": "Álgebra Linear e Geometria Análitica",
+      "turma": "Turma A",
+      "courseId": "curso_eag",
+      "period": 1,
+      "professorId": "prof_landir_saviniec",
+      "doNotAllocate": false,
+      "weeklySlotsRequired": 4,
+      "weeklyDaysRequired": 2,
+      "allowedShifts": [
+        "M"
+      ],
+      "enrolledStudents": 20,
+      "requiredRoomType": "comum",
+      "requiredResources": [],
+      "joinedClasses": [
+        {
+          "id": "turma_2027_1_l011",
+          "code": "JAN003A",
+          "name": "Álgebra Linear e Geometria Análitica",
+          "turma": "Turma A",
+          "courseId": "curso_eag",
+          "period": 1,
+          "professorId": "prof_landir_saviniec",
+          "doNotAllocate": false,
+          "weeklySlotsRequired": 4,
+          "weeklyDaysRequired": 2,
+          "allowedShifts": [
+            "M",
+            "T"
+          ],
+          "enrolledStudents": 15,
+          "requiredRoomType": "comum",
+          "requiredResources": []
+        },
+        {
+          "id": "turma_2027_1_l050",
+          "code": "JAN003A",
+          "name": "Álg. Linear e Geo. Analítica",
+          "turma": "Turma A",
+          "courseId": "curso_eal",
+          "period": 1,
+          "professorId": "prof_landir_saviniec",
+          "doNotAllocate": false,
+          "weeklySlotsRequired": 4,
+          "weeklyDaysRequired": 2,
+          "allowedShifts": [
+            "M",
+            "T"
+          ],
+          "enrolledStudents": 5,
+          "requiredRoomType": "comum",
+          "requiredResources": []
+        }
+      ]
+    },
+    {
+      "id": "turma_2027_1_l013",
+      "code": "JAG022A E JAG022AESP",
+      "name": "Armazenamento de Produtos Agrícolas",
+      "turma": "Turma A",
+      "courseId": "curso_eag",
+      "period": 5,
+      "professorId": "prof_adriano_thibes_hoshino",
+      "doNotAllocate": false,
+      "weeklySlotsRequired": 4,
+      "weeklyDaysRequired": 1,
+      "allowedShifts": [
+        "M",
+        "T"
+      ],
+      "enrolledStudents": 30,
+      "requiredRoomType": "comum",
+      "requiredResources": []
+    },
+    {
+      "id": "turma_2027_1_l014",
+      "code": "JAG046A",
+      "name": "Avaliação Econômica de Projetos",
+      "turma": "Turma A",
+      "courseId": "curso_eag",
+      "period": 9,
+      "professorId": "prof_silvia_graciele_hulse_de_souza",
+      "doNotAllocate": false,
+      "weeklySlotsRequired": 2,
+      "weeklyDaysRequired": 1,
+      "allowedShifts": [
+        "M",
+        "T"
+      ],
+      "enrolledStudents": 30,
+      "requiredRoomType": "comum",
+      "requiredResources": []
+    },
+    {
+      "id": "turma_2027_1_l016",
+      "code": "JAN011A",
+      "name": "Cálculo III",
+      "turma": "Turma A",
+      "courseId": "curso_eag",
+      "period": 3,
+      "professorId": "pro_40bd41c8-5045-41be-9460-2d161042a1ba",
+      "doNotAllocate": false,
+      "weeklySlotsRequired": 4,
+      "weeklyDaysRequired": 2,
+      "allowedShifts": [
+        "M",
+        "T"
+      ],
+      "enrolledStudents": 20,
+      "requiredRoomType": "comum",
+      "requiredResources": [],
+      "joinedClasses": [
+        {
+          "id": "turma_2027_1_l016",
+          "code": "JAN011A",
+          "name": "Cálculo III [docente a definir]",
+          "turma": "Turma A",
+          "courseId": "curso_eag",
+          "period": 3,
+          "professorId": "pro_d151b1d2-c0a8-4815-9d1a-309026188114",
+          "doNotAllocate": false,
+          "weeklySlotsRequired": 4,
+          "weeklyDaysRequired": 2,
+          "allowedShifts": [
+            "M",
+            "T"
+          ],
+          "enrolledStudents": 10,
+          "requiredRoomType": "comum",
+          "requiredResources": []
+        },
+        {
+          "id": "turma_2027_1_l060",
+          "code": "JAN011A",
+          "name": "Cálculo III [docente a definir]",
+          "turma": "Turma A",
+          "courseId": "curso_eal",
+          "period": 3,
+          "professorId": "pro_d151b1d2-c0a8-4815-9d1a-309026188114",
+          "doNotAllocate": false,
+          "weeklySlotsRequired": 4,
+          "weeklyDaysRequired": 2,
+          "allowedShifts": [
+            "M",
+            "T"
+          ],
+          "enrolledStudents": 10,
+          "requiredRoomType": "comum",
+          "requiredResources": []
+        }
+      ]
+    },
+    {
+      "id": "turma_2027_1_l017",
+      "code": "JAN004A",
+      "name": "Ciência, Tecnologia e Sociedade",
+      "turma": "Turma A",
+      "courseId": "curso_eag",
+      "period": 3,
+      "professorId": "prof_kelly_priscilla_loddo_cezar",
+      "doNotAllocate": false,
+      "weeklySlotsRequired": 2,
+      "weeklyDaysRequired": 1,
+      "allowedShifts": [
+        "M",
+        "T"
+      ],
+      "enrolledStudents": 39,
+      "requiredRoomType": "lab_info",
+      "requiredResources": [],
+      "joinedClasses": [
+        {
+          "id": "turma_2027_1_l017",
+          "code": "JAN004A",
+          "name": "Ciência, Tecnologia e Sociedade",
+          "turma": "Turma A",
+          "courseId": "curso_eag",
+          "period": 3,
+          "professorId": "prof_kelly_priscilla_loddo_cezar",
+          "doNotAllocate": false,
+          "weeklySlotsRequired": 2,
+          "weeklyDaysRequired": 1,
+          "allowedShifts": [
+            "M",
+            "T"
+          ],
+          "enrolledStudents": 10,
+          "requiredRoomType": "comum",
+          "requiredResources": []
+        },
+        {
+          "id": "turma_2027_1_l052",
+          "code": "JAN004A",
+          "name": "Ciência Tecnologia e Sociedade",
+          "turma": "Turma A",
+          "courseId": "curso_eal",
+          "period": 1,
+          "professorId": "prof_kelly_priscilla_loddo_cezar",
+          "doNotAllocate": false,
+          "weeklySlotsRequired": 2,
+          "weeklyDaysRequired": 1,
+          "allowedShifts": [
+            "M",
+            "T"
+          ],
+          "enrolledStudents": 10,
+          "requiredRoomType": "comum",
+          "requiredResources": []
+        },
+        {
+          "id": "turma_2027_1_l090",
+          "code": "JAN004A",
+          "name": "CIÊNCIA, TECNOLOGIA E SOCIEDADE [docente a definir]",
+          "turma": "Turma A",
+          "courseId": "curso_epr",
+          "period": 1,
+          "professorId": "prof_kelly_priscilla_loddo_cezar",
+          "doNotAllocate": false,
+          "weeklySlotsRequired": 2,
+          "weeklyDaysRequired": 1,
+          "allowedShifts": [
+            "M",
+            "T"
+          ],
+          "enrolledStudents": 30,
+          "requiredRoomType": "comum",
+          "requiredResources": []
+        }
+      ]
+    },
+    {
+      "id": "turma_2027_1_l018",
+      "code": "JAN031A",
+      "name": "Economia e Administração Agroindustrial [docente a definir]",
+      "turma": "Turma A",
+      "courseId": "curso_eag",
+      "period": 7,
+      "professorId": "prof_giancarlo_alfonso_lovon_canchumani",
+      "doNotAllocate": false,
+      "weeklySlotsRequired": 3,
+      "weeklyDaysRequired": 1,
+      "allowedShifts": [
+        "M",
+        "T"
+      ],
+      "enrolledStudents": 20,
+      "requiredRoomType": "comum",
+      "requiredResources": [],
+      "joinedClasses": [
+        {
+          "id": "turma_2027_1_l018",
+          "code": "JAN031A",
+          "name": "Economia e Administração Agroindustrial [docente a definir]",
+          "turma": "Turma A",
+          "courseId": "curso_eag",
+          "period": 7,
+          "professorId": "prof_giancarlo_alfonso_lovon_canchumani",
+          "doNotAllocate": false,
+          "weeklySlotsRequired": 3,
+          "weeklyDaysRequired": 1,
+          "allowedShifts": [
+            "M",
+            "T"
+          ],
+          "enrolledStudents": 10,
+          "requiredRoomType": "comum",
+          "requiredResources": []
+        },
+        {
+          "id": "turma_2027_1_l078",
+          "code": "JAN031A",
+          "name": "Economia e administração industrial [docente a definir]",
+          "turma": "Turma A",
+          "courseId": "curso_eal",
+          "period": 9,
+          "professorId": "prof_giancarlo_alfonso_lovon_canchumani",
+          "doNotAllocate": false,
+          "weeklySlotsRequired": 3,
+          "weeklyDaysRequired": 1,
+          "allowedShifts": [
+            "M",
+            "T"
+          ],
+          "enrolledStudents": 10,
+          "requiredRoomType": "comum",
+          "requiredResources": []
+        }
+      ]
+    },
+    {
+      "id": "turma_2027_1_l019",
+      "code": "JAG024A",
+      "name": "Elementos de Máquinas",
+      "turma": "Turma A",
+      "courseId": "curso_eag",
+      "period": 7,
+      "professorId": "prof_marcelo_jose_da_silva",
+      "doNotAllocate": false,
+      "weeklySlotsRequired": 2,
+      "weeklyDaysRequired": 1,
+      "allowedShifts": [
+        "M",
+        "T"
+      ],
+      "enrolledStudents": 30,
+      "requiredRoomType": "comum",
+      "requiredResources": []
+    },
+    {
+      "id": "turma_2027_1_l020",
+      "code": "JAG023A",
+      "name": "Energia na Agricultura",
+      "turma": "Turma A",
+      "courseId": "curso_eag",
+      "period": 7,
+      "professorId": "prof_gustavo_ferreira_coelho",
+      "doNotAllocate": false,
+      "weeklySlotsRequired": 3,
+      "weeklyDaysRequired": 1,
+      "allowedShifts": [
+        "M",
+        "T"
+      ],
+      "enrolledStudents": 30,
+      "requiredRoomType": "comum",
+      "requiredResources": []
+    },
+    {
+      "id": "turma_2027_1_l023",
+      "code": "JAN026A",
+      "name": "Estatística II",
+      "turma": "Turma A",
+      "courseId": "curso_eag",
+      "period": 3,
+      "professorId": "prof_silvia_graciele_hulse_de_souza",
+      "doNotAllocate": false,
+      "weeklySlotsRequired": 3,
+      "weeklyDaysRequired": 1,
+      "allowedShifts": [
+        "M",
+        "T"
+      ],
+      "enrolledStudents": 30,
+      "requiredRoomType": "comum",
+      "requiredResources": []
+    },
+    {
+      "id": "turma_2027_1_l024",
+      "code": "JAG065A",
+      "name": "Estruturas de Aço e Madeira",
+      "turma": "Turma A",
+      "courseId": "curso_eag",
+      "period": 5,
+      "professorId": "prof_jose_gabriel_viera_neto",
+      "doNotAllocate": false,
+      "weeklySlotsRequired": 3,
+      "weeklyDaysRequired": 1,
+      "allowedShifts": [
+        "M",
+        "T"
+      ],
+      "enrolledStudents": 30,
+      "requiredRoomType": "comum",
+      "requiredResources": []
+    },
+    {
+      "id": "turma_2027_1_l025",
+      "code": "JAG037A E JAG037AESP",
+      "name": "Extensão Rural",
+      "turma": "Turma A",
+      "courseId": "curso_eag",
+      "period": 9,
+      "professorId": "prof_renata_bachin_mazzini_guedes",
+      "doNotAllocate": false,
+      "weeklySlotsRequired": 3,
+      "weeklyDaysRequired": 1,
+      "allowedShifts": [
+        "M",
+        "T"
+      ],
+      "enrolledStudents": 20,
+      "requiredRoomType": "comum",
+      "requiredResources": []
+    },
+    {
+      "id": "turma_2027_1_l026",
+      "code": "JAG001A E JAG001AESP",
+      "name": "Física do Solo",
+      "turma": "Turma A",
+      "courseId": "curso_eag",
+      "period": 5,
+      "professorId": "prof_osvaldo_guedes_filho",
+      "doNotAllocate": false,
+      "weeklySlotsRequired": 4,
+      "weeklyDaysRequired": 1,
+      "allowedShifts": [
+        "M",
+        "T"
+      ],
+      "enrolledStudents": 20,
+      "requiredRoomType": "comum",
+      "requiredResources": []
+    },
+    {
+      "id": "turma_2027_1_l027",
+      "code": "JAN012A",
+      "name": "Física II",
+      "turma": "Turma A",
+      "courseId": "curso_eag",
+      "period": 3,
+      "professorId": "prof_flavio_franchello",
+      "doNotAllocate": false,
+      "weeklySlotsRequired": 4,
+      "weeklyDaysRequired": 2,
+      "allowedShifts": [
+        "M",
+        "T"
+      ],
+      "enrolledStudents": 3,
+      "requiredRoomType": "comum",
+      "requiredResources": [],
+      "joinedClasses": [
+        {
+          "id": "turma_2027_1_l027",
+          "code": "JAN012A",
+          "name": "Física II",
+          "turma": "Turma A",
+          "courseId": "curso_eag",
+          "period": 3,
+          "professorId": "prof_flavio_franchello",
+          "doNotAllocate": false,
+          "weeklySlotsRequired": 4,
+          "weeklyDaysRequired": 2,
+          "allowedShifts": [
+            "M",
+            "T"
+          ],
+          "enrolledStudents": 2,
+          "requiredRoomType": "comum",
+          "requiredResources": []
+        },
+        {
+          "id": "turma_2027_1_l057",
+          "code": "JAN012A",
+          "name": "Física II",
+          "turma": "Turma A",
+          "courseId": "curso_eal",
+          "period": 3,
+          "professorId": "prof_flavio_franchello",
+          "doNotAllocate": false,
+          "weeklySlotsRequired": 4,
+          "weeklyDaysRequired": 2,
+          "allowedShifts": [
+            "M",
+            "T"
+          ],
+          "enrolledStudents": 1,
+          "requiredRoomType": "comum",
+          "requiredResources": []
+        }
+      ]
+    },
+    {
+      "id": "turma_2027_1_l028",
+      "code": "JAG039A",
+      "name": "Fundamento do Fertilidade do Solo",
+      "turma": "Turma A",
+      "courseId": "curso_eag",
+      "period": 7,
+      "professorId": "prof_gustavo_ferreira_coelho",
+      "doNotAllocate": false,
+      "weeklySlotsRequired": 3,
+      "weeklyDaysRequired": 1,
+      "allowedShifts": [
+        "M",
+        "T"
+      ],
+      "enrolledStudents": 30,
+      "requiredRoomType": "comum",
+      "requiredResources": []
+    },
+    {
+      "id": "turma_2027_1_l029",
+      "code": "JAN019A",
+      "name": "Gestão Ambiental",
+      "turma": "Turma A",
+      "courseId": "curso_eag",
+      "period": 5,
+      "professorId": "prof_adriano_thibes_hoshino",
+      "doNotAllocate": false,
+      "weeklySlotsRequired": 2,
+      "weeklyDaysRequired": 1,
+      "allowedShifts": [
+        "M"
+      ],
+      "enrolledStudents": 20,
+      "requiredRoomType": "comum",
+      "requiredResources": [],
+      "nonConflictClassIds": [
+        "turma_2027_1_l134",
+        "turma_2027_1_l186",
+        "turma_2027_1_l187",
+        "turma_2027_1_l191",
+        "turma_2027_1_l192",
+        "turma_2027_1_l188",
+        "turma_2027_1_l190",
+        "turma_2027_1_l189"
+      ],
+      "joinedClasses": [
+        {
+          "id": "turma_2027_1_l029",
+          "code": "JAN019A",
+          "name": "Gestão Ambiental",
+          "turma": "Turma A",
+          "courseId": "curso_eag",
+          "period": 5,
+          "professorId": "prof_adriano_thibes_hoshino",
+          "doNotAllocate": false,
+          "weeklySlotsRequired": 2,
+          "weeklyDaysRequired": 1,
+          "allowedShifts": [
+            "M"
+          ],
+          "enrolledStudents": 10,
+          "requiredRoomType": "comum",
+          "requiredResources": []
+        },
+        {
+          "id": "turma_2027_1_l073",
+          "code": "JAN019A",
+          "name": "Gestão Ambiental [docente a definir]",
+          "turma": "Turma A",
+          "courseId": "curso_eal",
+          "period": 7,
+          "professorId": "prof_adriano_thibes_hoshino",
+          "doNotAllocate": false,
+          "weeklySlotsRequired": 2,
+          "weeklyDaysRequired": 1,
+          "allowedShifts": [
+            "M"
+          ],
+          "enrolledStudents": 10,
+          "requiredRoomType": "comum",
+          "requiredResources": []
+        }
+      ]
+    },
+    {
+      "id": "turma_2027_1_l030",
+      "code": "JAG003A",
+      "name": "Hidráulica",
+      "turma": "Turma A",
+      "courseId": "curso_eag",
+      "period": 5,
+      "professorId": "prof_andre_luiz_justi",
+      "doNotAllocate": false,
+      "weeklySlotsRequired": 4,
+      "weeklyDaysRequired": 1,
+      "allowedShifts": [
+        "M",
+        "T"
+      ],
+      "enrolledStudents": 30,
+      "requiredRoomType": "comum",
+      "requiredResources": []
+    },
+    {
+      "id": "turma_2027_1_l031",
+      "code": "JAG011A",
+      "name": "Hidrologia",
+      "turma": "Turma A",
+      "courseId": "curso_eag",
+      "period": 5,
+      "professorId": "prof_maycon_diego_ribeiro",
+      "doNotAllocate": false,
+      "weeklySlotsRequired": 2,
+      "weeklyDaysRequired": 1,
+      "allowedShifts": [
+        "M",
+        "T"
+      ],
+      "enrolledStudents": 30,
+      "requiredRoomType": "comum",
+      "requiredResources": []
+    },
+    {
+      "id": "turma_2027_1_l032",
+      "code": "JAN010A",
+      "name": "Introdução a Prática Profissional",
+      "turma": "Turma A",
+      "courseId": "curso_eag",
+      "period": 1,
+      "professorId": "prof_jose_gabriel_viera_neto",
+      "doNotAllocate": false,
+      "weeklySlotsRequired": 2,
+      "weeklyDaysRequired": 1,
+      "allowedShifts": [
+        "M",
+        "T"
+      ],
+      "enrolledStudents": 30,
+      "requiredRoomType": "comum",
+      "requiredResources": []
+    },
+    {
+      "id": "turma_2027_1_l033",
+      "code": "JAG053A E JAG053AESP",
+      "name": "Manejo e Conservação do Solo",
+      "turma": "Turma A",
+      "courseId": "curso_eag",
+      "period": 7,
+      "professorId": "prof_osvaldo_guedes_filho",
+      "doNotAllocate": false,
+      "weeklySlotsRequired": 4,
+      "weeklyDaysRequired": 1,
+      "allowedShifts": [
+        "M",
+        "T"
+      ],
+      "enrolledStudents": 20,
+      "requiredRoomType": "comum",
+      "requiredResources": []
+    },
+    {
+      "id": "turma_2027_1_l034",
+      "code": "JAG013A",
+      "name": "Máquinas e Implementos",
+      "turma": "Turma A",
+      "courseId": "curso_eag",
+      "period": 5,
+      "professorId": "prof_marcelo_jose_da_silva",
+      "doNotAllocate": false,
+      "weeklySlotsRequired": 5,
+      "weeklyDaysRequired": 1,
+      "allowedShifts": [
+        "M",
+        "T"
+      ],
+      "enrolledStudents": 30,
+      "requiredRoomType": "comum",
+      "requiredResources": []
+    },
+    {
+      "id": "turma_2027_1_l035",
+      "code": "JAG063A",
+      "name": "Plantio Direto",
+      "turma": "Turma A",
+      "courseId": "curso_eag",
+      "period": 7,
+      "professorId": "prof_gustavo_ferreira_coelho",
+      "doNotAllocate": false,
+      "weeklySlotsRequired": 2,
+      "weeklyDaysRequired": 1,
+      "allowedShifts": [
+        "M",
+        "T"
+      ],
+      "enrolledStudents": 30,
+      "requiredRoomType": "comum",
+      "requiredResources": []
+    },
+    {
+      "id": "turma_2027_1_l036",
+      "code": "JAN033A",
+      "name": "Práticas de Empreendedorismo [docente a definir]",
+      "turma": "Turma A",
+      "courseId": "curso_eag",
+      "period": 7,
+      "professorId": "prof_giancarlo_alfonso_lovon_canchumani",
+      "doNotAllocate": false,
+      "weeklySlotsRequired": 2,
+      "weeklyDaysRequired": 1,
+      "allowedShifts": [
+        "T"
+      ],
+      "enrolledStudents": 60,
+      "requiredRoomType": "comum",
+      "requiredResources": [],
+      "joinedClasses": [
+        {
+          "id": "turma_2027_1_l036",
+          "code": "JAN033A",
+          "name": "Práticas de Empreendedorismo [docente a definir]",
+          "turma": "Turma A",
+          "courseId": "curso_eag",
+          "period": 7,
+          "professorId": "prof_giancarlo_alfonso_lovon_canchumani",
+          "doNotAllocate": false,
+          "weeklySlotsRequired": 2,
+          "weeklyDaysRequired": 1,
+          "allowedShifts": [
+            "M",
+            "T"
+          ],
+          "enrolledStudents": 20,
+          "requiredRoomType": "comum",
+          "requiredResources": []
+        },
+        {
+          "id": "turma_2027_1_l079",
+          "code": "JAN033A",
+          "name": "Prática de empreendedorismo [docente a definir]",
+          "turma": "Turma A",
+          "courseId": "curso_eal",
+          "period": 9,
+          "professorId": "prof_giancarlo_alfonso_lovon_canchumani",
+          "doNotAllocate": false,
+          "weeklySlotsRequired": 2,
+          "weeklyDaysRequired": 1,
+          "allowedShifts": [
+            "M",
+            "T"
+          ],
+          "enrolledStudents": 10,
+          "requiredRoomType": "comum",
+          "requiredResources": []
+        },
+        {
+          "id": "turma_2027_1_l145",
+          "code": "JAN033A",
+          "name": "Práticas de Empreendedorismo",
+          "turma": "Turma A",
+          "courseId": "curso_iaes",
+          "period": 5,
+          "professorId": "prof_giancarlo_alfonso_lovon_canchumani",
+          "doNotAllocate": false,
+          "weeklySlotsRequired": 2,
+          "weeklyDaysRequired": 1,
+          "allowedShifts": [
+            "T"
+          ],
+          "enrolledStudents": 30,
+          "requiredRoomType": "comum",
+          "requiredResources": []
+        }
+      ]
+    },
+    {
+      "id": "turma_2027_1_l037",
+      "code": "JAG054A",
+      "name": "Projeto Integrado II (Irrigação)",
+      "turma": "Turma A",
+      "courseId": "curso_eag",
+      "period": 7,
+      "professorId": "prof_maycon_diego_ribeiro",
+      "doNotAllocate": false,
+      "weeklySlotsRequired": 5,
+      "weeklyDaysRequired": 1,
+      "allowedShifts": [
+        "M",
+        "T"
+      ],
+      "enrolledStudents": 30,
+      "requiredRoomType": "comum",
+      "requiredResources": []
+    },
+    {
+      "id": "turma_2027_1_l038",
+      "code": "JAG056A",
+      "name": "Projeto Integrado III (Máquinas)",
+      "turma": "Turma A",
+      "courseId": "curso_eag",
+      "period": 8,
+      "professorId": "prof_marcelo_jose_da_silva",
+      "doNotAllocate": false,
+      "weeklySlotsRequired": 5,
+      "weeklyDaysRequired": 1,
+      "allowedShifts": [
+        "M",
+        "T"
+      ],
+      "enrolledStudents": 30,
+      "requiredRoomType": "comum",
+      "requiredResources": []
+    },
+    {
+      "id": "turma_2027_1_l039",
+      "code": "JAG057A",
+      "name": "Projeto Integrado IV (Geotecnologias)",
+      "turma": "Turma A",
+      "courseId": "curso_eag",
+      "period": 9,
+      "professorId": "prof_silvia_graciele_hulse_de_souza",
+      "doNotAllocate": false,
+      "weeklySlotsRequired": 4,
+      "weeklyDaysRequired": 1,
+      "allowedShifts": [
+        "M",
+        "T"
+      ],
+      "enrolledStudents": 30,
+      "requiredRoomType": "comum",
+      "requiredResources": []
+    },
+    {
+      "id": "turma_2027_1_l040",
+      "code": "JAG030A",
+      "name": "Projetos de Irrigação e Drenagem",
+      "turma": "Turma A",
+      "courseId": "curso_eag",
+      "period": 7,
+      "professorId": "prof_maycon_diego_ribeiro",
+      "doNotAllocate": false,
+      "weeklySlotsRequired": 3,
+      "weeklyDaysRequired": 1,
+      "allowedShifts": [
+        "M",
+        "T"
+      ],
+      "enrolledStudents": 30,
+      "requiredRoomType": "comum",
+      "requiredResources": []
+    },
+    {
+      "id": "turma_2027_1_l041",
+      "code": "JAG014A",
+      "name": "Projetos de Silos e Armazéns",
+      "turma": "Turma A",
+      "courseId": "curso_eag",
+      "period": 9,
+      "professorId": "prof_jose_gabriel_viera_neto",
+      "doNotAllocate": false,
+      "weeklySlotsRequired": 4,
+      "weeklyDaysRequired": 1,
+      "allowedShifts": [
+        "M",
+        "T"
+      ],
+      "enrolledStudents": 30,
+      "requiredRoomType": "comum",
+      "requiredResources": []
+    },
+    {
+      "id": "turma_2027_1_l042",
+      "code": "JAG034A",
+      "name": "Sensoriamento Remoto",
+      "turma": "Turma A",
+      "courseId": "curso_eag",
+      "period": 3,
+      "professorId": "prof_carlos_henrique_wachholz_de_souza",
+      "doNotAllocate": false,
+      "weeklySlotsRequired": 2,
+      "weeklyDaysRequired": 1,
+      "allowedShifts": [
+        "M",
+        "T"
+      ],
+      "enrolledStudents": 30,
+      "requiredRoomType": "lab_info",
+      "requiredResources": []
+    },
+    {
+      "id": "turma_2027_1_l043",
+      "code": "JAG025A",
+      "name": "Topografia I",
+      "turma": "Turma A",
+      "courseId": "curso_eag",
+      "period": 3,
+      "professorId": "prof_carlos_henrique_wachholz_de_souza",
+      "doNotAllocate": false,
+      "weeklySlotsRequired": 3,
+      "weeklyDaysRequired": 1,
+      "allowedShifts": [
+        "M",
+        "T"
+      ],
+      "enrolledStudents": 20,
+      "requiredRoomType": "comum",
+      "requiredResources": []
+    },
+    {
+      "id": "turma_2027_1_l049",
+      "code": "JAN024A",
+      "name": "Química Geral Experimental",
+      "turma": "Turma A",
+      "courseId": "curso_eal",
+      "period": 1,
+      "professorId": "prof_leda_maria_saragiotto_colpini",
+      "doNotAllocate": false,
+      "weeklySlotsRequired": 1,
+      "weeklyDaysRequired": 1,
+      "allowedShifts": [
+        "M",
+        "T"
+      ],
+      "enrolledStudents": 25,
+      "requiredRoomType": "lab_quimica",
+      "requiredResources": []
+    },
+    {
+      "id": "turma_2027_1_l051",
+      "code": "JAL057A",
+      "name": "Introd. à Eng. Alimentos",
+      "turma": "Turma A",
+      "courseId": "curso_eal",
+      "period": 1,
+      "professorId": "prof_erika_de_castro_vasques",
+      "doNotAllocate": false,
+      "weeklySlotsRequired": 2,
+      "weeklyDaysRequired": 1,
+      "allowedShifts": [
+        "M",
+        "T"
+      ],
+      "enrolledStudents": 30,
+      "requiredRoomType": "comum",
+      "requiredResources": []
+    },
+    {
+      "id": "turma_2027_1_l053",
+      "code": "JAN032A",
+      "name": "Introdução à Extensão",
+      "turma": "Turma A",
+      "courseId": "curso_eal",
+      "period": 1,
+      "professorId": "prof_kelly_priscilla_loddo_cezar",
+      "doNotAllocate": false,
+      "weeklySlotsRequired": 2,
+      "weeklyDaysRequired": 1,
+      "allowedShifts": [
+        "M",
+        "T"
+      ],
+      "enrolledStudents": 30,
+      "requiredRoomType": "comum",
+      "requiredResources": []
+    },
+    {
+      "id": "turma_2027_1_l055",
+      "code": "JAN008A",
+      "name": "Algoritmos e programação de computadores",
+      "turma": "Turma A",
+      "courseId": "curso_eal",
+      "period": 1,
+      "professorId": "prof_carlos_roberto_beleti_junior",
+      "doNotAllocate": false,
+      "weeklySlotsRequired": 2,
+      "weeklyDaysRequired": 1,
+      "allowedShifts": [
+        "M",
+        "T"
+      ],
+      "enrolledStudents": 30,
+      "requiredRoomType": "comum",
+      "requiredResources": []
+    },
+    {
+      "id": "turma_2027_1_l056",
+      "code": "JAN009B",
+      "name": "Estatística I",
+      "turma": "Turma A",
+      "courseId": "curso_eal",
+      "period": 1,
+      "professorId": "prof_landir_saviniec",
+      "doNotAllocate": false,
+      "weeklySlotsRequired": 2,
+      "weeklyDaysRequired": 1,
+      "allowedShifts": [
+        "M",
+        "T"
+      ],
+      "enrolledStudents": 30,
+      "requiredRoomType": "comum",
+      "requiredResources": []
+    },
+    {
+      "id": "turma_2027_1_l058",
+      "code": "JAN028A",
+      "name": "Física Experimental II",
+      "turma": "Turma A",
+      "courseId": "curso_eal",
+      "period": 3,
+      "professorId": "prof_douglas_soares_de_oliveira",
+      "doNotAllocate": false,
+      "weeklySlotsRequired": 2,
+      "weeklyDaysRequired": 1,
+      "allowedShifts": [
+        "M",
+        "T"
+      ],
+      "enrolledStudents": 25,
+      "requiredRoomType": "lab_fisica",
+      "requiredResources": []
+    },
+    {
+      "id": "turma_2027_1_l059",
+      "code": "JAN008A",
+      "name": "Algoritmos e programação de computadores",
+      "turma": "Turma A",
+      "courseId": "curso_eal",
+      "period": 3,
+      "professorId": "prof_carlos_roberto_beleti_junior",
+      "doNotAllocate": false,
+      "weeklySlotsRequired": 4,
+      "weeklyDaysRequired": 2,
+      "allowedShifts": [
+        "M",
+        "T"
+      ],
+      "enrolledStudents": 30,
+      "requiredRoomType": "lab_info",
+      "requiredResources": [],
+      "joinedClasses": [
+        {
+          "id": "turma_2027_1_l059",
+          "code": "JAN008A",
+          "name": "Algoritmos e programação de computadores",
+          "turma": "Turma A",
+          "courseId": "curso_eal",
+          "period": 3,
+          "professorId": "prof_carlos_roberto_beleti_junior",
+          "doNotAllocate": false,
+          "weeklySlotsRequired": 4,
+          "weeklyDaysRequired": 2,
+          "allowedShifts": [
+            "M",
+            "T"
+          ],
+          "enrolledStudents": 15,
+          "requiredRoomType": "lab_info",
+          "requiredResources": []
+        },
+        {
+          "id": "turma_2027_1_l093",
+          "code": "JAN008A",
+          "name": "ALGORITMOS E PROGRAMAÇÃO DE COMPUTADORES",
+          "turma": "Turma A",
+          "courseId": "curso_epr",
+          "period": 3,
+          "professorId": "prof_carlos_roberto_beleti_junior",
+          "doNotAllocate": false,
+          "weeklySlotsRequired": 4,
+          "weeklyDaysRequired": 2,
+          "allowedShifts": [
+            "M",
+            "T"
+          ],
+          "enrolledStudents": 15,
+          "requiredRoomType": "lab_info",
+          "requiredResources": []
+        }
+      ]
+    },
+    {
+      "id": "turma_2027_1_l061",
+      "code": "JAN013A",
+      "name": "Cálculo Numérico",
+      "turma": "Turma A",
+      "courseId": "curso_eal",
+      "period": 3,
+      "professorId": "prof_juliana_verga_shirabayashi",
+      "doNotAllocate": false,
+      "weeklySlotsRequired": 4,
+      "weeklyDaysRequired": 2,
+      "allowedShifts": [
+        "M",
+        "T"
+      ],
+      "enrolledStudents": 30,
+      "requiredRoomType": "comum",
+      "requiredResources": [],
+      "joinedClasses": [
+        {
+          "id": "turma_2027_1_l061",
+          "code": "JAN013A",
+          "name": "Cálculo Numérico",
+          "turma": "Turma A",
+          "courseId": "curso_eal",
+          "period": 3,
+          "professorId": "prof_juliana_verga_shirabayashi",
+          "doNotAllocate": false,
+          "weeklySlotsRequired": 4,
+          "weeklyDaysRequired": 2,
+          "allowedShifts": [
+            "M",
+            "T"
+          ],
+          "enrolledStudents": 15,
+          "requiredRoomType": "comum",
+          "requiredResources": []
+        },
+        {
+          "id": "turma_2027_1_l100",
+          "code": "JAN013A",
+          "name": "CÁLCULO NUMÉRICO",
+          "turma": "Turma A",
+          "courseId": "curso_epr",
+          "period": 5,
+          "professorId": "prof_juliana_verga_shirabayashi",
+          "doNotAllocate": false,
+          "weeklySlotsRequired": 4,
+          "weeklyDaysRequired": 2,
+          "allowedShifts": [
+            "M",
+            "T"
+          ],
+          "enrolledStudents": 20,
+          "requiredRoomType": "comum",
+          "requiredResources": []
+        }
+      ]
+    },
+    {
+      "id": "turma_2027_1_l062",
+      "code": "JAL005A",
+      "name": "Química Analítica",
+      "turma": "Turma A",
+      "courseId": "curso_eal",
+      "period": 3,
+      "professorId": "prof_valquiria_de_moraes_silva",
+      "doNotAllocate": false,
+      "weeklySlotsRequired": 3,
+      "weeklyDaysRequired": 1,
+      "allowedShifts": [
+        "M",
+        "T"
+      ],
+      "enrolledStudents": 30,
+      "requiredRoomType": "comum",
+      "requiredResources": []
+    },
+    {
+      "id": "turma_2027_1_l063",
+      "code": "JAL003A",
+      "name": "Termodinâmica I",
+      "turma": "Turma A",
+      "courseId": "curso_eal",
+      "period": 5,
+      "professorId": "prof_daniel_angelo_longhi",
+      "doNotAllocate": false,
+      "weeklySlotsRequired": 4,
+      "weeklyDaysRequired": 2,
+      "allowedShifts": [
+        "M",
+        "T"
+      ],
+      "enrolledStudents": 30,
+      "requiredRoomType": "comum",
+      "requiredResources": []
+    },
+    {
+      "id": "turma_2027_1_l064",
+      "code": "JAL044A",
+      "name": "Bioquímica II",
+      "turma": "Turma A",
+      "courseId": "curso_eal",
+      "period": 5,
+      "professorId": "prof_josielle_abrahao_de_souza",
+      "doNotAllocate": false,
+      "weeklySlotsRequired": 3,
+      "weeklyDaysRequired": 1,
+      "allowedShifts": [
+        "M",
+        "T"
+      ],
+      "enrolledStudents": 30,
+      "requiredRoomType": "comum",
+      "requiredResources": []
+    },
+    {
+      "id": "turma_2027_1_l065",
+      "code": "JAL015A",
+      "name": "Mecânica dos Materiais",
+      "turma": "Turma A",
+      "courseId": "curso_eal",
+      "period": 5,
+      "professorId": "prof_leomara_floriano_ribeiro",
+      "doNotAllocate": false,
+      "weeklySlotsRequired": 4,
+      "weeklyDaysRequired": 2,
+      "allowedShifts": [
+        "M",
+        "T"
+      ],
+      "enrolledStudents": 30,
+      "requiredRoomType": "comum",
+      "requiredResources": []
+    },
+    {
+      "id": "turma_2027_1_l066",
+      "code": "JAL008A",
+      "name": "Microbiologia geral",
+      "turma": "Turma A",
+      "courseId": "curso_eal",
+      "period": 5,
+      "professorId": "prof_dirlei_diedrich_kieling",
+      "doNotAllocate": false,
+      "weeklySlotsRequired": 2,
+      "weeklyDaysRequired": 1,
+      "allowedShifts": [
+        "M",
+        "T"
+      ],
+      "enrolledStudents": 30,
+      "requiredRoomType": "comum",
+      "requiredResources": []
+    },
+    {
+      "id": "turma_2027_1_l067",
+      "code": "JAL019A",
+      "name": "Trato. de Efluentes Industr.",
+      "turma": "Turma A",
+      "courseId": "curso_eal",
+      "period": 5,
+      "professorId": "prof_erika_de_castro_vasques",
+      "doNotAllocate": false,
+      "weeklySlotsRequired": 2,
+      "weeklyDaysRequired": 1,
+      "allowedShifts": [
+        "M",
+        "T"
+      ],
+      "enrolledStudents": 30,
+      "requiredRoomType": "comum",
+      "requiredResources": []
+    },
+    {
+      "id": "turma_2027_1_l068",
+      "code": "JAL007A",
+      "name": "Química de Alimentos",
+      "turma": "Turma A",
+      "courseId": "curso_eal",
+      "period": 5,
+      "professorId": "prof_eduardo_cesar_meurer",
+      "doNotAllocate": false,
+      "weeklySlotsRequired": 3,
+      "weeklyDaysRequired": 1,
+      "allowedShifts": [
+        "M",
+        "T"
+      ],
+      "enrolledStudents": 30,
+      "requiredRoomType": "comum",
+      "requiredResources": []
+    },
+    {
+      "id": "turma_2027_1_l069",
+      "code": "JAL017A",
+      "name": "Proc. Ferm. e Enz.",
+      "turma": "Turma A",
+      "courseId": "curso_eal",
+      "period": 7,
+      "professorId": "prof_dirlei_diedrich_kieling",
+      "doNotAllocate": false,
+      "weeklySlotsRequired": 4,
+      "weeklyDaysRequired": 1,
+      "allowedShifts": [
+        "M",
+        "T"
+      ],
+      "enrolledStudents": 30,
+      "requiredRoomType": "comum",
+      "requiredResources": []
+    },
+    {
+      "id": "turma_2027_1_l070",
+      "code": "JAL016A",
+      "name": "Sistemas de qualidade",
+      "turma": "Turma A",
+      "courseId": "curso_eal",
+      "period": 7,
+      "professorId": "prof_leomara_floriano_ribeiro",
+      "doNotAllocate": false,
+      "weeklySlotsRequired": 3,
+      "weeklyDaysRequired": 1,
+      "allowedShifts": [
+        "M",
+        "T"
+      ],
+      "enrolledStudents": 30,
+      "requiredRoomType": "comum",
+      "requiredResources": []
+    },
+    {
+      "id": "turma_2027_1_l071",
+      "code": "JAL014A",
+      "name": "Op. Unitárias II",
+      "turma": "Turma A",
+      "courseId": "curso_eal",
+      "period": 7,
+      "professorId": "prof_erika_de_castro_vasques",
+      "doNotAllocate": false,
+      "weeklySlotsRequired": 3,
+      "weeklyDaysRequired": 1,
+      "allowedShifts": [
+        "M",
+        "T"
+      ],
+      "enrolledStudents": 30,
+      "requiredRoomType": "comum",
+      "requiredResources": []
+    },
+    {
+      "id": "turma_2027_1_l072",
+      "code": "JAL018A",
+      "name": "Tecnologia de Cereais",
+      "turma": "Turma A",
+      "courseId": "curso_eal",
+      "period": 7,
+      "professorId": "prof_dirlei_diedrich_kieling",
+      "doNotAllocate": false,
+      "weeklySlotsRequired": 3,
+      "weeklyDaysRequired": 1,
+      "allowedShifts": [
+        "M",
+        "T"
+      ],
+      "enrolledStudents": 30,
+      "requiredRoomType": "comum",
+      "requiredResources": []
+    },
+    {
+      "id": "turma_2027_1_l074",
+      "code": "JAL013A",
+      "name": "Refrigeração",
+      "turma": "Turma A",
+      "courseId": "curso_eal",
+      "period": 7,
+      "professorId": "prof_luana_carolina_bosmuler_zuge",
+      "doNotAllocate": false,
+      "weeklySlotsRequired": 3,
+      "weeklyDaysRequired": 1,
+      "allowedShifts": [
+        "M",
+        "T"
+      ],
+      "enrolledStudents": 30,
+      "requiredRoomType": "comum",
+      "requiredResources": []
+    },
+    {
+      "id": "turma_2027_1_l075",
+      "code": "JAL025",
+      "name": "Modelagem Matemática, instrumentação e controle de processos",
+      "turma": "Turma A",
+      "courseId": "curso_eal",
+      "period": 9,
+      "professorId": "prof_luana_carolina_bosmuler_zuge",
+      "doNotAllocate": false,
+      "weeklySlotsRequired": 4,
+      "weeklyDaysRequired": 1,
+      "allowedShifts": [
+        "M",
+        "T"
+      ],
+      "enrolledStudents": 30,
+      "requiredRoomType": "comum",
+      "requiredResources": []
+    },
+    {
+      "id": "turma_2027_1_l076",
+      "code": "JAL026A",
+      "name": "Embalagem de Alimentos",
+      "turma": "Turma A",
+      "courseId": "curso_eal",
+      "period": 9,
+      "professorId": "prof_suelen_siqueira_dos_santos",
+      "doNotAllocate": false,
+      "weeklySlotsRequired": 3,
+      "weeklyDaysRequired": 1,
+      "allowedShifts": [
+        "M",
+        "T"
+      ],
+      "enrolledStudents": 30,
+      "requiredRoomType": "comum",
+      "requiredResources": []
+    },
+    {
+      "id": "turma_2027_1_l077",
+      "code": "JAN005A",
+      "name": "Gestão de pessoas [docente a definir]",
+      "turma": "Turma A",
+      "courseId": "curso_eal",
+      "period": 9,
+      "professorId": "prof_rafael_germano_dal_molin_filho",
+      "doNotAllocate": false,
+      "weeklySlotsRequired": 2,
+      "weeklyDaysRequired": 1,
+      "allowedShifts": [
+        "M",
+        "T"
+      ],
+      "enrolledStudents": 20,
+      "requiredRoomType": "comum",
+      "requiredResources": [],
+      "joinedClasses": [
+        {
+          "id": "turma_2027_1_l077",
+          "code": "JAN005A",
+          "name": "Gestão de pessoas [docente a definir]",
+          "turma": "Turma A",
+          "courseId": "curso_eal",
+          "period": 9,
+          "professorId": "prof_rafael_germano_dal_molin_filho",
+          "doNotAllocate": false,
+          "weeklySlotsRequired": 2,
+          "weeklyDaysRequired": 1,
+          "allowedShifts": [
+            "M",
+            "T"
+          ],
+          "enrolledStudents": 10,
+          "requiredRoomType": "comum",
+          "requiredResources": []
+        },
+        {
+          "id": "turma_2027_1_l108",
+          "code": "JAN005A",
+          "name": "GESTÃO DE PESSOAS [docente a definir]",
+          "turma": "Turma A",
+          "courseId": "curso_epr",
+          "period": 7,
+          "professorId": "prof_rafael_germano_dal_molin_filho",
+          "doNotAllocate": false,
+          "weeklySlotsRequired": 2,
+          "weeklyDaysRequired": 1,
+          "allowedShifts": [
+            "M",
+            "T"
+          ],
+          "enrolledStudents": 10,
+          "requiredRoomType": "comum",
+          "requiredResources": []
+        }
+      ]
+    },
+    {
+      "id": "turma_2027_1_l080",
+      "code": "JAL030A",
+      "name": "Trabalho de conclusão de  curso I [docente a definir]",
+      "turma": "Turma A",
+      "courseId": "curso_eal",
+      "period": 9,
+      "professorId": "pro_1d155690-6eef-4d63-8a54-79d9d8834191",
+      "doNotAllocate": true,
+      "weeklySlotsRequired": 2,
+      "weeklyDaysRequired": 1,
+      "allowedShifts": [
+        "M",
+        "T"
+      ],
+      "enrolledStudents": 30,
+      "requiredRoomType": "comum",
+      "requiredResources": []
+    },
+    {
+      "id": "turma_2027_1_l083",
+      "code": "JAL050A",
+      "name": "Tópicos extensionistas em EAL I",
+      "turma": "Turma A",
+      "courseId": "curso_eal",
+      "period": 1,
+      "professorId": "prof_suelen_siqueira_dos_santos",
+      "doNotAllocate": false,
+      "weeklySlotsRequired": 4,
+      "weeklyDaysRequired": 1,
+      "allowedShifts": [
+        "M",
+        "T"
+      ],
+      "enrolledStudents": 15,
+      "requiredRoomType": "comum",
+      "requiredResources": [],
+      "joinedClasses": [
+        {
+          "id": "turma_2027_1_l083",
+          "code": "JAL050A",
+          "name": "Tópicos extensionistas em EAL I",
+          "turma": "Turma A",
+          "courseId": "curso_eal",
+          "period": 1,
+          "professorId": "prof_suelen_siqueira_dos_santos",
+          "doNotAllocate": false,
+          "weeklySlotsRequired": 4,
+          "weeklyDaysRequired": 1,
+          "allowedShifts": [
+            "M",
+            "T"
+          ],
+          "enrolledStudents": 30,
+          "requiredRoomType": "comum",
+          "requiredResources": []
+        },
+        {
+          "id": "turma_2027_1_l083_periodo3",
+          "code": "JAL050A",
+          "name": "Tópicos extensionistas em EAL I",
+          "turma": "Turma A",
+          "courseId": "curso_eal",
+          "period": 3,
+          "professorId": "prof_suelen_siqueira_dos_santos",
+          "doNotAllocate": false,
+          "weeklySlotsRequired": 4,
+          "weeklyDaysRequired": 1,
+          "allowedShifts": [
+            "M",
+            "T"
+          ],
+          "enrolledStudents": 30,
+          "requiredRoomType": "comum",
+          "requiredResources": []
+        }
+      ]
+    },
+    {
+      "id": "turma_2027_1_l084",
+      "code": "JAL046A",
+      "name": "Segurança Industrial",
+      "turma": "Turma A",
+      "courseId": "curso_eal",
+      "period": 9,
+      "professorId": "prof_leomara_floriano_ribeiro",
+      "doNotAllocate": false,
+      "weeklySlotsRequired": 2,
+      "weeklyDaysRequired": 1,
+      "allowedShifts": [
+        "M",
+        "T"
+      ],
+      "enrolledStudents": 30,
+      "requiredRoomType": "comum",
+      "requiredResources": []
+    },
+    {
+      "id": "turma_2027_1_l085",
+      "code": "JAL055A",
+      "name": "Microbiologia preditiva",
+      "turma": "Turma A",
+      "courseId": "curso_eal",
+      "period": 9,
+      "professorId": "prof_daniel_angelo_longhi",
+      "doNotAllocate": false,
+      "weeklySlotsRequired": 4,
+      "weeklyDaysRequired": 1,
+      "allowedShifts": [
+        "M",
+        "T"
+      ],
+      "enrolledStudents": 30,
+      "requiredRoomType": "lab_info",
+      "requiredResources": []
+    },
+    {
+      "id": "turma_2027_1_l086",
+      "code": "JAN001A",
+      "name": "CÁLCULO I",
+      "turma": "Turma A",
+      "courseId": "curso_epr",
+      "period": 1,
+      "professorId": "prof_jair_da_silva",
+      "doNotAllocate": false,
+      "weeklySlotsRequired": 6,
+      "weeklyDaysRequired": 2,
+      "allowedShifts": [
+        "T"
+      ],
+      "enrolledStudents": 30,
+      "requiredRoomType": "comum",
+      "requiredResources": []
+    },
+    {
+      "id": "turma_2027_1_l087",
+      "code": "JAN002A",
+      "name": "QUÍMICA GERAL TEÓRICA [docente a definir]",
+      "turma": "Turma A",
+      "courseId": "curso_epr",
+      "period": 1,
+      "professorId": "prof_leda_maria_saragiotto_colpini",
+      "doNotAllocate": false,
+      "weeklySlotsRequired": 3,
+      "weeklyDaysRequired": 1,
+      "allowedShifts": [
+        "T"
+      ],
+      "enrolledStudents": 30,
+      "requiredRoomType": "comum",
+      "requiredResources": []
+    },
+    {
+      "id": "turma_2027_1_l088",
+      "code": "JAN0024A",
+      "name": "QUÍMICA GERAL EXPERIMENTAL [docente a definir]",
+      "turma": "Turma A",
+      "courseId": "curso_epr",
+      "period": 1,
+      "professorId": "prof_leda_maria_saragiotto_colpini",
+      "doNotAllocate": false,
+      "weeklySlotsRequired": 1,
+      "weeklyDaysRequired": 1,
+      "allowedShifts": [
+        "T"
+      ],
+      "enrolledStudents": 25,
+      "requiredRoomType": "lab_quimica",
+      "requiredResources": []
+    },
+    {
+      "id": "turma_2027_1_l089",
+      "code": "JAN003A",
+      "name": "ÁLGEBRA LINEAR E GEOMETRIA ANALÍTICA",
+      "turma": "Turma A",
+      "courseId": "curso_epr",
+      "period": 1,
+      "professorId": "prof_landir_saviniec",
+      "doNotAllocate": false,
+      "weeklySlotsRequired": 4,
+      "weeklyDaysRequired": 2,
+      "allowedShifts": [
+        "T"
+      ],
+      "enrolledStudents": 30,
+      "requiredRoomType": "comum",
+      "requiredResources": []
+    },
+    {
+      "id": "turma_2027_1_l091",
+      "code": "JAN014A",
+      "name": "DESENHO TÉCNICO",
+      "turma": "Turma A",
+      "courseId": "curso_epr",
+      "period": 1,
+      "professorId": "prof_renata_bachin_mazzini_guedes",
+      "doNotAllocate": false,
+      "weeklySlotsRequired": 3,
+      "weeklyDaysRequired": 1,
+      "allowedShifts": [
+        "M",
+        "T"
+      ],
+      "enrolledStudents": 30,
+      "requiredRoomType": "desenho",
+      "requiredResources": []
+    },
+    {
+      "id": "turma_2027_1_l092",
+      "code": "JAN081A",
+      "name": "INTRODUÇÃO À ENGENHARIA DE PRODUÇÃO",
+      "turma": "Turma A",
+      "courseId": "curso_epr",
+      "period": 1,
+      "professorId": "prof_andre_luiz_gazoli_de_oliveira",
+      "doNotAllocate": false,
+      "weeklySlotsRequired": 2,
+      "weeklyDaysRequired": 1,
+      "allowedShifts": [
+        "M",
+        "T"
+      ],
+      "enrolledStudents": 30,
+      "requiredRoomType": "comum",
+      "requiredResources": []
+    },
+    {
+      "id": "turma_2027_1_l094",
+      "code": "JAN011A",
+      "name": "CÁLCULO III",
+      "turma": "Turma A",
+      "courseId": "curso_epr",
+      "period": 3,
+      "professorId": "prof_marcelo_franco_de_oliveira",
+      "doNotAllocate": false,
+      "weeklySlotsRequired": 4,
+      "weeklyDaysRequired": 2,
+      "allowedShifts": [
+        "M",
+        "T"
+      ],
+      "enrolledStudents": 30,
+      "requiredRoomType": "comum",
+      "requiredResources": [],
+      "joinedClasses": [
+        {
+          "id": "turma_2027_1_l094",
+          "code": "JAN011A",
+          "name": "CÁLCULO III",
+          "turma": "Turma A",
+          "courseId": "curso_epr",
+          "period": 3,
+          "professorId": "prof_marcelo_franco_de_oliveira",
+          "doNotAllocate": false,
+          "weeklySlotsRequired": 4,
+          "weeklyDaysRequired": 2,
+          "allowedShifts": [
+            "M",
+            "T"
+          ],
+          "enrolledStudents": 30,
+          "requiredRoomType": "comum",
+          "requiredResources": []
+        },
+        {
+          "id": "turma_2027_1_l138",
+          "code": "JAN011A",
+          "name": "Cálculo III",
+          "turma": "Turma A",
+          "courseId": "curso_iaes",
+          "period": 3,
+          "professorId": "prof_marcelo_franco_de_oliveira",
+          "doNotAllocate": false,
+          "weeklySlotsRequired": 4,
+          "weeklyDaysRequired": 2,
+          "allowedShifts": [
+            "T"
+          ],
+          "enrolledStudents": 30,
+          "requiredRoomType": "comum",
+          "requiredResources": []
+        }
+      ]
+    },
+    {
+      "id": "turma_2027_1_l095",
+      "code": "JAN012A",
+      "name": "FÍSICA II",
+      "turma": "Turma A",
+      "courseId": "curso_epr",
+      "period": 3,
+      "professorId": "prof_ana_claudia_nogueira_mulati",
+      "doNotAllocate": false,
+      "weeklySlotsRequired": 4,
+      "weeklyDaysRequired": 2,
+      "allowedShifts": [
+        "M",
+        "T"
+      ],
+      "enrolledStudents": 30,
+      "requiredRoomType": "comum",
+      "requiredResources": []
+    },
+    {
+      "id": "turma_2027_1_l096",
+      "code": "JAN0028A",
+      "name": "FÍSICA EXPERIMENTAL II",
+      "turma": "Turma A",
+      "courseId": "curso_epr",
+      "period": 3,
+      "professorId": "prof_douglas_soares_de_oliveira",
+      "doNotAllocate": false,
+      "weeklySlotsRequired": 2,
+      "weeklyDaysRequired": 1,
+      "allowedShifts": [
+        "M",
+        "T"
+      ],
+      "enrolledStudents": 20,
+      "requiredRoomType": "lab_fisica",
+      "requiredResources": []
+    },
+    {
+      "id": "turma_2027_1_l097",
+      "code": "JAN026A",
+      "name": "ESTATÍSTICA II [laboratório a confirmar]",
+      "turma": "Turma A",
+      "courseId": "curso_epr",
+      "period": 3,
+      "professorId": "prof_marcelo_franco_de_oliveira",
+      "doNotAllocate": false,
+      "weeklySlotsRequired": 3,
+      "weeklyDaysRequired": 1,
+      "allowedShifts": [
+        "T"
+      ],
+      "enrolledStudents": 39,
+      "requiredRoomType": "lab_info",
+      "requiredResources": [],
+      "requiredRoomId": "sala_a102",
+      "joinedClasses": [
+        {
+          "id": "turma_2027_1_l097",
+          "code": "JAN026A",
+          "name": "ESTATÍSTICA II [laboratório a confirmar]",
+          "turma": "Turma A",
+          "courseId": "curso_epr",
+          "period": 3,
+          "professorId": "prof_marcelo_franco_de_oliveira",
+          "doNotAllocate": false,
+          "weeklySlotsRequired": 3,
+          "weeklyDaysRequired": 1,
+          "allowedShifts": [
+            "M",
+            "T"
+          ],
+          "enrolledStudents": 30,
+          "requiredRoomType": "comum",
+          "requiredResources": []
+        },
+        {
+          "id": "turma_2027_1_l137",
+          "code": "JAN026A",
+          "name": "Estatística II",
+          "turma": "Turma A",
+          "courseId": "curso_iaes",
+          "period": 3,
+          "professorId": "prof_marcelo_franco_de_oliveira",
+          "doNotAllocate": false,
+          "weeklySlotsRequired": 3,
+          "weeklyDaysRequired": 1,
+          "allowedShifts": [
+            "T"
+          ],
+          "enrolledStudents": 30,
+          "requiredRoomType": "comum",
+          "requiredResources": []
+        }
+      ]
+    },
+    {
+      "id": "turma_2027_1_l098",
+      "code": "JEP002A",
+      "name": "GERENCIAMENTO DE PROJETOS",
+      "turma": "Turma A",
+      "courseId": "curso_epr",
+      "period": 3,
+      "professorId": "prof_rafael_germano_dal_molin_filho",
+      "doNotAllocate": false,
+      "weeklySlotsRequired": 4,
+      "weeklyDaysRequired": 2,
+      "allowedShifts": [
+        "M",
+        "T"
+      ],
+      "enrolledStudents": 30,
+      "requiredRoomType": "comum",
+      "requiredResources": []
+    },
+    {
+      "id": "turma_2027_1_l099",
+      "code": "JEP046A",
+      "name": "PROJETO INTEGRADOR EXTENSIONISTA I",
+      "turma": "Turma A",
+      "courseId": "curso_epr",
+      "period": 3,
+      "professorId": "prof_juliana_verga_shirabayashi",
+      "doNotAllocate": false,
+      "weeklySlotsRequired": 5,
+      "weeklyDaysRequired": 1,
+      "allowedShifts": [
+        "M",
+        "T"
+      ],
+      "enrolledStudents": 30,
+      "requiredRoomType": "comum",
+      "requiredResources": []
+    },
+    {
+      "id": "turma_2027_1_l101",
+      "code": "JEP001A",
+      "name": "ECONOMIA",
+      "turma": "Turma A",
+      "courseId": "curso_epr",
+      "period": 5,
+      "professorId": "prof_rafael_ariente_neto",
+      "doNotAllocate": false,
+      "weeklySlotsRequired": 4,
+      "weeklyDaysRequired": 2,
+      "allowedShifts": [
+        "M",
+        "T"
+      ],
+      "enrolledStudents": 30,
+      "requiredRoomType": "comum",
+      "requiredResources": []
+    },
+    {
+      "id": "turma_2027_1_l102",
+      "code": "JEP015A",
+      "name": "ENGENHARIA ERGONÔMICA",
+      "turma": "Turma A",
+      "courseId": "curso_epr",
+      "period": 5,
+      "professorId": "prof_william_rodrigues_dos_santos",
+      "doNotAllocate": false,
+      "weeklySlotsRequired": 2,
+      "weeklyDaysRequired": 1,
+      "allowedShifts": [
+        "M",
+        "T"
+      ],
+      "enrolledStudents": 30,
+      "requiredRoomType": "comum",
+      "requiredResources": []
+    },
+    {
+      "id": "turma_2027_1_l103",
+      "code": "JEP004A",
+      "name": "MECÂNICA PARA ENGENHARIA DE PRODUÇÃO",
+      "turma": "Turma A",
+      "courseId": "curso_epr",
+      "period": 5,
+      "professorId": "prof_rafael_ariente_neto",
+      "doNotAllocate": false,
+      "weeklySlotsRequired": 4,
+      "weeklyDaysRequired": 2,
+      "allowedShifts": [
+        "M",
+        "T"
+      ],
+      "enrolledStudents": 30,
+      "requiredRoomType": "comum",
+      "requiredResources": []
+    },
+    {
+      "id": "turma_2027_1_l104",
+      "code": "JEP005A",
+      "name": "SISTEMAS DE PRODUÇÃO",
+      "turma": "Turma A",
+      "courseId": "curso_epr",
+      "period": 5,
+      "professorId": "prof_andre_luiz_gazoli_de_oliveira",
+      "doNotAllocate": false,
+      "weeklySlotsRequired": 4,
+      "weeklyDaysRequired": 1,
+      "allowedShifts": [
+        "M",
+        "T"
+      ],
+      "enrolledStudents": 30,
+      "requiredRoomType": "comum",
+      "requiredResources": []
+    },
+    {
+      "id": "turma_2027_1_l105",
+      "code": "JAN019A",
+      "name": "GESTÃO AMBIENTAL",
+      "turma": "Turma A",
+      "courseId": "curso_epr",
+      "period": 5,
+      "professorId": "prof_giancarlo_alfonso_lovon_canchumani",
+      "doNotAllocate": false,
+      "weeklySlotsRequired": 2,
+      "weeklyDaysRequired": 1,
+      "allowedShifts": [
+        "T"
+      ],
+      "enrolledStudents": 30,
+      "requiredRoomType": "comum",
+      "requiredResources": [],
+      "nonConflictClassIds": [
+        "turma_2027_1_l134",
+        "turma_2027_1_l186",
+        "turma_2027_1_l187",
+        "turma_2027_1_l191",
+        "turma_2027_1_l192",
+        "turma_2027_1_l188",
+        "turma_2027_1_l190",
+        "turma_2027_1_l189"
+      ]
+    },
+    {
+      "id": "turma_2027_1_l106",
+      "code": "JEP019A",
+      "name": "ENGENHARIA DA QUALIDADE",
+      "turma": "Turma A",
+      "courseId": "curso_epr",
+      "period": 5,
+      "professorId": "prof_marco_aurelio_reis_dos_santos",
+      "doNotAllocate": false,
+      "weeklySlotsRequired": 4,
+      "weeklyDaysRequired": 2,
+      "allowedShifts": [
+        "M",
+        "T"
+      ],
+      "enrolledStudents": 30,
+      "requiredRoomType": "comum",
+      "requiredResources": []
+    },
+    {
+      "id": "turma_2027_1_l107",
+      "code": "JEP047A",
+      "name": "PROJETO INTEGRADOR EXTENSIONISTA II",
+      "turma": "Turma A",
+      "courseId": "curso_epr",
+      "period": 5,
+      "professorId": "prof_william_rodrigues_dos_santos",
+      "doNotAllocate": false,
+      "weeklySlotsRequired": 5,
+      "weeklyDaysRequired": 1,
+      "allowedShifts": [
+        "M",
+        "T"
+      ],
+      "enrolledStudents": 30,
+      "requiredRoomType": "comum",
+      "requiredResources": []
+    },
+    {
+      "id": "turma_2027_1_l109",
+      "code": "JEP008A",
+      "name": "TECNOLOGIA DA DECISÃO III",
+      "turma": "Turma A",
+      "courseId": "curso_epr",
+      "period": 7,
+      "professorId": "prof_marco_aurelio_reis_dos_santos",
+      "doNotAllocate": false,
+      "weeklySlotsRequired": 4,
+      "weeklyDaysRequired": 2,
+      "allowedShifts": [
+        "M",
+        "T"
+      ],
+      "enrolledStudents": 30,
+      "requiredRoomType": "comum",
+      "requiredResources": []
+    },
+    {
+      "id": "turma_2027_1_l110",
+      "code": "JEP011A",
+      "name": "PLANEJAMENTO, PROGRAMAÇÃO E CONTROLE DA PRODUÇÃO",
+      "turma": "Turma A",
+      "courseId": "curso_epr",
+      "period": 7,
+      "professorId": "prof_andre_luiz_gazoli_de_oliveira",
+      "doNotAllocate": false,
+      "weeklySlotsRequired": 4,
+      "weeklyDaysRequired": 2,
+      "allowedShifts": [
+        "M",
+        "T"
+      ],
+      "enrolledStudents": 30,
+      "requiredRoomType": "comum",
+      "requiredResources": []
+    },
+    {
+      "id": "turma_2027_1_l111",
+      "code": "JEP018A",
+      "name": "EMPREENDEDORISMO",
+      "turma": "Turma A",
+      "courseId": "curso_epr",
+      "period": 7,
+      "professorId": "prof_giancarlo_alfonso_lovon_canchumani",
+      "doNotAllocate": false,
+      "weeklySlotsRequired": 4,
+      "weeklyDaysRequired": 2,
+      "allowedShifts": [
+        "M",
+        "T"
+      ],
+      "enrolledStudents": 30,
+      "requiredRoomType": "comum",
+      "requiredResources": []
+    },
+    {
+      "id": "turma_2027_1_l112",
+      "code": "JEP050A",
+      "name": "PROJETO INTEGRADOR EXTENSIONISTA IV",
+      "turma": "Turma A",
+      "courseId": "curso_epr",
+      "period": 7,
+      "professorId": "prof_alexandre_jose_sousa_ferreira",
+      "doNotAllocate": false,
+      "weeklySlotsRequired": 5,
+      "weeklyDaysRequired": 1,
+      "allowedShifts": [
+        "M",
+        "T"
+      ],
+      "enrolledStudents": 30,
+      "requiredRoomType": "comum",
+      "requiredResources": []
+    },
+    {
+      "id": "turma_2027_1_l113",
+      "code": "JEP043A",
+      "name": "TRABALHO DE CONCLUSÃO DE CURSO I [laboratório a confirmar]",
+      "turma": "Turma A",
+      "courseId": "curso_epr",
+      "period": 9,
+      "professorId": "prof_rafael_germano_dal_molin_filho",
+      "doNotAllocate": false,
+      "weeklySlotsRequired": 2,
+      "weeklyDaysRequired": 1,
+      "allowedShifts": [
+        "M",
+        "T"
+      ],
+      "enrolledStudents": 30,
+      "requiredRoomType": "comum",
+      "requiredResources": []
+    },
+    {
+      "id": "turma_2027_1_l114",
+      "code": "JEP017A",
+      "name": "ENGENHARIA ECONÔMICA",
+      "turma": "Turma A",
+      "courseId": "curso_epr",
+      "period": 9,
+      "professorId": "prof_alexandre_jose_sousa_ferreira",
+      "doNotAllocate": true,
+      "weeklySlotsRequired": 3,
+      "weeklyDaysRequired": 1,
+      "allowedShifts": [
+        "M",
+        "T"
+      ],
+      "enrolledStudents": 30,
+      "requiredRoomType": "comum",
+      "requiredResources": []
+    },
+    {
+      "id": "turma_2027_1_l115",
+      "code": "JEP063A",
+      "name": "PLANEJAMENTO DE EXPERIMENTOS [laboratório a confirmar]",
+      "turma": "Turma A",
+      "courseId": "curso_epr",
+      "period": 9,
+      "professorId": "prof_marco_aurelio_reis_dos_santos",
+      "doNotAllocate": false,
+      "weeklySlotsRequired": 2,
+      "weeklyDaysRequired": 1,
+      "allowedShifts": [
+        "M",
+        "T"
+      ],
+      "enrolledStudents": 30,
+      "requiredRoomType": "comum",
+      "requiredResources": []
+    },
+    {
+      "id": "turma_2027_1_l116",
+      "code": "JEP054A",
+      "name": "METODOLOGIAS ATIVAS DE ENSINO PARA ENGENHARIAS [laboratório a confirmar]",
+      "turma": "Turma A",
+      "courseId": "curso_epr",
+      "period": 9,
+      "professorId": "prof_andre_luiz_gazoli_de_oliveira",
+      "doNotAllocate": false,
+      "weeklySlotsRequired": 2,
+      "weeklyDaysRequired": 1,
+      "allowedShifts": [
+        "M",
+        "T"
+      ],
+      "enrolledStudents": 30,
+      "requiredRoomType": "comum",
+      "requiredResources": []
+    },
+    {
+      "id": "turma_2027_1_l117",
+      "code": "JEP056A",
+      "name": "INTRODUÇÃO A MODELAGEM NA GESTÃO DE SERVIÇOS [laboratório a confirmar]",
+      "turma": "Turma A",
+      "courseId": "curso_epr",
+      "period": 9,
+      "professorId": "prof_rafael_ariente_neto",
+      "doNotAllocate": false,
+      "weeklySlotsRequired": 2,
+      "weeklyDaysRequired": 1,
+      "allowedShifts": [
+        "M",
+        "T"
+      ],
+      "enrolledStudents": 20,
+      "requiredRoomType": "comum",
+      "requiredResources": []
+    },
+    {
+      "id": "turma_2027_1_l118",
+      "code": "JAN006A",
+      "name": "CÁLCULO II [docente a definir]",
+      "turma": "Turma A",
+      "courseId": "curso_epr",
+      "period": 2,
+      "professorId": "prof_juliana_verga_shirabayashi",
+      "doNotAllocate": false,
+      "weeklySlotsRequired": 4,
+      "weeklyDaysRequired": 2,
+      "allowedShifts": [
+        "M",
+        "T"
+      ],
+      "enrolledStudents": 30,
+      "requiredRoomType": "comum",
+      "requiredResources": []
+    },
+    {
+      "id": "turma_2027_1_l119",
+      "code": "JEP009A",
+      "name": "CIÊNCIA DOS MATERIAIS PARA EP",
+      "turma": "Turma A",
+      "courseId": "curso_epr",
+      "period": 4,
+      "professorId": "prof_william_rodrigues_dos_santos",
+      "doNotAllocate": false,
+      "weeklySlotsRequired": 4,
+      "weeklyDaysRequired": 2,
+      "allowedShifts": [
+        "M",
+        "T"
+      ],
+      "enrolledStudents": 30,
+      "requiredRoomType": "comum",
+      "requiredResources": []
+    },
+    {
+      "id": "turma_2027_1_l122",
+      "code": "BIAES001",
+      "name": "ALGORITMOS E ESTRUTURAS DE DADOS I [vagas a definir] · Teoria",
+      "turma": "Turma A",
+      "courseId": "curso_fcomp",
+      "period": 1,
+      "professorId": "prof_robertino_mendes_santiago_junior",
+      "doNotAllocate": false,
+      "weeklySlotsRequired": 2,
+      "weeklyDaysRequired": 1,
+      "allowedShifts": [
+        "T"
+      ],
+      "enrolledStudents": 41,
+      "requiredRoomType": "comum",
+      "requiredResources": [],
+      "teachingComponent": {
+        "familyId": "turma_2027_1_l122",
+        "kind": "theory",
+        "groupIndex": 0,
+        "theorySlots": 2,
+        "practiceSlots": 2,
+        "groupSizes": [
+          21,
+          20
+        ],
+        "sourceClass": {
+          "id": "turma_2027_1_l122",
+          "code": "BIAES001",
+          "name": "ALGORITMOS E ESTRUTURAS DE DADOS I [vagas a definir]",
+          "turma": "Turma A",
+          "courseId": "curso_fcomp",
+          "period": 1,
+          "professorId": "prof_robertino_mendes_santiago_junior",
+          "doNotAllocate": false,
+          "weeklySlotsRequired": 4,
+          "weeklyDaysRequired": 2,
+          "allowedShifts": [
+            "T"
+          ],
+          "enrolledStudents": 41,
+          "requiredRoomType": "comum",
+          "requiredResources": [],
+          "joinedClasses": [
+            {
+              "id": "turma_2027_1_l122",
+              "code": "BIAES001",
+              "name": "ALGORITMOS E ESTRUTURAS DE DADOS I [vagas a definir]",
+              "turma": "Turma A",
+              "courseId": "curso_fcomp",
+              "period": 1,
+              "professorId": "prof_robertino_mendes_santiago_junior",
+              "doNotAllocate": false,
+              "weeklySlotsRequired": 4,
+              "weeklyDaysRequired": null,
+              "allowedShifts": null,
+              "enrolledStudents": 1,
+              "requiredRoomType": "comum",
+              "requiredResources": []
+            },
+            {
+              "id": "turma_2027_1_l128",
+              "code": "BIAES001",
+              "name": "Algoritmos e Estruturas de Dados I",
+              "turma": "Turma A",
+              "courseId": "curso_iaes",
+              "period": 1,
+              "professorId": "prof_robertino_mendes_santiago_junior",
+              "doNotAllocate": false,
+              "weeklySlotsRequired": 4,
+              "weeklyDaysRequired": 2,
+              "allowedShifts": [
+                "T"
+              ],
+              "enrolledStudents": 40,
+              "requiredRoomType": "comum",
+              "requiredResources": []
+            }
+          ]
+        }
+      }
+    },
+    {
+      "id": "pratica_0320eed8-8049-484a-8cf0-d5d2a1ede6a8",
+      "code": "BIAES001",
+      "name": "ALGORITMOS E ESTRUTURAS DE DADOS I [vagas a definir] · Prática G1/2",
+      "turma": "Turma A",
+      "courseId": "curso_fcomp",
+      "period": 1,
+      "professorId": "prof_robertino_mendes_santiago_junior",
+      "doNotAllocate": false,
+      "weeklySlotsRequired": 2,
+      "weeklyDaysRequired": 1,
+      "allowedShifts": [
+        "T"
+      ],
+      "enrolledStudents": 21,
+      "requiredRoomType": "lab_info",
+      "requiredResources": [],
+      "teachingComponent": {
+        "familyId": "turma_2027_1_l122",
+        "kind": "practice",
+        "groupIndex": 1,
+        "theorySlots": 2,
+        "practiceSlots": 2,
+        "groupSizes": [
+          21,
+          20
+        ],
+        "sourceClass": {
+          "id": "turma_2027_1_l122",
+          "code": "BIAES001",
+          "name": "ALGORITMOS E ESTRUTURAS DE DADOS I [vagas a definir]",
+          "turma": "Turma A",
+          "courseId": "curso_fcomp",
+          "period": 1,
+          "professorId": "prof_robertino_mendes_santiago_junior",
+          "doNotAllocate": false,
+          "weeklySlotsRequired": 4,
+          "weeklyDaysRequired": 2,
+          "allowedShifts": [
+            "T"
+          ],
+          "enrolledStudents": 41,
+          "requiredRoomType": "comum",
+          "requiredResources": [],
+          "joinedClasses": [
+            {
+              "id": "turma_2027_1_l122",
+              "code": "BIAES001",
+              "name": "ALGORITMOS E ESTRUTURAS DE DADOS I [vagas a definir]",
+              "turma": "Turma A",
+              "courseId": "curso_fcomp",
+              "period": 1,
+              "professorId": "prof_robertino_mendes_santiago_junior",
+              "doNotAllocate": false,
+              "weeklySlotsRequired": 4,
+              "weeklyDaysRequired": null,
+              "allowedShifts": null,
+              "enrolledStudents": 1,
+              "requiredRoomType": "comum",
+              "requiredResources": []
+            },
+            {
+              "id": "turma_2027_1_l128",
+              "code": "BIAES001",
+              "name": "Algoritmos e Estruturas de Dados I",
+              "turma": "Turma A",
+              "courseId": "curso_iaes",
+              "period": 1,
+              "professorId": "prof_robertino_mendes_santiago_junior",
+              "doNotAllocate": false,
+              "weeklySlotsRequired": 4,
+              "weeklyDaysRequired": 2,
+              "allowedShifts": [
+                "T"
+              ],
+              "enrolledStudents": 40,
+              "requiredRoomType": "comum",
+              "requiredResources": []
+            }
+          ]
+        }
+      }
+    },
+    {
+      "id": "pratica_92cd7e63-8c72-4132-801b-741be276d630",
+      "code": "BIAES001",
+      "name": "ALGORITMOS E ESTRUTURAS DE DADOS I [vagas a definir] · Prática G2/2",
+      "turma": "Turma A",
+      "courseId": "curso_fcomp",
+      "period": 1,
+      "professorId": "prof_robertino_mendes_santiago_junior",
+      "doNotAllocate": false,
+      "weeklySlotsRequired": 2,
+      "weeklyDaysRequired": 1,
+      "allowedShifts": [
+        "T"
+      ],
+      "enrolledStudents": 20,
+      "requiredRoomType": "lab_info",
+      "requiredResources": [],
+      "teachingComponent": {
+        "familyId": "turma_2027_1_l122",
+        "kind": "practice",
+        "groupIndex": 2,
+        "theorySlots": 2,
+        "practiceSlots": 2,
+        "groupSizes": [
+          21,
+          20
+        ],
+        "sourceClass": {
+          "id": "turma_2027_1_l122",
+          "code": "BIAES001",
+          "name": "ALGORITMOS E ESTRUTURAS DE DADOS I [vagas a definir]",
+          "turma": "Turma A",
+          "courseId": "curso_fcomp",
+          "period": 1,
+          "professorId": "prof_robertino_mendes_santiago_junior",
+          "doNotAllocate": false,
+          "weeklySlotsRequired": 4,
+          "weeklyDaysRequired": 2,
+          "allowedShifts": [
+            "T"
+          ],
+          "enrolledStudents": 41,
+          "requiredRoomType": "comum",
+          "requiredResources": [],
+          "joinedClasses": [
+            {
+              "id": "turma_2027_1_l122",
+              "code": "BIAES001",
+              "name": "ALGORITMOS E ESTRUTURAS DE DADOS I [vagas a definir]",
+              "turma": "Turma A",
+              "courseId": "curso_fcomp",
+              "period": 1,
+              "professorId": "prof_robertino_mendes_santiago_junior",
+              "doNotAllocate": false,
+              "weeklySlotsRequired": 4,
+              "weeklyDaysRequired": null,
+              "allowedShifts": null,
+              "enrolledStudents": 1,
+              "requiredRoomType": "comum",
+              "requiredResources": []
+            },
+            {
+              "id": "turma_2027_1_l128",
+              "code": "BIAES001",
+              "name": "Algoritmos e Estruturas de Dados I",
+              "turma": "Turma A",
+              "courseId": "curso_iaes",
+              "period": 1,
+              "professorId": "prof_robertino_mendes_santiago_junior",
+              "doNotAllocate": false,
+              "weeklySlotsRequired": 4,
+              "weeklyDaysRequired": 2,
+              "allowedShifts": [
+                "T"
+              ],
+              "enrolledStudents": 40,
+              "requiredRoomType": "comum",
+              "requiredResources": []
+            }
+          ]
+        }
+      }
+    },
+    {
+      "id": "turma_2027_1_l123",
+      "code": "BIAES003",
+      "name": "ÁLGEBRA LINEAR E GEOMETRIA ANALÍTICA [vagas a definir]",
+      "turma": "Turma A",
+      "courseId": "curso_fcomp",
+      "period": 1,
+      "professorId": "prof_carlos_eurico_galvao_rosa",
+      "doNotAllocate": false,
+      "weeklySlotsRequired": 4,
+      "weeklyDaysRequired": 2,
+      "allowedShifts": [
+        "M"
+      ],
+      "enrolledStudents": 41,
+      "requiredRoomType": "comum",
+      "requiredResources": [],
+      "joinedClasses": [
+        {
+          "id": "turma_2027_1_l123",
+          "code": "BIAES003",
+          "name": "ÁLGEBRA LINEAR E GEOMETRIA ANALÍTICA [vagas a definir]",
+          "turma": "Turma A",
+          "courseId": "curso_fcomp",
+          "period": 1,
+          "professorId": "prof_carlos_eurico_galvao_rosa",
+          "doNotAllocate": false,
+          "weeklySlotsRequired": 4,
+          "weeklyDaysRequired": null,
+          "allowedShifts": null,
+          "enrolledStudents": 1,
+          "requiredRoomType": "comum",
+          "requiredResources": []
+        },
+        {
+          "id": "turma_2027_1_l130",
+          "code": "BIAES003",
+          "name": "Álgebra Linear e Geometria Analítica",
+          "turma": "Turma A",
+          "courseId": "curso_iaes",
+          "period": 1,
+          "professorId": "prof_carlos_eurico_galvao_rosa",
+          "doNotAllocate": false,
+          "weeklySlotsRequired": 4,
+          "weeklyDaysRequired": 2,
+          "allowedShifts": [
+            "T"
+          ],
+          "enrolledStudents": 40,
+          "requiredRoomType": "comum",
+          "requiredResources": []
+        }
+      ]
+    },
+    {
+      "id": "turma_2027_1_l124",
+      "code": "FCOM001",
+      "name": "INTRODUÇÃO À PRÁTICA PROFISSIONAL",
+      "turma": "Turma A",
+      "courseId": "curso_fcomp",
+      "period": 1,
+      "professorId": "prof_douglas_soares_de_oliveira",
+      "doNotAllocate": false,
+      "weeklySlotsRequired": 2,
+      "weeklyDaysRequired": 1,
+      "allowedShifts": [
+        "M",
+        "T"
+      ],
+      "enrolledStudents": 20,
+      "requiredRoomType": "comum",
+      "requiredResources": []
+    },
+    {
+      "id": "turma_2027_1_l125",
+      "code": "JAN001A",
+      "name": "CÁLCULO I [vagas a definir]",
+      "turma": "Turma A",
+      "courseId": "curso_fcomp",
+      "period": 1,
+      "professorId": "prof_leticia_saragiotto_colpini",
+      "doNotAllocate": false,
+      "weeklySlotsRequired": 6,
+      "weeklyDaysRequired": 3,
+      "allowedShifts": [
+        "T"
+      ],
+      "enrolledStudents": 41,
+      "requiredRoomType": "comum",
+      "requiredResources": [],
+      "joinedClasses": [
+        {
+          "id": "turma_2027_1_l125",
+          "code": "JAN001A",
+          "name": "CÁLCULO I [vagas a definir]",
+          "turma": "Turma A",
+          "courseId": "curso_fcomp",
+          "period": 1,
+          "professorId": "prof_leticia_saragiotto_colpini",
+          "doNotAllocate": false,
+          "weeklySlotsRequired": 6,
+          "weeklyDaysRequired": null,
+          "allowedShifts": null,
+          "enrolledStudents": 1,
+          "requiredRoomType": "comum",
+          "requiredResources": []
+        },
+        {
+          "id": "turma_2027_1_l131",
+          "code": "JAN001A",
+          "name": "Cálculo I",
+          "turma": "Turma A",
+          "courseId": "curso_iaes",
+          "period": 1,
+          "professorId": "prof_leticia_saragiotto_colpini",
+          "doNotAllocate": false,
+          "weeklySlotsRequired": 6,
+          "weeklyDaysRequired": 3,
+          "allowedShifts": [
+            "T"
+          ],
+          "enrolledStudents": 40,
+          "requiredRoomType": "comum",
+          "requiredResources": []
+        }
+      ]
+    },
+    {
+      "id": "turma_2027_1_l126",
+      "code": "JAN007A",
+      "name": "FÍSICA I",
+      "turma": "Turma A",
+      "courseId": "curso_fcomp",
+      "period": 1,
+      "professorId": "prof_ana_claudia_nogueira_mulati",
+      "doNotAllocate": false,
+      "weeklySlotsRequired": 4,
+      "weeklyDaysRequired": 2,
+      "allowedShifts": [
+        "T"
+      ],
+      "enrolledStudents": 40,
+      "requiredRoomType": "comum",
+      "requiredResources": []
+    },
+    {
+      "id": "turma_2027_1_l127",
+      "code": "JAN025",
+      "name": "FÍSICA EXPERIMENTAL I",
+      "turma": "Turma A",
+      "courseId": "curso_fcomp",
+      "period": 1,
+      "professorId": "prof_flavio_franchello",
+      "doNotAllocate": false,
+      "weeklySlotsRequired": 2,
+      "weeklyDaysRequired": 1,
+      "allowedShifts": null,
+      "enrolledStudents": 20,
+      "requiredRoomType": "lab_fisica",
+      "requiredResources": []
+    },
+    {
+      "id": "turma_2027_1_l129",
+      "code": "BIAES002",
+      "name": "Introdução à Lógica",
+      "turma": "Turma A",
+      "courseId": "curso_iaes",
+      "period": 1,
+      "professorId": "prof_paulo_henrique_soares",
+      "doNotAllocate": false,
+      "weeklySlotsRequired": 3,
+      "weeklyDaysRequired": 1,
+      "allowedShifts": [
+        "T"
+      ],
+      "enrolledStudents": 40,
+      "requiredRoomType": "comum",
+      "requiredResources": []
+    },
+    {
+      "id": "turma_2027_1_l132",
+      "code": "BIAES004",
+      "name": "Comunicação, Expressão e Metodologia da Pesquisa Científica",
+      "turma": "Turma A",
+      "courseId": "curso_iaes",
+      "period": 1,
+      "professorId": "prof_mayte_gouvea_coleto",
+      "doNotAllocate": false,
+      "weeklySlotsRequired": 4,
+      "weeklyDaysRequired": 2,
+      "allowedShifts": [
+        "T"
+      ],
+      "enrolledStudents": 40,
+      "requiredRoomType": "comum",
+      "requiredResources": []
+    },
+    {
+      "id": "turma_2027_1_l133",
+      "code": "BIAES009",
+      "name": "Algoritmos e Estruturas de Dados III",
+      "turma": "Turma A",
+      "courseId": "curso_iaes",
+      "period": 3,
+      "professorId": "prof_alexandre_prusch_zuge",
+      "doNotAllocate": false,
+      "weeklySlotsRequired": 4,
+      "weeklyDaysRequired": 2,
+      "allowedShifts": [
+        "M",
+        "T"
+      ],
+      "enrolledStudents": 30,
+      "requiredRoomType": "comum",
+      "requiredResources": [],
+      "nonConflictClassIds": [
+        "turma_2027_1_l124",
+        "turma_2027_1_l126",
+        "turma_2027_1_l127"
+      ]
+    },
+    {
+      "id": "turma_2027_1_l134",
+      "code": "BIAES010",
+      "name": "Arquitetura de Computadores",
+      "turma": "Turma A",
+      "courseId": "curso_iaes",
+      "period": 3,
+      "professorId": "prof_carlos_roberto_beleti_junior",
+      "doNotAllocate": false,
+      "weeklySlotsRequired": 3,
+      "weeklyDaysRequired": 1,
+      "allowedShifts": [
+        "T"
+      ],
+      "enrolledStudents": 58,
+      "requiredRoomType": "comum",
+      "requiredResources": [],
+      "nonConflictClassIds": [
+        "turma_2027_1_l029",
+        "turma_2027_1_l105",
+        "turma_2027_1_l073"
+      ],
+      "joinedClasses": [
+        {
+          "id": "turma_2027_1_l134",
+          "code": "BIAES010",
+          "name": "Arquitetura de Computadores",
+          "turma": "Turma A",
+          "courseId": "curso_iaes",
+          "period": 3,
+          "professorId": "prof_carlos_roberto_beleti_junior",
+          "doNotAllocate": false,
+          "weeklySlotsRequired": 3,
+          "weeklyDaysRequired": 1,
+          "allowedShifts": [
+            "T"
+          ],
+          "enrolledStudents": 55,
+          "requiredRoomType": "comum",
+          "requiredResources": []
+        },
+        {
+          "id": "turma_2027_1_l183",
+          "code": "JLC030",
+          "name": "ARQUITETURA DE COMPUTADORES",
+          "turma": "Turma A",
+          "courseId": "curso_lco",
+          "period": 3,
+          "professorId": "prof_carlos_roberto_beleti_junior",
+          "doNotAllocate": false,
+          "weeklySlotsRequired": 3,
+          "weeklyDaysRequired": 1,
+          "allowedShifts": [
+            "T"
+          ],
+          "enrolledStudents": 3,
+          "requiredRoomType": "comum",
+          "requiredResources": []
+        }
+      ]
+    },
+    {
+      "id": "turma_2027_1_l135",
+      "code": "BIAES011",
+      "name": "Sistemas Operacionais",
+      "turma": "Turma A",
+      "courseId": "curso_iaes",
+      "period": 3,
+      "professorId": "prof_paulo_henrique_soares",
+      "doNotAllocate": false,
+      "weeklySlotsRequired": 3,
+      "weeklyDaysRequired": 1,
+      "allowedShifts": [
+        "T"
+      ],
+      "enrolledStudents": 30,
+      "requiredRoomType": "comum",
+      "requiredResources": []
+    },
+    {
+      "id": "turma_2027_1_l136",
+      "code": "BIAES012",
+      "name": "Processo de Produção de Software",
+      "turma": "Turma A",
+      "courseId": "curso_iaes",
+      "period": 3,
+      "professorId": "prof_rogerio_ferreira_da_silva",
+      "doNotAllocate": false,
+      "weeklySlotsRequired": 2,
+      "weeklyDaysRequired": 1,
+      "allowedShifts": [
+        "T"
+      ],
+      "enrolledStudents": 30,
+      "requiredRoomType": "lab_info",
+      "requiredResources": []
+    },
+    {
+      "id": "turma_2027_1_l139",
+      "code": "BIAES013",
+      "name": "Ética, Cidadania e Direitos Humanos",
+      "turma": "Turma A",
+      "courseId": "curso_iaes",
+      "period": 3,
+      "professorId": "prof_adriano_rodrigues_mansanera",
+      "doNotAllocate": false,
+      "weeklySlotsRequired": 4,
+      "weeklyDaysRequired": 1,
+      "allowedShifts": [
+        "T"
+      ],
+      "enrolledStudents": 30,
+      "requiredRoomType": "comum",
+      "requiredResources": []
+    },
+    {
+      "id": "turma_2027_1_l140",
+      "code": "BIAES020",
+      "name": "Teoria dos Grafos",
+      "turma": "Turma A",
+      "courseId": "curso_iaes",
+      "period": 5,
+      "professorId": "prof_alexandre_prusch_zuge",
+      "doNotAllocate": false,
+      "weeklySlotsRequired": 4,
+      "weeklyDaysRequired": 2,
+      "allowedShifts": [
+        "T"
+      ],
+      "enrolledStudents": 30,
+      "requiredRoomType": "comum",
+      "requiredResources": [],
+      "nonConflictClassIds": [
+        "turma_2027_1_l124",
+        "turma_2027_1_l126",
+        "turma_2027_1_l127"
+      ]
+    },
+    {
+      "id": "turma_2027_1_l141",
+      "code": "BIAES021",
+      "name": "Redes de Computadores",
+      "turma": "Turma A",
+      "courseId": "curso_iaes",
+      "period": 5,
+      "professorId": "prof_paulo_henrique_soares",
+      "doNotAllocate": false,
+      "weeklySlotsRequired": 2,
+      "weeklyDaysRequired": 1,
+      "allowedShifts": [
+        "T"
+      ],
+      "enrolledStudents": 30,
+      "requiredRoomType": "comum",
+      "requiredResources": []
+    },
+    {
+      "id": "turma_2027_1_l142",
+      "code": "BIAES022",
+      "name": "Programação Orientada a Objetos",
+      "turma": "Turma A",
+      "courseId": "curso_iaes",
+      "period": 5,
+      "professorId": "prof_robertino_mendes_santiago_junior",
+      "doNotAllocate": false,
+      "weeklySlotsRequired": 4,
+      "weeklyDaysRequired": 2,
+      "allowedShifts": [
+        "T"
+      ],
+      "enrolledStudents": 30,
+      "requiredRoomType": "comum",
+      "requiredResources": []
+    },
+    {
+      "id": "turma_2027_1_l143",
+      "code": "BIAES023",
+      "name": "Análise e Projeto de Software",
+      "turma": "Turma A",
+      "courseId": "curso_iaes",
+      "period": 5,
+      "professorId": "prof_rogerio_ferreira_da_silva",
+      "doNotAllocate": false,
+      "weeklySlotsRequired": 4,
+      "weeklyDaysRequired": 2,
+      "allowedShifts": [
+        "T"
+      ],
+      "enrolledStudents": 30,
+      "requiredRoomType": "comum",
+      "requiredResources": []
+    },
+    {
+      "id": "turma_2027_1_l144",
+      "code": "BIAES024",
+      "name": "Aprendizagem de Máquina (foi concentrada)",
+      "turma": "Turma A",
+      "courseId": "curso_iaes",
+      "period": 5,
+      "professorId": "prof_camila_andrade_de_macedo",
+      "doNotAllocate": false,
+      "weeklySlotsRequired": 4,
+      "weeklyDaysRequired": 2,
+      "allowedShifts": [
+        "M"
+      ],
+      "enrolledStudents": 30,
+      "requiredRoomType": "lab_info",
+      "requiredResources": []
+    },
+    {
+      "id": "turma_2027_1_l146",
+      "code": "BIAES061",
+      "name": "Tópicos em Programação III [período a definir]",
+      "turma": "Turma A · período a definir L146",
+      "courseId": "curso_iaes",
+      "period": 1,
+      "professorId": "prof_rogerio_ferreira_da_silva",
+      "doNotAllocate": false,
+      "weeklySlotsRequired": 2,
+      "weeklyDaysRequired": 1,
+      "allowedShifts": [
+        "M"
+      ],
+      "enrolledStudents": 30,
+      "requiredRoomType": "lab_info",
+      "requiredResources": []
+    },
+    {
+      "id": "turma_2027_1_l147",
+      "code": "JCE026",
+      "name": "Física II [período a definir] · Teoria",
+      "turma": "Turma A · período a definir L147",
+      "courseId": "curso_lce",
+      "period": 10,
+      "professorId": "prof_william_junior_do_nascimento",
+      "doNotAllocate": false,
+      "weeklySlotsRequired": 3,
+      "weeklyDaysRequired": 1,
+      "allowedShifts": [
+        "N"
+      ],
+      "enrolledStudents": 15,
+      "requiredRoomType": "comum",
+      "requiredResources": [],
+      "nonConflictClassIds": [
+        "turma_2027_1_l166"
+      ],
+      "teachingComponent": {
+        "familyId": "turma_2027_1_l147",
+        "kind": "theory",
+        "groupIndex": 0,
+        "theorySlots": 3,
+        "practiceSlots": 1,
+        "groupSizes": [
+          15
+        ],
+        "sourceClass": {
+          "id": "turma_2027_1_l147",
+          "code": "JCE026",
+          "name": "Física II [período a definir]",
+          "turma": "Turma A · período a definir L147",
+          "courseId": "curso_lce",
+          "period": 10,
+          "professorId": "prof_william_junior_do_nascimento",
+          "doNotAllocate": false,
+          "weeklySlotsRequired": 4,
+          "weeklyDaysRequired": 2,
+          "allowedShifts": [
+            "N"
+          ],
+          "enrolledStudents": 15,
+          "requiredRoomType": "comum",
+          "requiredResources": [],
+          "nonConflictClassIds": [
+            "turma_2027_1_l166"
+          ]
+        }
+      }
+    },
+    {
+      "id": "pratica_9fde1657-5325-4766-b5fb-0661a82f746d",
+      "code": "JCE026",
+      "name": "Física II [período a definir] · Prática",
+      "turma": "Turma A · período a definir L147",
+      "courseId": "curso_lce",
+      "period": 10,
+      "professorId": "prof_william_junior_do_nascimento",
+      "doNotAllocate": false,
+      "weeklySlotsRequired": 1,
+      "weeklyDaysRequired": 1,
+      "allowedShifts": [
+        "N"
+      ],
+      "enrolledStudents": 15,
+      "requiredRoomType": "lab_fisica",
+      "requiredResources": [],
+      "nonConflictClassIds": [
+        "turma_2027_1_l166"
+      ],
+      "teachingComponent": {
+        "familyId": "turma_2027_1_l147",
+        "kind": "practice",
+        "groupIndex": 1,
+        "theorySlots": 3,
+        "practiceSlots": 1,
+        "groupSizes": [
+          15
+        ],
+        "sourceClass": {
+          "id": "turma_2027_1_l147",
+          "code": "JCE026",
+          "name": "Física II [período a definir]",
+          "turma": "Turma A · período a definir L147",
+          "courseId": "curso_lce",
+          "period": 10,
+          "professorId": "prof_william_junior_do_nascimento",
+          "doNotAllocate": false,
+          "weeklySlotsRequired": 4,
+          "weeklyDaysRequired": 2,
+          "allowedShifts": [
+            "N"
+          ],
+          "enrolledStudents": 15,
+          "requiredRoomType": "comum",
+          "requiredResources": [],
+          "nonConflictClassIds": [
+            "turma_2027_1_l166"
+          ]
+        }
+      }
+    },
+    {
+      "id": "turma_2027_1_l148",
+      "code": "JCE028",
+      "name": "Matemática III",
+      "turma": "Turma A",
+      "courseId": "curso_lce",
+      "period": 5,
+      "professorId": "prof_janete_de_paula_ferrareze_silva",
+      "doNotAllocate": false,
+      "weeklySlotsRequired": 4,
+      "weeklyDaysRequired": 2,
+      "allowedShifts": [
+        "N"
+      ],
+      "enrolledStudents": 30,
+      "requiredRoomType": "comum",
+      "requiredResources": [],
+      "joinedClasses": [
+        {
+          "id": "turma_2027_1_l148",
+          "code": "JCE028",
+          "name": "Matemática III",
+          "turma": "Turma A",
+          "courseId": "curso_lce",
+          "period": 5,
+          "professorId": "prof_janete_de_paula_ferrareze_silva",
+          "doNotAllocate": false,
+          "weeklySlotsRequired": 4,
+          "weeklyDaysRequired": 2,
+          "allowedShifts": [
+            "N"
+          ],
+          "enrolledStudents": 50,
+          "requiredRoomType": "comum",
+          "requiredResources": []
+        },
+        {
+          "id": "turma_2027_1_l164",
+          "code": "JCE227",
+          "name": "Cálculo III",
+          "turma": "Turma A",
+          "courseId": "curso_lce",
+          "period": 5,
+          "professorId": "prof_janete_de_paula_ferrareze_silva",
+          "doNotAllocate": false,
+          "weeklySlotsRequired": 4,
+          "weeklyDaysRequired": 2,
+          "allowedShifts": [
+            "N"
+          ],
+          "enrolledStudents": 50,
+          "requiredRoomType": "comum",
+          "requiredResources": []
+        }
+      ]
+    },
+    {
+      "id": "turma_2027_1_l149",
+      "code": "JCE047",
+      "name": "Trabalho de Conclusão do Curso de Licenciatura em Ciências Exatas I [período a definir] [docente a definir]",
+      "turma": "Turma A · período a definir L149",
+      "courseId": "curso_lce",
+      "period": 1,
+      "professorId": "pro_1d155690-6eef-4d63-8a54-79d9d8834191",
+      "doNotAllocate": true,
+      "weeklySlotsRequired": 2,
+      "weeklyDaysRequired": 1,
+      "allowedShifts": [
+        "N"
+      ],
+      "enrolledStudents": 5,
+      "requiredRoomType": "comum",
+      "requiredResources": []
+    },
+    {
+      "id": "turma_2027_1_l150",
+      "code": "JCE069",
+      "name": "Estágio Supervisionado de Docência em Matemática IV  [docente a definir]",
+      "turma": "Turma A",
+      "courseId": "cou_b2341f67-62aa-4ddc-a9f0-85606ba1e89b",
+      "period": 9,
+      "professorId": "pro_aa7c0b05-ce22-4706-8ce6-0644cf14a6a4",
+      "doNotAllocate": false,
+      "weeklySlotsRequired": 7,
+      "weeklyDaysRequired": 1,
+      "allowedShifts": [
+        "N"
+      ],
+      "enrolledStudents": 16,
+      "requiredRoomType": "comum",
+      "requiredResources": [],
+      "eadWeeklyHours": 5
+    },
+    {
+      "id": "turma_2027_1_l151",
+      "code": "JCE098",
+      "name": "Prática Pedagógica do Ensino de Matemática III [laboratório a confirmar]",
+      "turma": "Turma A",
+      "courseId": "cou_b2341f67-62aa-4ddc-a9f0-85606ba1e89b",
+      "period": 7,
+      "professorId": "prof_wellington_piveta_oliveira",
+      "doNotAllocate": false,
+      "weeklySlotsRequired": 3,
+      "weeklyDaysRequired": 1,
+      "allowedShifts": [
+        "N"
+      ],
+      "enrolledStudents": 16,
+      "requiredRoomType": "comum",
+      "requiredResources": []
+    },
+    {
+      "id": "turma_2027_1_l152",
+      "code": "JCE100",
+      "name": "Estágio Supervisionado de Docência em Matemática III",
+      "turma": "Turma A",
+      "courseId": "curso_lce",
+      "period": 7,
+      "professorId": "prof_wellington_piveta_oliveira",
+      "doNotAllocate": false,
+      "weeklySlotsRequired": 5,
+      "weeklyDaysRequired": 2,
+      "allowedShifts": [
+        "N"
+      ],
+      "enrolledStudents": 16,
+      "requiredRoomType": "comum",
+      "requiredResources": []
+    },
+    {
+      "id": "turma_2027_1_l153",
+      "code": "JCE112",
+      "name": "Educação Inclusiva",
+      "turma": "Turma A",
+      "courseId": "curso_lce",
+      "period": 1,
+      "professorId": "prof_paola_beatriz_sanches",
+      "doNotAllocate": false,
+      "weeklySlotsRequired": 2,
+      "weeklyDaysRequired": 1,
+      "allowedShifts": [
+        "N"
+      ],
+      "enrolledStudents": 50,
+      "requiredRoomType": "comum",
+      "requiredResources": []
+    },
+    {
+      "id": "turma_2027_1_l154",
+      "code": "JCE117",
+      "name": "Ética, cidadania e direitos humanos",
+      "turma": "Turma A",
+      "courseId": "curso_lce",
+      "period": 3,
+      "professorId": "prof_adriano_rodrigues_mansanera",
+      "doNotAllocate": false,
+      "weeklySlotsRequired": 4,
+      "weeklyDaysRequired": 1,
+      "allowedShifts": [
+        "N"
+      ],
+      "enrolledStudents": 50,
+      "requiredRoomType": "comum",
+      "requiredResources": []
+    },
+    {
+      "id": "turma_2027_1_l155",
+      "code": "JCE120",
+      "name": "Psicologia da Educação",
+      "turma": "Turma A",
+      "courseId": "curso_lce",
+      "period": 5,
+      "professorId": "prof_mayte_gouvea_coleto",
+      "doNotAllocate": false,
+      "weeklySlotsRequired": 4,
+      "weeklyDaysRequired": 2,
+      "allowedShifts": [
+        "N"
+      ],
+      "enrolledStudents": 50,
+      "requiredRoomType": "comum",
+      "requiredResources": []
+    },
+    {
+      "id": "turma_2027_1_l156",
+      "code": "JCE124",
+      "name": "Didática das Ciências",
+      "turma": "Turma A",
+      "courseId": "curso_lce",
+      "period": 9,
+      "professorId": "prof_raimundo_alberto_tostes",
+      "doNotAllocate": false,
+      "weeklySlotsRequired": 3,
+      "weeklyDaysRequired": 1,
+      "allowedShifts": [
+        "N"
+      ],
+      "enrolledStudents": 4,
+      "requiredRoomType": "comum",
+      "requiredResources": [],
+      "eadWeeklyHours": 1,
+      "joinedClasses": [
+        {
+          "id": "turma_2027_1_l156",
+          "code": "JCE124",
+          "name": "Didática das Ciências",
+          "turma": "Turma A",
+          "courseId": "curso_lce",
+          "period": 9,
+          "professorId": "prof_raimundo_alberto_tostes",
+          "doNotAllocate": false,
+          "weeklySlotsRequired": 3,
+          "weeklyDaysRequired": 1,
+          "allowedShifts": [
+            "N"
+          ],
+          "enrolledStudents": 1,
+          "requiredRoomType": "comum",
+          "requiredResources": [],
+          "eadWeeklyHours": 1
+        },
+        {
+          "id": "cla_9cde72b9-f43f-4fbf-b508-aec1edd9eeea",
+          "code": "JCE124",
+          "name": "Didática das ciências",
+          "turma": "Turma A",
+          "courseId": "cou_b2341f67-62aa-4ddc-a9f0-85606ba1e89b",
+          "period": 9,
+          "professorId": "prof_raimundo_alberto_tostes",
+          "doNotAllocate": false,
+          "weeklySlotsRequired": 3,
+          "weeklyDaysRequired": 1,
+          "allowedShifts": [
+            "N"
+          ],
+          "enrolledStudents": 1,
+          "requiredRoomType": "comum",
+          "requiredResources": [],
+          "eadWeeklyHours": 1
+        },
+        {
+          "id": "cla_83c265e1-0ac3-4801-b1c3-62787c964c4d",
+          "code": "JCE124",
+          "name": "Didática das Ciências",
+          "turma": "Turma A",
+          "courseId": "cou_b2031b26-20ab-4546-bd9b-187a5fc31955",
+          "period": 9,
+          "professorId": "prof_raimundo_alberto_tostes",
+          "doNotAllocate": false,
+          "weeklySlotsRequired": 3,
+          "weeklyDaysRequired": 1,
+          "allowedShifts": [
+            "N"
+          ],
+          "enrolledStudents": 1,
+          "requiredRoomType": "comum",
+          "requiredResources": [],
+          "eadWeeklyHours": 1
+        },
+        {
+          "id": "cla_91e11ced-15cd-46cd-a726-4cc51d7ef23f",
+          "code": "JCE124",
+          "name": "Didática das Ciencias",
+          "turma": "Turma A",
+          "courseId": "cou_a82d4f73-6d68-4638-a3b4-cad9c46a8935",
+          "period": 9,
+          "professorId": "prof_raimundo_alberto_tostes",
+          "doNotAllocate": false,
+          "weeklySlotsRequired": 3,
+          "weeklyDaysRequired": 1,
+          "allowedShifts": [
+            "N"
+          ],
+          "enrolledStudents": 1,
+          "requiredRoomType": "comum",
+          "requiredResources": [],
+          "eadWeeklyHours": 1
+        }
+      ]
+    },
+    {
+      "id": "turma_2027_1_l157",
+      "code": "JCE125",
+      "name": "Epistemologia",
+      "turma": "Turma A ·",
+      "courseId": "curso_lce",
+      "period": 9,
+      "professorId": "prof_adriano_rodrigues_mansanera",
+      "doNotAllocate": false,
+      "weeklySlotsRequired": 3,
+      "weeklyDaysRequired": 1,
+      "allowedShifts": [
+        "N"
+      ],
+      "enrolledStudents": 4,
+      "requiredRoomType": "comum",
+      "requiredResources": [],
+      "eadWeeklyHours": 1,
+      "joinedClasses": [
+        {
+          "id": "turma_2027_1_l157",
+          "code": "JCE125",
+          "name": "Epistemologia",
+          "turma": "Turma A ·",
+          "courseId": "curso_lce",
+          "period": 9,
+          "professorId": "prof_adriano_rodrigues_mansanera",
+          "doNotAllocate": false,
+          "weeklySlotsRequired": 3,
+          "weeklyDaysRequired": 1,
+          "allowedShifts": [
+            "N"
+          ],
+          "enrolledStudents": 1,
+          "requiredRoomType": "comum",
+          "requiredResources": [],
+          "eadWeeklyHours": 1
+        },
+        {
+          "id": "cla_efbd40f0-3e2d-455a-b78c-f57f172412ac",
+          "code": "JCE125",
+          "name": "Epistemologia",
+          "turma": "Turma A",
+          "courseId": "cou_b2341f67-62aa-4ddc-a9f0-85606ba1e89b",
+          "period": 9,
+          "professorId": "prof_adriano_rodrigues_mansanera",
+          "doNotAllocate": false,
+          "weeklySlotsRequired": 3,
+          "weeklyDaysRequired": 1,
+          "allowedShifts": [
+            "N"
+          ],
+          "enrolledStudents": 1,
+          "requiredRoomType": "comum",
+          "requiredResources": [],
+          "eadWeeklyHours": 1
+        },
+        {
+          "id": "cla_958eb956-d96c-4c8a-a8b6-2d2fe66bb429",
+          "code": "JCE125",
+          "name": "Epistemologia",
+          "turma": "Turma A",
+          "courseId": "cou_b2031b26-20ab-4546-bd9b-187a5fc31955",
+          "period": 9,
+          "professorId": "prof_adriano_rodrigues_mansanera",
+          "doNotAllocate": false,
+          "weeklySlotsRequired": 3,
+          "weeklyDaysRequired": 1,
+          "allowedShifts": [
+            "N"
+          ],
+          "enrolledStudents": 1,
+          "requiredRoomType": "comum",
+          "requiredResources": [],
+          "eadWeeklyHours": 1
+        },
+        {
+          "id": "cla_a7bcb2c1-6766-4998-9ca0-7b064081a89d",
+          "code": "JCE125",
+          "name": "Epistemologia",
+          "turma": "Turma A",
+          "courseId": "cou_a82d4f73-6d68-4638-a3b4-cad9c46a8935",
+          "period": 9,
+          "professorId": "prof_adriano_rodrigues_mansanera",
+          "doNotAllocate": false,
+          "weeklySlotsRequired": 3,
+          "weeklyDaysRequired": 1,
+          "allowedShifts": [
+            "N"
+          ],
+          "enrolledStudents": 1,
+          "requiredRoomType": "comum",
+          "requiredResources": [],
+          "eadWeeklyHours": 1
+        }
+      ]
+    },
+    {
+      "id": "turma_2027_1_l158",
+      "code": "JCE211",
+      "name": "Matemática Elementar",
+      "turma": "Turma A",
+      "courseId": "curso_lce",
+      "period": 1,
+      "professorId": "prof_carlos_eurico_galvao_rosa",
+      "doNotAllocate": false,
+      "weeklySlotsRequired": 4,
+      "weeklyDaysRequired": 2,
+      "allowedShifts": [
+        "N"
+      ],
+      "enrolledStudents": 50,
+      "requiredRoomType": "comum",
+      "requiredResources": []
+    },
+    {
+      "id": "turma_2027_1_l159",
+      "code": "JCE217",
+      "name": "Cálculo I",
+      "turma": "Turma A",
+      "courseId": "curso_lce",
+      "period": 3,
+      "professorId": "prof_jair_da_silva",
+      "doNotAllocate": false,
+      "weeklySlotsRequired": 4,
+      "weeklyDaysRequired": 2,
+      "allowedShifts": [
+        "N"
+      ],
+      "enrolledStudents": 50,
+      "requiredRoomType": "comum",
+      "requiredResources": []
+    },
+    {
+      "id": "turma_2027_1_l160",
+      "code": "JCE218",
+      "name": "Física Experimental I",
+      "turma": "Turma A",
+      "courseId": "curso_lce",
+      "period": 3,
+      "professorId": "prof_william_junior_do_nascimento",
+      "doNotAllocate": false,
+      "weeklySlotsRequired": 2,
+      "weeklyDaysRequired": 1,
+      "allowedShifts": [
+        "N"
+      ],
+      "enrolledStudents": 20,
+      "requiredRoomType": "lab_fisica",
+      "requiredResources": []
+    },
+    {
+      "id": "turma_2027_1_l161",
+      "code": "JCE219",
+      "name": "Física I",
+      "turma": "Turma A",
+      "courseId": "curso_lce",
+      "period": 3,
+      "professorId": "prof_ana_claudia_nogueira_mulati",
+      "doNotAllocate": false,
+      "weeklySlotsRequired": 4,
+      "weeklyDaysRequired": 2,
+      "allowedShifts": [
+        "N"
+      ],
+      "enrolledStudents": 50,
+      "requiredRoomType": "comum",
+      "requiredResources": []
+    },
+    {
+      "id": "turma_2027_1_l162",
+      "code": "JCE220",
+      "name": "Química Geral Experimental II",
+      "turma": "Turma A",
+      "courseId": "curso_lce",
+      "period": 3,
+      "professorId": "prof_milena_do_prado_ferreira",
+      "doNotAllocate": false,
+      "weeklySlotsRequired": 1,
+      "weeklyDaysRequired": 1,
+      "allowedShifts": [
+        "N"
+      ],
+      "enrolledStudents": 20,
+      "requiredRoomType": "lab_quimica",
+      "requiredResources": []
+    },
+    {
+      "id": "turma_2027_1_l163",
+      "code": "JCE221",
+      "name": "Química Geral II",
+      "turma": "Turma A",
+      "courseId": "curso_lce",
+      "period": 3,
+      "professorId": "prof_milena_do_prado_ferreira",
+      "doNotAllocate": false,
+      "weeklySlotsRequired": 3,
+      "weeklyDaysRequired": 1,
+      "allowedShifts": [
+        "N"
+      ],
+      "enrolledStudents": 10,
+      "requiredRoomType": "comum",
+      "requiredResources": []
+    },
+    {
+      "id": "turma_2027_1_l165",
+      "code": "JCE228",
+      "name": "Física Exp. III",
+      "turma": "Turma A",
+      "courseId": "curso_lce",
+      "period": 5,
+      "professorId": "prof_gisele_strieder_philippsen",
+      "doNotAllocate": false,
+      "weeklySlotsRequired": 2,
+      "weeklyDaysRequired": 1,
+      "allowedShifts": [
+        "N"
+      ],
+      "enrolledStudents": 20,
+      "requiredRoomType": "lab_fisica",
+      "requiredResources": []
+    },
+    {
+      "id": "turma_2027_1_l166",
+      "code": "JCE229",
+      "name": "Física III",
+      "turma": "Turma A",
+      "courseId": "curso_lce",
+      "period": 5,
+      "professorId": "prof_gisele_strieder_philippsen",
+      "doNotAllocate": false,
+      "weeklySlotsRequired": 4,
+      "weeklyDaysRequired": 2,
+      "allowedShifts": [
+        "N"
+      ],
+      "enrolledStudents": 50,
+      "requiredRoomType": "comum",
+      "requiredResources": []
+    },
+    {
+      "id": "turma_2027_1_l167",
+      "code": "JCE230C",
+      "name": "Química e Sociedade",
+      "turma": "Turma A",
+      "courseId": "curso_lce",
+      "period": 5,
+      "professorId": "prof_milena_do_prado_ferreira",
+      "doNotAllocate": false,
+      "weeklySlotsRequired": 4,
+      "weeklyDaysRequired": 2,
+      "allowedShifts": [
+        "N"
+      ],
+      "enrolledStudents": 20,
+      "requiredRoomType": "comum",
+      "requiredResources": []
+    },
+    {
+      "id": "turma_2027_1_l168",
+      "code": "JCE236",
+      "name": "História da Ciência e Tecnologia",
+      "turma": "Turma A",
+      "courseId": "curso_lce",
+      "period": 7,
+      "professorId": "prof_raimundo_alberto_tostes",
+      "doNotAllocate": false,
+      "weeklySlotsRequired": 4,
+      "weeklyDaysRequired": 2,
+      "allowedShifts": [
+        "N"
+      ],
+      "enrolledStudents": 50,
+      "requiredRoomType": "comum",
+      "requiredResources": []
+    },
+    {
+      "id": "turma_2027_1_l169",
+      "code": "JCE237",
+      "name": "Física Matemática",
+      "turma": "Turma A",
+      "courseId": "cou_b2031b26-20ab-4546-bd9b-187a5fc31955",
+      "period": 7,
+      "professorId": "prof_flavio_franchello",
+      "doNotAllocate": false,
+      "weeklySlotsRequired": 4,
+      "weeklyDaysRequired": 2,
+      "allowedShifts": [
+        "N"
+      ],
+      "enrolledStudents": 50,
+      "requiredRoomType": "comum",
+      "requiredResources": []
+    },
+    {
+      "id": "turma_2027_1_l170",
+      "code": "JCE242",
+      "name": "Química Analítica",
+      "turma": "Turma A",
+      "courseId": "cou_a82d4f73-6d68-4638-a3b4-cad9c46a8935",
+      "period": 7,
+      "professorId": "prof_valquiria_de_moraes_silva",
+      "doNotAllocate": false,
+      "weeklySlotsRequired": 5,
+      "weeklyDaysRequired": 2,
+      "allowedShifts": [
+        "N"
+      ],
+      "enrolledStudents": 20,
+      "requiredRoomType": "comum",
+      "requiredResources": []
+    },
+    {
+      "id": "turma_2027_1_l171",
+      "code": "JCE243",
+      "name": "Química Orgânica II · Teoria",
+      "turma": "Turma A · período a definir L171",
+      "courseId": "cou_a82d4f73-6d68-4638-a3b4-cad9c46a8935",
+      "period": 7,
+      "professorId": "prof_eduardo_cesar_meurer",
+      "doNotAllocate": false,
+      "weeklySlotsRequired": 3,
+      "weeklyDaysRequired": 1,
+      "allowedShifts": [
+        "T"
+      ],
+      "enrolledStudents": 20,
+      "requiredRoomType": "comum",
+      "requiredResources": [],
+      "eadWeeklyHours": 1,
+      "nonConflictClassIds": [
+        "turma_2027_1_l182"
+      ],
+      "teachingComponent": {
+        "familyId": "turma_2027_1_l171",
+        "kind": "theory",
+        "groupIndex": 0,
+        "theorySlots": 2,
+        "practiceSlots": 2,
+        "groupSizes": [
+          20
+        ],
+        "sourceClass": {
+          "id": "turma_2027_1_l171",
+          "code": "JCE243",
+          "name": "Química Orgânica II",
+          "turma": "Turma A · período a definir L171",
+          "courseId": "cou_a82d4f73-6d68-4638-a3b4-cad9c46a8935",
+          "period": 7,
+          "professorId": "prof_eduardo_cesar_meurer",
+          "doNotAllocate": false,
+          "weeklySlotsRequired": 5,
+          "weeklyDaysRequired": 2,
+          "allowedShifts": [
+            "T"
+          ],
+          "enrolledStudents": 20,
+          "requiredRoomType": "comum",
+          "requiredResources": [],
+          "eadWeeklyHours": 1,
+          "nonConflictClassIds": [
+            "turma_2027_1_l182"
+          ]
+        }
+      }
+    },
+    {
+      "id": "pratica_127e4563-b1ee-46ea-abdc-d2b5e4284260",
+      "code": "JCE243",
+      "name": "Química Orgânica II · Prática",
+      "turma": "Turma A · período a definir L171",
+      "courseId": "cou_a82d4f73-6d68-4638-a3b4-cad9c46a8935",
+      "period": 7,
+      "professorId": "prof_eduardo_cesar_meurer",
+      "doNotAllocate": false,
+      "weeklySlotsRequired": 2,
+      "weeklyDaysRequired": 1,
+      "allowedShifts": [
+        "T"
+      ],
+      "enrolledStudents": 20,
+      "requiredRoomType": "lab_quimica",
+      "requiredResources": [],
+      "nonConflictClassIds": [
+        "turma_2027_1_l182"
+      ],
+      "teachingComponent": {
+        "familyId": "turma_2027_1_l171",
+        "kind": "practice",
+        "groupIndex": 1,
+        "theorySlots": 2,
+        "practiceSlots": 2,
+        "groupSizes": [
+          20
+        ],
+        "sourceClass": {
+          "id": "turma_2027_1_l171",
+          "code": "JCE243",
+          "name": "Química Orgânica II",
+          "turma": "Turma A · período a definir L171",
+          "courseId": "cou_a82d4f73-6d68-4638-a3b4-cad9c46a8935",
+          "period": 7,
+          "professorId": "prof_eduardo_cesar_meurer",
+          "doNotAllocate": false,
+          "weeklySlotsRequired": 5,
+          "weeklyDaysRequired": 2,
+          "allowedShifts": [
+            "T"
+          ],
+          "enrolledStudents": 20,
+          "requiredRoomType": "comum",
+          "requiredResources": [],
+          "eadWeeklyHours": 1,
+          "nonConflictClassIds": [
+            "turma_2027_1_l182"
+          ]
+        }
+      }
+    },
+    {
+      "id": "turma_2027_1_l172",
+      "code": "JCE250",
+      "name": "Eletromagnetismo",
+      "turma": "Turma A",
+      "courseId": "cou_b2031b26-20ab-4546-bd9b-187a5fc31955",
+      "period": 9,
+      "professorId": "prof_gisele_strieder_philippsen",
+      "doNotAllocate": false,
+      "weeklySlotsRequired": 4,
+      "weeklyDaysRequired": 2,
+      "allowedShifts": [
+        "N"
+      ],
+      "enrolledStudents": 20,
+      "requiredRoomType": "comum",
+      "requiredResources": []
+    },
+    {
+      "id": "turma_2027_1_l173",
+      "code": "JCE251",
+      "name": "Física Moderna I",
+      "turma": "Turma A",
+      "courseId": "cou_b2031b26-20ab-4546-bd9b-187a5fc31955",
+      "period": 9,
+      "professorId": "prof_douglas_soares_de_oliveira",
+      "doNotAllocate": false,
+      "weeklySlotsRequired": 4,
+      "weeklyDaysRequired": 2,
+      "allowedShifts": [
+        "N"
+      ],
+      "enrolledStudents": 20,
+      "requiredRoomType": "comum",
+      "requiredResources": []
+    },
+    {
+      "id": "turma_2027_1_l174",
+      "code": "JCE259",
+      "name": "História da Física",
+      "turma": "Turma A",
+      "courseId": "cou_b2031b26-20ab-4546-bd9b-187a5fc31955",
+      "period": 9,
+      "professorId": "prof_hercilia_alves_pereira_de_carvalho",
+      "doNotAllocate": false,
+      "weeklySlotsRequired": 4,
+      "weeklyDaysRequired": 2,
+      "allowedShifts": [
+        "N"
+      ],
+      "enrolledStudents": 20,
+      "requiredRoomType": "comum",
+      "requiredResources": []
+    },
+    {
+      "id": "turma_2027_1_l176",
+      "code": "JCE312",
+      "name": "Cursos e Eventos",
+      "turma": "Turma A",
+      "courseId": "curso_lce",
+      "period": 3,
+      "professorId": "prof_raimundo_alberto_tostes",
+      "doNotAllocate": false,
+      "weeklySlotsRequired": 2,
+      "weeklyDaysRequired": 1,
+      "allowedShifts": [
+        "N"
+      ],
+      "enrolledStudents": 30,
+      "requiredRoomType": "comum",
+      "requiredResources": []
+    },
+    {
+      "id": "turma_2027_1_l177",
+      "code": "JCE313",
+      "name": "Estágio de Formação Pedagógica em Ciências Exatas",
+      "turma": "Turma A",
+      "courseId": "curso_lce",
+      "period": 5,
+      "professorId": "prof_william_junior_do_nascimento",
+      "doNotAllocate": false,
+      "weeklySlotsRequired": 3,
+      "weeklyDaysRequired": 1,
+      "allowedShifts": [
+        "N"
+      ],
+      "enrolledStudents": 20,
+      "requiredRoomType": "comum",
+      "requiredResources": []
+    },
+    {
+      "id": "turma_2027_1_l178",
+      "code": "JCE324",
+      "name": "Estágio de Formação Pedagógica em Química II",
+      "turma": "Turma A",
+      "courseId": "cou_a82d4f73-6d68-4638-a3b4-cad9c46a8935",
+      "period": 7,
+      "professorId": "prof_andressa_algayer_da_silva_moretti",
+      "doNotAllocate": false,
+      "weeklySlotsRequired": 4,
+      "weeklyDaysRequired": 2,
+      "allowedShifts": [
+        "N"
+      ],
+      "enrolledStudents": 20,
+      "requiredRoomType": "comum",
+      "requiredResources": []
+    },
+    {
+      "id": "turma_2027_1_l179",
+      "code": "JCE325",
+      "name": "Prática Pedagógica em Química II",
+      "turma": "Turma A",
+      "courseId": "cou_a82d4f73-6d68-4638-a3b4-cad9c46a8935",
+      "period": 7,
+      "professorId": "prof_andressa_algayer_da_silva_moretti",
+      "doNotAllocate": false,
+      "weeklySlotsRequired": 4,
+      "weeklyDaysRequired": 2,
+      "allowedShifts": [
+        "N"
+      ],
+      "enrolledStudents": 20,
+      "requiredRoomType": "comum",
+      "requiredResources": []
+    },
+    {
+      "id": "turma_2027_1_l180",
+      "code": "JCE332",
+      "name": "Estágio de Formação Pedagógica em Física IV · Teoria",
+      "turma": "Turma A",
+      "courseId": "cou_b2031b26-20ab-4546-bd9b-187a5fc31955",
+      "period": 9,
+      "professorId": "prof_hercilia_alves_pereira_de_carvalho",
+      "doNotAllocate": false,
+      "weeklySlotsRequired": 4,
+      "weeklyDaysRequired": 1,
+      "allowedShifts": [
+        "N"
+      ],
+      "enrolledStudents": 20,
+      "requiredRoomType": "comum",
+      "requiredResources": [],
+      "teachingComponent": {
+        "familyId": "turma_2027_1_l180",
+        "kind": "theory",
+        "groupIndex": 0,
+        "theorySlots": 4,
+        "practiceSlots": 2,
+        "groupSizes": [
+          20
+        ],
+        "sourceClass": {
+          "id": "turma_2027_1_l180",
+          "code": "JCE332",
+          "name": "Estágio de Formação Pedagógica em Física IV",
+          "turma": "Turma A",
+          "courseId": "cou_b2031b26-20ab-4546-bd9b-187a5fc31955",
+          "period": 9,
+          "professorId": "prof_hercilia_alves_pereira_de_carvalho",
+          "doNotAllocate": false,
+          "weeklySlotsRequired": 6,
+          "weeklyDaysRequired": 1,
+          "allowedShifts": [
+            "N"
+          ],
+          "enrolledStudents": 20,
+          "requiredRoomType": "comum",
+          "requiredResources": []
+        }
+      }
+    },
+    {
+      "id": "pratica_4618004f-d6b1-42f7-879e-a172d592d8fc",
+      "code": "JCE332",
+      "name": "Estágio de Formação Pedagógica em Física IV · Outra sala",
+      "turma": "Turma A",
+      "courseId": "cou_b2031b26-20ab-4546-bd9b-187a5fc31955",
+      "period": 9,
+      "professorId": "prof_hercilia_alves_pereira_de_carvalho",
+      "doNotAllocate": false,
+      "weeklySlotsRequired": 2,
+      "weeklyDaysRequired": 1,
+      "allowedShifts": [
+        "T"
+      ],
+      "enrolledStudents": 20,
+      "requiredRoomType": "comum",
+      "requiredResources": [],
+      "teachingComponent": {
+        "familyId": "turma_2027_1_l180",
+        "kind": "practice",
+        "groupIndex": 1,
+        "theorySlots": 4,
+        "practiceSlots": 2,
+        "groupSizes": [
+          20
+        ],
+        "sourceClass": {
+          "id": "turma_2027_1_l180",
+          "code": "JCE332",
+          "name": "Estágio de Formação Pedagógica em Física IV",
+          "turma": "Turma A",
+          "courseId": "cou_b2031b26-20ab-4546-bd9b-187a5fc31955",
+          "period": 9,
+          "professorId": "prof_hercilia_alves_pereira_de_carvalho",
+          "doNotAllocate": false,
+          "weeklySlotsRequired": 6,
+          "weeklyDaysRequired": 1,
+          "allowedShifts": [
+            "N"
+          ],
+          "enrolledStudents": 20,
+          "requiredRoomType": "comum",
+          "requiredResources": []
+        }
+      }
+    },
+    {
+      "id": "turma_2027_1_l182",
+      "code": "JCE340",
+      "name": "Prática Pedagógica em Educação Não-formal",
+      "turma": "Turma A",
+      "courseId": "curso_lce",
+      "period": 10,
+      "professorId": "prof_paola_beatriz_sanches",
+      "doNotAllocate": false,
+      "weeklySlotsRequired": 4,
+      "weeklyDaysRequired": 2,
+      "allowedShifts": [
+        "T"
+      ],
+      "enrolledStudents": 20,
+      "requiredRoomType": "comum",
+      "requiredResources": []
+    },
+    {
+      "id": "turma_2027_1_l184",
+      "code": "JLC019",
+      "name": "ESTÁGIO SUPERVISIONADO I",
+      "turma": "Turma A",
+      "courseId": "curso_lco",
+      "period": 5,
+      "professorId": "prof_marcelo_franco_de_oliveira",
+      "doNotAllocate": false,
+      "weeklySlotsRequired": 3,
+      "weeklyDaysRequired": 1,
+      "allowedShifts": [
+        "M",
+        "T"
+      ],
+      "enrolledStudents": 2,
+      "requiredRoomType": "comum",
+      "requiredResources": [],
+      "allowSaturday": true
+    },
+    {
+      "id": "turma_2027_1_l185",
+      "code": "JLC045",
+      "name": "ESTÁGIO SUPERVISIONADO II",
+      "turma": "Turma A",
+      "courseId": "curso_lco",
+      "period": 6,
+      "professorId": "prof_robertino_mendes_santiago_junior",
+      "doNotAllocate": false,
+      "weeklySlotsRequired": 4,
+      "weeklyDaysRequired": null,
+      "allowedShifts": [
+        "M",
+        "T"
+      ],
+      "enrolledStudents": 1,
+      "requiredRoomType": "comum",
+      "requiredResources": [],
+      "allowSaturday": true
+    },
+    {
+      "id": "turma_2027_1_l186",
+      "code": "JLC003",
+      "name": "COMPUTADORES E SOCIEDADE",
+      "turma": "Turma A",
+      "courseId": "curso_lco",
+      "period": 7,
+      "professorId": "prof_paulo_henrique_soares",
+      "doNotAllocate": false,
+      "weeklySlotsRequired": 2,
+      "weeklyDaysRequired": 1,
+      "allowedShifts": [
+        "T"
+      ],
+      "enrolledStudents": 4,
+      "requiredRoomType": "comum",
+      "requiredResources": []
+    },
+    {
+      "id": "turma_2027_1_l187",
+      "code": "JLC017",
+      "name": "PRÁTICA PEDAGÓGICA VII",
+      "turma": "Turma A",
+      "courseId": "curso_lco",
+      "period": 7,
+      "professorId": "prof_camila_andrade_de_macedo",
+      "doNotAllocate": false,
+      "weeklySlotsRequired": 2,
+      "weeklyDaysRequired": 1,
+      "allowedShifts": [
+        "T"
+      ],
+      "enrolledStudents": 5,
+      "requiredRoomType": "lab_info",
+      "requiredResources": []
+    },
+    {
+      "id": "turma_2027_1_l188",
+      "code": "JLC032",
+      "name": "SISTEMAS DISTRIBUIDOS",
+      "turma": "Turma A",
+      "courseId": "curso_lco",
+      "period": 7,
+      "professorId": "prof_helio_henrique_lopes_costa_monte_alto",
+      "doNotAllocate": false,
+      "weeklySlotsRequired": 2,
+      "weeklyDaysRequired": 1,
+      "allowedShifts": [
+        "T"
+      ],
+      "enrolledStudents": 4,
+      "requiredRoomType": "comum",
+      "requiredResources": []
+    },
+    {
+      "id": "turma_2027_1_l189",
+      "code": "JLC057",
+      "name": "TEORIA DA COMPUTAÇÃO",
+      "turma": "Turma A",
+      "courseId": "curso_lco",
+      "period": 7,
+      "professorId": "prof_helio_henrique_lopes_costa_monte_alto",
+      "doNotAllocate": false,
+      "weeklySlotsRequired": 4,
+      "weeklyDaysRequired": 2,
+      "allowedShifts": [
+        "T"
+      ],
+      "enrolledStudents": 4,
+      "requiredRoomType": "comum",
+      "requiredResources": []
+    },
+    {
+      "id": "turma_2027_1_l190",
+      "code": "JLC052",
+      "name": "EDUCAÇÃO INCLUSIVA E TECNOLOGIAS ASSISTIVAS",
+      "turma": "Turma A",
+      "courseId": "curso_lco",
+      "period": 7,
+      "professorId": "prof_mayte_gouvea_coleto",
+      "doNotAllocate": false,
+      "weeklySlotsRequired": 3,
+      "weeklyDaysRequired": 1,
+      "allowedShifts": [
+        "T"
+      ],
+      "enrolledStudents": 4,
+      "requiredRoomType": "comum",
+      "requiredResources": []
+    },
+    {
+      "id": "turma_2027_1_l191",
+      "code": "JLC022",
+      "name": "ESTÁGIO SUPERVISIONADO III",
+      "turma": "Turma A",
+      "courseId": "curso_lco",
+      "period": 7,
+      "professorId": "prof_marcelo_franco_de_oliveira",
+      "doNotAllocate": false,
+      "weeklySlotsRequired": 8,
+      "weeklyDaysRequired": 2,
+      "allowedShifts": [
+        "M",
+        "T",
+        "N"
+      ],
+      "enrolledStudents": 4,
+      "requiredRoomType": "comum",
+      "requiredResources": [],
+      "eadWeeklyHours": 8
+    },
+    {
+      "id": "turma_2027_1_l192",
+      "code": "JLC022",
+      "name": "ESTÁGIO SUPERVISIONADO III",
+      "turma": "Turma A · L192",
+      "courseId": "curso_lco",
+      "period": 7,
+      "professorId": "prof_robertino_mendes_santiago_junior",
+      "doNotAllocate": false,
+      "weeklySlotsRequired": 8,
+      "weeklyDaysRequired": 2,
+      "allowedShifts": [
+        "M",
+        "T",
+        "N"
+      ],
+      "enrolledStudents": 4,
+      "requiredRoomType": "comum",
+      "requiredResources": [],
+      "eadWeeklyHours": 8
+    },
+    {
+      "id": "turma_2027_1_l193",
+      "code": "JLC018A",
+      "name": "TRABALHO DE CONCLUSÃO DE CURSO I [docente a definir]",
+      "turma": "Turma A",
+      "courseId": "curso_lco",
+      "period": 7,
+      "professorId": "prof_carlos_roberto_beleti_junior",
+      "doNotAllocate": false,
+      "weeklySlotsRequired": 2,
+      "weeklyDaysRequired": null,
+      "allowedShifts": [
+        "M",
+        "T",
+        "N"
+      ],
+      "enrolledStudents": 3,
+      "requiredRoomType": "comum",
+      "requiredResources": [],
+      "allowSaturday": true
+    },
+    {
+      "id": "turma_2027_1_l194",
+      "code": "JLC021",
+      "name": "TRABALHO DE CONCLUSÃO DE CURSO II",
+      "turma": "Turma A",
+      "courseId": "curso_lco",
+      "period": 7,
+      "professorId": "prof_carlos_roberto_beleti_junior",
+      "doNotAllocate": false,
+      "weeklySlotsRequired": 2,
+      "weeklyDaysRequired": 1,
+      "allowedShifts": [
+        "M",
+        "T",
+        "N"
+      ],
+      "enrolledStudents": 1,
+      "requiredRoomType": "comum",
+      "requiredResources": [],
+      "allowSaturday": true
+    },
+    {
+      "id": "turma_2027_1_l195",
+      "code": "JLC067",
+      "name": "ESTÁGIO SUPERVISIONADO IV",
+      "turma": "Turma A",
+      "courseId": "curso_lco",
+      "period": 8,
+      "professorId": "prof_robertino_mendes_santiago_junior",
+      "doNotAllocate": false,
+      "weeklySlotsRequired": 8,
+      "weeklyDaysRequired": 2,
+      "allowedShifts": [
+        "M",
+        "T",
+        "N"
+      ],
+      "enrolledStudents": 1,
+      "requiredRoomType": "comum",
+      "requiredResources": [],
+      "allowSaturday": true
+    },
+    {
+      "id": "turma_2027_1_l196",
+      "code": "JLC021",
+      "name": "TRABALHO DE CONCLUSÃO DE CURSO II",
+      "turma": "Turma A",
+      "courseId": "curso_lco",
+      "period": 8,
+      "professorId": "prof_rogerio_ferreira_da_silva",
+      "doNotAllocate": false,
+      "weeklySlotsRequired": 2,
+      "weeklyDaysRequired": 1,
+      "allowedShifts": [
+        "M",
+        "T",
+        "N"
+      ],
+      "enrolledStudents": 1,
+      "requiredRoomType": "comum",
+      "requiredResources": [],
+      "allowSaturday": true
+    },
+    {
+      "id": "turma_2027_1_l197",
+      "code": "JLMTD101",
+      "name": "Metodologia Científica [vagas a definir]",
+      "turma": "Turma A",
+      "courseId": "curso_lmtd",
+      "period": 1,
+      "professorId": "prof_paola_beatriz_sanches",
+      "doNotAllocate": false,
+      "weeklySlotsRequired": 4,
+      "weeklyDaysRequired": 2,
+      "allowedShifts": [
+        "T"
+      ],
+      "enrolledStudents": 1,
+      "requiredRoomType": "comum",
+      "requiredResources": []
+    },
+    {
+      "id": "turma_2027_1_l198",
+      "code": "JLMTD102",
+      "name": "Introdução à Prática Profissional",
+      "turma": "Turma A",
+      "courseId": "curso_lmtd",
+      "period": 1,
+      "professorId": "prof_wellington_piveta_oliveira",
+      "doNotAllocate": false,
+      "weeklySlotsRequired": 2,
+      "weeklyDaysRequired": 1,
+      "allowedShifts": [
+        "T"
+      ],
+      "enrolledStudents": 1,
+      "requiredRoomType": "comum",
+      "requiredResources": []
+    },
+    {
+      "id": "turma_2027_1_l199",
+      "code": "JLMTD103",
+      "name": "Educação Inclusiva [vagas a definir]",
+      "turma": "Turma A",
+      "courseId": "curso_lmtd",
+      "period": 1,
+      "professorId": "prof_paola_beatriz_sanches",
+      "doNotAllocate": false,
+      "weeklySlotsRequired": 4,
+      "weeklyDaysRequired": 2,
+      "allowedShifts": [
+        "T"
+      ],
+      "enrolledStudents": 1,
+      "requiredRoomType": "comum",
+      "requiredResources": []
+    },
+    {
+      "id": "turma_2027_1_l200",
+      "code": "JLMTD104",
+      "name": "Matemática Elementar I [vagas a definir]",
+      "turma": "Turma A",
+      "courseId": "curso_lmtd",
+      "period": 1,
+      "professorId": "prof_carlos_eurico_galvao_rosa",
+      "doNotAllocate": false,
+      "weeklySlotsRequired": 4,
+      "weeklyDaysRequired": 2,
+      "allowedShifts": [
+        "T"
+      ],
+      "enrolledStudents": 1,
+      "requiredRoomType": "comum",
+      "requiredResources": []
+    },
+    {
+      "id": "turma_2027_1_l201",
+      "code": "JLMTD105",
+      "name": "Letramento Digital [vagas a definir] [laboratório a confirmar]",
+      "turma": "Turma A",
+      "courseId": "curso_lmtd",
+      "period": 1,
+      "professorId": "prof_camila_andrade_de_macedo",
+      "doNotAllocate": false,
+      "weeklySlotsRequired": 4,
+      "weeklyDaysRequired": 2,
+      "allowedShifts": [
+        "T"
+      ],
+      "enrolledStudents": 1,
+      "requiredRoomType": "comum",
+      "requiredResources": []
+    },
+    {
+      "id": "turma_2027_1_l208",
+      "code": "BIAES025",
+      "name": "Oficina Integradora",
+      "turma": "Turma A",
+      "courseId": "curso_iaes",
+      "period": 5,
+      "professorId": "prof_rogerio_ferreira_da_silva",
+      "doNotAllocate": true,
+      "weeklySlotsRequired": 4,
+      "weeklyDaysRequired": 2,
+      "allowedShifts": [
+        "M"
+      ],
+      "enrolledStudents": 30,
+      "requiredRoomType": "comum",
+      "requiredResources": []
+    },
+    {
+      "id": "cla_ae38d151-ac34-4c6b-a461-0cc70aa4aa6c",
+      "code": "JAN0024A_Turma B",
+      "name": "Química Geral Experimental - Turma B",
+      "turma": "Turma A",
+      "courseId": "curso_agro",
+      "period": 1,
+      "professorId": "prof_leda_maria_saragiotto_colpini",
+      "doNotAllocate": false,
+      "weeklySlotsRequired": 1,
+      "weeklyDaysRequired": 1,
+      "allowedShifts": [
+        "M"
+      ],
+      "enrolledStudents": 25,
+      "requiredRoomType": "lab_quimica",
+      "requiredResources": []
+    },
+    {
+      "id": "cla_0f24c16a-02c2-4629-bf83-dfbdfb9fbfc9",
+      "code": "JAN014A_TurmaB",
+      "name": "Desenho Técnico",
+      "turma": "Turma A",
+      "courseId": "curso_agro",
+      "period": 1,
+      "professorId": "prof_renata_bachin_mazzini_guedes",
+      "doNotAllocate": false,
+      "weeklySlotsRequired": 3,
+      "weeklyDaysRequired": 1,
+      "allowedShifts": [
+        "M",
+        "T"
+      ],
+      "enrolledStudents": 32,
+      "requiredRoomType": "desenho",
+      "requiredResources": []
+    },
+    {
+      "id": "cla_0c9fd6b6-2ea9-494b-a599-986ef19e19d9",
+      "code": "JPED12",
+      "name": "Fundamentos de Lingua portuguesa",
+      "turma": "Turma A",
+      "courseId": "curso_ped",
+      "period": 1,
+      "professorId": "prof_kelly_priscilla_loddo_cezar",
+      "doNotAllocate": false,
+      "weeklySlotsRequired": 4,
+      "weeklyDaysRequired": 1,
+      "allowedShifts": [
+        "N"
+      ],
+      "enrolledStudents": 50,
+      "requiredRoomType": "comum",
+      "requiredResources": [],
+      "eadWeeklyHours": 4
+    },
+    {
+      "id": "cla_de9db16f-e43c-4468-a7fa-a215bca74c08",
+      "code": "JCE342",
+      "name": "Estágio de Formação Pedagógica em Ciencias Exatas 1",
+      "turma": "Turma A",
+      "courseId": "curso_lce",
+      "period": 3,
+      "professorId": "prof_andressa_algayer_da_silva_moretti",
+      "doNotAllocate": false,
+      "weeklySlotsRequired": 2,
+      "weeklyDaysRequired": 1,
+      "allowedShifts": [
+        "N"
+      ],
+      "enrolledStudents": 10,
+      "requiredRoomType": "comum",
+      "requiredResources": []
+    },
+    {
+      "id": "cla_276b8d70-02f9-4d48-964e-e63879108be1",
+      "code": "JPED11",
+      "name": "Psicologia do Desenvolvimento",
+      "turma": "Turma A",
+      "courseId": "curso_ped",
+      "period": 1,
+      "professorId": "pro_ce751400-8694-4f52-ae57-459d10a01967",
+      "doNotAllocate": false,
+      "weeklySlotsRequired": 4,
+      "weeklyDaysRequired": 1,
+      "allowedShifts": [
+        "N"
+      ],
+      "enrolledStudents": 40,
+      "requiredRoomType": "comum",
+      "requiredResources": []
+    },
+    {
+      "id": "cla_47a3afca-fbc7-4e8c-bb4c-1133d3c883ce",
+      "code": "JPED13",
+      "name": "Letramento Digital e Ambientes de Aprendizagem",
+      "turma": "Turma A",
+      "courseId": "curso_ped",
+      "period": 1,
+      "professorId": "pro_f6aa1a7f-e61c-48cf-81d9-79d69141d963",
+      "doNotAllocate": false,
+      "weeklySlotsRequired": 4,
+      "weeklyDaysRequired": 1,
+      "allowedShifts": [
+        "N"
+      ],
+      "enrolledStudents": 39,
+      "requiredRoomType": "lab_info",
+      "requiredResources": []
+    },
+    {
+      "id": "cla_90df321d-1e94-4e88-b4a5-4e5eb79a207d",
+      "code": "JPED14",
+      "name": "História da Educação",
+      "turma": "Turma A",
+      "courseId": "curso_ped",
+      "period": 1,
+      "professorId": "pro_ce751400-8694-4f52-ae57-459d10a01967",
+      "doNotAllocate": false,
+      "weeklySlotsRequired": 4,
+      "weeklyDaysRequired": null,
+      "allowedShifts": null,
+      "enrolledStudents": 40,
+      "requiredRoomType": "comum",
+      "requiredResources": [],
+      "eadWeeklyHours": 4
+    },
+    {
+      "id": "cla_597ac843-9d96-431a-9088-c5aae3b76f2b",
+      "code": "JPED15",
+      "name": "Fundamentos de Matemática Básica",
+      "turma": "Turma A",
+      "courseId": "curso_ped",
+      "period": 1,
+      "professorId": "pro_aa7c0b05-ce22-4706-8ce6-0644cf14a6a4",
+      "doNotAllocate": false,
+      "weeklySlotsRequired": 4,
+      "weeklyDaysRequired": null,
+      "allowedShifts": null,
+      "enrolledStudents": 40,
+      "requiredRoomType": "comum",
+      "requiredResources": [],
+      "eadWeeklyHours": 4
+    },
+    {
+      "id": "cla_6e0e471b-8bbd-4138-939a-29a6f0dc3a67",
+      "code": "JPED16",
+      "name": "Estágio Obrigatório 1: Observação e Inserção",
+      "turma": "Turma A",
+      "courseId": "curso_ped",
+      "period": 1,
+      "professorId": "pro_f6aa1a7f-e61c-48cf-81d9-79d69141d963",
+      "doNotAllocate": false,
+      "weeklySlotsRequired": 2,
+      "weeklyDaysRequired": 1,
+      "allowedShifts": [
+        "N"
+      ],
+      "enrolledStudents": 50,
+      "requiredRoomType": "comum",
+      "requiredResources": []
+    }
+  ],
+  "allocations": []
+}
