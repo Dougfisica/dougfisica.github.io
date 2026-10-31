@@ -1,9 +1,9 @@
 {
   "ok": true,
   "repository": "Dougfisica/dougfisica.github.io",
-  "generated_at": "2026-10-30T18:02:04+00:00",
+  "generated_at": "2026-10-31T17:15:44+00:00",
   "first_run": false,
-  "new_count": 1,
+  "new_count": 0,
   "total_count": 5,
   "sources": [
     {
@@ -35,22 +35,7 @@
       "error": null
     }
   ],
-  "new_houses": [
-    {
-      "id": "hashimoto:1852",
-      "source": "hashimoto",
-      "source_name": "Hashimoto Corretor de Imóveis",
-      "code": "2109",
-      "category": "CASA",
-      "price": "2500.00",
-      "price_formatted": "R$ 2.500,00",
-      "address": "RUA SENADOR SOUZA NAVES, 323",
-      "neighborhood": "CENTRO",
-      "city": "JANDAIA DO SUL",
-      "url": "https://hashimotocorretordeimoveis.com.br/imovel/exibir/2109",
-      "image_url": "https://cdnmidia.simob.com.br/cdn/imovelImages/1852/b687bb62200a27fab7c18dcf809d8845.jpeg?idImobiliaria=388"
-    }
-  ],
+  "new_houses": [],
   "current_houses": [
     {
       "id": "hashimoto:1728",
