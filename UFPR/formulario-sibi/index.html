@@ -1,0 +1,69 @@
+<!doctype html>
+<html lang="pt-BR">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta name="description" content="Preenchimento da ficha de incorporação de materiais bibliográficos do SiBi/UFPR.">
+  <title>Ficha SiBi/UFPR</title>
+  <link rel="stylesheet" href="styles.css">
+</head>
+<body>
+  <main class="app-shell">
+    <section class="form-panel" aria-labelledby="page-title">
+      <div class="brand-row">
+        <span class="brand-mark" aria-hidden="true">S</span>
+        <div>
+          <p class="eyebrow">SiBi / UFPR</p>
+          <h1 id="page-title">Ficha de incorporação</h1>
+        </div>
+      </div>
+      <p class="intro">Preencha os dados abaixo. O PDF será baixado com o mesmo layout e os logos do formulário original.</p>
+
+      <form id="sibi-form">
+        <label for="docente">Docente</label>
+        <input id="docente" name="docente" type="text" autocomplete="name" maxlength="110" required>
+
+        <label for="email">E-mail</label>
+        <input id="email" name="email" type="email" autocomplete="email" maxlength="110" required>
+
+        <label for="curso">Curso</label>
+        <input id="curso" name="curso" type="text" maxlength="140" required>
+
+        <label for="biblioteca">Biblioteca de destino</label>
+        <input id="biblioteca" name="biblioteca" type="text" maxlength="140" required>
+
+        <label for="quantidade">Quantidade de livros</label>
+        <input id="quantidade" name="quantidade" type="number" inputmode="numeric" min="1" max="99999" required>
+
+        <button id="generate" type="submit">
+          <span>Gerar PDF</span>
+          <span aria-hidden="true">↓</span>
+        </button>
+        <p id="status" class="status" role="status" aria-live="polite"></p>
+      </form>
+    </section>
+
+    <section class="preview-panel" aria-labelledby="preview-title">
+      <div class="preview-heading">
+        <div>
+          <p class="eyebrow">Pré-visualização</p>
+          <h2 id="preview-title">Documento final</h2>
+        </div>
+        <span class="a4-chip">A4</span>
+      </div>
+      <div class="paper-wrap">
+        <div class="paper" aria-label="Pré-visualização do formulário preenchido">
+          <img id="form-background" alt="Formulário SiBi/UFPR com os logos da UFPR e do SiBi">
+          <span class="field-preview docente" data-preview="docente"></span>
+          <span class="field-preview email" data-preview="email"></span>
+          <span class="field-preview curso" data-preview="curso"></span>
+          <span class="field-preview biblioteca" data-preview="biblioteca"></span>
+          <span class="field-preview quantidade" data-preview="quantidade"></span>
+        </div>
+      </div>
+    </section>
+  </main>
+  <script src="assets/formulario-base-data.js"></script>
+  <script src="app.js"></script>
+</body>
+</html>
