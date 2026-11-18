@@ -1,16 +1,16 @@
 {
   "ok": true,
   "repository": "Dougfisica/dougfisica.github.io",
-  "generated_at": "2026-11-17T20:59:06+00:00",
+  "generated_at": "2026-11-18T20:36:37+00:00",
   "first_run": false,
   "new_count": 0,
-  "total_count": 5,
+  "total_count": 4,
   "sources": [
     {
       "id": "hashimoto",
       "name": "Hashimoto Corretor de Imóveis",
       "ok": true,
-      "count": 2,
+      "count": 1,
       "error": null
     },
     {
@@ -78,20 +78,6 @@
       "city": "Jandaia do Sul",
       "url": "https://www.jolnegociosimobiliarios.com.br/imovel/4276738/casa-locacao-jandaia-do-sul-pr-centro",
       "image_url": "https://www.jolnegociosimobiliarios.com.br/imagens/imoveis/202606291040371636.jpeg"
-    },
-    {
-      "id": "hashimoto:1852",
-      "source": "hashimoto",
-      "source_name": "Hashimoto Corretor de Imóveis",
-      "code": "2109",
-      "category": "CASA",
-      "price": "2500.00",
-      "price_formatted": "R$ 2.500,00",
-      "address": "RUA SENADOR SOUZA NAVES, 323",
-      "neighborhood": "CENTRO",
-      "city": "JANDAIA DO SUL",
-      "url": "https://hashimotocorretordeimoveis.com.br/imovel/exibir/2109",
-      "image_url": "https://cdnmidia.simob.com.br/cdn/imovelImages/1852/b687bb62200a27fab7c18dcf809d8845.jpeg?idImobiliaria=388"
     },
     {
       "id": "jol:4268715",
